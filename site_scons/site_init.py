@@ -28,6 +28,9 @@ def CheckSConsLocation():
   Without this, if system scons is used then it produces rather cryptic error
   messages.
   """
+  # Daemon: use system scons instead!
+  return
+
   scons_location = os.path.dirname(os.path.abspath(SCons.__file__))
   nacl_dir = os.path.dirname(os.path.dirname(os.path.dirname(
                                              os.path.abspath(__file__))))
@@ -364,7 +367,8 @@ def SiteInitMain():
   # Since our site dir was specified on the SCons command line, SCons will
   # normally only look at our site dir.  Add back checking for project-local
   # site_scons directories.
-  if not SCons.Script.GetOption('no_site_dir'):
+  # WTF? scons docs say no_site_dir is still supposed to exist, but it raises an attribute error...
+  if False: #  not SCons.Script.GetOption('no_site_dir'):
     SCons.Script.Main._load_site_scons_dir(
         SCons.Node.FS.get_default_fs().SConstruct_dir.__str__(), None)
 
