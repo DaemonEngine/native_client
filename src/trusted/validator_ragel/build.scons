@@ -164,8 +164,10 @@ ragel_targets = set([
     'dfachecktries'])
 ragel_involved = ragel_targets.intersection(COMMAND_LINE_TARGETS)
 
-gas = env.MakeUntrustedNativeEnv()['AS']
-objdump = env.MakeUntrustedNativeEnv()['OBJDUMP']
+#gas = env.MakeUntrustedNativeEnv()['AS']
+#objdump = env.MakeUntrustedNativeEnv()['OBJDUMP']
+gas = "AAAAAAAAAAAAA"
+objdump = "BBBBBBB"
 
 if ragel_involved:
   if not env.Bit('host_linux'):

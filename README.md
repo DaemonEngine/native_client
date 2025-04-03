@@ -1,3 +1,18 @@
+Fork of https://chromium.googlesource.com/native_client/src/native_client
+with edits to enable building NaCl without the Chromium
+dev tools. History had to be cut off due to 200 MB zip files in the history.
+Currently it only works for amd64 host+target. (run.py won't work
+since NaCl targets aren't supported yet.)
+Dependencies:
+- LLVM (must be installed in /usr/bin)
+- SCons
+
+Build with:
+```
+scons platform=x86-64 MODE=opt-host naclsdk_validate=0 sysinfo=0 sel_ldr
+```
+---
+
 #  Native Client
 
 Native Client is a deprecated sandboxing technology. It is currently used by a
