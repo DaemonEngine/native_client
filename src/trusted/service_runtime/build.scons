@@ -379,6 +379,7 @@ if (env.Bit('linux') and not env.Bit('built_elsewhere')):
     bootstrap_env.Append(CCFLAGS=['-ffreestanding',
                                   '-U__STDC_HOSTED__',
                                   '-D__STDC_HOSTED__=1',
+                                  '-Wno-builtin-macro-redefined',
                                   '-Qunused-arguments'])
   compiler_override = ''
   if env.Bit('build_x86_64'):
