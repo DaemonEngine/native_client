@@ -129,7 +129,7 @@ def BuildEnvironmentSConscripts(env):
     else:
       raise SCons.Errors.UserError(
           'Bad location for a SConscript. "%s" is not under '
-          '\$TARGET_ROOT or \$MAIN_DIR' % c_script)
+          '$TARGET_ROOT or $MAIN_DIR' % c_script)
 
 def UsingNaclMode():
   build_modes = SCons.Script.ARGUMENTS.get('MODE') or SCons.Script.GetOption('build_mode')

@@ -3623,7 +3623,7 @@ windows_coverage_env = windows_debug_env.Clone(
     #    needed.
     MANIFEST_FILE = None,
     COVERAGE_ANALYZER_DIR=r'..\third_party\coverage_analyzer\bin',
-    COVERAGE_ANALYZER='$COVERAGE_ANALYZER_DIR\coverage_analyzer.exe',
+    COVERAGE_ANALYZER=r'$COVERAGE_ANALYZER_DIR\coverage_analyzer.exe',
 )
 # TODO(bradnelson): Switch nacl to common testing process so this won't be
 #                   needed. Ignoring instrumentation failure as that's easier

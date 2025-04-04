@@ -824,7 +824,7 @@ if env.Bit('build_x86_64'):
 
 if env.Bit('build_x86') and env.Bit('nacl_static_link'):
   RE_HELLO = '^(Hello, World!)$'
-  RE_IDENT = '^\[[0-9,:.]*\] (e_ident\+1 = ELF)$'
+  RE_IDENT = r'^\[[0-9,:.]*\] (e_ident\+1 = ELF)$'
 
   node = env.CommandSelLdrTestNacl(
       'nacl_log.out',
