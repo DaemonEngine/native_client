@@ -23,7 +23,7 @@ def GetLocation(addr2line, binary, offset):
   proc = subprocess.Popen(
       [addr2line, '--functions', '--basenames',
        '-e', binary, hex(offset)],
-      stdout=subprocess.PIPE)
+      stdout=subprocess.PIPE, text=True)
   function, file_loc = list(proc.stdout)
   function = function.rstrip()
   proc.wait()
@@ -45,7 +45,7 @@ def PrintDisassembly(objdump, binary, start_address, stop_address,
       [objdump, '-D', binary,
        '--start-address', hex(start_address),
        '--stop-address', hex(stop_address)],
-      stdout=subprocess.PIPE)
+       stdout=subprocess.PIPE, text=True)
 
   disassembly = []
   for line in proc.stdout:
@@ -124,7 +124,7 @@ def main():
   # by bundles).
 
   errors = []
-  proc = subprocess.Popen([args.ncval, binary], stderr=subprocess.PIPE)
+  proc = subprocess.Popen([args.ncval, binary], stderr=subprocess.PIPE, text=True)
   for line in proc.stderr:
     # Collect error messages of the form
     #    201ef: unrecognized instruction
