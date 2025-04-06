@@ -129,9 +129,10 @@ def CommunicateWithTimeout(proc, input_data=None, timeout=None):
     pynacl.platform.KillSubprocessAndChildren(proc)
     # Thus result should ALWAYS contain something after this join.
     thread.join()
-    sys.stderr.write('\n\nKilled test due to timeout!\n')
+    msg = '\n\nKilled test due to timeout!\n'
+    sys.stderr.write(msg)
     # Also append to stderr.
-    result[0][1] += '\n\nKilled test due to timeout!\n'
+    result[0][1] += (msg.encode('ascii') if isinstance(result[0][1], bytes) else msg)
     returncode = -9
   else:
     returncode = proc.returncode
