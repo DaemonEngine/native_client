@@ -24,6 +24,7 @@ testserver.log
 /toolchain_build/src/
 
 # Ignore these absolute directories (relative to native_client directory)
+/build-*/
 /build/Debug/
 /build/Release/
 /chromebinaries/
