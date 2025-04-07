@@ -7,9 +7,28 @@ Dependencies:
 - LLVM (must be installed in /usr/bin)
 - SCons
 
-Build with:
+### Build the NaCl loader and boostrap loader
 ```
-scons platform=x86-64 MODE=opt-host naclsdk_validate=0 sysinfo=0 sel_ldr
+scons --mode=opt-host platform=x86-64 sel_ldr
+```
+
+### Build the IRT
+This requires the Saigo NaCl toolchain. You can provide it by either
+(a) passing `saigo_newlib_dir=<path>` on the command line (the directory
+you want to target is normally called `saigo_newlib`), or
+(b) dropping the toolchain in `toolchain/linux_x86/` and renaming its
+top-level directory from `saigo_newlib` to `saigo_newlib_raw`.
+
+The following command builds one `irt_core_raw.nexe`. You need to strip it
+yourself; ordinary Linux `strip` seems to work.
+```
+scons --mode=nacl saigo=1 platform=x86-64 irt_core_raw [optional saigo_newlib_dir=...]
+```
+
+### Try some tests
+This builds both components and runs some tests.
+```
+scons --mode=opt-host,nacl saigo=1 platform=x86-64 --keep-going small_tests medium_tests
 ```
 ---
 

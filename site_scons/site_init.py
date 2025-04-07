@@ -131,6 +131,11 @@ def BuildEnvironmentSConscripts(env):
           'Bad location for a SConscript. "%s" is not under '
           '\$TARGET_ROOT or \$MAIN_DIR' % c_script)
 
+def UsingNaclMode():
+  build_modes = SCons.Script.ARGUMENTS.get('MODE') or SCons.Script.GetOption('build_mode')
+  build_modes = build_modes.split(',')
+  return any('nacl' in mode for mode in build_modes)
+
 def FilterEnvironments(environments):
   """Filters out the environments to be actually build from the specified list
 

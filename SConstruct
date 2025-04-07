@@ -34,8 +34,6 @@ import pynacl.platform
 import gc
 gc.disable()
 
-nacltool = False # Daemon: not yet implemented
-
 # REPORT
 CMD_COUNTER = {}
 ENV_COUNTER = {}
@@ -2798,7 +2796,7 @@ pre_base_env.Append(
 nacl_env = MakeArchSpecificEnv()
 # See comment below about libc++ and libpthread in NONIRT_LIBS.
 using_nacl_libcxx = nacl_env.Bit('bitcode') or nacl_env.Bit('nacl_clang')
-if nacltool: nacl_env = nacl_env.Clone(
+if UsingNaclMode(): nacl_env = nacl_env.Clone(
     tools = ['naclsdk'],
     NACL_BUILD_FAMILY = 'UNTRUSTED',
     BUILD_TYPE = 'nacl',
@@ -3138,7 +3136,7 @@ if nacl_env.Bit('running_on_valgrind'):
     nacl_env.Append(LINKFLAGS = ['-Wl,-u,have_nacl_valgrind_interceptors'],
                     LIBS = ['valgrind'])
 
-if nacltool: environment_list.append(nacl_env)
+if UsingNaclMode(): environment_list.append(nacl_env)
 
 if not nacl_env.Bit('nacl_glibc'):
   # These are all specific to nacl-newlib so we do not include them
@@ -3392,11 +3390,11 @@ nacl_irt_env.ClearBits('bitcode')
 # used to build user/test code. nacl-clang is used everywhere for the IRT.
 nacl_irt_env.SetBits('nacl_clang')
 
-if nacltool: nacl_irt_env.Tool('naclsdk')
+if UsingNaclMode(): nacl_irt_env.Tool('naclsdk')
 # These are unfortunately clobbered by running Tool, which
 # we needed to do to get the destination directory reset.
 # We want all the same values from nacl_env.
-if nacltool: nacl_irt_env.Replace(EXTRA_CFLAGS=nacl_env['EXTRA_CFLAGS'],
+if UsingNaclMode(): nacl_irt_env.Replace(EXTRA_CFLAGS=nacl_env['EXTRA_CFLAGS'],
                      EXTRA_CXXFLAGS=nacl_env['EXTRA_CXXFLAGS'],
                      CCFLAGS=nacl_env['CCFLAGS'],
                      CFLAGS=nacl_env['CFLAGS'],
@@ -3417,7 +3415,7 @@ if nacl_irt_env.Bit('build_x86_32'):
 # The IRT is C only, don't link with the C++ linker so that it doesn't
 # start depending on the C++ standard library and (in the case of
 # libc++) pthread.
-if nacltool: nacl_irt_env.Replace(LINK=(nacl_irt_env['LINK'].
+if UsingNaclMode(): nacl_irt_env.Replace(LINK=(nacl_irt_env['LINK'].
                            replace('nacl-clang++', 'nacl-clang')))
 
 # TODO(mcgrathr): Clean up uses of these methods.
@@ -3533,8 +3531,8 @@ def AddImplicitLibs(env):
     # The -B<dir>/ flag is necessary to tell gcc to look for crt[1in].o there.
     env.Prepend(LINKFLAGS=['-B${LIB_DIR}/'])
 
-if nacltool: AddImplicitLibs(nacl_env)
-if nacltool: AddImplicitLibs(nacl_irt_env)
+if UsingNaclMode(): AddImplicitLibs(nacl_env)
+if UsingNaclMode(): AddImplicitLibs(nacl_irt_env)
 
 nacl_irt_env.Append(
     BUILD_SCONSCRIPTS = [
@@ -3549,7 +3547,7 @@ nacl_irt_env.Append(
     ])
 nacl_irt_env.AddChromeFilesFromGroup('untrusted_irt_scons_files')
 
-if nacltool: environment_list.append(nacl_irt_env)
+if UsingNaclMode(): environment_list.append(nacl_irt_env)
 
 # Since browser_tests already use the IRT normally, those are fully covered
 # in nacl_env.  But the non_browser_tests don't use the IRT in nacl_env.
@@ -3614,7 +3612,7 @@ def IrtTestAddNodeToTestSuite(env, node, suite_name, node_name=None,
                             is_broken, is_flaky)
 nacl_irt_test_env.AddMethod(IrtTestAddNodeToTestSuite, 'AddNodeToTestSuite')
 
-if nacltool: environment_list.append(nacl_irt_test_env)
+if UsingNaclMode(): environment_list.append(nacl_irt_test_env)
 
 
 windows_coverage_env = windows_debug_env.Clone(

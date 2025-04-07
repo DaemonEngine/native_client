@@ -164,10 +164,13 @@ ragel_targets = set([
     'dfachecktries'])
 ragel_involved = ragel_targets.intersection(COMMAND_LINE_TARGETS)
 
-#gas = env.MakeUntrustedNativeEnv()['AS']
-#objdump = env.MakeUntrustedNativeEnv()['OBJDUMP']
-gas = "AAAAAAAAAAAAA"
-objdump = "BBBBBBB"
+if UsingNaclMode():
+  gas = env.MakeUntrustedNativeEnv()['AS']
+  objdump = env.MakeUntrustedNativeEnv()['OBJDUMP']
+else:
+  gas = 'AS_UNAVAILABLE_WITHOUT_MODE_NACL'
+  objdump = 'OBJDUMP_UNAVAILABLE_WITHOUT_MODE_NACL'
+
 
 if ragel_involved:
   if not env.Bit('host_linux'):
