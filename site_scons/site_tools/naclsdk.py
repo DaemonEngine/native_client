@@ -755,7 +755,8 @@ def generate(env):
   else:
     _SetEnvForNativeSdk(env, root)
 
-  if (env.Bit('bitcode') or env.Bit('nacl_clang')) and env.Bit('build_x86'):
+  # Daemon: don't depend on a second NaCl toolchain!
+  if (env.Bit('bitcode') or env.Bit('nacl_clang')) and env.Bit('build_x86') and not env.Bit('no_gdb_tests'):
     # Get GDB from the nacl-gcc glibc toolchain even when using PNaCl.
     # TODO(mseaborn): We really want the nacl-gdb binary to be in a
     # separate tarball from the nacl-gcc toolchain, then this step
