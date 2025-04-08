@@ -38,7 +38,7 @@ const int kMagicConst_ROUNDSS = 0xc0000000;
 const int kMagicConst_POPCNT = 13;
 const int kMagicConst_CRC32  = 0xb906c3ea;
 
-#if !(NACL_WINDOWS && (NACL_BUILD_SUBARCH == 64))
+#if !((NACL_WINDOWS || !defined(_MSC_VER)) && (NACL_BUILD_SUBARCH == 64))
 static int asm_HasMMX(void) {
   volatile int before, after;
   before = kMagicConst;
@@ -386,13 +386,13 @@ static int asm_HasCX8(void) {
 #endif  /* 0 */
 #endif  /* 64-bit Windows */
 
-#if NACL_WINDOWS && (NACL_BUILD_SUBARCH == 64)
+#if !(NACL_WINDOWS && (NACL_BUILD_SUBARCH == 64)) || !defined(MSC_VER)
 static int CheckCPUFeatureDetection(NaClCPUFeaturesX86 *cpuf) {
   /* Unfortunately the asm_ tests will not work on 64-bit Windows */
   return 0;
 }
 #else
-#if (NACL_LINUX || NACL_OSX)
+#if (NACL_LINUX || NACL_OSX || (NACL_WINDOWS && !defined(MSC_VER))
 /* Linux/MacOS signal handling code, for trapping illegal instruction faults */
 static int sawbadinstruction = 0;
 static struct sigaction crash_detect;
