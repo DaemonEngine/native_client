@@ -16,6 +16,7 @@
 #ifndef NATIVE_CLIENT_SRC_INCLUDE_PORTABILITY_H_
 #define NATIVE_CLIENT_SRC_INCLUDE_PORTABILITY_H_ 1
 
+#include <stdint.h>
 #include <stdlib.h>
 
 #include "native_client/src/include/build_config.h"
