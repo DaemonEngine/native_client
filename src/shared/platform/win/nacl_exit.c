@@ -39,7 +39,11 @@ void NaClAbort(void) {
    * http://code.google.com/p/nativeclient/issues/detail?id=2772).
    */
   while (1) {
+#if defined(_MSC_VER)
     __halt();
+#else
+    __asm__("hlt");
+#endif
   }
 }
 
