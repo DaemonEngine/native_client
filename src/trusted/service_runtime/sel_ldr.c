@@ -912,7 +912,7 @@ void NaClVmIoPendingCheck_mu(struct NaClApp *nap,
  * We need its symbol in the symbol table so don't inline it.
  * TODO(dje): add some explanation for the non-GDB person.
  */
-#if NACL_WINDOWS
+#if NACL_WINDOWS && defined(_MSVC_VER)
 __declspec(dllexport noinline)
 #endif
 #ifdef __GNUC__
