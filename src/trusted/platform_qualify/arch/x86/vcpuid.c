@@ -38,7 +38,15 @@ const int kMagicConst_ROUNDSS = 0xc0000000;
 const int kMagicConst_POPCNT = 13;
 const int kMagicConst_CRC32  = 0xb906c3ea;
 
-#if !(NACL_WINDOWS && (NACL_BUILD_SUBARCH == 64))
+#if (NACL_WINDOWS && defined(_MSC_VER) && (NACL_BUILD_SUBARCH == 64))
+# define NACL_WINDOWS_MSC_64
+#endif
+
+#if (NACL_WINDOWS && !defined(_MSC_VER))
+# define NACL_WINDOWS_MINGW
+#endif
+
+#if !defined(NACL_WINDOWS_MSC_64) && !defined(NACL_WINDOWS_MINGW)
 static int asm_HasMMX(void) {
   volatile int before, after;
   before = kMagicConst;
@@ -386,7 +394,7 @@ static int asm_HasCX8(void) {
 #endif  /* 0 */
 #endif  /* 64-bit Windows */
 
-#if NACL_WINDOWS && (NACL_BUILD_SUBARCH == 64)
+#if defined(NACL_WINDOWS_MSC_64) || defined(NACL_WINDOWS_MINGW)
 static int CheckCPUFeatureDetection(NaClCPUFeaturesX86 *cpuf) {
   /* Unfortunately the asm_ tests will not work on 64-bit Windows */
   return 0;
