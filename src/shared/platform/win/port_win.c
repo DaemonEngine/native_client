@@ -12,7 +12,7 @@
 
 #include "native_client/src/include/portability.h"
 
-#if ( DO_NOT_USE_FAST_ASSEMBLER_VERSION_FOR_FFS || defined(_WIN64) )
+#if ( DO_NOT_USE_FAST_ASSEMBLER_VERSION_FOR_FFS || defined(_WIN64) || !defined(_MSC_VER) )
 int ffs(int x) {
   int r = 1;
 
