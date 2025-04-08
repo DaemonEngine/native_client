@@ -19,7 +19,7 @@
 #include "native_client/src/include/build_config.h"
 #include "native_client/src/trusted/validator_ragel/decoder.h"
 
-#if NACL_WINDOWS
+#if NACL_WINDOWS && !defined(__GNUC__)
 # define FORCEINLINE __forceinline
 #else
 # define FORCEINLINE __inline __attribute__ ((always_inline))
