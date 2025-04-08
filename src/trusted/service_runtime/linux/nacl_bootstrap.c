@@ -20,6 +20,7 @@
 #include <elf.h>
 #include <fcntl.h>
 #include <limits.h>
+#include <linux/limits.h>
 #include <link.h>
 #include <stddef.h>
 #include <stdint.h>
