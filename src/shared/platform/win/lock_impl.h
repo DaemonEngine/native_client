@@ -8,7 +8,7 @@
 #ifndef NATIVE_CLIENT_SRC_TRUSTED_PLATFORM_WIN_LOCK_IMPL_H_
 #define NATIVE_CLIENT_SRC_TRUSTED_PLATFORM_WIN_LOCK_IMPL_H_
 
-#include <Windows.h>
+#include <windows.h>
 #include "native_client/src/include/nacl_macros.h"
 #include "native_client/src/shared/platform/nacl_sync.h"
 
