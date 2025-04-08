@@ -60,7 +60,7 @@
 #define GG_UINT32_C(x)  (x ## U)
 #define GG_UINT64_C(x)  GG_ULONGLONG(x)
 
-#if NACL_WINDOWS
+#if NACL_WINDOWS && defined(_MSC_VER)
 #define GG_LONGLONG(x) x##I64
 #define GG_ULONGLONG(x) x##UI64
 #else
