@@ -58,7 +58,7 @@ struct NaClExceptionFrame;
 #define NACL_ABI_WIFSIGNALED(status) ((((status) + 1) & 0x7f) > 1)
 #define NACL_ABI_W_EXITCODE(ret, sig) ((((ret) & 0xff) << 8) + ((sig) & 0x7f))
 
-#if NACL_WINDOWS
+#if NACL_WINDOWS && defined(_MSC_VER)
 enum PosixSignals {
   SIGINT  = 2,
   SIGQUIT = 3,
