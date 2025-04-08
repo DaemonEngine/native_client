@@ -21,7 +21,7 @@
 #include "native_client/src/trusted/validator/validation_metadata.h"
 
 #if NACL_WINDOWS
-#include <Windows.h>
+#include <windows.h>
 #include <io.h>
 #endif
 

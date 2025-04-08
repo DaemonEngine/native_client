@@ -9,7 +9,7 @@
  */
 
 #include <errno.h>
-#include <WinError.h>
+#include <winerror.h>
 
 #include "native_client/src/shared/platform/nacl_log.h"
 #include "native_client/src/shared/platform/win/xlate_system_error.h"
