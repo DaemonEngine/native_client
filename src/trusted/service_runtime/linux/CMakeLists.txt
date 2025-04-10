@@ -99,6 +99,12 @@ string(REPLACE ";" " " BOOTSTRAP_FLAGS_STRING "${BOOTSTRAP_FLAGS}")
 add_library(nacl_bootstrap OBJECT "nacl_bootstrap.c")
 set_target_properties(nacl_bootstrap PROPERTIES COMPILE_FLAGS ${BOOTSTRAP_FLAGS_STRING})
 
+if (USE_ARMHF_16K_PAGESIZE)
+	set(MAX_PAGE_SIZE 0x4000)
+else()
+	set(MAX_PAGE_SIZE 0x1000)
+endif()
+
 add_custom_target(nacl_bootstrap_raw
 	COMMAND env "${PYTHON}"
 		"${CMAKE_CURRENT_LIST_DIR}/ld_bfd.py"
@@ -106,7 +112,7 @@ add_custom_target(nacl_bootstrap_raw
 		-m "${LD_EMUL}"
 		--build-id
 		-static
-		-z "max-page-size=0x1000"
+		-z "max-page-size=${MAX_PAGE_SIZE}"
 		--defsym RESERVE_TOP="${RESERVE_TOP}"
 		--script "${CMAKE_CURRENT_LIST_DIR}/nacl_bootstrap.x"
 		-o "${CMAKE_CURRENT_BINARY_DIR}/nacl_bootstrap_raw"

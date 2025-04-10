@@ -4,6 +4,11 @@ if (NOT MSVC)
 	option(USE_STATIC_LIBS "Tries to use static libs where possible." OFF)
 endif()
 
+if (ARCH_armhf)
+	option(USE_ARMHF_16K_PAGESIZE "Build armhf binaries with 16K PageSize." OFF)
+	list(APPEND INHERITED_OPTIONS "USE_ARMHF_16K_PAGESIZE")
+endif()
+
 macro(set_ASM_flag FLAG)
 	set(lang ASM)
 	if (${ARGC} GREATER 1)
@@ -91,6 +96,10 @@ endmacro()
 if (USE_STATIC_LIBS)
 	set_compiler_flag("-static")
 	set_linker_flag("-static")
+endif()
+
+if (USE_ARMHF_16K_PAGESIZE)
+	set_linker_flag("-Wl,-z,max-page-size=16384")
 endif()
 
 #TODO: Import from SetUpClang() from (root)/SConstruct.
