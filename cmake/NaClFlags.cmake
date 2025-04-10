@@ -1,5 +1,10 @@
 option(USE_WERROR "Tell the compiler to make the build fail when warnings are present." OFF)
 
+if (DAEMON_ARCH_armhf)
+	option(USE_ARMHF_LARGE_PAGESIZE "Build armhf binaries with large page size." ON)
+	list(APPEND INHERITED_OPTIONS "USE_ARMHF_LARGE_PAGESIZE")
+endif()
+
 macro(set_ASM_flag FLAG)
 	set(lang ASM)
 	if (${ARGC} GREATER 1)
@@ -83,6 +88,14 @@ macro(set_linker_flag FLAG)
 		endif()
 	endforeach()
 endmacro()
+
+if (USE_ARMHF_LARGE_PAGESIZE)
+	set(MAX_PAGE_SIZE 0x10000)
+else()
+	set(MAX_PAGE_SIZE 0x1000)
+endif()
+
+set_linker_flag("-Wl,-z,max-page-size=${MAX_PAGE_SIZE}")
 
 #TODO: Import from SetUpClang() from (root)/SConstruct.
 #TODO: This is mostly ASAN configurations.
