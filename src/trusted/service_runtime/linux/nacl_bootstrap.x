@@ -108,9 +108,9 @@ SECTIONS {
    * It just maps it from the file, i.e. way off the end of the file,
    * which is perfect for reserving the address space.
    */
-  . = ALIGN(CONSTANT(COMMONPAGESIZE));
+  . = ALIGN(CONSTANT(MAXPAGESIZE));
   RESERVE_START = .;
-  .reserve : {
+  .reserve : ALIGN(CONSTANT(MAXPAGESIZE)) {
     . += (RESERVE_TOP > RESERVE_START) ? (RESERVE_TOP - RESERVE_START) : 0;
   } :reserve
 
