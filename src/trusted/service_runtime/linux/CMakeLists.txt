@@ -111,7 +111,7 @@ add_custom_target(nacl_bootstrap_raw
 		-m "${LD_EMUL}"
 		--build-id
 		-static
-		-z "max-page-size=0x1000"
+		-z "max-page-size=${MAX_PAGE_SIZE}"
 		--defsym RESERVE_TOP="${RESERVE_TOP}"
 		--orphan-handling=discard
 		--script "${CMAKE_CURRENT_LIST_DIR}/nacl_bootstrap.x"

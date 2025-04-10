@@ -103,6 +103,20 @@ if (USE_PATH_SANITIZATION)
 	endforeach()
 endif()
 
+if (YOKAI_TARGET_SYSTEM_LINUX_COMPATIBILITY)
+	if (YOKAI_TARGET_ARCH_ARMHF)
+		option(USE_ARMHF_LARGE_PAGESIZE "Build armhf binaries with large page size." ON)
+	endif()
+
+	if (USE_ARMHF_LARGE_PAGESIZE)
+		set(MAX_PAGE_SIZE 0x10000)
+	else()
+		set(MAX_PAGE_SIZE 0x1000)
+	endif()
+
+	set_linker_flag("-Wl,-z,max-page-size=${MAX_PAGE_SIZE}")
+endif()
+
 #TODO: Import from SetUpClang() from (root)/SConstruct.
 #TODO: This is mostly ASAN configurations.
 
