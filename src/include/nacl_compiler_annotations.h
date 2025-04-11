@@ -10,7 +10,7 @@
 #include "native_client/src/include/build_config.h"
 
 /* MSVC supports "inline" only in C++ */
-#if NACL_WINDOWS
+#if NACL_WINDOWS && defined(_MSC_VER)
 # define INLINE __forceinline
 #else
 # define INLINE __inline__

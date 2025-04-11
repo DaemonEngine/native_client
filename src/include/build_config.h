@@ -36,7 +36,7 @@
 # define NACL_OSX 0
 #endif
 
-#if defined(ANDROID)
+#if defined(__ANDROID__)
 # define NACL_ANDROID 1
 #else
 # define NACL_ANDROID 0

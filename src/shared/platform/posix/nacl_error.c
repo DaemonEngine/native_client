@@ -10,8 +10,16 @@
 #include "native_client/src/include/build_config.h"
 #include "native_client/src/shared/platform/nacl_error.h"
 
+#if defined(__native_client__)
+	#define HAS_GNU_STRERROR_R
+#elif NACL_LINUX && !NACL_ANDROID
+	#define HAS_GNU_STRERROR_R
+#elif NACL_ANDROID && (__ANDROID_MIN_SDK_VERSION__ > 22)
+	#define HAS_GNU_STRERROR_R
+#endif
+
 int NaClGetLastErrorString(char* buffer, size_t length) {
-#if defined(__native_client__) || (NACL_LINUX && !NACL_ANDROID)
+#if defined(HAS_GNU_STRERROR_R)
   char* message;
   /*
    * Note some Linux distributions and newlib provide only the GNU version of

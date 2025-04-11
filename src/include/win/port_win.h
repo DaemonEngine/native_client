@@ -74,7 +74,9 @@ typedef __int64_t         int64_t;
 typedef __uint64_t        uint64_t;
 
 typedef long              off_t;
+#if !defined(__MINGW32__)
 typedef int               mode_t;
+#endif
 typedef long              _off_t;
 typedef long int          __loff_t;
 typedef unsigned long     DWORD;

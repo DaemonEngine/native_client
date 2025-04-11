@@ -90,7 +90,7 @@ int NaClAppThreadInitArchSpecific(struct NaClAppThread *natp,
    * Save the system's state of the x87 FPU control word so we can restore
    * the same state when returning to trusted code.
    */
-#if NACL_WINDOWS
+#if NACL_WINDOWS && defined(_MSC_VER)
   {
     uint16_t sys_fcw;
     __asm {

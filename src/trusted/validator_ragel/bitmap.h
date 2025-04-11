@@ -15,7 +15,7 @@
 #include "native_client/src/include/nacl_macros.h"
 #include "native_client/src/include/portability.h"
 
-#if NACL_WINDOWS
+#if NACL_WINDOWS && defined(_MSC_VER)
 # define FORCEINLINE __forceinline
 #else
 # define FORCEINLINE __inline __attribute__ ((always_inline))

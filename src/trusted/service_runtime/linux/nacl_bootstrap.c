@@ -20,6 +20,7 @@
 #include <elf.h>
 #include <fcntl.h>
 #include <limits.h>
+#include <linux/limits.h>
 #include <link.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -290,8 +291,8 @@ static ElfW(Addr) load_elf_file(const char *filename,
     fail(filename, "ELF file has unreasonable ",
          "e_phnum", ehdr.e_phnum, NULL, 0);
 
-  if (ehdr.e_type != ET_DYN)
-    fail(filename, "ELF file not ET_DYN!  ",
+  if (ehdr.e_type != ET_DYN && ehdr.e_type != ET_EXEC)
+    fail(filename, "ELF file not ET_DYN neither ET_EXEC!  ",
          "e_type", ehdr.e_type, NULL, 0);
 
   my_pread(filename, "Failed to read program headers from ELF file!  ",
