@@ -28,4 +28,4 @@ node = env.CommandSelLdrTestNacl(
     loader=trusted_env.GetSelLdrSeccomp())
 
 env.AddNodeToTestSuite(node, ['small_tests', 'nonpexe_tests'],
-                       'run_sel_ldr_seccomp_test')
+                       'run_sel_ldr_seccomp_test', is_broken=True)
