@@ -14,8 +14,8 @@ from __future__ import print_function
 
 import getopt
 import os
-import pipes
 import re
+import shlex
 import sys
 
 # local imports
@@ -663,7 +663,7 @@ def Main(argv):
     command = run_under.split(',') + command
 
   # print the command in copy-and-pastable fashion
-  print(' '.join(pipes.quote(arg) for arg in env_vars + command))
+  print(' '.join(shlex.quote(arg) for arg in env_vars + command))
 
   # Concatenate output when running multiple times (e.g., for timing).
   combined_stdout = ''
