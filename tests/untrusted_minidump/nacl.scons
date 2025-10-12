@@ -7,7 +7,7 @@ import os
 Import('env')
 
 # Preserve debugging info (which is not ABI-stable under PNaCl).
-if not env.SetNonStableBitcodeIfAllowed() or not env.Bit('pnacl_generate_pexe'):
+if not env.SetNonStableBitcodeIfAllowed():
   Return()
 
 if env.Bit('bitcode'):
