@@ -23,4 +23,6 @@ fi
 
 readonly BASE_SCRIPT="${SCRIPT_DIR_ABS}/scons.py"
 
-python3 "${BASE_SCRIPT}" "$@"
+# Use the old Python from Chromium's virtual env since the bundled scons uses removed APIs
+# Must put depot_tools in PATH
+vpython3 "${BASE_SCRIPT}" "$@"
