@@ -11,12 +11,12 @@ Import('env')
 #       expecting the include path to be set
 #       Sadly, we also have to set this path for every unittest
 env.Append(CPPPATH=
-           ['${SOURCE_ROOT}/testing/gtest/include'])
+           ['${MAIN_DIR}/src/third_party/gtest/gtest/include'])
 
 
 # NOTE: src/gtest-all.cc *includes* a bunch of other .cc files
 env.Append(
-    CPPPATH=['${SOURCE_ROOT}/testing/gtest'])
+    CPPPATH=['${MAIN_DIR}/src/third_party/gtest/gtest'])
 
 
 if env.Bit('linux') or env.Bit('mac'):
@@ -44,4 +44,4 @@ if env.Bit('linux') or env.Bit('clang') or env.Bit('mac'):
 env.ComponentLibrary(
     'gtest',
     [env.ComponentObject('gtest-all.o',
-                         '${SOURCE_ROOT}/testing/gtest/src/gtest-all.cc')])
+                         '${MAIN_DIR}/src/third_party/gtest/gtest/src/gtest-all.cc')])

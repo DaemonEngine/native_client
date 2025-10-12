@@ -2049,7 +2049,7 @@ def MakeGTestEnv(env):
   # This is necessary for unittest_main.c which includes gtest/gtest.h
   # The problem is that gtest.h includes other files expecting the
   # include path to be set.
-  gtest_env.Prepend(CPPPATH=['${SOURCE_ROOT}/testing/gtest/include'])
+  gtest_env.Prepend(CPPPATH=['${MAIN_DIR}/src/third_party/gtest/gtest/include'])
 
   # gtest does not compile with our stringent settings.
   if gtest_env.Bit('linux') or gtest_env.Bit('mac'):
