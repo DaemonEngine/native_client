@@ -637,20 +637,7 @@ def ReadELFInfo(f):
 
 
 def FindBaseDir():
-  '''Crawl backwards, starting from the directory containing this script,
-     until we find the native_client/ directory.
-  '''
-
-  curdir = os.path.abspath(sys.argv[0])
-  while os.path.basename(curdir) != 'native_client':
-    curdir,subdir = os.path.split(curdir)
-    if subdir == '':
-      # We've hit the file system root
-      break
-
-  if os.path.basename(curdir) != 'native_client':
-    Fatal('Unable to find native_client directory!')
-  return curdir
+  return os.path.dirname(__file__)
 
 
 if __name__ == '__main__':
