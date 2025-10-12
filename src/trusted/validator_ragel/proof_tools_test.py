@@ -19,12 +19,12 @@ class ProofToolsTest(unittest.TestCase):
                                output_rr=None)
     op3 = proof_tools.Operands(disasms=('%r12',),
                                input_rr=None, output_rr='%r12')
-    self.assertEquals(
+    self.assertEqual(
         proof_tools.Operands(disasms=('0x0(%r13)', '%r12'),
                              input_rr='%r13', output_rr='%r12'),
         proof_tools.MergeOperands(op1, op3))
 
-    self.assertEquals(
+    self.assertEqual(
         proof_tools.Operands(disasms=('0x0(%r14)', '%r12'),
                              input_rr='%r14', output_rr='%r12'),
         proof_tools.MergeOperands(op2, op3))
@@ -49,7 +49,7 @@ class ProofToolsTest(unittest.TestCase):
         [proof_tools.Operands(disasms=('i',)),
          proof_tools.Operands(disasms=('ii',))])
 
-    self.assertEquals(
+    self.assertEqual(
         set([proof_tools.Operands(disasms=('a', '1', 'i')),
              proof_tools.Operands(disasms=('a', '1', 'ii')),
              proof_tools.Operands(disasms=('a', '2', 'i')),
@@ -63,7 +63,7 @@ class ProofToolsTest(unittest.TestCase):
   def testMemoryOperandsTemplate32(self):
     mem = proof_tools.MemoryOperandsTemplate(
         disp='0x0', base='%ebx', index='%eax', scale=2, bitness=32)
-    self.assertEquals(
+    self.assertEqual(
         [proof_tools.Operands(disasms=('(%ebx)',)),
          proof_tools.Operands(disasms=('0x0',)),
          proof_tools.Operands(disasms=('(%ebx,%eax,2)',)),
@@ -75,7 +75,7 @@ class ProofToolsTest(unittest.TestCase):
   def testMemoryOperandsTemplate64(self):
     mem = proof_tools.MemoryOperandsTemplate(
         disp='0x0', base='%rsp', index='%r8', scale=2, bitness=64)
-    self.assertEquals(
+    self.assertEqual(
         [proof_tools.Operands(disasms=('(%rsp)',)),
          proof_tools.Operands(disasms=('0x0(%rsp)',)),
          proof_tools.Operands(disasms=('(%rsp,%r8,2)',), input_rr='%r8'),
@@ -89,7 +89,7 @@ class ProofToolsTest(unittest.TestCase):
     for mem in mems:
       self.assertTrue(mem.input_rr is None, mem)
       self.assertTrue(mem.output_rr is None, mem)
-      self.assertEquals(len(mem.disasms), 1)
+      self.assertEqual(len(mem.disasms), 1)
       m = re.match(spec.MemoryRE() + r'$', mem.disasms[0])
       self.assertTrue(m is not None, msg=mem.disasms[0])
       self.assertTrue(m.group('memory_segment') is None, msg=mem.disasms[0])
@@ -100,10 +100,10 @@ class ProofToolsTest(unittest.TestCase):
       if index is not None:
         indexes.add(index)
 
-    self.assertEquals(
+    self.assertEqual(
         set(['%ebp', '%eax', '%edi', '%ebx', '%esi', '%ecx', '%edx', '%eiz']),
         indexes)
-    self.assertEquals(
+    self.assertEqual(
         set(['%ebp', '%eax', '%edi', '%ebx', '%esi', '%ecx', '%edx', '%esp']),
         bases)
 
@@ -113,7 +113,7 @@ class ProofToolsTest(unittest.TestCase):
     bases = set()
     for mem in mems:
       self.assertTrue(mem.output_rr is None, mem)
-      self.assertEquals(len(mem.disasms), 1)
+      self.assertEqual(len(mem.disasms), 1)
       m = re.match(spec.MemoryRE() + r'$', mem.disasms[0])
       self.assertTrue(m is not None, msg=mem.disasms[0])
       self.assertTrue(m.group('memory_segment') is None, msg=mem.disasms[0])
@@ -123,14 +123,14 @@ class ProofToolsTest(unittest.TestCase):
         bases.add(base)
       if index is not None and index != '%riz':
         indexes.add(index)
-        self.assertEquals(mem.input_rr, index)
+        self.assertEqual(mem.input_rr, index)
 
-    self.assertEquals(
+    self.assertEqual(
         set(['%rax', '%rbx', '%rcx', '%rdx', '%rsi', '%rdi',
              '%r8', '%r9', '%r10', '%r11', '%r12', '%r13', '%r14', '%r15']),
         indexes)
 
-    self.assertEquals(
+    self.assertEqual(
         set(['%rsp', '%r15', '%rbp', '%rip']),
         bases)
 

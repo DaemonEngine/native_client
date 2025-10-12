@@ -162,11 +162,11 @@ class DriverToolsTest(unittest.TestCase):
 
       # After ArchMerge(), ARCH is set.
       driver_tools.ArchMerge(path, True)
-      self.assertEquals('X8632', driver_tools.GetArch())
+      self.assertEqual('X8632', driver_tools.GetArch())
 
       # The ArchMerge() with the file of the same architecture shouldn't fail.
       driver_tools.ArchMerge(path, True)
-      self.assertEquals('X8632', driver_tools.GetArch())
+      self.assertEqual('X8632', driver_tools.GetArch())
 
   def test_ArchMerge_ArchiveFile(self):
     with NamedTemporaryFile(suffix='.a') as path:
@@ -182,11 +182,11 @@ class DriverToolsTest(unittest.TestCase):
 
       # After ArchMerge(), ARCH is set.
       driver_tools.ArchMerge(path, True)
-      self.assertEquals('X8632', driver_tools.GetArch())
+      self.assertEqual('X8632', driver_tools.GetArch())
 
       # The ArchMerge() with the file of the same architecture shouldn't fail.
       driver_tools.ArchMerge(path, True)
-      self.assertEquals('X8632', driver_tools.GetArch())
+      self.assertEqual('X8632', driver_tools.GetArch())
 
   def test_ArchMerge_Inconsistent(self):
     with NamedTemporaryFile(suffix='.o') as path:
@@ -202,7 +202,7 @@ class DriverToolsTest(unittest.TestCase):
       driver_tools.ArchMerge(path, False)
 
       # ARCH is not modified.
-      self.assertEquals('ARM', driver_tools.GetArch())
+      self.assertEqual('ARM', driver_tools.GetArch())
 
       # Calling ArchMerge() with must_match=True causes a fatal error.
       with self.assertRaises(SystemExit):

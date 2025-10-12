@@ -23,7 +23,7 @@ class SyscallThreadTest(gdb_test.GdbTest):
     self.CheckBacktrace(backtrace[b'stack'], [b'inside_f3', b'f3'])
     # Check we have one more thread
     thread_info = self.gdb.Command('-thread-info')
-    self.assertEquals(len(thread_info[b'threads']), 2)
+    self.assertEqual(len(thread_info[b'threads']), 2)
     # Select another thread
     syscall_thread_id = thread_info[b'threads'][0][b'id']
     if syscall_thread_id == thread_info[b'current-thread-id']:

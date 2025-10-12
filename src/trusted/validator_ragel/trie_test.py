@@ -22,7 +22,7 @@ class TrieTest(unittest.TestCase):
 
   def CheckTrieAccepts(self, accept_sequences):
     accept = trie.AcceptInfo(input_rr='%eax', output_rr='%edx')
-    self.assertEquals([(accept, ['0', '1', '2']),
+    self.assertEqual([(accept, ['0', '1', '2']),
                        (accept, ['0', '1', '2', '3']),
                        (accept, ['0', '1', '3']),
                        (accept, ['0', '1', '4']),
@@ -36,13 +36,13 @@ class TrieTest(unittest.TestCase):
     #                  | -3-> n5
     #                  | -4-> n6
     #                  | -5-> n7
-    self.assertEquals(8, len(trie.GetAllUniqueNodes(uncompressed)))
+    self.assertEqual(8, len(trie.GetAllUniqueNodes(uncompressed)))
 
     node_cache = trie.NodeCache()
     compressed_trie = node_cache.Merge(node_cache.empty_node, uncompressed)
     self.CheckTrieAccepts(trie.GetAllAcceptSequences(compressed_trie))
     # (n4, n5. n6, n7) can be grouped together from above
-    self.assertEquals(5, len(trie.GetAllUniqueNodes(compressed_trie)))
+    self.assertEqual(5, len(trie.GetAllUniqueNodes(compressed_trie)))
 
   def testTrieSerializationAndDeserialization(self):
     uncompressed = self.MakeUncompressedTrie()
@@ -51,7 +51,7 @@ class TrieTest(unittest.TestCase):
     reconstructed_trie = trie.TrieFromDict(trie.TrieToDict(compressed_trie),
                                            node_cache)
     self.CheckTrieAccepts(trie.GetAllAcceptSequences(reconstructed_trie))
-    self.assertEquals(5, len(trie.GetAllUniqueNodes(reconstructed_trie)))
+    self.assertEqual(5, len(trie.GetAllUniqueNodes(reconstructed_trie)))
 
   def testTrieDiffEqual(self):
     # This is a regression test for a bug that occurred in Python 2
@@ -65,7 +65,7 @@ class TrieTest(unittest.TestCase):
     # On Python 2, the first of these assertions would fail but the
     # second would pass.  i.e. "==" and "!=" would not be consistent.
     # That is because "!=" does not automatically forward to the
-    # __eq__ method on Python 2.  (We don't use assertEquals() here
+    # __eq__ method on Python 2.  (We don't use assertEqual() here
     # because we want to test the "==" and "!=" operators
     # specifically.)
     self.assertFalse(trie1.accept_info != trie2.accept_info)
@@ -76,7 +76,7 @@ class TrieTest(unittest.TestCase):
     # incorrectly report a difference on Python 2.
     node_cache = trie.NodeCache()
     diffs = list(trie.DiffTries(trie1, trie2, node_cache.empty_node, ()))
-    self.assertEquals(diffs, [])
+    self.assertEqual(diffs, [])
 
   def testTrieDiff(self):
     trie1 = trie.Node()
@@ -107,11 +107,11 @@ class TrieTest(unittest.TestCase):
                                node_cache.empty_node, ()):
       compressed_diffs.add(diff)
 
-    self.assertEquals(
+    self.assertEqual(
         diffs,
         set([(('0', '1', '4'), accept1, accept2),
              (('0', '1', '5'), accept1, None)]))
-    self.assertEquals(diffs, compressed_diffs)
+    self.assertEqual(diffs, compressed_diffs)
 
 
 if __name__ == '__main__':

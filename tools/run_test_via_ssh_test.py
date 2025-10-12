@@ -20,7 +20,7 @@ class Test(unittest.TestCase):
       escaped = run_test_via_ssh.ShellEscape(c)
       result = subprocess.check_output('echo ' + escaped, shell=True,
                                        encoding='utf-8')
-      self.assertEquals(result, '%s\n' % c)
+      self.assertEqual(result, '%s\n' % c)
 
 
 if __name__ == '__main__':

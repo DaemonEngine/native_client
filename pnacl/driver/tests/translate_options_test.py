@@ -96,7 +96,7 @@ define i32 @_start() {
     if expected_output_file_count is not None:
       output_files_got = re.findall(
           r'-E NACL_IRT_PNACL_TRANSLATOR_COMPILE_OUTPUT_\d*=([^ ]*)', out)
-      self.assertEquals(len(output_files_got), expected_output_file_count)
+      self.assertEqual(len(output_files_got), expected_output_file_count)
 
 
   #### Individual tests.

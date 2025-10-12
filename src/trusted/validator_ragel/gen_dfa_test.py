@@ -13,22 +13,22 @@ import gen_dfa
 class TestLegacyPrefixes(unittest.TestCase):
 
   def test_empty(self):
-    self.assertEquals(
+    self.assertEqual(
         gen_dfa.GenerateLegacyPrefixes(64, [], []),
         [()])
 
   def test_one(self):
-    self.assertEquals(
+    self.assertEqual(
         gen_dfa.GenerateLegacyPrefixes(64, ['req'], []),
         [('req',)])
-    self.assertEquals(
+    self.assertEqual(
         set(gen_dfa.GenerateLegacyPrefixes(64, [], ['opt'])),
         set([
             (),
             ('opt',)]))
 
   def test_many(self):
-    self.assertEquals(
+    self.assertEqual(
         set(gen_dfa.GenerateLegacyPrefixes(64, ['req'], ['opt1', 'opt2'])),
         set([
             ('req',),
@@ -52,11 +52,11 @@ class TestOperand(unittest.TestCase):
         default_rw=def_format.OperandReadWriteMode.READ)
 
     assert op.Readable() and not op.Writable()
-    self.assertEquals(op.arg_type, def_format.OperandType.REGISTER_IN_OPCODE)
-    self.assertEquals(op.size, '')
+    self.assertEqual(op.arg_type, def_format.OperandType.REGISTER_IN_OPCODE)
+    self.assertEqual(op.size, '')
     assert not op.implicit
 
-    self.assertEquals(str(op), '=r')
+    self.assertEqual(str(op), '=r')
 
 
 class TestInstruction(unittest.TestCase):
@@ -64,14 +64,14 @@ class TestInstruction(unittest.TestCase):
   def test_name_and_operands(self):
     instr = gen_dfa.Instruction()
     instr.ParseNameAndOperands('add G E')
-    self.assertEquals(instr.name, 'add')
-    self.assertEquals(len(instr.operands), 2)
+    self.assertEqual(instr.name, 'add')
+    self.assertEqual(len(instr.operands), 2)
 
     op1, op2 = instr.operands
     assert op1.Readable() and not op1.Writable()
     assert op2.Readable() and op2.Writable()
 
-    self.assertEquals(str(instr), 'add =G &E,')
+    self.assertEqual(str(instr), 'add =G &E,')
 
   def test_modrm_presence(self):
     instr = gen_dfa.Instruction.Parse(
@@ -93,8 +93,8 @@ class TestInstruction(unittest.TestCase):
 
     instr.CollectPrefixes()
 
-    self.assertEquals(instr.required_prefixes, ['0xf3'])
-    self.assertEquals(instr.opcodes, ['0x90'])
+    self.assertEqual(instr.required_prefixes, ['0xf3'])
+    self.assertEqual(instr.opcodes, ['0x90'])
 
 
 class TestPrinterParts(unittest.TestCase):
@@ -106,7 +106,7 @@ class TestPrinterParts(unittest.TestCase):
 
     printer._PrintSignature(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         @instruction_nopw___0x0__eax__eax_1_
@@ -120,7 +120,7 @@ class TestPrinterParts(unittest.TestCase):
 
     printer._PrintSignature(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         @instruction_mov
@@ -136,7 +136,7 @@ class TestPrinterParts(unittest.TestCase):
 
     printer._PrintOpcode(instr)
 
-    self.assertEquals(printer.GetContent(), '0x90')
+    self.assertEqual(printer.GetContent(), '0x90')
 
   def test_register_in_opcode(self):
     printer = gen_dfa.InstructionPrinter(gen_dfa.DECODER, 32)
@@ -146,7 +146,7 @@ class TestPrinterParts(unittest.TestCase):
 
     printer._PrintOpcode(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         0x0f (0xc8|0xc9|0xca|0xcb|0xcc|0xcd|0xce|0xcf)
@@ -160,7 +160,7 @@ class TestPrinterParts(unittest.TestCase):
 
     printer._PrintOpcode(instr)
 
-    self.assertEquals(printer.GetContent(), '0x80')
+    self.assertEqual(printer.GetContent(), '0x80')
 
 
 class TestInstructionPrinter(unittest.TestCase):
@@ -172,7 +172,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithoutModRM(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         0xa0
@@ -191,7 +191,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithoutModRM(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         0xeb
@@ -208,7 +208,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithoutModRM(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         0x14
@@ -231,7 +231,7 @@ class TestInstructionPrinter(unittest.TestCase):
     instr = printer._SetOperandIndices(instr)
     printer._PrintImmediates(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         @operand0_immediate
@@ -246,7 +246,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithoutModRM(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         REX_RXB?
@@ -270,7 +270,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithoutModRM(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         0x40 0x90
@@ -288,7 +288,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithoutModRM(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         REX_RXB?
@@ -310,7 +310,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithoutModRM(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         (rep)?
@@ -324,7 +324,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithModRMReg(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         REX_RXB?
@@ -350,7 +350,7 @@ class TestInstructionPrinter(unittest.TestCase):
                             x_matters=True,
                             b_matters=False))
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         REX_RXB?
@@ -374,7 +374,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithModRMReg(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         0x80
@@ -395,7 +395,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithModRMReg(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         0x8c
@@ -415,7 +415,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithoutModRM(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         0x0f 0x77
@@ -431,7 +431,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithModRMReg(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         0x0f 0x0f
@@ -456,7 +456,7 @@ class TestInstructionPrinter(unittest.TestCase):
                             x_matters=False,
                             b_matters=True))
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         0x0f 0x0f
@@ -483,7 +483,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer._PrintVexOrXopPrefix(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         (0xc4 (VEX_RB & VEX_map00001)  b_0_1111_0_11 @vex_prefix3 |
@@ -497,7 +497,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithoutModRM(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         REX_RXB?
@@ -519,7 +519,7 @@ class TestInstructionPrinter(unittest.TestCase):
 
     printer.PrintInstructionWithModRMReg(instr)
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         (0xf0)
@@ -547,7 +547,7 @@ class TestInstructionPrinter(unittest.TestCase):
                             x_matters=False,
                             b_matters=True))
 
-    self.assertEquals(
+    self.assertEqual(
         printer.GetContent().split(),
         """
         REX_RXB?
@@ -565,20 +565,20 @@ class TestSplit(unittest.TestCase):
 
   def test_no_split_rm(self):
     instr = gen_dfa.Instruction.Parse('mov =G !E, 0x88')
-    self.assertEquals(
+    self.assertEqual(
         list(map(str, gen_dfa.SplitRM(instr))),
         ['mov =G !R, 0x88',
          'mov =G !M, 0x88'])
 
   def test_split_rm(self):
     instr = gen_dfa.Instruction.Parse('mov =O !a, 0xa0, ia32')
-    self.assertEquals(
+    self.assertEqual(
         list(map(str, gen_dfa.SplitRM(instr))),
         [str(instr)])
 
   def test_split_byte(self):
     instr = gen_dfa.Instruction.Parse('mov =I !E, 0xc6 /0')
-    self.assertEquals(
+    self.assertEqual(
         list(map(str, gen_dfa.SplitByteNonByte(instr))),
         ['mov =Ib !Eb, 0xc6 /0',
          'mov =Iz !Ev, 0xc7 /0'])
@@ -588,24 +588,24 @@ class TestSplit(unittest.TestCase):
 
     instr1, instr2, instr3 = gen_dfa.SplitVYZ(64, instr)
 
-    self.assertEquals(str(instr1), 'mov =Iw !Ew, 0xc7 /0')
+    self.assertEqual(str(instr1), 'mov =Iw !Ew, 0xc7 /0')
     assert not instr1.rex.w_set
-    self.assertEquals(instr1.required_prefixes, ['data16'])
+    self.assertEqual(instr1.required_prefixes, ['data16'])
 
-    self.assertEquals(str(instr2), 'mov =Id !Ed, 0xc7 /0')
+    self.assertEqual(str(instr2), 'mov =Id !Ed, 0xc7 /0')
     assert not instr2.rex.w_set
-    self.assertEquals(instr2.required_prefixes, [])
+    self.assertEqual(instr2.required_prefixes, [])
 
-    self.assertEquals(str(instr3), 'mov =Id !Eq, 0xc7 /0')
+    self.assertEqual(str(instr3), 'mov =Id !Eq, 0xc7 /0')
     assert instr3.rex.w_set
-    self.assertEquals(instr3.required_prefixes, [])
+    self.assertEqual(instr3.required_prefixes, [])
 
   def test_split_L(self):
     instr = gen_dfa.Instruction.Parse(
         'vaddpd =Wpdx =Hpdx !Vpdx, '
         '0xc4 RXB.00001 x.src.L.01 0x58, '
         'CPUFeature_AVX')
-    self.assertEquals(
+    self.assertEqual(
         list(map(str, gen_dfa.SplitL(instr))),
         [('vaddpd =Wpd =Hpd !Vpd, '
           '0xc4 RXB.00001 x.src.0.01 0x58, '
@@ -617,7 +617,7 @@ class TestSplit(unittest.TestCase):
   def test_name_suffix(self):
     instr = gen_dfa.Instruction.Parse(
         'movs X Y, 0xa4, rep nacl-amd64-forbidden')
-    self.assertEquals(
+    self.assertEqual(
         list(map(str, gen_dfa.SplitByteNonByte(instr))),
         ['movs =Xb &Yb, 0xa4, rep nacl-amd64-forbidden att-show-name-suffix-b',
          'movs =Xv &Yv, 0xa5, rep nacl-amd64-forbidden'])

@@ -23,10 +23,10 @@ class TestLocalStorageCache(unittest.TestCase):
   def CanBeReadBothWays(self, storage, key, out_file, expected):
     # Check that reading key with both GetData and GetFile yields expected.
     # out_file is used for GetFile output.
-    self.assertEquals(expected, storage.GetData(key).decode('utf-8'))
+    self.assertEqual(expected, storage.GetData(key).decode('utf-8'))
     url = storage.GetFile(key, out_file)
-    self.assertNotEquals(None, url)
-    self.assertEquals(expected, file_tools.ReadFileString(out_file))
+    self.assertNotEqual(None, url)
+    self.assertEqual(expected, file_tools.ReadFileString(out_file))
 
   def test_WriteRead(self):
     # Check that things written with PutData can be read back.
@@ -60,11 +60,11 @@ class TestLocalStorageCache(unittest.TestCase):
           cache_path=os.path.join(work_dir, 'db'),
           storage=mem_storage)
       storage.PutData('bar', 'foo')
-      self.assertEquals(None, mem_storage.GetData('foo'))
+      self.assertEqual(None, mem_storage.GetData('foo'))
       bar = os.path.join(work_dir, 'bar_file')
       file_tools.WriteFile('bar', bar)
       storage.PutFile(bar, 'foo')
-      self.assertEquals(None, mem_storage.GetData('foo'))
+      self.assertEqual(None, mem_storage.GetData('foo'))
 
   def test_Exists(self):
     # Checks that exists works properly.
@@ -84,7 +84,7 @@ class TestLocalStorageCache(unittest.TestCase):
       storage = local_storage_cache.LocalStorageCache(
           cache_path=os.path.join(work_dir, 'db'),
           storage=mem_storage)
-      self.assertEquals(None, storage.GetData('foo'))
+      self.assertEqual(None, storage.GetData('foo'))
 
   def test_HitWrappedStorage(self):
     # Check that if something isn't locally cached primary storage is hit.
@@ -94,7 +94,7 @@ class TestLocalStorageCache(unittest.TestCase):
           cache_path=os.path.join(work_dir, 'db'),
           storage=mem_storage)
       mem_storage.PutData('hello', 'foo')
-      self.assertEquals('hello', storage.GetData('foo'))
+      self.assertEqual('hello', storage.GetData('foo'))
 
   def test_HitLocalFirst(self):
     # Check that reading hits local storage first.
@@ -105,7 +105,7 @@ class TestLocalStorageCache(unittest.TestCase):
           storage=mem_storage)
       storage.PutData('there', 'foo')
       mem_storage.PutData('hello', 'foo')
-      self.assertEquals('there', storage.GetData('foo').decode('utf-8'))
+      self.assertEqual('there', storage.GetData('foo').decode('utf-8'))
 
   def test_AcceptSlashesAndDots(self):
     # Check that keys with slashes and dots are okay.
@@ -115,7 +115,7 @@ class TestLocalStorageCache(unittest.TestCase):
           cache_path=os.path.join(work_dir, 'db'),
           storage=mem_storage)
       storage.PutData('hello', 'this/is/a/cool_test.txt')
-      self.assertEquals(
+      self.assertEqual(
           'hello', storage.GetData('this/is/a/cool_test.txt').decode('utf-8'))
 
   def test_InvalidKey(self):

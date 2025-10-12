@@ -11,8 +11,8 @@ class CallFromGdbTest(gdb_test.GdbTest):
   def test_call_from_gdb_test(self):
     self.gdb.Command('break main')
     self.gdb.ResumeAndExpectStop('continue', 'breakpoint-hit')
-    self.assertEquals(self.gdb.Eval('test_call_from_gdb(1)'), b'3')
-    self.assertEquals(self.gdb.Eval('global_var'), b'2')
+    self.assertEqual(self.gdb.Eval('test_call_from_gdb(1)'), b'3')
+    self.assertEqual(self.gdb.Eval('global_var'), b'2')
 
 
 if __name__ == '__main__':

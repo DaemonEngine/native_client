@@ -49,7 +49,7 @@ void _start() {
                          stdout=open(dest_file, "w"))
     # ncval_annotate should propagate the exit code through so that it
     # can be used as a substitute for ncval.
-    self.assertEquals(rc, 1)
+    self.assertEqual(rc, 1)
 
     # Errors printed in two lines, with interspersed objdump output.
     # The first line starts with an ADDRESS and file/line.
@@ -101,7 +101,7 @@ ADDRESS \(FILENAME:[0-9]+, function _start\): unrecognized instruction
     filter_pattern = ".*<<<<$"
     failures = len([line for line in open(dest_file, "r")
                     if re.match(filter_pattern, line)])
-    self.assertEquals(failures, 10)
+    self.assertEqual(failures, 10)
 
 
 if __name__ == "__main__":

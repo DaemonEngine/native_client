@@ -51,7 +51,7 @@ class TestOnce(unittest.TestCase):
                     system_summary='test')
       o.Run('test', self._input_dirs, self._output_dirs[0],
             [command.Copy('%(input0)s/in0', '%(output)s/out')])
-      self.assertEquals('FirstTimedata0',
+      self.assertEqual('FirstTimedata0',
                         pynacl.file_tools.ReadFileString(self._output_files[0]))
 
   def test_HitsCacheSecondTime(self):
@@ -74,12 +74,12 @@ class TestOnce(unittest.TestCase):
       self._url = None
       o.Run('test', self._input_dirs, self._output_dirs[1],
             [command.Runnable(None, Copy,'%(input0)s/in0', '%(output)s/out')])
-      self.assertEquals(pynacl.file_tools.ReadFile(self._input_files[0]),
+      self.assertEqual(pynacl.file_tools.ReadFile(self._input_files[0]),
                         pynacl.file_tools.ReadFile(self._output_files[0]))
-      self.assertEquals(pynacl.file_tools.ReadFile(self._input_files[0]),
+      self.assertEqual(pynacl.file_tools.ReadFile(self._input_files[0]),
                         pynacl.file_tools.ReadFile(self._output_files[1]))
-      self.assertEquals(1, self._tally)
-      self.assertEquals(initial_url, self._url)
+      self.assertEqual(1, self._tally)
+      self.assertEqual(initial_url, self._url)
 
   def test_CachedCommandRecorded(self):
     with pynacl.working_directory.TemporaryWorkingDirectory() as work_dir:
@@ -88,7 +88,7 @@ class TestOnce(unittest.TestCase):
                     system_summary='test')
       o.Run('test', self._input_dirs, self._output_dirs[0],
             [command.Copy('%(input0)s/in0', '%(output)s/out')])
-      self.assertEquals(len(o.GetCachedCloudItems()), 1)
+      self.assertEqual(len(o.GetCachedCloudItems()), 1)
 
   def test_UncachedCommandsNotRecorded(self):
     with pynacl.working_directory.TemporaryWorkingDirectory() as work_dir:
@@ -97,7 +97,7 @@ class TestOnce(unittest.TestCase):
                     system_summary='test', cache_results=False)
       o.Run('test', self._input_dirs, self._output_dirs[0],
             [command.Copy('%(input0)s/in0', '%(output)s/out')])
-      self.assertEquals(len(o.GetCachedCloudItems()), 0)
+      self.assertEqual(len(o.GetCachedCloudItems()), 0)
 
   def FileLength(self, src, dst, **kwargs):
     """Command object to write the length of one file into another."""
@@ -124,7 +124,7 @@ class TestOnce(unittest.TestCase):
 
       # Check that 3 writes have occurred. One to write a mapping from in->out,
       # one for the output data, and one for the log file.
-      self.assertEquals(3, fs.WriteCount())
+      self.assertEqual(3, fs.WriteCount())
 
       # Run the computation again from input1 to output1.
       # (These should have the same length.)
@@ -134,21 +134,21 @@ class TestOnce(unittest.TestCase):
 
       # Write count goes up by one as an in->out hash is added,
       # but no new output is stored (as it is the same).
-      self.assertEquals(4, fs.WriteCount())
+      self.assertEqual(4, fs.WriteCount())
 
       # Check that the test is still valid:
       #   - in0 and in1 have equal length.
       #   - out0 and out1 have that length in them.
       #   - out0 and out1 agree.
-      self.assertEquals(
+      self.assertEqual(
           str(len(pynacl.file_tools.ReadFile(self._input_files[0]))),
           pynacl.file_tools.ReadFileString(self._output_files[0])
       )
-      self.assertEquals(
+      self.assertEqual(
           str(len(pynacl.file_tools.ReadFile(self._input_files[1]))),
           pynacl.file_tools.ReadFileString(self._output_files[1])
       )
-      self.assertEquals(
+      self.assertEqual(
           pynacl.file_tools.ReadFileString(self._output_files[0]),
           pynacl.file_tools.ReadFileString(self._output_files[1])
       )
@@ -187,10 +187,10 @@ class TestOnce(unittest.TestCase):
             [command.Runnable(None, Copy,'%(input0)s/in0', '%(output)s/out')])
       o.Run('test', self._input_dirs, self._output_dirs[1],
             [command.Runnable(None, Copy,'%(input0)s/in0', '%(output)s/out')])
-      self.assertEquals(2, self._tally)
-      self.assertEquals(pynacl.file_tools.ReadFile(self._input_files[0]),
+      self.assertEqual(2, self._tally)
+      self.assertEqual(pynacl.file_tools.ReadFile(self._input_files[0]),
                         pynacl.file_tools.ReadFile(self._output_files[0]))
-      self.assertEquals(pynacl.file_tools.ReadFile(self._input_files[0]),
+      self.assertEqual(pynacl.file_tools.ReadFile(self._input_files[0]),
                         pynacl.file_tools.ReadFile(self._output_files[1]))
 
   def test_CacheResultsFalse(self):
@@ -202,8 +202,8 @@ class TestOnce(unittest.TestCase):
       o = once.Once(storage=storage, cache_results=False, system_summary='test')
       o.Run('test', self._input_dirs, self._output_dirs[0],
             [command.Copy('%(input0)s/in0', '%(output)s/out')])
-      self.assertEquals(0, storage.ItemCount())
-      self.assertEquals(pynacl.file_tools.ReadFile(self._input_files[0]),
+      self.assertEqual(0, storage.ItemCount())
+      self.assertEqual(pynacl.file_tools.ReadFile(self._input_files[0]),
                         pynacl.file_tools.ReadFile(self._output_files[0]))
 
   def test_Mkdir(self):
@@ -228,7 +228,7 @@ class TestOnce(unittest.TestCase):
                 sys.executable, '-c',
                 'import sys; open(sys.argv[1], "w").write("hello")',
                 '%(output)s/out'])])
-      self.assertEquals(
+      self.assertEqual(
           'hello',
           pynacl.file_tools.ReadFileString(self._output_files[0])
       )
@@ -241,7 +241,7 @@ class TestOnce(unittest.TestCase):
       o = once.Once(storage=pynacl.fake_storage.FakeStorage(),
                     system_summary='test')
       def CheckCores(logger, subst):
-        self.assertNotEquals(0, int(subst.Substitute('%(cores)s')))
+        self.assertNotEqual(0, int(subst.Substitute('%(cores)s')))
       o.Run('test', {}, self._output_dirs[0], [command.Runnable(None,
                                                                 CheckCores)])
 
@@ -262,7 +262,7 @@ class TestOnce(unittest.TestCase):
                  'import sys; open(sys.argv[1], "w").write("not hello")',
                  '%(output)s/out'],
                  run_cond=lambda cmd_opts: False)])
-      self.assertEquals(
+      self.assertEqual(
           'hello',
           pynacl.file_tools.ReadFileString(self._output_files[0])
       )

@@ -26,15 +26,15 @@ class DisconnectTest(gdb_test.GdbTest):
       # Run to that breakpoint.
       self.gdb.ResumeAndExpectStop('continue', 'breakpoint-hit')
       # Check for the expected value set at that point.
-      self.assertEquals(self.gdb.Eval('global_var'), expected_value)
+      self.assertEqual(self.gdb.Eval('global_var'), expected_value)
       # Confirm you can use the gdb disconnect and reconnect commands.
       self.gdb.Disconnect()
       self.gdb.Reconnect()
-      self.assertEquals(self.gdb.Eval('global_var'), expected_value)
+      self.assertEqual(self.gdb.Eval('global_var'), expected_value)
       # Confirm you can hangup and reconnect with a new gdb session.
       self.Hangup()
       self.LaunchGdb()
-      self.assertEquals(self.gdb.Eval('global_var'), expected_value)
+      self.assertEqual(self.gdb.Eval('global_var'), expected_value)
 
 
 class DisconnectAbruptlyTest(DisconnectTest):

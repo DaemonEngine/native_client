@@ -12,15 +12,15 @@ class ChangeVariableTest(gdb_test.GdbTest):
     self.gdb.Command('break test_change_variable')
     self.gdb.ResumeAndExpectStop('continue', 'breakpoint-hit')
     self.gdb.Command('set var arg = 2')
-    self.assertEquals(self.gdb.Eval('arg'), b'2')
+    self.assertEqual(self.gdb.Eval('arg'), b'2')
     self.gdb.ResumeCommand('step')
-    self.assertEquals(self.gdb.Eval('local_var'), b'4')
+    self.assertEqual(self.gdb.Eval('local_var'), b'4')
     self.gdb.Command('set var local_var = 5')
-    self.assertEquals(self.gdb.Eval('local_var'), b'5')
+    self.assertEqual(self.gdb.Eval('local_var'), b'5')
     self.gdb.Command('set var global_var = 1')
-    self.assertEquals(self.gdb.Eval('global_var'), b'1')
+    self.assertEqual(self.gdb.Eval('global_var'), b'1')
     self.gdb.ResumeCommand('step')
-    self.assertEquals(self.gdb.Eval('global_var'), b'8') # 1 + 5 + 2
+    self.assertEqual(self.gdb.Eval('global_var'), b'8') # 1 + 5 + 2
 
 
 if __name__ == '__main__':

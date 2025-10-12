@@ -12,21 +12,21 @@ class StackTraceTest(gdb_test.GdbTest):
     self.gdb.Command('break leaf_call')
     self.gdb.ResumeAndExpectStop('continue', 'breakpoint-hit')
     result = self.gdb.Command('-stack-list-frames 0 2')
-    self.assertEquals(result[b'stack'][0][b'frame'][b'func'], b'leaf_call')
-    self.assertEquals(result[b'stack'][1][b'frame'][b'func'], b'nested_calls')
-    self.assertEquals(result[b'stack'][2][b'frame'][b'func'], b'main')
+    self.assertEqual(result[b'stack'][0][b'frame'][b'func'], b'leaf_call')
+    self.assertEqual(result[b'stack'][1][b'frame'][b'func'], b'nested_calls')
+    self.assertEqual(result[b'stack'][2][b'frame'][b'func'], b'main')
 
     result = self.gdb.Command('-stack-list-arguments 1 0 1')
-    self.assertEquals(result[b'stack-args'][0][b'frame'][b'args'][0][b'value'],
+    self.assertEqual(result[b'stack-args'][0][b'frame'][b'args'][0][b'value'],
                       b'2')
     # This stopped working somewhere between llvm commits
     # ecea8371ff03c15fb3dc27ee4108b98335fd2d63 and
     # 1d5d18924d185a4267462479307f1ff9911cb112
-    #self.assertEquals(result[b'stack-args'][1][b'frame'][b'args'][0][b'value'],
+    #self.assertEqual(result[b'stack-args'][1][b'frame'][b'args'][0][b'value'],
     #                  b'1')
     self.gdb.Command('return')
     self.gdb.ResumeAndExpectStop('finish', 'function-finished')
-    self.assertEquals(self.gdb.Eval('global_var'), b'1')
+    self.assertEqual(self.gdb.Eval('global_var'), b'1')
 
 
 if __name__ == '__main__':

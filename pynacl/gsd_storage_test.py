@@ -44,7 +44,7 @@ class TestGSDStorage(unittest.TestCase):
         read_buckets=[],
         gsutil=['mygsutil'], call=call)
     url = storage.PutData('foo', 'bar')
-    self.assertEquals('https://storage.googleapis.com/mybucket/bar', url)
+    self.assertEqual('https://storage.googleapis.com/mybucket/bar', url)
 
   def test_PutFile(self):
     path = 'my/path'
@@ -72,7 +72,7 @@ class TestGSDStorage(unittest.TestCase):
         read_buckets=[],
         gsutil=['mygsutil'], call=call)
     url = storage.PutFile(path, 'bar')
-    self.assertEquals('https://storage.googleapis.com/mybucket/bar', url)
+    self.assertEqual('https://storage.googleapis.com/mybucket/bar', url)
 
   def test_PutFails(self):
     def call(cmd):
@@ -134,7 +134,7 @@ class TestGSDStorage(unittest.TestCase):
         read_buckets=['mybucket'],
         download=download)
     self.assertFalse(storage.GetFile('foo', 'bar'))
-    self.assertEquals(None, storage.GetData('foo'))
+    self.assertEqual(None, storage.GetData('foo'))
 
   def test_GetFallback(self):
     # Fail reading from the first bucket, and check fallback to the second.
@@ -148,7 +148,7 @@ class TestGSDStorage(unittest.TestCase):
         write_bucket='mybucket',
         read_buckets=['badbucket', 'goodbucket'],
         download=download)
-    self.assertEquals('bar', storage.GetData('foo').decode('utf-8'))
+    self.assertEqual('bar', storage.GetData('foo').decode('utf-8'))
 
   def test_Exists(self):
     stored_keys = set()
@@ -181,7 +181,7 @@ class TestGSDStorage(unittest.TestCase):
         read_buckets=['mybucket'],
         call=call)
 
-    self.assertNotEquals(None, write_storage.PutData('data', 'foo_key'))
+    self.assertNotEqual(None, write_storage.PutData('data', 'foo_key'))
     self.assertTrue(write_storage.Exists('foo_key'))
     self.assertFalse(write_storage.Exists('bad_key'))
     self.assertTrue(read_storage.Exists('foo_key'))
