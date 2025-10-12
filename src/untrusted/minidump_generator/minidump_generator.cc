@@ -25,7 +25,7 @@
 
 #include <algorithm>
 
-#include "breakpad/src/google_breakpad/common/minidump_format.h"
+#include "google_breakpad/common/minidump_format.h"
 #if !DYNAMIC_LOADING_SUPPORT
 # include "native_client/src/include/elf_constants.h"
 #endif

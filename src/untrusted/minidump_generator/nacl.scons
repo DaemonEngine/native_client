@@ -5,8 +5,9 @@
 
 Import('env')
 
+# DAEMON: use the same dir as Breakpad tools for Breakpad includes
 # Allow Breakpad headers to #include other Breakpad headers.
-env.Append(CPPPATH=['${SOURCE_ROOT}/breakpad/src'])
+env.Append(CPPPATH=['${BREAKPAD_TOOLS_DIR}/src'])
 # Breakpad's headers do not compile with "-pedantic".
 env.FilterOut(CCFLAGS=['-pedantic'])
 

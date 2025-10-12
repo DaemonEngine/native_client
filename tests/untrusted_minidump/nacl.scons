@@ -10,6 +10,9 @@ Import('env')
 if not env.SetNonStableBitcodeIfAllowed():
   Return()
 
+if env.get('BREAKPAD_TOOLS_DIR') is None:
+  Return() # DAEMON: avoid building minidump_generator
+
 if env.Bit('bitcode'):
   # With the PNaCl toolchain, special flags are required to get a build ID.
   env.Append(LINKFLAGS=['--pnacl-allow-nexe-build-id'])
