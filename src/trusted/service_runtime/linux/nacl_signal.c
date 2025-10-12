@@ -394,7 +394,7 @@ static void AssertNoOtherSignalHandlers(void) {
          * we allow it here.
          */
         if (sa.sa_sigaction == NULL ||
-            sa.sa_sigaction == (void (*)(int, siginfo_t *, void *)) SIG_IGN)
+            (void *) sa.sa_sigaction == (void *) SIG_IGN)
           continue;
       }
       NaClLog(LOG_FATAL, "AssertNoOtherSignalHandlers: "
