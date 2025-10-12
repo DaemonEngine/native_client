@@ -59,7 +59,7 @@ def InfoLinux():
 
 def InfoDarwin():
   Banner('OS:')
-  os.system('sysctl kern | egrep "kern\.os|version"')
+  os.system(r'sysctl kern | egrep "kern\.os|version"')
 
   Banner('CPU:')
   os.system('sysctl hw.machine')
@@ -80,7 +80,7 @@ def InfoDarwin():
   print('TBD')
 
   Banner('UPTIME:')
-  os.system('sysctl kern | egrep "kern\.boottime"')
+  os.system(r'sysctl kern | egrep "kern\.boottime"')
 
 
 def InfoWin32():

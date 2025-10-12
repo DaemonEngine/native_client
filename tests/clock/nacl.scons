@@ -23,7 +23,7 @@ if env.Bit('tests_use_irt'):
       wrapper_program_prefix = [
         '${PYTHON}', time_check, '-S',
         '-r',
-        '"Realtime\sclock\svalue[^\d]*(\d+\.\d*|\d*\.\d+)"',
+        r'"Realtime\sclock\svalue[^\d]*(\d+\.\d*|\d*\.\d+)"',
         '--'])
 
   env.AddNodeToTestSuite(node, ['small_tests'], 'run_clock_irt_test')
@@ -49,7 +49,7 @@ node = env.CommandSelLdrTestNacl(
     wrapper_program_prefix = [
       '${PYTHON}', time_check, '-S',
       '-r',
-      '"Realtime\sclock\svalue[^\d]*(\d+\.\d*|\d*\.\d+)"',
+      r'"Realtime\sclock\svalue[^\d]*(\d+\.\d*|\d*\.\d+)"',
       '--'])
 
 env.AddNodeToTestSuite(node, ['small_tests'], 'run_clock_get_test')
