@@ -5,6 +5,9 @@
 
 Import('env')
 
+# DAEMON: disable because it requires PNaCl even in Saigo mode
+Return()
+
 # This test does not make any sense for pure pnacl
 if env.Bit('bitcode') and env.Bit('pnacl_generate_pexe'):
   Return()
