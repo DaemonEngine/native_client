@@ -14,9 +14,12 @@ if (ANDROID)
 	remove_definitions(-D_FORTIFY_SOURCE=2)
 endif()
 
-# Using optimizations when building with GCC breaks the program on armhf.
-if (NOT DAEMON_CXX_COMPILER_Clang_COMPATIBILITY)
-	list(APPEND BOOTSTRAP_FLAGS "-O0")
+list(APPEND BOOTSTRAP_FLAGS "-Os")
+
+# Using this optimization when building with GCC breaks the program on armhf:
+# > Illegal instruction
+if (NOT DAEMON_CXX_COMPILER_Clang_COMPATIBILITY AND (DAEMON_ARCH_armhf OR DAEMON_ARCH_armel))
+	list(APPEND BOOTSTRAP_FLAGS -fno-toplevel-reorder)
 endif()
 
 # The src/trusted/service_runtime/build.scons file was only setting them on
