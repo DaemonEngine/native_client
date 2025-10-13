@@ -203,6 +203,7 @@ ACCEPTABLE_ARGUMENTS = set([
     # FEATURE_VERSION file.  This is used for PNaCl ABI compatibility
     # testing.
     'toolchain_feature_version',
+    'sysroot',
   ])
 
 
@@ -495,6 +496,9 @@ if breakpad_tools_dir is not None:
   pre_base_env['BREAKPAD_TOOLS_DIR'] = pre_base_env.Dir(
       os.path.abspath(breakpad_tools_dir))
 
+sysroot_flags = []
+if ARGUMENTS.get('sysroot') is not None:
+    sysroot_flags.append('--sysroot=' + os.path.abspath(ARGUMENTS.get('sysroot')))
 
 # CLANG
 DeclareBit('clang', 'Use clang to build trusted code')
@@ -2488,16 +2492,13 @@ def SetUpLinuxEnvArm(env):
     env.Replace(CC='true', CXX='true', LD='true',
                 AR='true', RANLIB='true', INSTALL=FakeInstall)
   else:
-    sysroot=os.path.join(
-      '${SOURCE_ROOT}/build/linux/debian_bullseye_arm-sysroot')
-    env.Prepend(CCFLAGS=['--sysroot='+sysroot],
+    env.Prepend(CCFLAGS=sysroot_flags,
                 ASFLAGS=[],
                 # The -rpath-link argument is needed on Ubuntu/Precise to
                 # avoid linker warnings about missing ld.linux.so.3.
                 # TODO(sbc): remove this once we stop supporting Precise
                 # as a build environment.
-                LINKFLAGS=['-fuse-ld=lld',
-                           '--sysroot='+sysroot]
+                LINKFLAGS=['-fuse-ld=lld'] + sysroot_flags
                 )
     # Note we let the compiler choose whether it's -marm or -mthumb by
     # default.  The hope is this will have the best chance of testing
@@ -2699,18 +2700,14 @@ def MakeGenericLinuxEnv(platform=None):
       )
 
   if linux_env.Bit('build_x86_32'):
-    sysroot=os.path.join(
-      '${SOURCE_ROOT}/build/linux/debian_bullseye_i386-sysroot')
     linux_env.Prepend(
-        CCFLAGS = ['-m32', '--sysroot='+sysroot],
-        LINKFLAGS = ['-m32', '--sysroot='+sysroot],
+        CCFLAGS = ['-m32'] + sysroot_flags,
+        LINKFLAGS = ['-m32'] + sysroot_flags,
         )
   elif linux_env.Bit('build_x86_64'):
-    sysroot=os.path.join(
-      '${SOURCE_ROOT}/build/linux/debian_bullseye_amd64-sysroot')
     linux_env.Prepend(
-        CCFLAGS = ['-m64'],#, '--sysroot='+sysroot],
-        LINKFLAGS = ['-m64']#, '--sysroot='+sysroot],
+        CCFLAGS = ['-m64'] + sysroot_flags,
+        LINKFLAGS = ['-m64'] + sysroot_flags,
         )
   elif linux_env.Bit('build_arm'):
     SetUpLinuxEnvArm(linux_env)
