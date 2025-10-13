@@ -63,7 +63,11 @@ if (YOKAI_TARGET_ARCH_AMD64)
 		# truncated, which produces an error. With mcmodel set to large,
 		# there is no restriction on the code and data, so we can
 		# safely set reserve_top to 0x100000000.
-		list(APPEND BOOTSTRAP_FLAGS "-mcmodel=large")
+		if (DAEMON_CXX_COMPILER_Clang_COMPATIBILITY)
+			list(APPEND BOOTSTRAP_FLAGS "-mcmodel=medium")
+		else()
+			list(APPEND BOOTSTRAP_FLAGS "-mcmodel=large")
+		endif()
 	else()
 		set(RESERVE_TOP "0x0")
 	endif()
