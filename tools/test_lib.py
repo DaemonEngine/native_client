@@ -237,8 +237,9 @@ def RunTestWithInputOutput(cmd, input_data, capture_stderr=True, timeout=None):
     cpu_time_consumed = 0
   else:
     cpu_time_consumed = timer.ElapsedCpuTime(p)
-  stdout = stdout.decode('utf-8', 'backslashreplace')
-  stderr = stderr.decode('utf-8', 'backslashreplace')
+  if not isinstance(stdout, str):
+    stdout = stdout.decode('utf-8', 'backslashreplace')
+    stderr = stderr.decode('utf-8', 'backslashreplace')
   return (cpu_time_consumed, retcode, failed, stdout, stderr)
 
 
