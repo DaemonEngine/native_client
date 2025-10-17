@@ -881,7 +881,7 @@ int32_t NaClSysTestInfoLeak(struct NaClAppThread *natp) {
    * Put some interesting bits into the VFP registers.
    */
 
-  static const char manybytes[64] =
+  __attribute__((aligned(4))) static const char manybytes[64] =
       "Sensitive information must not be leaked to untrusted code!!!!\n";
 
   __asm__ volatile("vldm %0, {d0-d7}" :: "r" (manybytes) :
