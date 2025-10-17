@@ -35,8 +35,7 @@ def SetupEnvironment():
   env.pnacl_base = os.path.join(env.toolchain_base, 'pnacl_newlib')
 
   # QEMU
-  env.arm_root = os.path.join(env.toolchain_base, 'arm_trusted')
-  env.qemu_arm = os.path.join(env.arm_root, 'run_under_qemu_arm')
+  env.qemu_arm_args = ['qemu-armhf', '-L', '/usr/arm-linux-gnueabihf/']
 
   env.mips32_root = os.path.join(env.toolchain_base, 'mips_trusted')
   env.qemu_mips32 = os.path.join(env.mips32_root, 'run_under_qemu_mips32')
@@ -262,7 +261,7 @@ def RunSelLdr(args, quiet_args=[], collate=False, stdin_string=None):
   bootstrap_loader_args = []
   arch = pynacl.platform.GetArch3264()
   if arch != pynacl.platform.ARCH3264_ARM and env.arch == 'arm':
-    prefix = [ env.qemu_arm, '-cpu', 'cortex-a9']
+    prefix = env.qemu_arm_args + ['-cpu', 'cortex-a9']
     if env.trace:
       prefix += ['-d', 'in_asm,op,exec,cpu']
     args = ['-Q'] + args
