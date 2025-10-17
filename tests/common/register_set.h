@@ -400,12 +400,23 @@ extern const uint8_t kX86FlagBits[5];
         "push {r14}\n" \
         /* Save r0-r12 and sp; adjust sp for the pushes above */ \
         "add r14, sp, #0xc\n" \
-        "push {r10-r12, r14}\n" \
+        "push {r14}\n" \
+        "push {r12}\n" \
+        "push {r11}\n" \
+        "push {r10}\n" \
         /* Push a dummy value for r9, which the tests need not compare */ \
         "mov r10, #0\n" \
         "push {r10}\n" \
         /* Save the rest of struct NaClSignalContext */ \
-        "push {r0-r8}\n" \
+        "push {r8}\n" \
+        "push {r7}\n" \
+        "push {r6}\n" \
+        "push {r5}\n" \
+        "push {r4}\n" \
+        "push {r3}\n" \
+        "push {r2}\n" \
+        "push {r1}\n" \
+        "push {r0}\n" \
         /* Now save a correct prog_ctr value */ \
         "adr r0, " #def_func "\n" \
         "str r0, [sp, #0x3c]\n" \
