@@ -265,7 +265,7 @@ validator_tests = {
 # The following tests generate ARM nexes from assembly and validate the
 # generate file. They're all expected to fail and produce the golden files'
 # stdout. Stderr is expected to be empty.
-if env.Bit('build_arm'):
+if env.Bit('build_arm') and UsingNaclMode():
   untrusted_env = env.MakeUntrustedNativeEnv()
   for test, exit_status in validator_tests.items():
     nexe = untrusted_env.ComponentProgram(test, 'testdata/' + test + '.S',
