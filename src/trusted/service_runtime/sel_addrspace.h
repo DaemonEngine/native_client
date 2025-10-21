@@ -94,6 +94,9 @@ NaClErrorCode NaClAllocateSpace(void **mem, size_t addrsp_size) NACL_WUR;
  *
  * Note that this does not free any other data structures associated
  * with the NaClApp.  In particular, it does not free mem_map.
+ *
+ * FIXME: does not work when memory is prereserved by nacl_bootstrap_helper
+ * since we don't know what vm.mmap_min_addr sysctl was
  */
 void NaClAddrSpaceFree(struct NaClApp *nap);
 
