@@ -53,7 +53,9 @@ size_t strnlen(const char* str, size_t max);
 
 #if NACL_WINDOWS
 /* disable warnings for deprecated strncpy */
+#if defined(_MSC_VER)
 #pragma warning(disable : 4996)
+#endif
 
 #define STRDUP _strdup
 #define STRTOLL _strtoi64

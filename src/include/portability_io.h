@@ -17,7 +17,9 @@
 
 #if NACL_WINDOWS
 /* disable warnings for deprecated _snprintf */
+#if defined(_MSC_VER)
 #pragma warning(disable : 4996)
+#endif
 
 #include <io.h>
 #include <direct.h>
@@ -43,7 +45,9 @@
 /* missing from win stdio.h and fcntl.h */
 
 /* from bits/fcntl.h */
+#if defined(_MSC_VER)
 #define O_ACCMODE 0003
+#endif
 
 #else
 

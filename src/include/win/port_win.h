@@ -38,6 +38,7 @@
 
 /* TODO: eliminated this file and move its contents to portability*.h */
 
+#if defined(_MSC_VER)
 /* wchar_t and unsigned short are not always equivalent*/
 #pragma warning(disable : 4255)
 /* padding added after struct member */
@@ -46,6 +47,7 @@
 #pragma warning(disable: 4826)
 /* conditional expression is constant */
 #pragma warning(disable : 4127)
+#endif
 
 /* TODO: limit this include to files that really need it */
 #ifndef NOMINMAX
@@ -96,7 +98,7 @@ typedef int32_t           ssize_t;
  *
  * Only including range values actually used in our codebase.
  */
-#if _MSC_VER >= 1800
+#if !defined(_MSC_VER) || _MSC_VER >= 1800
 #include <stdint.h>
 #else
 # if !defined(UINT8_MAX)
@@ -162,6 +164,8 @@ EXTERN_C_END
 
 
 /* from linux/limits.h, via sys/param.h */
+#if defined(_MSC_VER)
 #define PATH_MAX 4096
+#endif
 
 #endif  /* NATIVE_CLIENT_SRC_INCLUDE_WIN_PORT_WIN_H_ */
