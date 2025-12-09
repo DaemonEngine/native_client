@@ -78,7 +78,7 @@ SECTIONS {
   .rodata : {
     *(.rodata*)
     *(.eh_frame*)
-  }
+  } :text
 
   etext = .;
 
