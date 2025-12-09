@@ -66,6 +66,8 @@ http://msdn.microsoft.com/en-us/library/windows/desktop/ms686997(v=vs.85).aspx
  */
 # define NACL_HAS_STRNDUP   0
 /* could use TLS if not built into a DLL, otherwise must use TLSALLOC */
+# define NACL_USE_TLS       0
+# define NACL_USE_TSD       0
 # define NACL_USE_TLSALLOC  1
 # include <windows.h>
 #endif
