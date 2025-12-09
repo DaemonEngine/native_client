@@ -30,7 +30,9 @@
 
 #if NACL_WINDOWS
 /* disable warnings for deprecated functions like getenv, etc. */
+#if defined(_MSC_VER)
 #pragma warning(disable : 4996)
+#endif
 # include <malloc.h>
 /* TODO: eliminate port_win.h */
 # include "native_client/src/include/win/port_win.h"
