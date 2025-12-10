@@ -46,7 +46,7 @@ const int kMagicConst_CRC32  = 0xb906c3ea;
 # define NACL_WINDOWS_MINGW
 #endif
 
-#if !defined(NACL_WINDOWS_MSC_64) && !defined(NACL_WINDOWS_MINGW)
+#if !defined(NACL_WINDOWS_MSC_64)
 static int asm_HasMMX(void) {
   volatile int before, after;
   before = kMagicConst;
@@ -394,20 +394,34 @@ static int asm_HasCX8(void) {
 #endif  /* 0 */
 #endif  /* 64-bit Windows */
 
-#if defined(NACL_WINDOWS_MSC_64) || defined(NACL_WINDOWS_MINGW)
+#if defined(NACL_WINDOWS_MSC_64)
 static int CheckCPUFeatureDetection(NaClCPUFeaturesX86 *cpuf) {
   /* Unfortunately the asm_ tests will not work on 64-bit Windows */
   return 0;
 }
 #else
-#if (NACL_LINUX || NACL_OSX)
+#if (NACL_LINUX || NACL_OSX || defined(NACL_WINDOWS_MINGW))
 /* Linux/MacOS signal handling code, for trapping illegal instruction faults */
 static int sawbadinstruction = 0;
-static struct sigaction crash_detect;
 static int signum;
 
-sigjmp_buf crash_load;
+#if defined(NACL_WINDOWS_MINGW)
+static PVOID crash_handler;
+static jmp_buf crash_load;
+#else
+static struct sigaction crash_detect;
+static sigjmp_buf crash_load;
+#endif
 
+#if defined(NACL_WINDOWS_MINGW)
+static LONG CALLBACK handler_load(EXCEPTION_POINTERS *ep)
+{
+  if (ep->ExceptionRecord->ExceptionCode == EXCEPTION_ILLEGAL_INSTRUCTION) {
+      longjmp(crash_load, SIGILL);
+  }
+  return EXCEPTION_CONTINUE_SEARCH;
+}
+#else
 void  handler_load(int  signal_num) {
   siglongjmp(crash_load, signal_num);
 }
@@ -435,13 +449,18 @@ void  all_sigs(struct sigaction *new_action,
   (void) sigaction(SIGCHLD, &ign, 0);
   (void) sigaction(SIGTSTP, &ign, 0);
 }
+#endif
 
 static void SignalInit(void) {
   sawbadinstruction = 0;
+#if defined(NACL_WINDOWS_MINGW)
+  crash_handler = AddVectoredExceptionHandler(1, handler_load);
+#else
   crash_detect.sa_handler = handler_load;
   sigemptyset(&crash_detect.sa_mask);
   crash_detect.sa_flags = SA_RESETHAND;
   all_sigs(&crash_detect, 0);
+#endif
 }
 
 static void SetSawBadInst(void) {
@@ -458,7 +477,13 @@ static int SawBadInst(void) {
  */
 static int DoTest(int (*thetest)(void), const char *s) {
   SignalInit();
-  if (0 != (signum = sigsetjmp(crash_load, 1))) {
+
+#if defined(NACL_WINDOWS_MINGW)
+  signum = setjmp(crash_load);
+#else
+  signum = sigsetjmp(crash_load, 1);
+#endif
+  if (0 != signum) {
     SetSawBadInst();
     if (SIGILL == signum) {
       fprintf(stderr, "%s: illegal instruction\n", s);
@@ -470,10 +495,16 @@ static int DoTest(int (*thetest)(void), const char *s) {
     int hasfeature = thetest();
     if (hasfeature && (! SawBadInst())) {
       printf("[Has %s]\n", s);
+#if defined(NACL_WINDOWS_MINGW)
+      RemoveVectoredExceptionHandler(crash_handler);
+#endif
       return 0;
     }
   }
   printf("no %s\n", s);
+#if defined(NACL_WINDOWS_MINGW)
+  RemoveVectoredExceptionHandler(crash_handler);
+#endif
   return 1;
 }
 #elif NACL_WINDOWS
