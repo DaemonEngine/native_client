@@ -154,16 +154,16 @@ void NaClSignalHandleUntrusted(int signal,
  */
 void NaClSignalTestCrashOnStartup(void) {
   if (getenv("NACL_CRASH_TEST") != NULL) {
+    int *volatile p = (int*)4;
     NaClSignalErrorMessage("[CRASH_TEST] Causing crash in NaCl "
                            "trusted code...\n");
     /*
      * Clang transmutes a NULL pointer reference into a generic
      * "undefined" case.  That code crashes with a different signal
      * than an actual bad pointer reference, violating the tests'
-     * expectations.  A pointer that is known bad but is not literally
-     * NULL does not get this treatment.
+     * expectations.
      */
-    *(volatile int *) 1 = 0;
+    *p = 0;
   }
 }
 

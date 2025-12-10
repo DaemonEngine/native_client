@@ -37,6 +37,7 @@ int main(void) {
   char *stack;
   stack_t st;
   int rc;
+  int *volatile bad_ptr = (int *)4;
 
   NaClAllModulesInit();
   NaClSignalHandlerInit();
@@ -66,7 +67,7 @@ int main(void) {
    * pointer reference, violating the tests' expectations.  A pointer that
    * is known bad but is not literally NULL does not get this treatment.
    */
-  *(volatile int *) 1 = 0;
+  *bad_ptr = 0;
 
   fprintf(stderr, "Should never reach here.\n");
   return 1;
