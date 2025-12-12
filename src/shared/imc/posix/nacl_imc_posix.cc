@@ -108,9 +108,11 @@ static int TryShmOrTempOpen(size_t length, bool use_temp) {
 
   for (;;) {
     int m;
-    snprintf(name, sizeof name, "%s-%u.%u", prefix,
-             getpid(),
-             (int) AtomicIncrement(&memory_object_count, 1));
+    if ((int)(sizeof name) <= snprintf(name, sizeof name, "%s-%u.%u", prefix,
+                                       getpid(),
+                                       (int) AtomicIncrement(&memory_object_count, 1))) {
+      return -1;
+    }
     if (use_temp) {
       m = open(name, O_RDWR | O_CREAT | O_EXCL, 0);
     } else {
