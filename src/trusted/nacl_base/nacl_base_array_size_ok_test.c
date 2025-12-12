@@ -20,7 +20,7 @@
 int main(void) {
   char buffer[4096];
 
-  printf("#buffer = %"NACL_PRIuS"\n", NACL_ARRAY_SIZE(buffer));
+  printf("#buffer = %" NACL_PRIuS "\n", NACL_ARRAY_SIZE(buffer));
 
   return 0;
 }
