@@ -66,7 +66,7 @@ static int NaClThreadCreate(struct NaClThread  *ntp,
   }
   if (0 != (code = pthread_create(&ntp->tid,
                                   &attr,
-                                  (void *(*)(void *)) start_fn,
+                                  (void *(*)(void *)) (uintptr_t) start_fn,
                                   state))) {
     NaClLog(LOG_ERROR,
             "nacl_thread: pthread_create returned %d\n",
