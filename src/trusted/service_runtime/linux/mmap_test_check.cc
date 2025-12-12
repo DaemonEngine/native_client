@@ -64,5 +64,6 @@ void CheckMapping(uintptr_t addr, size_t size, int protect, int map_type) {
   ASSERT(found);
   ASSERT_EQ(prot, protect);
   ASSERT_EQ(type, map_type);
-  ASSERT_EQ(fclose(maps_file), 0);
+  int fclose_result = fclose(maps_file);
+  ASSERT_EQ(fclose_result, 0);
 }
