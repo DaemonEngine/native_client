@@ -5,8 +5,9 @@
  *
  * This is a custom linker script used to build nacl_helper_bootstrap.
  * It has a very special layout.  This script will only work with input
- * that is kept extremely minimal.  If there are unexpected input sections
- * not named here, the result will not be correct.
+ * that is kept extremely minimal.  Unexpected input sections will be
+ * discarded so if there are unexpected input sections not named here which
+ * are actually important, the result will not be correct.
  *
  * We need to use a standalone loader program rather than just using a
  * dynamically-linked program here because its entire address space will be
