@@ -113,6 +113,7 @@ add_custom_target(nacl_bootstrap_raw
 		-static
 		-z "max-page-size=0x1000"
 		--defsym RESERVE_TOP="${RESERVE_TOP}"
+		--orphan-handling=discard
 		--script "${CMAKE_CURRENT_LIST_DIR}/nacl_bootstrap.x"
 		-o "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/nacl_bootstrap_raw"
 		"${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/nacl_bootstrap.dir/nacl_bootstrap.c.o"
