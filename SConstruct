@@ -2494,11 +2494,6 @@ def SetUpLinuxEnvArm(env):
   else:
     env.Prepend(CCFLAGS=sysroot_flags,
                 ASFLAGS=[],
-                # The -rpath-link argument is needed on Ubuntu/Precise to
-                # avoid linker warnings about missing ld.linux.so.3.
-                # TODO(sbc): remove this once we stop supporting Precise
-                # as a build environment.
-                LINKFLAGS=['-fuse-ld=lld'] + sysroot_flags
                 )
     # Note we let the compiler choose whether it's -marm or -mthumb by
     # default.  The hope is this will have the best chance of testing
