@@ -29,6 +29,7 @@ testserver.log
 /chromebinaries/
 /scons-out/
 /toolchain/
+/toolchain
 /tools/BUILD/
 /tools/out/
 /tools/perf_expectations/
