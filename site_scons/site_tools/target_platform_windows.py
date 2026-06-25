@@ -344,7 +344,7 @@ def generate(env):
           #     NOTE: cygwin is only required for coverage on windows.
           ('c:\\cygwin\\bin\\bash -c "'
            'PATH=/cygdrive/c/cygwin/bin '
-           'build/filter_windows_lcov.py '
+           'tools/build/filter_windows_lcov.py '
            "< `cygpath '${COVERAGE_OUTPUT_FILE}.pre.coverage.lcov'` "
            "> `cygpath '${COVERAGE_OUTPUT_FILE}'` \""),
           # TODO(bradnelson): eliminate cygwin dependency.
