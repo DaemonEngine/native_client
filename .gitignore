@@ -52,3 +52,6 @@ testserver.log
 
 # Ignore the hermetic cygwin used on windows toolchain builds.
 /cygwin/
+
+# It is common practice with CMake to build in build/
+/build/
