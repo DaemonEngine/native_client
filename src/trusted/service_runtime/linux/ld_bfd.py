@@ -69,10 +69,15 @@ def main(args):
   else:
     cxx_bin = os.getenv('CXX', 'g++')
 
-  args = [FindLDBFD(cxx_bin)] + args
-  libgcc = FindLibgcc(cxx_bin)
-  if libgcc is not None:
-    args.append(libgcc)
+  if 0:
+    args = [FindLDBFD(cxx_bin)] + args
+    libgcc = FindLibgcc(cxx_bin)
+    if libgcc is not None:
+      args.append(libgcc)
+  else:
+    assert cxx_bin.endswith("g++")
+    ld = cxx_bin[:-3] + "ld.bfd"
+    args = [ld] + args
   return subprocess.call(args)
 
 if __name__ == "__main__":
