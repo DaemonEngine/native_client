@@ -24,7 +24,7 @@ JSON Files:
   Packages File - A file which describes the various package targets for each
     platform/architecture along with the packages associated with each package
     target.
-    [Default file: build/package_version/standard_packages.json].
+    [Default file: tools/build/package_version/standard_packages.json].
   Package File - A file which contains the list of package archives within
     a package.
     [Default file: toolchain/.tars/$PACKAGE_TARGET/$PACKAGE.json]

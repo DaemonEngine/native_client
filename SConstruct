@@ -2103,7 +2103,7 @@ def MakeBaseTrustedEnv(platform=None):
 
   base_env.Append(BUILD_SCONSCRIPTS = [
       # KEEP THIS SORTED PLEASE
-      'build/package_version/build.scons',
+      'tools/build/package_version/build.scons',
       'pynacl/build.scons',
       'src/nonsfi/irt/build.scons',
       'src/nonsfi/loader/build.scons',
@@ -2436,7 +2436,7 @@ def MakeMacEnv(platform=None):
     # This invocation matches the model in //build/config/mac/mac_sdk.gni.
     mac_sdk_sysroot, mac_sdk_version = subprocess.check_output([
         sys.executable,
-        os.path.join(os.path.pardir, 'build', 'mac', 'find_sdk.py'),
+        os.path.join(os.path.pardir, 'tools', 'build', 'mac', 'find_sdk.py'),
         '--print_sdk_path',
         mac_sdk_min
         ], encoding='utf-8').splitlines()
@@ -2667,7 +2667,7 @@ def SetUpLinuxEnvMips(env):
     if not which(os.path.join(tc_dir, 'mipsel-linux-gnu-gcc')):
       print("WARNING: "
           "MIPS trusted toolchain not found - try running:\n"
-          "  build/package_version/package_version.py --packages"
+          "  tools/build/package_version/package_version.py --packages"
           " linux_x86/mips_trusted sync -x\n"
           "Or build it yourself with:\n"
           "  tools/trusted_cross_toolchains/trusted-toolchain-creator"
