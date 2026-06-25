@@ -129,3 +129,8 @@ add_custom_target(nacl_helper_bootstrap ALL
 	DEPENDS nacl_bootstrap_raw
 	BYPRODUCTS "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/nacl_helper_bootstrap"
 )
+
+install(PROGRAMS
+	"${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/nacl_helper_bootstrap"
+	DESTINATION bin
+)
