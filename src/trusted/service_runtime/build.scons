@@ -417,7 +417,7 @@ if (env.Bit('linux') and not env.Bit('built_elsewhere')):
   elif env.Bit('build_arm'):
     ld_emul = 'armelf_linux_eabi'
     reserve_top = '0x40002000'
-    compiler_override = '--compiler arm-linux-gnueabihf-gcc'
+    compiler_override = '--compiler arm-linux-gnueabihf-g++'
   elif env.Bit('build_mips32'):
     ld_emul = 'elf32ltsmip'
     reserve_top = '0x40008000'
