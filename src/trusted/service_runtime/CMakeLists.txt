@@ -374,6 +374,7 @@ if (NOT COVERAGE_ENABLED OR NOT YOKAI_TARGET_SYSTEM_WINDOWS)
 
 	add_executable(sel_ldr)
 	target_link_libraries(sel_ldr ${LDR_LIBS})
+	install(TARGETS sel_ldr DESTINATION bin)
 
 	if (YOKAI_TARGET_SYSTEM_MACOS)
 		# This target exists only to check that the service_runtime code
