@@ -62,7 +62,7 @@ typedef struct stat nacl_host_stat_t;
 # define NACL_HOST_STAT64 stat
 # define NACL_HOST_LSTAT64 lstat
 #elif NACL_WINDOWS
-typedef struct _stati64 nacl_host_stat_t;
+typedef struct _stat64 nacl_host_stat_t;
 # define NACL_HOST_FSTAT64 _fstat64
 # define NACL_HOST_STAT64 _stati64
 #elif defined __native_client__
