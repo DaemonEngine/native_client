@@ -82,6 +82,27 @@ macro(set_linker_flag FLAG)
 	endforeach()
 endmacro()
 
+option(USE_PATH_SANITIZATION "Tell the compiler to remove build-specific paths from generated binaries." ON)
+
+if (USE_PATH_SANITIZATION)
+	if (YOKAI_CXX_COMPILER_MSVC)
+		set(path_sanitization_flags
+			"/FC-"
+			"/pathmap:${CMAKE_CURRENT_SOURCE_DIR}=."
+		)
+	else()
+		set(path_sanitization_flags
+			"-ffile-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=."
+			"-fmacro-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=."
+			"-fdebug-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=."
+		)
+	endif()
+
+	foreach(path_sanitization_flag ${path_sanitization_flags})
+		set_compiler_flag("${path_sanitization_flag}")
+	endforeach()
+endif()
+
 #TODO: Import from SetUpClang() from (root)/SConstruct.
 #TODO: This is mostly ASAN configurations.
 
