@@ -64,7 +64,7 @@ typedef struct stat nacl_host_stat_t;
 #elif NACL_WINDOWS
 typedef struct _stat64 nacl_host_stat_t;
 # define NACL_HOST_FSTAT64 _fstat64
-# define NACL_HOST_STAT64 _stati64
+# define NACL_HOST_STAT64 _stat64
 #elif defined __native_client__
 /* nacl_host_stat_t not exposed to NaCl module code */
 #else
