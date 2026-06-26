@@ -40,7 +40,7 @@
 static int NaClHostDirInit(struct NaClHostDir *d) {
   int retval;
 
-  d->handle = FindFirstFile(d->pattern, &d->find_data);
+  d->handle = FindFirstFileW(d->pattern, &d->find_data);
   d->off = 0;
   d->done = 0;
 
@@ -217,7 +217,7 @@ ssize_t NaClHostDirGetdents(struct NaClHostDir  *d,
     i += nacl_abi_rec_length;
     ++d->off;
 
-    if (!FindNextFile(d->handle, &d->find_data)) {
+    if (!FindNextFileW(d->handle, &d->find_data)) {
       int win_err = GetLastError();
       if (win_err == ERROR_NO_MORE_FILES) {
         d->done = 1;
