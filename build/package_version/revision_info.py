@@ -88,15 +88,14 @@ class RevisionInfo(object):
       package_targets = set(package_targets)
       revision_targets = set(self._package_targets.keys())
 
-      for target in package_targets:
-        if target not in revision_targets:
-          raise error.Error('Invalid revision information - '
-                            'target mismatch:'
-                            + '\n%s:' % self._package_name
-                            + '\n  Required Target Packages:'
-                            + '\n\t' + '\n\t'.join(sorted(package_targets))
-                            + '\n  Supplied Target Packages:'
-                            + '\n\t' + '\n\t'.join(sorted(revision_targets)))
+      if package_targets != revision_targets:
+        raise error.Error('Invalid revision information - '
+                           'target mismatch:'
+                           + '\n%s:' % self._package_name
+                           + '\n  Required Target Packages:'
+                           + '\n\t' + '\n\t'.join(sorted(package_targets))
+                           + '\n  Supplied Target Packages:'
+                           + '\n\t' + '\n\t'.join(sorted(revision_targets)))
 
   def LoadRevisionFile(self, revision_file, skip_hash_verify=False):
     """Loads a revision JSON file into this object.
