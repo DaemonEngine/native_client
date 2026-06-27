@@ -14,7 +14,6 @@ It is used as follows:
 
 from __future__ import print_function
 
-import json
 import os
 import time
 import SCons.Script
@@ -235,22 +234,6 @@ def _CoverageInstall(dest, source, env):
   else:
     env['PRECOVERAGE_INSTALL'](dest, source, env)
 
-def _FindDepotTools():
-  paths = os.environ['PATH'].split(os.pathsep)
-  for path in paths:
-    if os.path.split(path)[-1] == 'depot_tools':
-      return path
-  raise Exception('Cannot find depot_tools in PATH!')
-
-
-def _FindVSFilesPath():
-  vs = os.path.join(_FindDepotTools(), 'win_toolchain', 'vs_files')
-  for version in os.listdir(vs):
-    path = os.path.join(vs, version)
-    if os.path.exists(os.path.join(path, 'Windows Kits')):
-      return path
-  raise Exception('Cannot find MSVC in depot_tools!')
-
 
 def generate(env):
   # NOTE: SCons requires the use of this name, which fails gpylint.
@@ -278,35 +261,6 @@ def generate(env):
 
   # Load various Visual Studio related tools.
   if use_msvc_tools:
-    # Our bots have a file that encodes necessary environment vars in a .json
-    # file. Find it, read it, and set ENVs accordingly.
-    vs_files_path = _FindVSFilesPath()
-    env_json_file = os.path.join(vs_files_path, 'Windows Kits',
-                                 '10', 'bin', 'SetEnv.x64.json')
-    if not os.path.exists(env_json_file):
-      raise Exception('Could not find environment file for MSVC!')
-
-    with open(env_json_file) as f:
-      parsed_json_env = json.load(f)['env']
-
-    # Example keys: INCLUDE, LIB, PATH, LIBPATH
-    for key, paths in parsed_json_env.items():
-      for path in paths:
-        final_path = os.path.join(vs_files_path, *path)
-        env.AppendENVPath(key, final_path)
-
-    # VS autodetection relies on vswhere.exe, which our bots don't have.
-    # Disable VS autodetection by setting MSVC_USE_SCRIPT to False, and set
-    # location and version directly.
-    env['MSVC_USE_SCRIPT'] = False
-    env['MSSDK_DIR'] = vs_files_path
-    # If this gets updated, we may also need to update scons, as this is the
-    # newest version that our scons knows about.
-    # VS_VERSION 2022 will be MSVC_VERSION 14.3
-    with open(os.path.join(vs_files_path, 'VS_VERSION')) as f:
-      assert f.read().strip() == '2019'
-    env['MSVC_VERSION'] = '14.2'
-
     env.Tool('as')
     env.Tool('msvs')
     env.Tool('windows_hard_link')
