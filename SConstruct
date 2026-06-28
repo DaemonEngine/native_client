@@ -2331,8 +2331,10 @@ def MakeWindowsEnv(platform=None):
       LIBS = ['ws2_32', 'advapi32'],
       # TODO(bsy) remove 4355 once cross-repo
       # NACL_ALLOW_THIS_IN_INITIALIZER_LIST changes go in.
-      CCFLAGS = ['/EHsc', '/WX', '/wd4355', '/wd4800']
+      CCFLAGS = ['/EHsc', '/wd4355', '/wd4800']
   )
+  if windows_env.Bit('werror'):
+    windows_env.Append(CCFLAGS = '/WX')
 
   # This linker option allows us to ensure our builds are compatible with
   # Chromium, which uses it.
