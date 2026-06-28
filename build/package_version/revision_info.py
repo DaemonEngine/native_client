@@ -88,7 +88,7 @@ class RevisionInfo(object):
       package_targets = set(package_targets)
       revision_targets = set(self._package_targets.keys())
 
-      if package_targets != revision_targets:
+      if package_targets - revision_targets:
         raise error.Error('Invalid revision information - '
                            'target mismatch:'
                            + '\n%s:' % self._package_name

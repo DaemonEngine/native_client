@@ -60,8 +60,8 @@
       "pnacl_newlib",
       "pnacl_newlib_raw",
       "pnacl_translator",
-      "saigo_newlib",
-      "saigo_newlib_raw"
+      "saigo_newlib_old",
+      "saigo_newlib_raw_old"
     ],
 
     "mac_x86": [
@@ -74,8 +74,8 @@
       "pnacl_newlib",
       "pnacl_newlib_raw",
       "pnacl_translator",
-      "saigo_newlib",
-      "saigo_newlib_raw"
+      "saigo_newlib_old",
+      "saigo_newlib_raw_old"
     ],
 
     "linux_x86": [
