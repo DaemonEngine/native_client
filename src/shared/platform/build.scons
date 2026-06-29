@@ -9,8 +9,10 @@ import os
 import platform
 
 Import('env')
-env.Append(CCFLAGS=['-Wno-cast-function-type-mismatch',
-                    '-Wno-unknown-warning-option'])
+
+if not env.Bit('windows'):  # FIXME: better MSVC test
+  env.Append(CCFLAGS=['-Wno-cast-function-type-mismatch',
+                      '-Wno-unknown-warning-option'])
 
 platform_inputs = []
 
