@@ -13,7 +13,8 @@ if env.Bit('built_elsewhere'):
 
 # Modern compilers detect that the NACL_ASSERT_IS_POINTER(x) macro does not
 # actually use x, which can trigger false warnings.
-env.Append(CCFLAGS='-Wno-unused-but-set-variable')
+if not env.Bit('windows'):  # FIXME: better MSVC test
+  env.Append(CCFLAGS='-Wno-unused-but-set-variable')
 
 nacl_base_lib_inputs = [
   'nacl_refcount.c',
