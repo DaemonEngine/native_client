@@ -104,7 +104,7 @@ if env.Bit('bitcode') or env.Bit('nacl_clang'):
                      EXTRA_CCFLAGS='-DSHOULD_INLINE=' + str(should_inline),
   # inline case is currently broken:
   # https://code.google.com/p/nativeclient/issues/detail?id=4170
-                     is_broken=should_inline)
+                     is_broken=should_inline and not env.Bit('saigo'))
   AddIntrinsicTest(env, 'llvm_math_intrinsics.cc', '0',
                    golden_file=env.File('llvm_math_intrinsics.stdout'))
   # Also test the math functions with -ffast-math, so we are a tiny bit more
@@ -459,7 +459,7 @@ c99_env = env.Clone()
 c99_env.Append(CFLAGS=['-std=c99'])
 # VLA test is broken on nacl-gcc x86-64 (segfaults in test_two_recursion()).
 # http://code.google.com/p/nativeclient/issues/detail?id=3527
-vla_is_broken = not env.Bit('bitcode') and env.Bit('build_x86_64')
+vla_is_broken = not env.Bit('bitcode') and env.Bit('build_x86_64') and not env.Bit('saigo')
 nexe = c99_env.ComponentProgram('vla', 'vla.c',
                                 EXTRA_LIBS=['${NONIRT_LIBS}'])
 node = env.CommandSelLdrTestNacl('vla.out', nexe,
