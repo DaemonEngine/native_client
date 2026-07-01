@@ -1,0 +1,2 @@
+redir_test.stderr eol=lf
+redir_test.stdout eol=lf
