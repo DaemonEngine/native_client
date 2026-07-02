@@ -491,11 +491,6 @@ if 'generate_ninja' in ARGUMENTS:
       pre_base_env, dest_file=ARGUMENTS['generate_ninja'])
 
 
-breakpad_install_dir = ARGUMENTS.get('breakpad_install_dir')
-if breakpad_install_dir is not None:
-  pre_base_env['BREAKPAD_INSTALL_DIR'] = pre_base_env.Dir(
-    os.path.abspath(breakpad_install_dir))
-
 sysroot_flags = []
 if ARGUMENTS.get('sysroot') is not None:
     sysroot_flags.append('--sysroot=' + os.path.abspath(ARGUMENTS.get('sysroot')))
@@ -1187,6 +1182,15 @@ def GetToolchainDir(env, platform_build_dir=None, toolchain_name=None,
   return env.SConstructAbsPath(toolchain_sub_dir)
 
 pre_base_env.AddMethod(GetToolchainDir)
+
+
+breakpad_install_dir = ARGUMENTS.get('breakpad_install_dir')
+if breakpad_install_dir is None:
+  default_location = pre_base_env.GetToolchainDir(toolchain_name='breakpad')
+  if os.path.isdir(default_location):
+    breakpad_install_dir = default_location
+if breakpad_install_dir:
+  pre_base_env['BREAKPAD_INSTALL_DIR'] = os.path.abspath(breakpad_install_dir)
 
 
 def GetSelLdr(env):

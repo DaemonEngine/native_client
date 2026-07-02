@@ -47,8 +47,8 @@ for crash_in_lib in [0, 1]:
     breakpad_install_dir = env.get('BREAKPAD_INSTALL_DIR')
     if breakpad_install_dir is not None:
       # Check that the minidump can be decoded.
-      minidump_dump = breakpad_install_dir.File('bin/minidump_dump')
-      if not os.path.exists(minidump_dump.abspath):
+      minidump_dump = os.path.join(breakpad_install_dir, 'bin', 'minidump_dump')
+      if not os.path.exists(minidump_dump):
         raise Exception('minidump_dump not available, '
             'but breakpad_install_dir=%s specified' % breakpad_install_dir)
       nodes.append(env.AutoDepsCommand(
@@ -57,9 +57,8 @@ for crash_in_lib in [0, 1]:
           '>${TARGETS[0]}', '2>${TARGETS[1]}']))
       # Check that a stack trace can be extracted from the minidump.
       # TODO(bradnelson): Check the trace is actually right.
-      minidump_stackwalk = breakpad_install_dir.File(
-          'bin/minidump_stackwalk')
-      if not os.path.exists(minidump_stackwalk.abspath):
+      minidump_stackwalk = os.path.join(breakpad_install_dir, 'bin', 'minidump_stackwalk')
+      if not os.path.exists(minidump_stackwalk):
         raise Exception('minidump_stackwalk not available, '
                     'but breakpad_install_dir=%s specified' % breakpad_install_dir)
       nodes.append(env.AutoDepsCommand(

@@ -30,8 +30,9 @@ This builds both components and runs some tests.
 ```
 scons --mode=opt-host,nacl saigo=1 platform=x86-64 --keep-going small_tests medium_tests
 
-To enable crash dump tests, add the option `breakpad_install_dir=<breakpad install prefix>`. The
-repository can be found at `daemon/libs/breakpad`. You need to have built the Breakpad
+To enable crash dump tests, add the option `breakpad_install_dir=<breakpad install prefix>`,
+OR install Breakpad to toolchain/linux_x86/breakpad/`. The
+repository can be found at `daemon/libs/breakpad`. You need to build the Breakpad
 tools and run `make install`.
 ```
 ---
