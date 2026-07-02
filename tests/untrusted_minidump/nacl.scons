@@ -59,7 +59,7 @@ for crash_in_lib in [0, 1]:
       # TODO(bradnelson): Check the trace is actually right.
       minidump_stackwalk = breakpad_tools_dir.File(
           'src/processor/minidump_stackwalk')
-      if not os.path.exists(minidump_dump.abspath):
+      if not os.path.exists(minidump_stackwalk.abspath):
         raise Exception('minidump_stackwalk not available, '
                     'but breakpad_tools_dir=%s specified' % breakpad_tools_dir)
       nodes.append(env.AutoDepsCommand(
