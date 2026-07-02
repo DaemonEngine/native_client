@@ -14,6 +14,7 @@ via the -B flag.
 from __future__ import print_function
 
 import os
+import re
 import subprocess
 import sys
 
@@ -74,10 +75,12 @@ def main(args):
     libgcc = FindLibgcc(cxx_bin)
     if libgcc is not None:
       args.append(libgcc)
-  else:
-    assert cxx_bin.endswith("g++")
+  elif re.search('[^a-zA-Z]g[+][+]$', cxx_bin):
     ld = cxx_bin[:-3] + "ld.bfd"
     args = [ld] + args
+  else:
+    # We just have to hope the system binutils knows about the target platform
+    args = ["ld.bfd"] + args
   return subprocess.call(args)
 
 if __name__ == "__main__":
