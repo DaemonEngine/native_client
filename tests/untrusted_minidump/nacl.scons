@@ -10,7 +10,7 @@ Import('env')
 if not env.SetNonStableBitcodeIfAllowed():
   Return()
 
-if env.get('BREAKPAD_TOOLS_DIR') is None:
+if env.get('BREAKPAD_INSTALL_DIR') is None:
   Return() # DAEMON: avoid building minidump_generator
 
 if env.Bit('bitcode'):
@@ -44,24 +44,24 @@ for crash_in_lib in [0, 1]:
                           ]),
     ]
     env.SideEffect(output_dump_file, nodes[0])
-    breakpad_tools_dir = env.get('BREAKPAD_TOOLS_DIR')
-    if breakpad_tools_dir is not None:
+    breakpad_install_dir = env.get('BREAKPAD_INSTALL_DIR')
+    if breakpad_install_dir is not None:
       # Check that the minidump can be decoded.
-      minidump_dump = breakpad_tools_dir.File('src/processor/minidump_dump')
+      minidump_dump = breakpad_install_dir.File('bin/minidump_dump')
       if not os.path.exists(minidump_dump.abspath):
         raise Exception('minidump_dump not available, '
-            'but breakpad_tools_dir=%s specified' % breakpad_tools_dir)
+            'but breakpad_install_dir=%s specified' % breakpad_install_dir)
       nodes.append(env.AutoDepsCommand(
           [name + '.dump', name + '.dump_errors'],
           [minidump_dump, output_dump_file,
           '>${TARGETS[0]}', '2>${TARGETS[1]}']))
       # Check that a stack trace can be extracted from the minidump.
       # TODO(bradnelson): Check the trace is actually right.
-      minidump_stackwalk = breakpad_tools_dir.File(
-          'src/processor/minidump_stackwalk')
+      minidump_stackwalk = breakpad_install_dir.File(
+          'bin/minidump_stackwalk')
       if not os.path.exists(minidump_stackwalk.abspath):
         raise Exception('minidump_stackwalk not available, '
-                    'but breakpad_tools_dir=%s specified' % breakpad_tools_dir)
+                    'but breakpad_install_dir=%s specified' % breakpad_install_dir)
       nodes.append(env.AutoDepsCommand(
           [name + '.stackwalk', name + '.stackwalk_errors'],
           [minidump_stackwalk, output_dump_file,
