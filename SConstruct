@@ -189,8 +189,8 @@ ACCEPTABLE_ARGUMENTS = set([
     'libdir',
     # Where to install trusted-code binaries for public (SDK) consumption.
     'bindir',
-    # Where a Breakpad build output directory is for optional Breakpad testing.
-    'breakpad_tools_dir',
+    # Breakpad install directory (configure --prefix=...) for optional Breakpad testing.
+    'breakpad_install_dir',
     # Allows overriding of the nacl newlib toolchain directory.
     'nacl_newlib_dir',
     # Allows override of the nacl glibc toolchain directory.
@@ -491,10 +491,10 @@ if 'generate_ninja' in ARGUMENTS:
       pre_base_env, dest_file=ARGUMENTS['generate_ninja'])
 
 
-breakpad_tools_dir = ARGUMENTS.get('breakpad_tools_dir')
-if breakpad_tools_dir is not None:
-  pre_base_env['BREAKPAD_TOOLS_DIR'] = pre_base_env.Dir(
-      os.path.abspath(breakpad_tools_dir))
+breakpad_install_dir = ARGUMENTS.get('breakpad_install_dir')
+if breakpad_install_dir is not None:
+  pre_base_env['BREAKPAD_INSTALL_DIR'] = pre_base_env.Dir(
+    os.path.abspath(breakpad_install_dir))
 
 sysroot_flags = []
 if ARGUMENTS.get('sysroot') is not None:
