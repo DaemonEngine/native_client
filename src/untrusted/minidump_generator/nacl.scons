@@ -5,6 +5,9 @@
 
 Import('env')
 
+if env.get('BREAKPAD_TOOLS_DIR') is None:
+  Return()
+
 # DAEMON: use the same dir as Breakpad tools for Breakpad includes
 # Allow Breakpad headers to #include other Breakpad headers.
 env.Append(CPPPATH=['${BREAKPAD_TOOLS_DIR}/src'])
