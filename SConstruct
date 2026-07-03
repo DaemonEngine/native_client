@@ -199,6 +199,8 @@ ACCEPTABLE_ARGUMENTS = set([
     'pnacl_newlib_dir',
     # Allows override of the pnacl newlib toolchain directory.
     'saigo_newlib_dir',
+    # MinGW install directory, for Windows builds. Required.
+    'mingw_dir',
     # Allows overriding the version number in the toolchain's
     # FEATURE_VERSION file.  This is used for PNaCl ABI compatibility
     # testing.
@@ -2348,16 +2350,10 @@ def MakeWindowsEnv(platform=None):
   # We use the GNU assembler (gas) on Windows so that we can use the
   # same .S assembly files on all platforms.  Microsoft's assembler uses
   # a completely different syntax for x86 code.
-  if windows_env.Bit('build_x86_64'):
-    # This assembler only works for x86-64 code.
-    windows_env['WINASM'] = \
-        windows_env.File('$SOURCE_ROOT/third_party/mingw-w64/mingw/bin/'
-                         'x86_64-w64-mingw32-as.exe').abspath
-  else:
-    # This assembler only works for x86-32 code.
-    windows_env['WINASM'] = \
-        windows_env.File('$SOURCE_ROOT/third_party/gnu_binutils/files/'
-                         'as').abspath
+  mingw_dir = os.path.abspath(ARGUMENTS['mingw_dir'])
+  windows_env['MINGW_BIN'] = os.path.join(mingw_dir, 'bin')
+  windows_env['WINASM'] = os.path.join(windows_env['MINGW_BIN'], 'as.exe')
+
   return windows_env
 
 (windows_debug_env,
