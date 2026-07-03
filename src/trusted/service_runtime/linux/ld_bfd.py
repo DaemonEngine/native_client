@@ -70,17 +70,18 @@ def main(args):
   else:
     cxx_bin = os.getenv('CXX', 'g++')
 
-  if 0:
-    args = [FindLDBFD(cxx_bin)] + args
-    libgcc = FindLibgcc(cxx_bin)
-    if libgcc is not None:
-      args.append(libgcc)
-  elif re.search('[^a-zA-Z]g[+][+]$', cxx_bin):
+  # Match g++, <target>-g++, but not clang++.
+  if re.search('[^a-zA-Z]g[+][+]$', cxx_bin):
     ld = cxx_bin[:-3] + "ld.bfd"
     args = [ld] + args
   else:
     # We just have to hope the system binutils knows about the target platform
     args = ["ld.bfd"] + args
+
+  libgcc = FindLibgcc(cxx_bin)
+  if libgcc is not None:
+    args.append(libgcc)
+
   return subprocess.call(args)
 
 if __name__ == "__main__":
