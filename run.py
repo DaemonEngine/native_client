@@ -594,6 +594,8 @@ def FindReadElf():
     candidates.append(os.path.join(path, 'readelf'))
 
   for readelf in candidates:
+    if pynacl.platform.IsWindows():
+      readelf += '.exe'
     if os.path.exists(readelf):
       return readelf
 
