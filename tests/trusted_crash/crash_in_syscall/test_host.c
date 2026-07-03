@@ -195,7 +195,7 @@ static LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS *exc_info) {
      * although the unsigned values are used in headers and are more
      * widely recognised
      */
-    fprintf(stderr, "** intended_exit_status=%i\n", STATUS_ACCESS_VIOLATION);
+    fprintf(stderr, "** intended_exit_status=%u\n", STATUS_ACCESS_VIOLATION);
   } else if (strcmp(g_crash_type, "NACL_TEST_CRASH_LOG_FATAL") == 0 ||
              strcmp(g_crash_type, "NACL_TEST_CRASH_CHECK_FAILURE") == 0) {
     fprintf(stderr, "** intended_exit_status=trusted_sigabrt\n");

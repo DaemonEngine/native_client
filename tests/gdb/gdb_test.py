@@ -14,7 +14,7 @@ import unittest
 
 
 if sys.platform == 'win32':
-  RETURNCODE_KILL = -9
+  RETURNCODE_KILL = -9 & 0xffffffff
 else:
   RETURNCODE_KILL = -9 & 0xff
 
