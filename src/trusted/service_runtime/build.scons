@@ -427,7 +427,7 @@ if (env.Bit('linux') and not env.Bit('built_elsewhere')):
       'nacl_bootstrap_raw',
       [bootstrap_obj],
       ("env CXX='${CXX}' ${PYTHON} %s %s " +
-       '-m %s --build-id -static -z max-page-size=0x1000 ' +
+       '-m %s --build-id -static -z max-page-size=${MAX_PAGE_SIZE} ' +
        '--orphan-handling=discard ' +
        '--defsym RESERVE_TOP=%s --script %s -o ${TARGET} ${SOURCES}') %
       (bootstrap_env.File('linux/ld_bfd.py'), compiler_override, ld_emul,
