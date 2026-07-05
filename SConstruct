@@ -2479,6 +2479,27 @@ def which(cmd, paths=os.environ.get('PATH', '').split(os.pathsep)):
        return True
   return False
 
+def SetUpLinuxEnvX86(env):
+  if env.Bit('built_elsewhere'):
+    def FakeInstall(dest, source, env):
+      print('Not installing', dest)
+      # Replace build commands with no-ops
+    env.Replace(CC='true', CXX='true', LD='true',
+                AR='true', RANLIB='true', INSTALL=FakeInstall)
+  else:
+    env.Prepend(CCFLAGS=sysroot_flags,
+                ASFLAGS=[],
+                )
+    if env.Bit('clang'):
+      # TODO use --target=i386-linux-gnu or whetever?
+      env.Prepend(
+          CCFLAGS = ['-m32'] + sysroot_flags,
+          LINKFLAGS = ['-m32'] + sysroot_flags,
+      )
+    else:
+      env.Replace(CC='i686-linux-gnu-gcc',
+                  CXX='i686-linux-gnu-g++',
+                  LD='i686-linux-gnu-ld')
 
 def SetUpLinuxEnvArm(env):
   if not platform.machine().startswith('arm'):
@@ -2691,10 +2712,7 @@ def MakeGenericLinuxEnv(platform=None):
       )
 
   if linux_env.Bit('build_x86_32'):
-    linux_env.Prepend(
-        CCFLAGS = ['-m32'] + sysroot_flags,
-        LINKFLAGS = ['-m32'] + sysroot_flags,
-        )
+    SetUpLinuxEnvX86(linux_env)
   elif linux_env.Bit('build_x86_64'):
     linux_env.Prepend(
         CCFLAGS = ['-m64'] + sysroot_flags,
