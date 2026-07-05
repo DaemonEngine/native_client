@@ -2508,9 +2508,6 @@ def SetUpLinuxEnvArm(env):
     env.Prepend(CCFLAGS=['-march=armv7-a','-mfloat-abi=hard',
                          '-mtune=generic-armv7-a', '-mfpu=neon'])
 
-  # get_plugin_dirname.cc has a dependency on dladdr
-  env.Append(LIBS=['dl'])
-
 def SetUpAndroidEnv(env):
   env.FilterOut(CPPDEFINES=[['_LARGEFILE64_SOURCE', '1']])
   android_ndk_root = os.path.join('${SOURCE_ROOT}', 'third_party',
