@@ -2481,7 +2481,6 @@ def which(cmd, paths=os.environ.get('PATH', '').split(os.pathsep)):
 
 
 def SetUpLinuxEnvArm(env):
-  jail = env.GetToolchainDir(toolchain_name='arm_trusted')
   if not platform.machine().startswith('arm'):
     # Allow emulation on non-ARM hosts.
     env.Replace(EMULATOR='qemu-armhf -L /usr/arm-linux-gnueabihf/ -cpu cortex-a9')
