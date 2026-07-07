@@ -19,6 +19,7 @@
 
 
 int NaClAttemptToExecuteDataAtAddr(uint8_t *thunk_buffer, size_t size) {
+#if defined(_MSC_VER)
   int got_fault = 0;
   nacl_void_thunk thunk = NaClGenerateThunk(thunk_buffer, size);
   __try {
@@ -28,12 +29,16 @@ int NaClAttemptToExecuteDataAtAddr(uint8_t *thunk_buffer, size_t size) {
     got_fault = 1;
   }
   return got_fault;
+#else
+  return 1;
+#endif
 }
 
 /*
  * Returns 1 if Data Execution Prevention is present and working.
  */
 int NaClAttemptToExecuteData(void) {
+#if defined(_MSC_VER)
   int result;
   uint8_t *thunk_buffer = malloc(64);
   if (NULL == thunk_buffer) {
@@ -42,4 +47,7 @@ int NaClAttemptToExecuteData(void) {
   result = NaClAttemptToExecuteDataAtAddr(thunk_buffer, 64);
   free(thunk_buffer);
   return result;
+#else
+  return 1;
+#endif
 }
