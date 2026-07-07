@@ -18,10 +18,12 @@ void NaClAddrSpaceFree(struct NaClApp *nap) {
   uintptr_t addrsp_size = (uintptr_t) 1U << nap->addr_bits;
   size_t full_size = (NACL_ADDRSPACE_LOWER_GUARD_SIZE + addrsp_size +
                       NACL_ADDRSPACE_UPPER_GUARD_SIZE);
+#if NACL_LINUX
   if (g_prereserved_sandbox_size > 0) {
     NaClLog(LOG_WARNING, "NaClAddrSpaceFree: can't unmap when memory is prereserved by bootstrap helper\n");
     return;
   }
+#endif
   if (munmap(base, full_size) != 0) {
     NaClLog(LOG_FATAL, "NaClAddrSpaceFree: munmap() failed, errno %d\n",
             errno);
