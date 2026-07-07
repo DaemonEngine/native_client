@@ -1,0 +1,115 @@
+# Documentation: https://wiki.unvanquished.net/wiki/Continuous_integration
+
+trigger:
+  branches:
+    include:
+      - master
+
+pr:
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - .azure-pipelines.yml
+      - src/
+      - include-hax/
+      - cmake/
+      - CMakeLists.txt
+
+strategy:
+  matrix:
+    Linux amd64 GCC:
+      VM_IMAGE: 'ubuntu-22.04'
+      APT_PACKAGES: ninja-build g++-10
+      C_COMPILER: gcc-10
+      CXX_COMPILER: g++-10
+    Linux i686 GCC:
+      VM_IMAGE: 'ubuntu-22.04'
+      APT_PACKAGES: ninja-build g++-i686-linux-gnu
+      C_COMPILER: i686-linux-gnu-gcc
+      CXX_COMPILER: i686-linux-gnu-g++
+      COMPILER_FLAGS: -mfpmath=sse -msse
+    Linux armhf GCC:
+      # There is an IO bug in qemu-arm from ubuntu-22.04.
+      VM_IMAGE: 'ubuntu-24.04'
+      APT_PACKAGES: ninja-build g++-arm-linux-gnueabihf qemu-user
+      C_COMPILER: arm-linux-gnueabihf-gcc
+      CXX_COMPILER: arm-linux-gnueabihf-g++
+      EXE_RUNNER: qemu-arm -L /usr/arm-linux-gnueabihf
+    Linux amd64 Clang:
+      VM_IMAGE: 'ubuntu-22.04'
+      APT_PACKAGES: ninja-build
+      C_COMPILER: clang
+      CXX_COMPILER: clang++
+    Windows amd64 MinGW:
+      VM_IMAGE: 'ubuntu-22.04'
+      APT_PACKAGES: ninja-build g++-mingw-w64-x86-64 mingw-w64-x86-64-dev gcc-mingw-w64-x86-64-posix-runtime wine
+      SETUP_COMMANDS: sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
+      TOOLCHAIN_FILE: cmake/cross-toolchain-mingw64.cmake
+      EXE_RUNNER: wine
+      EXE_EXT: .exe
+      WITH_JWASM: true
+    Windows i686 MinGW:
+      VM_IMAGE: 'ubuntu-22.04'
+      APT_ARCHITECTURE: i386
+      APT_PACKAGES: ninja-build g++-mingw-w64-i686 mingw-w64-i686-dev gcc-mingw-w64-i686-posix-runtime wine wine32
+      SETUP_COMMANDS: sudo update-alternatives --set i686-w64-mingw32-g++ /usr/bin/i686-w64-mingw32-g++-posix
+      TOOLCHAIN_FILE: cmake/cross-toolchain-mingw32.cmake
+      COMPILER_FLAGS: -mfpmath=sse -msse
+      EXE_RUNNER: wine
+      EXE_EXT: .exe
+      WITH_JWASM: true
+    macOS amd64 AppleClang:
+      VM_IMAGE: 'macOS-14'
+      CMAKE_GENERATOR: Unix Makefiles
+      NPROC_COMMAND: sysctl -n hw.logicalcpu
+
+pool:
+  vmImage: $(VM_IMAGE)
+
+steps:
+- bash: |
+    set -xue
+    if [ -n "${APT_ARCHITECTURE:-}" ]; then
+      sudo dpkg --add-architecture "${APT_ARCHITECTURE}"
+    fi
+    if [ -n "${APT_PACKAGES:-}" ]; then
+      sudo apt-get update && sudo apt-get -y -q --no-install-recommends install ${APT_PACKAGES}
+    fi
+    if [ -n "${SETUP_COMMANDS:-}" ]; then
+     $(SETUP_COMMANDS)
+    fi
+  displayName: 'Setup'
+- bash: |
+    set -xue
+    export CMAKE_BUILD_PARALLEL_LEVEL="$(${NPROC_COMMAND:-nproc})"
+    echo "${CMAKE_BUILD_PARALLEL_LEVEL}"
+    cmake_args=(-G"${CMAKE_GENERATOR:-Ninja}")
+    if "${WITH_JWASM:-false}"; then
+        git clone https://github.com/JWasm/JWasm.git build/jwasm
+        cmake -Sbuild/jwasm -Bbuild/jwasm/build
+        cmake --build build/jwasm/build --config Release
+        # No EXE_EXT, this is a native tool.
+        cmake_args+=(-DCMAKE_ASM_MASM_COMPILER="$(realpath build/jwasm/build/jwasm)")
+    fi
+    if [ -n "${TOOLCHAIN_FILE:-}" ]; then
+        cmake_args+=(-DCMAKE_TOOLCHAIN_FILE="${TOOLCHAIN_FILE}")
+    fi
+    if [ -n "${C_COMPILER:-}" ]; then
+        cmake_args+=(-DCMAKE_C_COMPILER="${C_COMPILER}")
+    fi
+    if [ -n "${CXX_COMPILER:-}" ]; then
+        cmake_args+=(-DCMAKE_CXX_COMPILER="${CXX_COMPILER}")
+    fi
+    if [ -n "${COMPILER_FLAGS:-}" ]; then
+        cmake_args+=(-DCMAKE_C_FLAGS="${COMPILER_FLAGS}" -DCMAKE_CXX_FLAGS="${COMPILER_FLAGS}")
+    fi
+    cmake -S. -Bbuild "${cmake_args[@]}"
+    cmake --build build --config Release
+  displayName: 'Build'
+- bash: |
+    set -xue
+    # TODO
+    true
+  displayName: 'Test'
