@@ -2354,7 +2354,7 @@ def MakeWindowsEnv(platform=None):
   # We use the GNU assembler (gas) on Windows so that we can use the
   # same .S assembly files on all platforms.  Microsoft's assembler uses
   # a completely different syntax for x86 code.
-  mingw_dir = os.path.abspath(ARGUMENTS['mingw_dir'])
+  mingw_dir = os.path.abspath(ARGUMENTS.get('mingw_dir', 'You.must.provide.the.mingw_dir.argument'))
   windows_env['MINGW_BIN'] = os.path.join(mingw_dir, 'bin')
   windows_env['WINASM'] = os.path.join(windows_env['MINGW_BIN'], 'as.exe')
 
