@@ -1527,11 +1527,12 @@ def CommandTestFileCheck(env, name, cmd, check_file):
   of stdout will then be piped to the file_check.py tool which
   will search for the regexes specified in |check_file|. """
 
+  env = env.Clone()
+  env['ENV']['PYTHONPATH'] = Dir('#/src/third_party/python-filecheck').abspath
   return env.CommandTest(
           name,
           ['${PYTHON}',
           env.File('${SCONSTRUCT_DIR}/tools/llvm_file_check_wrapper.py'),
-          '${FILECHECK}',
           check_file] + cmd,
           direct_emulation=False)
 
