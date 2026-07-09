@@ -2261,13 +2261,18 @@ def SetUpClang(env):
                            '-fno-omit-frame-pointer',
                            '-DMEMORY_SANITIZER'])
 
-  env['CC'] = '${CLANG_DIR}/clang ${CLANG_OPTS}'
-  env['CXX'] = '${CLANG_DIR}/clang++ ${CLANG_OPTS}'
-  # Make sure we find Clang-supplied libraries like -lprofile_rt
-  # in the Clang build we use, rather than from the system.
-  # The system-installed versions go with the system-installed Clang
-  # and might not be compatible with the Clang we're running.
-  env.Append(LIBPATH=['${CLANG_DIR}/../lib'])
+  if env.Bit('host_windows'):
+    # Use the clang-cl shipped with Visual Studio
+    env['CC'] = 'clang-cl ${CLANG_OPTS}'
+    env['CXX'] = 'clang-cl ${CLANG_OPTS}'
+  else:
+    env['CC'] = '${CLANG_DIR}/clang ${CLANG_OPTS}'
+    env['CXX'] = '${CLANG_DIR}/clang++ ${CLANG_OPTS}'
+    # Make sure we find Clang-supplied libraries like -lprofile_rt
+    # in the Clang build we use, rather than from the system.
+    # The system-installed versions go with the system-installed Clang
+    # and might not be compatible with the Clang we're running.
+    env.Append(LIBPATH=['${CLANG_DIR}/../lib'])
 
 def GenerateOptimizationLevels(env):
   if env.Bit('clang') and not env.Bit('built_elsewhere'):
@@ -3694,7 +3699,7 @@ def DumpCompilerVersion(cc, env):
     env.Execute(env.Action('${CC} -v -c'))
     env.Execute(env.Action('${CC} -print-search-dirs'))
     env.Execute(env.Action('${CC} -print-libgcc-file-name'))
-  elif cc.startswith('cl'):
+  elif cc == 'cl':
     import subprocess
     try:
       p = subprocess.Popen(env.subst('${CC} /V'),
