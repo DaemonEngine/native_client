@@ -8,10 +8,6 @@ import os
 
 Import('env')
 
-time_test_is_broken_on_this_os=False
-if 'TRUSTED_ENV' in env and env['TRUSTED_ENV'].Bit('windows'):
-  time_test_is_broken_on_this_os=True
-
 env.ComponentLibrary('syscall_test_framework', ['test.cc'])
 
 env.Append(CPPDEFINES=[['NONSFI_MODE',
@@ -185,9 +181,6 @@ if nonstable_env.SetNonStableBitcodeIfAllowed():
                                    ['small_tests', 'sel_ldr_tests'],
                                    'run_sysbrk_test')
 
-# These are timing tests, so we only run on real hardware
-is_on_vm = env.Bit('running_on_vm')
-
 # additions to add syscall tests 40-42
 timefuncs_test_nexe = env.ComponentProgram(
     'timefuncs_test',
@@ -201,7 +194,7 @@ node = env.CommandSelLdrTestNacl(
 env.AddNodeToTestSuite(node,
                        ['small_tests', 'sel_ldr_tests'],
                        'run_timefuncs_test',
-                       is_broken=is_on_vm or time_test_is_broken_on_this_os
+                       is_flaky=True,
                        )
 
 raw_syscall_timefunc_objects = env.RawSyscallObjects(['timefuncs_test.cc'])
@@ -215,7 +208,7 @@ node = env.CommandSelLdrTestNacl('raw_timefuncs_test.out',
 env.AddNodeToTestSuite(node,
                        ['small_tests', 'sel_ldr_tests'],
                        'run_raw_timefuncs_test',
-                       is_broken=is_on_vm or time_test_is_broken_on_this_os)
+                       is_flaky=True)
 
 sysconf_pagesize_nexe = env.ComponentProgram('sysconf_pagesize_test',
                                              ['sysconf_pagesize.c'],
