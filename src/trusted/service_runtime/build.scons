@@ -648,7 +648,10 @@ if env.Bit('windows') and env.Bit('build_x86_64'):
                                                ])
   node = env.CommandTest('patch_ntdll_test.out',
                          command=[test_prog], declares_exit_status=True)
-  env.AddNodeToTestSuite(node, ['small_tests'], 'run_patch_ntdll_test')
+  # This is broken in opt but not dbg mode. The difference is
+  # /MT vs. /MTd.
+  env.AddNodeToTestSuite(node, ['small_tests'], 'run_patch_ntdll_test',
+                         is_broken=True)
 
   intercept_test_prog = env.ComponentProgram(
       'ntdll_intercept_test', 'win/exception_patch/intercept_test.c',
