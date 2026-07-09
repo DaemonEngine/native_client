@@ -2735,7 +2735,7 @@ def MakeGenericLinuxEnv(platform=None):
   # noexecstack: ensure that the executable does not get a PT_GNU_STACK
   #              header that causes the kernel to set the READ_IMPLIES_EXEC
   #              personality flag, which disables NX page protection.
-  linux_env.Prepend(CPPDEFINES=[['-D_FORTIFY_SOURCE', '2']])
+  linux_env.Prepend(CPPDEFINES=['_FORTIFY_SOURCE=2'])
   # By default SHLINKFLAGS uses $LINKFLAGS, but we do not want -pie
   # in $SHLINKFLAGS, only in $LINKFLAGS.  So move LINKFLAGS over to
   # COMMON_LINKFLAGS, and add the "hardening" options there.  Then
@@ -2755,7 +2755,7 @@ def MakeGenericLinuxEnv(platform=None):
     linux_env.Prepend(CCFLAGS=['-fPIC'])
     # TODO(mcgrathr): Temporarily punt _FORTIFY_SOURCE for ARM because
     # it causes a libc dependency newer than the old bots have installed.
-    linux_env.FilterOut(CPPDEFINES=[['-D_FORTIFY_SOURCE', '2']])
+    linux_env.FilterOut(CPPDEFINES=['_FORTIFY_SOURCE=2'])
   else:
     linux_env.Prepend(CCFLAGS=['-fPIE'])
 
