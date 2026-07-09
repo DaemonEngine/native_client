@@ -6,7 +6,6 @@
 
 Import('env')
 
-test_is_broken_on_this_os=False
 slop_args = []
 
 if 'TRUSTED_ENV' in env and (env['TRUSTED_ENV'].Bit('windows') or
@@ -15,9 +14,6 @@ if 'TRUSTED_ENV' in env and (env['TRUSTED_ENV'].Bit('windows') or
   # Number of milliseconds by which a thread is allowed to wake up
   # early, after invoking nanosleep (on Windows, implemnted via
   # Sleep()).  On WinXP, Sleep sometimes return early.
-
-if 'TRUSTED_ENV' in env and env['TRUSTED_ENV'].Bit('windows'):
-  test_is_broken_on_this_os=True
 
 nexe = env.ComponentProgram('nanosleep_test',
                             'nanosleep_test.c',
@@ -31,4 +27,4 @@ node = env.CommandSelLdrTestNacl(
     nexe,
     args=slop_args)
 env.AddNodeToTestSuite(node, ['small_tests'], 'run_nanosleep_test',
-    is_broken=is_on_vm or test_is_broken_on_this_os)
+    is_flaky=True)
