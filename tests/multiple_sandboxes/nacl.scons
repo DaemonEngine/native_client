@@ -25,6 +25,7 @@ test_prog = env.ComponentProgram(
 test_prog = env.GetTranslatedNexe(test_prog)
 
 node = env.CommandTest('multidomain_test.out', [runner, test_prog],
+                       size='medium',
                        # Increase verbosity to get more information in
                        # the event of a crash.
                        osenv='NACLVERBOSITY=4',
@@ -41,5 +42,5 @@ is_broken = (env.Bit('build_arm') or
              env.Bit('build_mips32') or
              env.Bit('nacl_glibc'))
 
-env.AddNodeToTestSuite(node, ['small_tests'], 'run_multidomain_test',
+env.AddNodeToTestSuite(node, ['medium_tests'], 'run_multidomain_test',
                        is_broken=is_broken)

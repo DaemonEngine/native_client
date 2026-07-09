@@ -763,8 +763,9 @@ nullptr_nexe = untrusted_env.GetTranslatedNexe(
 node = env.CommandSelLdrTestNacl(
     'fuzz_nullptr_test.out',
     nullptr_nexe,
+    size='large',
     sel_ldr_flags=['-F'])
-env.AddNodeToTestSuite(node, ['small_tests'], 'run_fuzz_nullptr_test')
+env.AddNodeToTestSuite(node, ['large_tests'], 'run_fuzz_nullptr_test')
 
 if env.Bit('build_mips32'):
   text_region_start = 0x00020000
