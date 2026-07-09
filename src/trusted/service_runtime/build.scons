@@ -113,9 +113,9 @@ elif env.Bit('build_x86_64'):
   else:
     ldr_inputs += ['arch/x86_64/sel_addrspace_posix_x86_64.c']
   if env.Bit('x86_64_zero_based_sandbox'):
-    env.Append(CPPDEFINES=['-DNACL_X86_64_ZERO_BASED_SANDBOX=1'])
+    env.Append(CPPDEFINES=['NACL_X86_64_ZERO_BASED_SANDBOX=1'])
   else:
-    env.Append(CPPDEFINES=['-DNACL_X86_64_ZERO_BASED_SANDBOX=0'])
+    env.Append(CPPDEFINES=['NACL_X86_64_ZERO_BASED_SANDBOX=0'])
 elif env.Bit('build_arm'):
   ldr_inputs += [
     'arch/arm/nacl_app.c',
