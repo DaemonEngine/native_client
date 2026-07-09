@@ -457,18 +457,18 @@ gtest_env = env.MakeGTestEnv()
 
 unittest_inputs = [
     'filename_util_test.cc',
-    'mmap_unittest.cc',
-    'unittest_main.cc',
     'sel_memory_unittest.cc',
     'sel_mem_test.cc',
     'sel_ldr_test.cc',
     'thread_suspension_test.cc',
 ]
 
+unittest_main = gtest_env.Object('service_runtime_test_main', 'unittest_main.cc')
+
 if not env.Bit('coverage_enabled') or not env.Bit('windows'):
   unit_tests_exe = gtest_env.ComponentProgram(
       'service_runtime_tests',
-      unittest_inputs,
+      unittest_inputs + [unittest_main],
       EXTRA_LIBS=['sel',
                   'env_cleanser',
                   'nrd_xfer',
@@ -483,11 +483,22 @@ if not env.Bit('coverage_enabled') or not env.Bit('windows'):
 
   node = gtest_env.CommandTest(
       'gtest_output.xml.out',
-      size='large', # This test suite is fairly slow on Windows XP.
       command=[unit_tests_exe, '--gtest_output=xml:${TARGET}'])
   gtest_env.AddNodeToTestSuite(node, ['small_tests'],
       'run_service_runtime_tests')
 
+  # Takes several minutes on Windows only
+  mmap_test_size = 'huge' if env.Bit('windows') else 'small'
+  mmap_unit_test_exe = gtest_env.ComponentProgram(
+      'mmap_unit_test',
+      ['mmap_unittest.cc', unittest_main],
+      EXTRA_LIBS=['nacl_base', 'sel', 'nrd_xfer', 'imc', 'sel_test'])
+  node = gtest_env.CommandTest(
+      'mmap_gtest_output.xml.out',
+      command=[mmap_unit_test_exe, '--gtest_output=xml:${TARGET}'],
+      size=mmap_test_size)
+  gtest_env.AddNodeToTestSuite(node, [mmap_test_size + '_tests'],
+      'run_mmap_unit_test')
 
 if not env.Bit('coverage_enabled') or not env.Bit('windows'):
   format_string_test_exe = env.ComponentProgram(
