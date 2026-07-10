@@ -3696,8 +3696,10 @@ def DumpCompilerVersion(cc, env):
     env.Execute(env.Action('${CC} -print-libgcc-file-name'))
   elif cc.startswith('cl'):
     import subprocess
+    oldpath = os.environ['PATH']
+    os.environ['PATH'] = env['ENV']['PATH']
     try:
-      p = subprocess.Popen(env.subst('${CC} /V'),
+      p = subprocess.Popen([env.subst('${CC}')],
                            text=True,
                            bufsize=1000*1000,
                            stdout=subprocess.PIPE,
@@ -3705,10 +3707,9 @@ def DumpCompilerVersion(cc, env):
       stdout, stderr = p.communicate()
       print(stderr[0:stderr.find("\n")])
     except WindowsError:
-      # If vcvars was not run before running SCons, we won't be able to find
-      # the compiler at this point.  SCons has built in functions for finding
-      # the compiler, but they haven't run yet.
-      print('Can not find the compiler, assuming SCons will find it later.')
+      print('Cannot find the compiler (cl)!')
+    finally:
+      os.environ['PATH'] = oldpath
   else:
     print("UNKNOWN COMPILER")
 
