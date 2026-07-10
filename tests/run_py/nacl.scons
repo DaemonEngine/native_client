@@ -21,7 +21,7 @@ elif env.Bit('nacl_glibc'):
   # With the new glibc port, it won't work at all.
   Return()
 
-if env['TRUSTED_ENV'].Bit('windows'):
+if 'TRUSTED_ENV' in env and env['TRUSTED_ENV'].Bit('windows'):
   # To find readelf. Saigo also has a readelf but it's named x86_64-nacl-readelf (etc.)
   env = env.Clone()
   env.PrependENVPath('PATH', env['TRUSTED_ENV']['MINGW_BIN'])
