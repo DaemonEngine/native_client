@@ -3703,11 +3703,12 @@ def DumpCompilerVersion(cc, env):
     import subprocess
     try:
       p = subprocess.Popen(env.subst('${CC} /V'),
+                           text=True,
                            bufsize=1000*1000,
                            stdout=subprocess.PIPE,
                            stderr=subprocess.PIPE)
       stdout, stderr = p.communicate()
-      print(stderr[0:stderr.find("\r")])
+      print(stderr[0:stderr.find("\n")])
     except WindowsError:
       # If vcvars was not run before running SCons, we won't be able to find
       # the compiler at this point.  SCons has built in functions for finding
