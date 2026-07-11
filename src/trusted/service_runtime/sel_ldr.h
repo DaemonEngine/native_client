@@ -755,8 +755,8 @@ void NaClHandleRDebug(const char *switch_value, char *argv0);
 void NaClHandleReservedAtZero(const char *switch_value);
 #else
 static INLINE void NaClHandleBootstrapArgs(int *argc_p, char ***argv_p) {
-  UNREFERENCED_PARAMETER(argc_p);
-  UNREFERENCED_PARAMETER(argv_p);
+  NACL_UNUSED_PARAMETER(argc_p);
+  NACL_UNUSED_PARAMETER(argv_p);
 }
 #endif
 

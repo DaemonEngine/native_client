@@ -261,7 +261,7 @@ static void RegisterHandlers(void) {
 int32_t JumpToZeroCrashSyscall(struct NaClAppThread *natp) {
   void (*null_func_ptr)(void) = NULL;
 
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 
   null_func_ptr();
 

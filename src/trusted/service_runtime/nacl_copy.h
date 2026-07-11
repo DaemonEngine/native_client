@@ -103,11 +103,11 @@ static INLINE void NaClCopyDropLock(struct NaClApp *nap) {
 #else
 
 static INLINE void NaClCopyTakeLock(struct NaClApp *nap) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 }
 
 static INLINE void NaClCopyDropLock(struct NaClApp *nap) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 }
 
 #endif

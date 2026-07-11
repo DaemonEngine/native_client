@@ -38,9 +38,9 @@ static void NaClDescNullDtor(struct NaClRefCount *vself) {
 static ssize_t NaClDescNullRead(struct NaClDesc *vself,
                                void *buf,
                                size_t len) {
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(buf);
-  UNREFERENCED_PARAMETER(len);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(buf);
+  NACL_UNUSED_PARAMETER(len);
 
   return 0;
 }
@@ -48,8 +48,8 @@ static ssize_t NaClDescNullRead(struct NaClDesc *vself,
 static ssize_t NaClDescNullWrite(struct NaClDesc *vself,
                                 void const *buf,
                                 size_t len) {
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(buf);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(buf);
 
   return len;
 }
@@ -58,9 +58,9 @@ static ssize_t NaClDescNullPRead(struct NaClDesc *vself,
                                  void *buf,
                                  size_t len,
                                  nacl_off64_t offset) {
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(buf);
-  UNREFERENCED_PARAMETER(len);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(buf);
+  NACL_UNUSED_PARAMETER(len);
   if (offset < 0) {
     return -NACL_ABI_EINVAL;
   }
@@ -72,8 +72,8 @@ static ssize_t NaClDescNullPWrite(struct NaClDesc *vself,
                                   void const *buf,
                                   size_t len,
                                   nacl_off64_t offset) {
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(buf);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(buf);
   if (offset < 0) {
     return -NACL_ABI_EINVAL;
   }
@@ -83,7 +83,7 @@ static ssize_t NaClDescNullPWrite(struct NaClDesc *vself,
 
 static int NaClDescNullFstat(struct NaClDesc *vself,
                             struct nacl_abi_stat *statbuf) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
 
   memset(statbuf, 0, sizeof *statbuf);
   statbuf->nacl_abi_st_dev = 0;
@@ -116,7 +116,7 @@ static int NaClDescNullFstat(struct NaClDesc *vself,
 static int NaClDescNullExternalizeSize(struct NaClDesc *vself,
                                        size_t *nbytes,
                                        size_t *nhandles) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
 
   *nbytes = 0;
   *nhandles = 0;
@@ -125,8 +125,8 @@ static int NaClDescNullExternalizeSize(struct NaClDesc *vself,
 
 static int NaClDescNullExternalize(struct NaClDesc *vself,
                                    struct NaClDescXferState *xfer) {
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(xfer);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(xfer);
 
   return 0;
 }
@@ -179,7 +179,7 @@ int NaClDescNullInternalize(struct NaClDesc **out_desc,
   int rv;
   struct NaClDescNull *d_null = malloc(sizeof *d_null);
 
-  UNREFERENCED_PARAMETER(xfer);
+  NACL_UNUSED_PARAMETER(xfer);
   if (NULL == d_null) {
     rv = -NACL_ABI_ENOMEM;
     goto cleanup;

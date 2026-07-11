@@ -32,7 +32,7 @@ void NaClTimeInternalInit(struct NaClTimeState *ntsp) {
 }
 
 void NaClTimeInternalFini(struct NaClTimeState *ntsp) {
-  UNREFERENCED_PARAMETER(ntsp);
+  NACL_UNUSED_PARAMETER(ntsp);
 }
 
 uint64_t NaClTimerResolutionNsInternal(struct NaClTimeState *ntsp) {

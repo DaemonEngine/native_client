@@ -33,7 +33,7 @@ int NaClFindPrereservedSandboxMemory(void **p, size_t num_bytes) {
 void NaClAddrSpaceBeforeAlloc(size_t untrusted_size) {
   struct rlimit lim;
 
-  UNREFERENCED_PARAMETER(untrusted_size);
+  NACL_UNUSED_PARAMETER(untrusted_size);
 
   if (getrlimit(RLIMIT_AS, &lim) < 0) {
     NaClLog(LOG_WARNING, "NaClAddrSpaceBeforeAlloc: getrlimit failed: %s",

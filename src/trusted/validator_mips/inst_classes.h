@@ -78,9 +78,9 @@ class ClassDecoder {
   virtual bool IsMask(const Instruction instr,
                       const nacl_mips_dec::Register dest,
                       const nacl_mips_dec::Register mask) const {
-    UNREFERENCED_PARAMETER(instr);
-    UNREFERENCED_PARAMETER(dest);
-    UNREFERENCED_PARAMETER(mask);
+    NACL_UNUSED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(dest);
+    NACL_UNUSED_PARAMETER(mask);
     return false;
   }
 
@@ -88,7 +88,7 @@ class ClassDecoder {
    * The gpr register altered by the instruction.
    */
   virtual Register DestGprReg(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return Register::None();
   }
 
@@ -96,7 +96,7 @@ class ClassDecoder {
    * May be used for instr's with immediate operand; like addiu or jal.
    */
   virtual uint32_t GetImm(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return -1;
   }
 
@@ -146,8 +146,8 @@ class ClassDecoder {
    * For direct jumps, returning the destination address.
    */
   virtual uint32_t DestAddr(const Instruction instr, uint32_t addr) const {
-    UNREFERENCED_PARAMETER(instr);
-    UNREFERENCED_PARAMETER(addr);
+    NACL_UNUSED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(addr);
     return 0;
   }
 
@@ -156,7 +156,7 @@ class ClassDecoder {
    * address to jump to.
    */
   virtual Register TargetReg(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return Register::None();
   }
 
@@ -164,7 +164,7 @@ class ClassDecoder {
    * Base address register, for load and store instructions.
    */
   virtual Register BaseAddressRegister(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return Register::None();
   }
 
@@ -181,7 +181,7 @@ class NaClHalt : public ClassDecoder {
  public:
   virtual ~NaClHalt() {}
   virtual SafetyLevel safety(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return MAY_BE_SAFE;
   }
 };
@@ -194,7 +194,7 @@ class Forbidden : public ClassDecoder {
  public:
   virtual ~Forbidden() {}
   virtual SafetyLevel safety(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return FORBIDDEN;
   }
 };
@@ -210,7 +210,7 @@ class Arithm2 : public ClassDecoder {
     return instr.Reg(20, 16);
   }
   virtual SafetyLevel safety(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return MAY_BE_SAFE;
   }
 };
@@ -226,7 +226,7 @@ class Arithm3 : public ClassDecoder {
     return instr.Reg(15, 11);
   }
   virtual SafetyLevel safety(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return MAY_BE_SAFE;
   }
   virtual bool IsMask(const Instruction instr,
@@ -246,7 +246,7 @@ class DirectJump : public ClassDecoder {
  public:
   virtual ~DirectJump() {}
   virtual SafetyLevel safety(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return MAY_BE_SAFE;
   }
   virtual bool IsDirectJump() const {
@@ -289,7 +289,7 @@ class AbstractLoadStore : public ClassDecoder {
   }
   virtual ~AbstractLoadStore() {}
   virtual SafetyLevel safety(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return MAY_BE_SAFE;
   }
   virtual Register BaseAddressRegister(const Instruction instr) const {
@@ -382,7 +382,7 @@ class JmpReg : public ClassDecoder {
  public:
   virtual ~JmpReg() {}
   virtual SafetyLevel safety(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return MAY_BE_SAFE;
   }
   virtual bool IsJmpReg() const {
@@ -417,7 +417,7 @@ class ExtIns : public ClassDecoder {
     return instr.Reg(20, 16);
   }
   virtual SafetyLevel safety(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return MAY_BE_SAFE;
   }
 };
@@ -428,7 +428,7 @@ class Safe : public ClassDecoder {
  public:
   virtual ~Safe() {}
   virtual SafetyLevel safety(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return MAY_BE_SAFE;
   }
 };
@@ -437,7 +437,7 @@ class Other : public ClassDecoder {
  public:
   virtual ~Other() {}
   virtual SafetyLevel safety(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return FORBIDDEN;
   }
 };
@@ -449,7 +449,7 @@ class Unrecognized : public ClassDecoder {
  public:
   virtual ~Unrecognized() {}
   virtual SafetyLevel safety(const Instruction instr) const {
-    UNREFERENCED_PARAMETER(instr);
+    NACL_UNUSED_PARAMETER(instr);
     return FORBIDDEN;
   }
 };

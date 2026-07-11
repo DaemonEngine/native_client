@@ -148,8 +148,8 @@ static struct NaClDesc *NaClResourceNaClAppFileOpen(
     int mode,
     int allow_debug) {
   struct NaClDesc *rv = NULL;
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(allow_debug);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(allow_debug);
 
   if (0 == strcmp(resource_locator, NACL_RESOURCE_FILE_DEV_NULL)) {
     rv = NaClResourceNullFactory();

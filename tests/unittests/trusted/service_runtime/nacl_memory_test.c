@@ -28,8 +28,8 @@ void run_check(void) {
 
 int main(int argc, char* argv[]) {
   int i;
-  UNREFERENCED_PARAMETER(argc);
-  UNREFERENCED_PARAMETER(argv);
+  NACL_UNUSED_PARAMETER(argc);
+  NACL_UNUSED_PARAMETER(argv);
 
   NaClPlatformInit();
 

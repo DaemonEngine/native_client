@@ -38,7 +38,7 @@ class ObjWithDtor {
 int main() {
   std::set_terminate(terminate_handler);
   ObjWithDtor obj;
-  UNREFERENCED_PARAMETER(obj);
+  NACL_UNUSED_PARAMETER(obj);
   throw 1;
   return 1;
 }

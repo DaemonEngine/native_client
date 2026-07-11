@@ -359,7 +359,7 @@ int SeekPastEndAndWriteTest(struct NaClHostDesc *test_file,
   int err;
   nacl_off64_t seek_result;
 
-  UNREFERENCED_PARAMETER(test_params);
+  NACL_UNUSED_PARAMETER(test_params);
   err = NaClHostDescFstat(test_file, &stbuf);
   if (0 != err) {
     fprintf(stderr, "SeekPastEndAndWriteTest: fstat failed\n");
@@ -398,8 +398,8 @@ int PReadWithNegativeOffset(struct NaClHostDesc *test_file,
   char buffer[1<<16];
   ssize_t result;
 
-  UNREFERENCED_PARAMETER(ro_view);
-  UNREFERENCED_PARAMETER(test_params);
+  NACL_UNUSED_PARAMETER(ro_view);
+  NACL_UNUSED_PARAMETER(test_params);
 
   result = NaClHostDescPRead(test_file, buffer, sizeof buffer, -10);
   if (result != -NACL_ABI_EINVAL) {
@@ -434,8 +434,8 @@ int PWriteUsesOffsetSeekReadVerification(struct NaClHostDesc *test_file,
   ssize_t io_rv;
   nacl_off64_t seek_err;
 
-  UNREFERENCED_PARAMETER(ro_view);
-  UNREFERENCED_PARAMETER(test_params);
+  NACL_UNUSED_PARAMETER(ro_view);
+  NACL_UNUSED_PARAMETER(test_params);
 
   CHECK(len <= sizeof buffer);
 
@@ -499,7 +499,7 @@ int PWriteUsesOffsetPReadVerification(struct NaClHostDesc *test_file,
   char buffer[4096];
   ssize_t io_rv;
 
-  UNREFERENCED_PARAMETER(test_params);
+  NACL_UNUSED_PARAMETER(test_params);
 
   CHECK(len <= sizeof buffer);
 
@@ -557,7 +557,7 @@ int PWriteUsesOffsetReadPtrVerification(struct NaClHostDesc *test_file,
   ssize_t io_rv;
   const size_t pwrite_position = 4096;
 
-  UNREFERENCED_PARAMETER(test_params);
+  NACL_UNUSED_PARAMETER(test_params);
 
   seek_err = NaClHostDescSeek(test_file, 0, 0);
   if (seek_err < 0) {

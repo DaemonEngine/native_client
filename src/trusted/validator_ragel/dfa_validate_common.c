@@ -26,10 +26,10 @@ static const uint8_t kStubOutMem[MAX_INSTRUCTION_LENGTH] = {
 
 Bool NaClDfaProcessValidationError(const uint8_t *begin, const uint8_t *end,
                                    uint32_t info, void *callback_data) {
-  UNREFERENCED_PARAMETER(begin);
-  UNREFERENCED_PARAMETER(end);
-  UNREFERENCED_PARAMETER(info);
-  UNREFERENCED_PARAMETER(callback_data);
+  NACL_UNUSED_PARAMETER(begin);
+  NACL_UNUSED_PARAMETER(end);
+  NACL_UNUSED_PARAMETER(info);
+  NACL_UNUSED_PARAMETER(callback_data);
 
   return FALSE;
 }
@@ -77,7 +77,7 @@ static Bool RewriteNonTemporal(uint8_t *ptr, uint8_t *end, uint32_t info) {
   }
 
 #if NACL_BUILD_SUBARCH == 32
-  UNREFERENCED_PARAMETER(info);
+  NACL_UNUSED_PARAMETER(info);
 
   if (size >= 2 && memcmp(ptr, "\x0f\xe7", 2) == 0) {
     /* movntq => movq */
@@ -192,9 +192,9 @@ static Bool BundleValidationCheckAfterRewrite(const uint8_t *begin,
                                               const uint8_t *end,
                                               uint32_t info,
                                               void *callback_data) {
-  UNREFERENCED_PARAMETER(begin);
-  UNREFERENCED_PARAMETER(end);
-  UNREFERENCED_PARAMETER(callback_data);
+  NACL_UNUSED_PARAMETER(begin);
+  NACL_UNUSED_PARAMETER(end);
+  NACL_UNUSED_PARAMETER(callback_data);
 
   return AllowErrorDuringBundleValidation(info);
 }

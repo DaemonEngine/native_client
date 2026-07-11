@@ -153,16 +153,16 @@ static bool IgnoreSIGPIPE() {
  * functions so that sigpipe_test continues to link.
  */
 NaClHandle NaClBoundSocket(const NaClSocketAddress* address) {
-  UNREFERENCED_PARAMETER(address);
+  NACL_UNUSED_PARAMETER(address);
   NaClLog(LOG_FATAL, "BoundSocket(): Not used on OSX\n");
   return -1;
 }
 
 int NaClSendDatagramTo(const NaClMessageHeader* message, int flags,
                        const NaClSocketAddress* name) {
-  UNREFERENCED_PARAMETER(message);
-  UNREFERENCED_PARAMETER(flags);
-  UNREFERENCED_PARAMETER(name);
+  NACL_UNUSED_PARAMETER(message);
+  NACL_UNUSED_PARAMETER(flags);
+  NACL_UNUSED_PARAMETER(name);
   NaClLog(LOG_FATAL, "SendDatagramTo(): Not used on OSX\n");
   return -1;
 }
@@ -206,7 +206,7 @@ int NaClSendDatagram(NaClHandle handle, const NaClMessageHeader* message,
   Header header = { 0, 0 };
   int result;
   size_t i;
-  UNREFERENCED_PARAMETER(flags);
+  NACL_UNUSED_PARAMETER(flags);
 
   assert(CMSG_SPACE(NACL_HANDLE_COUNT_MAX * sizeof(int))
          <= CMSG_SPACE_KHANDLE_COUNT_MAX_INTS);

@@ -63,15 +63,15 @@ struct TestValidationQuery {
 };
 
 static void *TestCreateQuery(void *handle) {
-  UNREFERENCED_PARAMETER(handle);
+  NACL_UNUSED_PARAMETER(handle);
   return static_cast<void *>(new TestValidationQuery());
 }
 
 static void TestAddData(void *query, const unsigned char *data,
                         size_t length) {
-  UNREFERENCED_PARAMETER(query);
-  UNREFERENCED_PARAMETER(data);
-  UNREFERENCED_PARAMETER(length);
+  NACL_UNUSED_PARAMETER(query);
+  NACL_UNUSED_PARAMETER(data);
+  NACL_UNUSED_PARAMETER(length);
 }
 
 static int TestQueryKnownToValidate(void *query) {
@@ -89,20 +89,20 @@ static void TestDestroyQuery(void *query) {
 }
 
 static int TestCachingIsInexpensive(const struct NaClValidationMetadata *m) {
-  UNREFERENCED_PARAMETER(m);
+  NACL_UNUSED_PARAMETER(m);
   return 1;
 }
 
 void ExampleDescDestroy(void *handle) {
-  UNREFERENCED_PARAMETER(handle);
+  NACL_UNUSED_PARAMETER(handle);
 }
 
 ssize_t ExampleDescSendMsg(void *handle,
                            const struct NaClImcTypedMsgHdr *msg,
                            int flags) {
-  UNREFERENCED_PARAMETER(handle);
-  UNREFERENCED_PARAMETER(msg);
-  UNREFERENCED_PARAMETER(flags);
+  NACL_UNUSED_PARAMETER(handle);
+  NACL_UNUSED_PARAMETER(msg);
+  NACL_UNUSED_PARAMETER(flags);
 
   NaClLog(LOG_FATAL, "ExampleDescSendMsg: Not implemented\n");
   return 0;
@@ -111,9 +111,9 @@ ssize_t ExampleDescSendMsg(void *handle,
 ssize_t ExampleDescRecvMsg(void *handle,
                            struct NaClImcTypedMsgHdr *msg,
                            int flags) {
-  UNREFERENCED_PARAMETER(handle);
-  UNREFERENCED_PARAMETER(msg);
-  UNREFERENCED_PARAMETER(flags);
+  NACL_UNUSED_PARAMETER(handle);
+  NACL_UNUSED_PARAMETER(msg);
+  NACL_UNUSED_PARAMETER(flags);
 
   NaClLog(LOG_FATAL, "ExampleDescRecvMsg: Not implemented\n");
   return 0;

@@ -32,8 +32,8 @@
 
 void NaClHandleRDebug(const char *switch_value, char *argv0) {
 #if NACL_ANDROID
-  UNREFERENCED_PARAMETER(switch_value);
-  UNREFERENCED_PARAMETER(argv0);
+  NACL_UNUSED_PARAMETER(switch_value);
+  NACL_UNUSED_PARAMETER(argv0);
 #else
   char *endp = NULL;
   uintptr_t r_debug_addr = strtoul(switch_value, &endp, 0);

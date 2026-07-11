@@ -46,7 +46,7 @@ int prot_exec_test(struct NaClHostDesc *d, void *test_specifics) {
   int param;
   int value;
 
-  UNREFERENCED_PARAMETER(test_specifics);
+  NACL_UNUSED_PARAMETER(test_specifics);
 
   if ((uintptr_t) -4095 <
       (addr = NaClHostDescMap(d,
@@ -87,7 +87,7 @@ int map_shared_test(struct NaClHostDesc *d, void *test_specifics) {
   char *v1ptr;
   char *v2ptr;
 
-  UNREFERENCED_PARAMETER(test_specifics);
+  NACL_UNUSED_PARAMETER(test_specifics);
 
   if ((uintptr_t) -4095 <
       (view1 = NaClHostDescMap(d,

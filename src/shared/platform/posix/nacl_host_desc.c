@@ -192,11 +192,11 @@ static INLINE void NaClHostDescInit(void) {
 }
 
 static INLINE void NaClHostDescExclusiveLock(int host_desc) {
-  UNREFERENCED_PARAMETER(host_desc);
+  NACL_UNUSED_PARAMETER(host_desc);
 }
 
 static INLINE void NaClHostDescExclusiveUnlock(int host_desc) {
-  UNREFERENCED_PARAMETER(host_desc);
+  NACL_UNUSED_PARAMETER(host_desc);
 }
 
 #endif
@@ -217,7 +217,7 @@ uintptr_t NaClHostDescMap(struct NaClHostDesc *d,
   int   tmp_prot;
   int   host_flags;
   int   need_exec;
-  UNREFERENCED_PARAMETER(effp);
+  NACL_UNUSED_PARAMETER(effp);
 
   NaClLog(4,
           ("NaClHostDescMap(0x%08"NACL_PRIxPTR", "

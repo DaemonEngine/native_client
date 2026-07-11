@@ -54,7 +54,7 @@ static INLINE size_t min_size(size_t  a,
 
 void NaClNrdXferIncrTagOverhead(size_t *byte_count,
                                 size_t *handle_count) {
-  UNREFERENCED_PARAMETER(handle_count);
+  NACL_UNUSED_PARAMETER(handle_count);
   ++*byte_count;
 }
 

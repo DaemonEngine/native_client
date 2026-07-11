@@ -29,7 +29,7 @@ static void GetNaClSyscallSeg(struct NaClApp *nap,
     *nacl_syscall_seg_regs_saved = (uintptr_t) &NaClSyscallSegRegsSavedNoSSE;
   }
 #else
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 
   *nacl_syscall_seg = (uintptr_t) &NaClSyscallSeg;
   *nacl_syscall_seg_regs_saved = (uintptr_t) &NaClSyscallSegRegsSaved;

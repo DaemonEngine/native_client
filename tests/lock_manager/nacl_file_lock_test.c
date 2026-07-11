@@ -113,8 +113,8 @@ static void NaClFileLockTestSetFileIdentityData(
                  int desc),
     struct NaClFileLockEntry *entry,
     int desc) {
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(orig);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(orig);
   entry->file_dev = 0;
   entry->file_ino = desc;
 }
@@ -126,7 +126,7 @@ static int NaClFileLockTestTakeFileLock(struct NaClFileLockTestInterface *vself,
   struct NaClFileLockTestImpl *self = (struct NaClFileLockTestImpl *) vself;
   int success = 0;
 
-  UNREFERENCED_PARAMETER(orig);
+  NACL_UNUSED_PARAMETER(orig);
   pthread_mutex_lock(&self->mu);
   for (;;) {
     if (self->num_files <= (size_t) desc) {
@@ -154,7 +154,7 @@ static int NaClFileLockTestDropFileLock(struct NaClFileLockTestInterface *vself,
   struct NaClFileLockTestImpl *self = (struct NaClFileLockTestImpl *) vself;
   int success = 0;
 
-  UNREFERENCED_PARAMETER(orig);
+  NACL_UNUSED_PARAMETER(orig);
   pthread_mutex_lock(&self->mu);
   if (self->num_files <= (size_t) desc) {
     printf("Bad descriptor %d, num_files = %d\n",
@@ -290,7 +290,7 @@ static int NaClFileLockTestRealFileTakeFileLock(
       (struct NaClFileLockTestRealFileImpl *) vself;
   int real_desc = NaClFileLockTestRealFileGetDesc(self, desc);
 
-  UNREFERENCED_PARAMETER(thread_number);
+  NACL_UNUSED_PARAMETER(thread_number);
   if (-1 == real_desc) {
     printf("RealFileTakeFileLock: Bad descriptor %d\n", desc);
     return 0;
@@ -311,7 +311,7 @@ static int NaClFileLockTestRealFileDropFileLock(
       (struct NaClFileLockTestRealFileImpl *) vself;
   int real_desc = NaClFileLockTestRealFileGetDesc(self, desc);
 
-  UNREFERENCED_PARAMETER(thread_number);
+  NACL_UNUSED_PARAMETER(thread_number);
   if (-1 == real_desc) {
     printf("RealFileDropFileLock: Bad descriptor %d\n", desc);
     return 0;

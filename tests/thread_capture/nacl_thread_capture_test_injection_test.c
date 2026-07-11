@@ -31,7 +31,7 @@ void NaClSignalHandler(int signum, siginfo_t *info, void *other) {
   uintptr_t faulting_pc;
   ucontext_t *ucp;
 
-  UNREFERENCED_PARAMETER(info);
+  NACL_UNUSED_PARAMETER(info);
   ucp = (ucontext_t *) other;
 #if NACL_LINUX
 # if NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86

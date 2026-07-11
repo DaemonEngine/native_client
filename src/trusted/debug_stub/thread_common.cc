@@ -51,7 +51,7 @@ bool Thread::SetStep(bool on) {
   return true;
 #else
   // TODO(mseaborn): Implement for ARM.
-  UNREFERENCED_PARAMETER(on);
+  NACL_UNUSED_PARAMETER(on);
   return false;
 #endif
 }

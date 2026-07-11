@@ -105,7 +105,7 @@ int32_t NaClSemGetValue(struct NaClSemaphore *sem) {
   NTSTATUS    status;
    */
   int32_t     count = -1;
-  UNREFERENCED_PARAMETER(sem);
+  NACL_UNUSED_PARAMETER(sem);
 /* TODO(gregoryd): cannot use NtQuerySemaphore without linking to ntdll.lib
   status = NtQuerySemaphore(
     sem->sem_handle,

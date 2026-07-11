@@ -21,7 +21,7 @@
  * No segments:  (currently) no-op.
  */
 NaClErrorCode NaClAppPrepareToLaunch(struct NaClApp     *nap) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 
   return LOAD_OK;
 }

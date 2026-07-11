@@ -130,7 +130,7 @@ static nacl_off64_t NaClDescDirDescSeek(struct NaClDesc *vself,
 
 static int NaClDescDirDescFstat(struct NaClDesc          *vself,
                                 struct nacl_abi_stat     *statbuf) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
 
   memset(statbuf, 0, sizeof *statbuf);
   /*

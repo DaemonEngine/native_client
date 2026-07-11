@@ -616,7 +616,7 @@ def _generate_decoder_method_bodies(decoder, values, out):
     # Add message to stop compilation warnings if this table
     # doesn't require subtables to select a class decoder.
     if not table.methods():
-      out.write("  UNREFERENCED_PARAMETER(inst);")
+      out.write("  NACL_UNUSED_PARAMETER(inst);")
 
     count = 0
     for row in opt_rows:

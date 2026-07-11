@@ -7,15 +7,15 @@
 #include "native_client/src/trusted/service_runtime/nacl_valgrind_hooks.h"
 
 void NaClFileMappingForValgrind(size_t vma, size_t size, size_t file_offset) {
-  UNREFERENCED_PARAMETER(vma);
-  UNREFERENCED_PARAMETER(size);
-  UNREFERENCED_PARAMETER(file_offset);
+  NACL_UNUSED_PARAMETER(vma);
+  NACL_UNUSED_PARAMETER(size);
+  NACL_UNUSED_PARAMETER(file_offset);
 }
 
 void NaClFileNameForValgrind(const char* name) {
-  UNREFERENCED_PARAMETER(name);
+  NACL_UNUSED_PARAMETER(name);
 }
 
 void NaClSandboxMemoryStartForValgrind(uintptr_t mem_start) {
-  UNREFERENCED_PARAMETER(mem_start);
+  NACL_UNUSED_PARAMETER(mem_start);
 }

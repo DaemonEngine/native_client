@@ -66,9 +66,9 @@ static INLINE void NaClFlushCacheForDoublyMappedCode(uint8_t *writable_addr,
    * We simply prevent the compiler from moving loads or stores around
    * this function.
    */
-  UNREFERENCED_PARAMETER(writable_addr);
-  UNREFERENCED_PARAMETER(executable_addr);
-  UNREFERENCED_PARAMETER(size);
+  NACL_UNUSED_PARAMETER(writable_addr);
+  NACL_UNUSED_PARAMETER(executable_addr);
+  NACL_UNUSED_PARAMETER(size);
 #if NACL_WINDOWS
   _ReadWriteBarrier();
 #else

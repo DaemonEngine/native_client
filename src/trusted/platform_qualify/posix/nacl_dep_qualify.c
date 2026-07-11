@@ -110,12 +110,12 @@ typedef int MachExceptionHandlerData;
 
 static void DisableMachExceptionHandler(
     MachExceptionHandlerData *saved_handlers) {
-  UNREFERENCED_PARAMETER(saved_handlers);
+  NACL_UNUSED_PARAMETER(saved_handlers);
 }
 
 static void EnableMachExceptionHandler(
     MachExceptionHandlerData *saved_handlers) {
-  UNREFERENCED_PARAMETER(saved_handlers);
+  NACL_UNUSED_PARAMETER(saved_handlers);
 }
 
 #endif

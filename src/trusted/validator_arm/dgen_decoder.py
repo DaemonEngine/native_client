@@ -172,7 +172,7 @@ DECODER_BASE_HEADER="""
 DECODER_BASE_DEF="""
 Register %(decoder_name)s::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // %(neutral_rep)s
   return %(method_exp)s;
 }
@@ -193,7 +193,7 @@ DECODER_CLEARS_BITS_HEADER="""
 DECODER_CLEARS_BITS_DEF="""
 bool %(decoder_name)s::
 clears_bits(Instruction inst, uint32_t clears_mask) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // %(neutral_rep)s
   return %(method_exp)s;
 }
@@ -216,7 +216,7 @@ DECODER_DEFS_HEADER="""
 DECODER_DEFS_DEF="""
 RegisterList %(decoder_name)s::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // %(neutral_rep)s
   return %(method_exp)s;
 }
@@ -274,7 +274,7 @@ DECODER_IS_LITERAL_LOAD_HEADER="""
 DECODER_IS_LITERAL_LOAD_DEF="""
 bool %(decoder_name)s::
 is_literal_load(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // %(neutral_rep)s
   return %(method_exp)s;
 }
@@ -297,7 +297,7 @@ DECODER_IS_LOAD_TP_HEADER="""
 DECODER_IS_LOAD_TP_DEF="""
 bool %(decoder_name)s::
 is_load_thread_address_pointer(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // %(neutral_rep)s
   return %(method_exp)s;
 }
@@ -318,7 +318,7 @@ DECODER_POOL_HEAD_HEADER="""
 DECODER_POOL_HEAD_DEF="""
 bool %(decoder_name)s::
 is_literal_pool_head(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // %(neutral_rep)s
   return %(method_exp)s;
 }
@@ -339,7 +339,7 @@ DECODER_RELATIVE_HEADER="""
 DECODER_RELATIVE_DEF="""
 bool %(decoder_name)s::
 is_relative_branch(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // %(neutral_rep)s
   return %(method_exp)s;
 }
@@ -360,7 +360,7 @@ DECODER_RELATIVE_OFFSET_HEADER="""
 DECODER_RELATIVE_OFFSET_DEF="""
 int32_t %(decoder_name)s::
 branch_target_offset(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // %(neutral_rep)s
   return %(method_exp)s;
 }
@@ -383,7 +383,7 @@ DECODER_SAFETY_HEADER="""
 DECODER_SAFETY_DEF_HEADER="""
 SafetyLevel %(decoder_name)s::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 """
 
 DECODER_SAFETY_DEF_CHECK="""
@@ -430,7 +430,7 @@ bool %(decoder_name)s::
 sets_Z_if_bits_clear(
       Instruction inst, Register test_register,
       uint32_t clears_mask) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // %(neutral_rep)s
   return %(method_exp)s;
 }
@@ -458,7 +458,7 @@ DECODER_SMALL_IMM_BASE_WB_DEF="""
 bool %(decoder_name)s::
 base_address_register_writeback_small_immediate(
       Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // %(neutral_rep)s
   return %(method_exp)s;
 }
@@ -481,7 +481,7 @@ DECODER_TARGET_HEADER="""
 DECODER_TARGET_DEF="""
 Register %(decoder_name)s::
 branch_target_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // %(neutral_rep)s
   return %(method_exp)s;
 }
@@ -502,7 +502,7 @@ DECODER_USES_HEADER="""
 DECODER_USES_DEF="""
 RegisterList %(decoder_name)s::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // %(neutral_rep)s
   return %(method_exp)s;
 }

@@ -378,7 +378,7 @@ static inline void generate_call_position_diagnostics(
       const nacl_arm_val::DecodedInstruction& inst,
       const nacl_arm_val::SfiValidator& sfi,
       nacl_arm_val::ProblemSink* out) {
-  UNREFERENCED_PARAMETER(sfi);
+  NACL_UNUSED_PARAMETER(sfi);
   if (ContainsViolation(violations, CALL_POSITION_VIOLATION)) {
     out->ReportProblemDiagnostic(
         CALL_POSITION_VIOLATION,
@@ -403,7 +403,7 @@ static inline void generate_read_only_diagnostics(
     const nacl_arm_val::DecodedInstruction& inst,
     const nacl_arm_val::SfiValidator& sfi,
     nacl_arm_val::ProblemSink* out) {
-  UNREFERENCED_PARAMETER(sfi);
+  NACL_UNUSED_PARAMETER(sfi);
   if (ContainsViolation(violations, READ_ONLY_VIOLATION)) {
     RegisterList& read_only = inst.defs().Intersect(sfi.read_only_registers());
     for (Register::Number r = 0; r < Register::kNumberGPRs; ++r) {
@@ -434,7 +434,7 @@ static inline void generate_read_thread_local_pointer_diagnostics(
     const nacl_arm_val::DecodedInstruction& inst,
     const nacl_arm_val::SfiValidator& sfi,
     nacl_arm_val::ProblemSink* out) {
-  UNREFERENCED_PARAMETER(sfi);
+  NACL_UNUSED_PARAMETER(sfi);
   if (ContainsViolation(violations, READ_THREAD_LOCAL_POINTER_VIOLATION)) {
     out->ReportProblemDiagnostic(
         READ_THREAD_LOCAL_POINTER_VIOLATION,
@@ -477,7 +477,7 @@ static inline void generate_pc_writes_diagnostics(
     const nacl_arm_val::DecodedInstruction& inst,
     const nacl_arm_val::SfiValidator& sfi,
     nacl_arm_val::ProblemSink* out) {
-  UNREFERENCED_PARAMETER(sfi);
+  NACL_UNUSED_PARAMETER(sfi);
   if (ContainsViolation(violations, PC_WRITES_VIOLATION)) {
     out->ReportProblemDiagnostic(
         PC_WRITES_VIOLATION,

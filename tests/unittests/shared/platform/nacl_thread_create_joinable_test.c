@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) {
   int num = TEST_NUM;
   struct NaClThread thr;
 
-  UNREFERENCED_PARAMETER(argc);
-  UNREFERENCED_PARAMETER(argv);
+  NACL_UNUSED_PARAMETER(argc);
+  NACL_UNUSED_PARAMETER(argv);
 
   if (!NaClThreadCreateJoinable(&thr, myThread, &num, 128*1024)) {
     failWithErrno("NaClThreadCreateJoinable");

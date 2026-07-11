@@ -48,16 +48,16 @@ static size_t GetRights(struct msghdr* msg, int* fdv) {
  * functions so that sigpipe_test continues to link.
  */
 NaClHandle NaClBoundSocket(const NaClSocketAddress* address) {
-  UNREFERENCED_PARAMETER(address);
+  NACL_UNUSED_PARAMETER(address);
   NaClLog(LOG_FATAL, "BoundSocket(): Not used on Linux\n");
   return -1;
 }
 
 int NaClSendDatagramTo(const NaClMessageHeader* message, int flags,
                        const NaClSocketAddress* name) {
-  UNREFERENCED_PARAMETER(message);
-  UNREFERENCED_PARAMETER(flags);
-  UNREFERENCED_PARAMETER(name);
+  NACL_UNUSED_PARAMETER(message);
+  NACL_UNUSED_PARAMETER(flags);
+  NACL_UNUSED_PARAMETER(name);
   NaClLog(LOG_FATAL, "SendDatagramTo(): Not used on Linux\n");
   return -1;
 }

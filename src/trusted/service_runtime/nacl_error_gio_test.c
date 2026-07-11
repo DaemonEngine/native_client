@@ -37,14 +37,14 @@ static int TailGioCtor(struct TailGio *self) {
 }
 
 static void TailGioDtor(struct Gio *vself) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
   return;
 }
 
 static ssize_t TailGioRead(struct Gio *vself, void *buf, size_t count) {
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(buf);
-  UNREFERENCED_PARAMETER(count);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(buf);
+  NACL_UNUSED_PARAMETER(count);
   return 0;
 }
 
@@ -88,19 +88,19 @@ static ssize_t TailGioWrite(struct Gio *vself, void const *buf, size_t count) {
 static off_t TailGioSeek(struct Gio *vself,
                   off_t offset,
                   int whence) {
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(offset);
-  UNREFERENCED_PARAMETER(whence);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(offset);
+  NACL_UNUSED_PARAMETER(whence);
   return 0;
 }
 
 static int TailGioFlush(struct Gio *vself) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
   return 0;
 }
 
 static int TailGioClose(struct Gio *vself) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
   return 0;
 }
 

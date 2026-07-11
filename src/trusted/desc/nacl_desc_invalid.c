@@ -32,7 +32,7 @@
 static int NaClDescInvalidExternalizeSize(struct NaClDesc      *vself,
                                           size_t               *nbytes,
                                           size_t               *nhandles) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
   *nbytes = 0;
   *nhandles = 0;
   return 0;
@@ -40,8 +40,8 @@ static int NaClDescInvalidExternalizeSize(struct NaClDesc      *vself,
 
 static int NaClDescInvalidExternalize(struct NaClDesc          *vself,
                                       struct NaClDescXferState *xfer) {
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(xfer);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(xfer);
   return 0;
 }
 
@@ -148,7 +148,7 @@ struct NaClDescInvalid const *NaClDescInvalidMake(void) {
 
 int NaClDescInvalidInternalize(struct NaClDesc               **baseptr,
                                struct NaClDescXferState      *xfer) {
-  UNREFERENCED_PARAMETER(xfer);
+  NACL_UNUSED_PARAMETER(xfer);
 
   *baseptr = (struct NaClDesc *) NaClDescInvalidMake();
 

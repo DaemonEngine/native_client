@@ -239,7 +239,7 @@ char const *NaClDescTypeString(enum NaClDescTypeTag type_tag) {
 
 
 void NaClDescDtorNotImplemented(struct NaClRefCount  *vself) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
 
   NaClLog(LOG_FATAL, "Must implement a destructor!\n");
 }
@@ -251,12 +251,12 @@ uintptr_t NaClDescMapNotImplemented(struct NaClDesc         *vself,
                                     int                     prot,
                                     int                     flags,
                                     nacl_off64_t            offset) {
-  UNREFERENCED_PARAMETER(effp);
-  UNREFERENCED_PARAMETER(start_addr);
-  UNREFERENCED_PARAMETER(len);
-  UNREFERENCED_PARAMETER(prot);
-  UNREFERENCED_PARAMETER(flags);
-  UNREFERENCED_PARAMETER(offset);
+  NACL_UNUSED_PARAMETER(effp);
+  NACL_UNUSED_PARAMETER(start_addr);
+  NACL_UNUSED_PARAMETER(len);
+  NACL_UNUSED_PARAMETER(prot);
+  NACL_UNUSED_PARAMETER(flags);
+  NACL_UNUSED_PARAMETER(offset);
 
   NaClLog(LOG_ERROR,
           "Map method is not implemented for object of type %s\n",
@@ -268,8 +268,8 @@ uintptr_t NaClDescMapNotImplemented(struct NaClDesc         *vself,
 ssize_t NaClDescReadNotImplemented(struct NaClDesc          *vself,
                                    void                     *buf,
                                    size_t                   len) {
-  UNREFERENCED_PARAMETER(buf);
-  UNREFERENCED_PARAMETER(len);
+  NACL_UNUSED_PARAMETER(buf);
+  NACL_UNUSED_PARAMETER(len);
 
   NaClLog(LOG_ERROR,
           "Read method is not implemented for object of type %s\n",
@@ -281,8 +281,8 @@ ssize_t NaClDescReadNotImplemented(struct NaClDesc          *vself,
 ssize_t NaClDescWriteNotImplemented(struct NaClDesc         *vself,
                                     void const              *buf,
                                     size_t                  len) {
-  UNREFERENCED_PARAMETER(buf);
-  UNREFERENCED_PARAMETER(len);
+  NACL_UNUSED_PARAMETER(buf);
+  NACL_UNUSED_PARAMETER(len);
 
   NaClLog(LOG_ERROR,
           "Write method is not implemented for object of type %s\n",
@@ -294,8 +294,8 @@ ssize_t NaClDescWriteNotImplemented(struct NaClDesc         *vself,
 nacl_off64_t NaClDescSeekNotImplemented(struct NaClDesc          *vself,
                                         nacl_off64_t             offset,
                                         int                      whence) {
-  UNREFERENCED_PARAMETER(offset);
-  UNREFERENCED_PARAMETER(whence);
+  NACL_UNUSED_PARAMETER(offset);
+  NACL_UNUSED_PARAMETER(whence);
 
   NaClLog(LOG_ERROR,
           "Seek method is not implemented for object of type %s\n",
@@ -308,9 +308,9 @@ ssize_t NaClDescPReadNotImplemented(struct NaClDesc *vself,
                                     void *buf,
                                     size_t len,
                                     nacl_off64_t offset) {
-  UNREFERENCED_PARAMETER(buf);
-  UNREFERENCED_PARAMETER(len);
-  UNREFERENCED_PARAMETER(offset);
+  NACL_UNUSED_PARAMETER(buf);
+  NACL_UNUSED_PARAMETER(len);
+  NACL_UNUSED_PARAMETER(offset);
 
   NaClLog(LOG_ERROR,
           "PRead method is not implemented for object of type %s\n",
@@ -323,9 +323,9 @@ ssize_t NaClDescPWriteNotImplemented(struct NaClDesc *vself,
                                      void const *buf,
                                      size_t len,
                                      nacl_off64_t offset) {
-  UNREFERENCED_PARAMETER(buf);
-  UNREFERENCED_PARAMETER(len);
-  UNREFERENCED_PARAMETER(offset);
+  NACL_UNUSED_PARAMETER(buf);
+  NACL_UNUSED_PARAMETER(len);
+  NACL_UNUSED_PARAMETER(offset);
 
   NaClLog(LOG_ERROR,
           "PWrite method is not implemented for object of type %s\n",
@@ -336,7 +336,7 @@ ssize_t NaClDescPWriteNotImplemented(struct NaClDesc *vself,
 
 int NaClDescFstatNotImplemented(struct NaClDesc         *vself,
                                 struct nacl_abi_stat    *statbuf) {
-  UNREFERENCED_PARAMETER(statbuf);
+  NACL_UNUSED_PARAMETER(statbuf);
 
   NaClLog(LOG_ERROR,
           "Fstat method is not implemented for object of type %s\n",
@@ -355,7 +355,7 @@ int NaClDescFchdirNotImplemented(struct NaClDesc *vself) {
 
 int NaClDescFchmodNotImplemented(struct NaClDesc *vself,
                                  int             mode) {
-  UNREFERENCED_PARAMETER(mode);
+  NACL_UNUSED_PARAMETER(mode);
 
   NaClLog(LOG_ERROR,
           "Fchmod method is not implemented for object of type %s\n",
@@ -382,7 +382,7 @@ int NaClDescFdatasyncNotImplemented(struct NaClDesc *vself) {
 
 int NaClDescFtruncateNotImplemented(struct NaClDesc  *vself,
                                     nacl_abi_off_t   length) {
-  UNREFERENCED_PARAMETER(length);
+  NACL_UNUSED_PARAMETER(length);
 
   NaClLog(LOG_ERROR,
           "Ftruncate method is not implemented for object of type %s\n",
@@ -394,8 +394,8 @@ int NaClDescFtruncateNotImplemented(struct NaClDesc  *vself,
 ssize_t NaClDescGetdentsNotImplemented(struct NaClDesc          *vself,
                                        void                     *dirp,
                                        size_t                   count) {
-  UNREFERENCED_PARAMETER(dirp);
-  UNREFERENCED_PARAMETER(count);
+  NACL_UNUSED_PARAMETER(dirp);
+  NACL_UNUSED_PARAMETER(count);
 
   NaClLog(LOG_ERROR,
           "Getdents method is not implemented for object of type %s\n",
@@ -407,8 +407,8 @@ ssize_t NaClDescGetdentsNotImplemented(struct NaClDesc          *vself,
 int NaClDescExternalizeSizeNotImplemented(struct NaClDesc *vself,
                                           size_t          *nbytes,
                                           size_t          *nhandles) {
-  UNREFERENCED_PARAMETER(nbytes);
-  UNREFERENCED_PARAMETER(nhandles);
+  NACL_UNUSED_PARAMETER(nbytes);
+  NACL_UNUSED_PARAMETER(nhandles);
 
   NaClLog(LOG_ERROR,
           "ExternalizeSize method is not implemented for object of type %s\n",
@@ -419,7 +419,7 @@ int NaClDescExternalizeSizeNotImplemented(struct NaClDesc *vself,
 
 int NaClDescExternalizeNotImplemented(struct NaClDesc          *vself,
                                       struct NaClDescXferState *xfer) {
-  UNREFERENCED_PARAMETER(xfer);
+  NACL_UNUSED_PARAMETER(xfer);
 
   NaClLog(LOG_ERROR,
           "Externalize method is not implemented for object of type %s\n",
@@ -454,7 +454,7 @@ int NaClDescUnlockNotImplemented(struct NaClDesc  *vself) {
 
 int NaClDescWaitNotImplemented(struct NaClDesc  *vself,
                                struct NaClDesc  *mutex) {
-  UNREFERENCED_PARAMETER(mutex);
+  NACL_UNUSED_PARAMETER(mutex);
 
   NaClLog(LOG_ERROR,
           "Wait method is not implemented for object of type %s\n",
@@ -466,8 +466,8 @@ int NaClDescWaitNotImplemented(struct NaClDesc  *vself,
 int NaClDescTimedWaitAbsNotImplemented(struct NaClDesc                *vself,
                                        struct NaClDesc                *mutex,
                                        struct nacl_abi_timespec const *ts) {
-  UNREFERENCED_PARAMETER(mutex);
-  UNREFERENCED_PARAMETER(ts);
+  NACL_UNUSED_PARAMETER(mutex);
+  NACL_UNUSED_PARAMETER(ts);
 
   NaClLog(LOG_ERROR,
           "TimedWaitAbs method is not implemented for object of type %s\n",
@@ -496,8 +496,8 @@ ssize_t NaClDescSendMsgNotImplemented(
     struct NaClDesc                 *vself,
     const struct NaClImcTypedMsgHdr *nitmhp,
     int                             flags) {
-  UNREFERENCED_PARAMETER(nitmhp);
-  UNREFERENCED_PARAMETER(flags);
+  NACL_UNUSED_PARAMETER(nitmhp);
+  NACL_UNUSED_PARAMETER(flags);
 
   NaClLog(LOG_ERROR,
           "SendMsg method is not implemented for object of type %s\n",
@@ -510,8 +510,8 @@ ssize_t NaClDescRecvMsgNotImplemented(
     struct NaClDesc                 *vself,
     struct NaClImcTypedMsgHdr       *nitmhp,
     int                             flags) {
-  UNREFERENCED_PARAMETER(nitmhp);
-  UNREFERENCED_PARAMETER(flags);
+  NACL_UNUSED_PARAMETER(nitmhp);
+  NACL_UNUSED_PARAMETER(flags);
 
   NaClLog(LOG_ERROR,
           "RecvMsg method is not implemented for object of type %s\n",
@@ -524,8 +524,8 @@ ssize_t NaClDescLowLevelSendMsgNotImplemented(
     struct NaClDesc                *vself,
     struct NaClMessageHeader const *dgram,
     int                            flags) {
-  UNREFERENCED_PARAMETER(dgram);
-  UNREFERENCED_PARAMETER(flags);
+  NACL_UNUSED_PARAMETER(dgram);
+  NACL_UNUSED_PARAMETER(flags);
 
   NaClLog(LOG_ERROR,
           "LowLevelSendMsg method is not implemented for object of type %s\n",
@@ -538,8 +538,8 @@ ssize_t NaClDescLowLevelRecvMsgNotImplemented(
     struct NaClDesc           *vself,
     struct NaClMessageHeader  *dgram,
     int                       flags) {
-  UNREFERENCED_PARAMETER(dgram);
-  UNREFERENCED_PARAMETER(flags);
+  NACL_UNUSED_PARAMETER(dgram);
+  NACL_UNUSED_PARAMETER(flags);
 
   NaClLog(LOG_ERROR,
           "LowLevelRecvMsg method is not implemented for object of type %s\n",
@@ -550,7 +550,7 @@ ssize_t NaClDescLowLevelRecvMsgNotImplemented(
 
 int NaClDescConnectAddrNotImplemented(struct NaClDesc *vself,
                                       struct NaClDesc **result) {
-  UNREFERENCED_PARAMETER(result);
+  NACL_UNUSED_PARAMETER(result);
 
   NaClLog(LOG_ERROR,
           "ConnectAddr method is not implemented for object of type %s\n",
@@ -561,7 +561,7 @@ int NaClDescConnectAddrNotImplemented(struct NaClDesc *vself,
 
 int NaClDescAcceptConnNotImplemented(struct NaClDesc *vself,
                                      struct NaClDesc **result) {
-  UNREFERENCED_PARAMETER(result);
+  NACL_UNUSED_PARAMETER(result);
 
   NaClLog(LOG_ERROR,
           "AcceptConn method is not implemented for object of type %s\n",
@@ -597,8 +597,8 @@ int NaClDescGetValueNotImplemented(struct NaClDesc  *vself) {
 int NaClDescInternalizeNotImplemented(
     struct NaClDesc                **out_desc,
     struct NaClDescXferState       *xfer) {
-  UNREFERENCED_PARAMETER(out_desc);
-  UNREFERENCED_PARAMETER(xfer);
+  NACL_UNUSED_PARAMETER(out_desc);
+  NACL_UNUSED_PARAMETER(xfer);
 
   NaClLog(LOG_ERROR,
           "Attempted transfer of non-transferable descriptor\n");

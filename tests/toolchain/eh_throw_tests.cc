@@ -281,7 +281,7 @@ class DtorThrowCatch {
 __attribute__((noinline))
 void nested_throw_catch() {
   DtorThrowCatch obj;
-  UNREFERENCED_PARAMETER(obj);
+  NACL_UNUSED_PARAMETER(obj);
   throw MyException(50);
 }
 

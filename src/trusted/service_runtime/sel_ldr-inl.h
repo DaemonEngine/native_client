@@ -127,13 +127,13 @@ static INLINE uintptr_t NaClSysToUser(struct NaClApp  *nap,
  */
 static INLINE uintptr_t NaClUserToSysStackAddr(struct NaClApp *nap,
                                                uintptr_t      stackaddr) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
   return stackaddr;
 }
 
 static INLINE uintptr_t NaClSysToUserStackAddr(struct NaClApp *nap,
                                                uintptr_t      stackaddr) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
   return stackaddr;
 }
 
@@ -189,11 +189,11 @@ static INLINE uintptr_t NaClSandboxCodeAddr(struct NaClApp *nap,
 #  error "What kind of x86 are we on anyway?!?"
 # endif
 #elif NACL_ARCH(NACL_BUILD_ARCH) == NACL_arm
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
   addr &= ~NACL_CONTROL_FLOW_MASK;
   return addr;
 #elif NACL_ARCH(NACL_BUILD_ARCH) == NACL_mips
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
   return addr & NACL_CONTROL_FLOW_MASK;
 #else
 # error "What architecture are we on?!?"

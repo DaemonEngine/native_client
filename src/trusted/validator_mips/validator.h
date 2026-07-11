@@ -365,10 +365,10 @@ class ProblemSink {
    */
   virtual void ReportProblem(uint32_t vaddr, nacl_mips_dec::SafetyLevel safety,
       const nacl::string &problem_code, uint32_t ref_vaddr = 0) {
-    UNREFERENCED_PARAMETER(vaddr);
-    UNREFERENCED_PARAMETER(safety);
-    UNREFERENCED_PARAMETER(problem_code);
-    UNREFERENCED_PARAMETER(ref_vaddr);
+    NACL_UNUSED_PARAMETER(vaddr);
+    NACL_UNUSED_PARAMETER(safety);
+    NACL_UNUSED_PARAMETER(problem_code);
+    NACL_UNUSED_PARAMETER(ref_vaddr);
   }
 
   /*

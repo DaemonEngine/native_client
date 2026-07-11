@@ -53,8 +53,8 @@ void NcvalProblemReporter::
 ReportProblemMessage(nacl_arm_dec::Violation violation,
                      uint32_t vaddr,
                      const char* message) {
-  UNREFERENCED_PARAMETER(vaddr);
-  UNREFERENCED_PARAMETER(violation);
+  NACL_UNUSED_PARAMETER(vaddr);
+  NACL_UNUSED_PARAMETER(violation);
   printf("%8" NACL_PRIx32 ": %s\n", vaddr, message);
 }
 

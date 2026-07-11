@@ -54,10 +54,10 @@ int64_t NaClDescQuotaInterfaceWriteRequestNotImplemented(
     uint8_t const                  *file_id,
     int64_t                        offset,
     int64_t                        length) {
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(file_id);
-  UNREFERENCED_PARAMETER(offset);
-  UNREFERENCED_PARAMETER(length);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(file_id);
+  NACL_UNUSED_PARAMETER(offset);
+  NACL_UNUSED_PARAMETER(length);
   NaClLog(LOG_FATAL, "NaClDescQuotaInterface: WriteRequest not implemented.");
   return 0;
 }
@@ -66,9 +66,9 @@ int64_t NaClDescQuotaInterfaceFtruncateRequestNotImplemented(
     struct NaClDescQuotaInterface  *vself,
     uint8_t const                  *file_id,
     int64_t                        length) {
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(file_id);
-  UNREFERENCED_PARAMETER(length);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(file_id);
+  NACL_UNUSED_PARAMETER(length);
   NaClLog(LOG_FATAL,
           "NaClDescQuotaInterface: FtruncateRequest not implemented.");
   return 0;

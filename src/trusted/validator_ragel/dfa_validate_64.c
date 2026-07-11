@@ -47,7 +47,7 @@ static NaClValidationStatus ApplyDfaValidator_x86_64(
   callback_data.validate_chunk_func = ValidateChunkAMD64;
   callback_data.did_rewrite = 0;
 
-  UNREFERENCED_PARAMETER(guest_addr);
+  NACL_UNUSED_PARAMETER(guest_addr);
 
   if (stubout_mode)
     return NaClValidationFailedNotImplemented;
@@ -109,7 +109,7 @@ static NaClValidationStatus ValidatorCodeCopy_x86_64(
   /* TODO(jfb) Use a safe cast here. */
   NaClCPUFeaturesX86 *cpu_features = (NaClCPUFeaturesX86 *) f;
   struct CodeCopyCallbackData callback_data;
-  UNREFERENCED_PARAMETER(guest_addr);
+  NACL_UNUSED_PARAMETER(guest_addr);
 
   if (size & kBundleMask)
     return NaClValidationFailed;
@@ -218,7 +218,7 @@ static NaClValidationStatus ValidatorCodeReplacement_x86_64(
     const NaClCPUFeatures *f) {
   /* TODO(jfb) Use a safe cast here. */
   NaClCPUFeaturesX86 *cpu_features = (NaClCPUFeaturesX86 *) f;
-  UNREFERENCED_PARAMETER(guest_addr);
+  NACL_UNUSED_PARAMETER(guest_addr);
 
   if (size & kBundleMask)
     return NaClValidationFailed;
@@ -241,7 +241,7 @@ static Bool IsOnInstBoundaryCallback(const uint8_t *begin,
                               uint32_t info,
                               void *callback_data) {
   struct IsOnInstBoundaryCallbackData *data = callback_data;
-  UNREFERENCED_PARAMETER(end);
+  NACL_UNUSED_PARAMETER(end);
 
   /*
    * Superinstructions are only reported when the final instruction

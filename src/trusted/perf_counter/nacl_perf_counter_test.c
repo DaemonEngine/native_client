@@ -35,8 +35,8 @@ struct perf_counter_test arr[] = {
 int main(int argc, char*argv[]) {
   int i = 0;
   int64_t res = 0;
-  UNREFERENCED_PARAMETER(argc);
-  UNREFERENCED_PARAMETER(argv);
+  NACL_UNUSED_PARAMETER(argc);
+  NACL_UNUSED_PARAMETER(argv);
   NaClLogModuleInit();
   NaClTimeInit();
 

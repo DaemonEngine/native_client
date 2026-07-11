@@ -61,7 +61,7 @@ int NaClMachThreadStateIsInUntrusted(x86_thread_state_t *state,
 
   uint16_t global_cs;
 
-  UNREFERENCED_PARAMETER(nacl_thread_index);
+  NACL_UNUSED_PARAMETER(nacl_thread_index);
 
   CHECK(state->tsh.flavor == x86_THREAD_STATE32);
 

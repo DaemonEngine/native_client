@@ -35,7 +35,7 @@ const int INSN_WIDTH = 15; /* Counterpart of '--insn-width' objdump option. */
 void NaClLog(int detail_level, char const  *fmt, ...) {
   va_list ap;
 
-  UNREFERENCED_PARAMETER(detail_level);
+  NACL_UNUSED_PARAMETER(detail_level);
   va_start(ap, fmt);
   vfprintf(stderr, fmt, ap);
   exit(1);

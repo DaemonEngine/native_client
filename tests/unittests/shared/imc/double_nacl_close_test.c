@@ -24,8 +24,8 @@ int main(int argc, char* argv[]) {
   int result;
   NaClHandle pair[2];
 
-  UNREFERENCED_PARAMETER(argc);
-  UNREFERENCED_PARAMETER(argv);
+  NACL_UNUSED_PARAMETER(argc);
+  NACL_UNUSED_PARAMETER(argv);
 
   if (0 != NaClSocketPair(pair)) {
     failWithErrno("SocketPair");

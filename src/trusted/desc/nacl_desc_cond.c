@@ -67,7 +67,7 @@ static void NaClDescCondVarDtor(struct NaClRefCount *vself) {
 
 static int NaClDescCondVarFstat(struct NaClDesc          *vself,
                                 struct nacl_abi_stat     *statbuf) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
 
   memset(statbuf, 0, sizeof *statbuf);
   statbuf->nacl_abi_st_mode = NACL_ABI_S_IFCOND | NACL_ABI_S_IRWXU;

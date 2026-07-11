@@ -50,15 +50,15 @@ EXTERN_C_END
  */
 
 static INLINE int NaClDebugExceptionHandlerEnsureAttached(struct NaClApp *nap) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 
   return 1;
 }
 
 static INLINE void NaClDebugExceptionHandlerStandaloneHandleArgs(int argc,
                                                                  char **argv) {
-  UNREFERENCED_PARAMETER(argc);
-  UNREFERENCED_PARAMETER(argv);
+  NACL_UNUSED_PARAMETER(argc);
+  NACL_UNUSED_PARAMETER(argv);
 }
 
 #endif

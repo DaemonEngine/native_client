@@ -47,7 +47,7 @@ NaClValidationStatus ApplyDfaValidator_x86_32(
   callback_data.validate_chunk_func = ValidateChunkIA32;
   callback_data.did_rewrite = 0;
 
-  UNREFERENCED_PARAMETER(guest_addr);
+  NACL_UNUSED_PARAMETER(guest_addr);
 
   if (stubout_mode)
     return NaClValidationFailedNotImplemented;
@@ -108,7 +108,7 @@ static NaClValidationStatus ValidatorCopy_x86_32(
   /* TODO(jfb) Use a safe cast here. */
   NaClCPUFeaturesX86 *cpu_features = (NaClCPUFeaturesX86 *) f;
   struct CodeCopyCallbackData callback_data;
-  UNREFERENCED_PARAMETER(guest_addr);
+  NACL_UNUSED_PARAMETER(guest_addr);
 
   if (size & kBundleMask)
     return NaClValidationFailed;
@@ -277,7 +277,7 @@ static NaClValidationStatus ValidatorCodeReplacement_x86_32(
   /* TODO(jfb) Use a safe cast here. */
   NaClCPUFeaturesX86 *cpu_features = (NaClCPUFeaturesX86 *) f;
   struct CodeReplacementCallbackData callback_data;
-  UNREFERENCED_PARAMETER(guest_addr);
+  NACL_UNUSED_PARAMETER(guest_addr);
 
   if (size & kBundleMask)
     return NaClValidationFailed;
@@ -308,8 +308,8 @@ static Bool IsOnInstBoundaryCallback(const uint8_t *begin,
                                      uint32_t info,
                                      void *callback_data) {
   struct IsOnInstBoundaryCallbackData *data = callback_data;
-  UNREFERENCED_PARAMETER(info);
-  UNREFERENCED_PARAMETER(end);
+  NACL_UNUSED_PARAMETER(info);
+  NACL_UNUSED_PARAMETER(end);
 
   /*
    * For x86-32 superinstructions are at most 2 normal instructions,

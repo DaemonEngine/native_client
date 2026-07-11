@@ -97,7 +97,7 @@ void  NaClVmmapEntryFree(struct NaClVmmapEntry *entry) {
  */
 void NaClVmentryPrint(void                  *state,
                       struct NaClVmmapEntry *vmep) {
-  UNREFERENCED_PARAMETER(state);
+  NACL_UNUSED_PARAMETER(state);
 
   printf("page num 0x%06x\n", (uint32_t)vmep->page_num);
   printf("num pages %d\n", (uint32_t)vmep->npages);

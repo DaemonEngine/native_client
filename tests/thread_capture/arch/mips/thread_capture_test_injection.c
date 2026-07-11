@@ -13,7 +13,7 @@
 #include "native_client/src/trusted/service_runtime/nacl_tls.h"
 
 static int32_t TestSyscall(struct NaClAppThread *natp) {
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 
   g_nacl_syscall_thread_capture_fault_addr =
       (uintptr_t) &NaClSyscallThreadCaptureFault;

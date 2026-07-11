@@ -145,7 +145,7 @@ bool IPlatform::GetMemory(uint64_t virt, uint32_t len, void *dst) {
 
 bool IPlatform::SetMemory(struct NaClApp *nap, uint64_t virt, uint32_t len,
                           void *src) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
   uint32_t oldFlags = Reprotect(reinterpret_cast<void *>(virt),
                                 len, PAGE_READWRITE);
 

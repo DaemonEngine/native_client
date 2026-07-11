@@ -60,9 +60,9 @@ static int64_t FakeWriteRequest(struct NaClDescQuotaInterface *quota_interface,
                                 uint8_t const                 *file_id,
                                 int64_t                       offset,
                                 int64_t                       length) {
-  UNREFERENCED_PARAMETER(quota_interface);
-  UNREFERENCED_PARAMETER(file_id);
-  UNREFERENCED_PARAMETER(offset);
+  NACL_UNUSED_PARAMETER(quota_interface);
+  NACL_UNUSED_PARAMETER(file_id);
+  NACL_UNUSED_PARAMETER(offset);
 
   NaClLog(1,
           ("NaClSrpcPepperWriteRequest(dummy): requesting length %"NACL_PRId64
@@ -88,8 +88,8 @@ static int64_t FakeFtruncateRequest(
     struct NaClDescQuotaInterface *quota_interface,
     uint8_t const                 *file_id,
     int64_t                       length) {
-  UNREFERENCED_PARAMETER(quota_interface);
-  UNREFERENCED_PARAMETER(file_id);
+  NACL_UNUSED_PARAMETER(quota_interface);
+  NACL_UNUSED_PARAMETER(file_id);
 
   NaClLog(LOG_FATAL, "FtruncateRequest invoked!?!\n");
   return length;

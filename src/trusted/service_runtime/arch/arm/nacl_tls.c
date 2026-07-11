@@ -86,7 +86,7 @@ static int NaClThreadIdxAllocate(void) {
  * actually launches.
  */
 uint32_t NaClTlsAllocate(struct NaClAppThread *natp) {
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 
   return NaClThreadIdxAllocate();
 }

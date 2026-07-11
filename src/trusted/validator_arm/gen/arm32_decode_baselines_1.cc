@@ -34,7 +34,7 @@ namespace nacl_arm_dec {
 //    uses: {Rn}}
 RegisterList ADC_immediate_cccc0010101snnnnddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -48,7 +48,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ADC_immediate_cccc0010101snnnnddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -69,7 +69,7 @@ safety(Instruction inst) const {
 
 RegisterList ADC_immediate_cccc0010101snnnnddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -105,7 +105,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList ADC_register_cccc0000101snnnnddddiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -118,7 +118,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ADC_register_cccc0000101snnnnddddiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -139,7 +139,7 @@ safety(Instruction inst) const {
 
 RegisterList ADC_register_cccc0000101snnnnddddiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -176,7 +176,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Rs}}
 RegisterList ADC_register_shifted_register_cccc0000101snnnnddddssss0tt1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -190,7 +190,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ADC_register_shifted_register_cccc0000101snnnnddddssss0tt1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -212,7 +212,7 @@ safety(Instruction inst) const {
 
 RegisterList ADC_register_shifted_register_cccc0000101snnnnddddssss0tt1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -245,7 +245,7 @@ uses(Instruction inst) const {
 //    uses: {Rn}}
 RegisterList ADD_immediate_cccc0010100snnnnddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -259,7 +259,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ADD_immediate_cccc0010100snnnnddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -288,7 +288,7 @@ safety(Instruction inst) const {
 
 RegisterList ADD_immediate_cccc0010100snnnnddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -324,7 +324,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList ADD_register_cccc0000100snnnnddddiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -337,7 +337,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ADD_register_cccc0000100snnnnddddiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -358,7 +358,7 @@ safety(Instruction inst) const {
 
 RegisterList ADD_register_cccc0000100snnnnddddiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -395,7 +395,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Rs}}
 RegisterList ADD_register_shifted_register_cccc0000100snnnnddddssss0tt1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -409,7 +409,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ADD_register_shifted_register_cccc0000100snnnnddddssss0tt1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -431,7 +431,7 @@ safety(Instruction inst) const {
 
 RegisterList ADD_register_shifted_register_cccc0000100snnnnddddssss0tt1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -454,7 +454,7 @@ uses(Instruction inst) const {
 //    uses: {Pc}}
 RegisterList ADR_A1_cccc001010001111ddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -462,7 +462,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ADR_A1_cccc001010001111ddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(15:12)=1111 => FORBIDDEN_OPERANDS
   if ((inst.Bits() & 0x0000F000)  ==
@@ -475,7 +475,7 @@ safety(Instruction inst) const {
 
 RegisterList ADR_A1_cccc001010001111ddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{15}'
   return RegisterList().
    Add(Register(15));
@@ -496,7 +496,7 @@ uses(Instruction inst) const {
 //    uses: {Pc}}
 RegisterList ADR_A2_cccc001001001111ddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -504,7 +504,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ADR_A2_cccc001001001111ddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(15:12)=1111 => FORBIDDEN_OPERANDS
   if ((inst.Bits() & 0x0000F000)  ==
@@ -517,7 +517,7 @@ safety(Instruction inst) const {
 
 RegisterList ADR_A2_cccc001001001111ddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{15}'
   return RegisterList().
    Add(Register(15));
@@ -546,7 +546,7 @@ uses(Instruction inst) const {
 //    uses: {Rn}}
 RegisterList AND_immediate_cccc0010000snnnnddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -560,7 +560,7 @@ defs(Instruction inst) const {
 
 SafetyLevel AND_immediate_cccc0010000snnnnddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -581,7 +581,7 @@ safety(Instruction inst) const {
 
 RegisterList AND_immediate_cccc0010000snnnnddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -617,7 +617,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList AND_register_cccc0000000snnnnddddiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -630,7 +630,7 @@ defs(Instruction inst) const {
 
 SafetyLevel AND_register_cccc0000000snnnnddddiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -651,7 +651,7 @@ safety(Instruction inst) const {
 
 RegisterList AND_register_cccc0000000snnnnddddiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -688,7 +688,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Rs}}
 RegisterList AND_register_shifted_register_cccc0000000snnnnddddssss0tt1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -702,7 +702,7 @@ defs(Instruction inst) const {
 
 SafetyLevel AND_register_shifted_register_cccc0000000snnnnddddssss0tt1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -724,7 +724,7 @@ safety(Instruction inst) const {
 
 RegisterList AND_register_shifted_register_cccc0000000snnnnddddssss0tt1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -760,7 +760,7 @@ uses(Instruction inst) const {
 //    uses: {Rm}}
 RegisterList ASR_immediate_cccc0001101s0000ddddiiiii100mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -773,7 +773,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ASR_immediate_cccc0001101s0000ddddiiiii100mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -794,7 +794,7 @@ safety(Instruction inst) const {
 
 RegisterList ASR_immediate_cccc0001101s0000ddddiiiii100mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -821,7 +821,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList ASR_register_cccc0001101s0000ddddmmmm0101nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -835,7 +835,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ASR_register_cccc0001101s0000ddddmmmm0101nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -854,7 +854,7 @@ safety(Instruction inst) const {
 
 RegisterList ASR_register_cccc0001101s0000ddddmmmm0101nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -880,7 +880,7 @@ uses(Instruction inst) const {
 //    uses: {Rd}}
 RegisterList BFC_cccc0111110mmmmmddddlllll0011111_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -888,7 +888,7 @@ defs(Instruction inst) const {
 
 SafetyLevel BFC_cccc0111110mmmmmddddlllll0011111_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) => UNPREDICTABLE
@@ -906,7 +906,7 @@ safety(Instruction inst) const {
 
 RegisterList BFC_cccc0111110mmmmmddddlllll0011111_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -934,7 +934,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rd}}
 RegisterList BFI_cccc0111110mmmmmddddlllll001nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -942,7 +942,7 @@ defs(Instruction inst) const {
 
 SafetyLevel BFI_cccc0111110mmmmmddddlllll001nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(3:0) => DECODER_ERROR
@@ -965,7 +965,7 @@ safety(Instruction inst) const {
 
 RegisterList BFI_cccc0111110mmmmmddddlllll001nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(15:12)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -998,7 +998,7 @@ uses(Instruction inst) const {
 //    uses: {Rn}}
 bool BIC_immediate_cccc0011110snnnnddddiiiiiiiiiiii_case_0::
 clears_bits(Instruction inst, uint32_t clears_mask) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // clears_bits: '(ARMExpandImm(inst(11:0)) &&
   //       clears_mask())  ==
   //          clears_mask()'
@@ -1007,7 +1007,7 @@ clears_bits(Instruction inst, uint32_t clears_mask) const {
 
 RegisterList BIC_immediate_cccc0011110snnnnddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -1021,7 +1021,7 @@ defs(Instruction inst) const {
 
 SafetyLevel BIC_immediate_cccc0011110snnnnddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -1042,7 +1042,7 @@ safety(Instruction inst) const {
 
 RegisterList BIC_immediate_cccc0011110snnnnddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -1078,7 +1078,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList BIC_register_cccc0001110snnnnddddiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -1091,7 +1091,7 @@ defs(Instruction inst) const {
 
 SafetyLevel BIC_register_cccc0001110snnnnddddiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -1112,7 +1112,7 @@ safety(Instruction inst) const {
 
 RegisterList BIC_register_cccc0001110snnnnddddiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -1149,7 +1149,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Rs}}
 RegisterList BIC_register_shifted_register_cccc0001110snnnnddddssss0tt1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -1163,7 +1163,7 @@ defs(Instruction inst) const {
 
 SafetyLevel BIC_register_shifted_register_cccc0001110snnnnddddssss0tt1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -1185,7 +1185,7 @@ safety(Instruction inst) const {
 
 RegisterList BIC_register_shifted_register_cccc0001110snnnnddddssss0tt1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -1213,14 +1213,14 @@ uses(Instruction inst) const {
 //    violations: [implied by 'is_literal_pool_head']}
 RegisterList BKPT_cccc00010010iiiiiiiiiiii0111iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 bool BKPT_cccc00010010iiiiiiiiiiii0111iiii_case_0::
 is_literal_pool_head(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // is_literal_pool_head: 'LiteralPoolHeadConstant()  ==
   //          inst'
   return ((inst.Bits()) == (nacl_arm_dec::LiteralPoolHeadConstant()));
@@ -1228,7 +1228,7 @@ is_literal_pool_head(Instruction inst) const {
 
 SafetyLevel BKPT_cccc00010010iiiiiiiiiiii0111iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(31:28)=~1110 => UNPREDICTABLE
   if ((inst.Bits() & 0xF0000000)  !=
@@ -1245,7 +1245,7 @@ safety(Instruction inst) const {
 
 RegisterList BKPT_cccc00010010iiiiiiiiiiii0111iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -1279,14 +1279,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    uses: {}}
 RegisterList BLX_immediate_1111101hiiiiiiiiiiiiiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel BLX_immediate_1111101hiiiiiiiiiiiiiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -1298,7 +1298,7 @@ safety(Instruction inst) const {
 
 RegisterList BLX_immediate_1111101hiiiiiiiiiiiiiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -1320,7 +1320,7 @@ uses(Instruction inst) const {
 //    violations: [implied by 'target']}
 RegisterList BLX_register_cccc000100101111111111110011mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{15, 14}'
   return RegisterList().
    Add(Register(15)).
@@ -1329,7 +1329,7 @@ defs(Instruction inst) const {
 
 SafetyLevel BLX_register_cccc000100101111111111110011mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(3:0)=1111 => FORBIDDEN_OPERANDS
   if ((inst.Bits() & 0x0000000F)  ==
@@ -1342,14 +1342,14 @@ safety(Instruction inst) const {
 
 Register BLX_register_cccc000100101111111111110011mmmm_case_0::
 branch_target_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // target: 'inst(3:0)'
   return Register((inst.Bits() & 0x0000000F));
 }
 
 RegisterList BLX_register_cccc000100101111111111110011mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -1395,7 +1395,7 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'relative']}
 RegisterList BL_BLX_immediate_cccc1011iiiiiiiiiiiiiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{15, 14}'
   return RegisterList().
    Add(Register(15)).
@@ -1404,14 +1404,14 @@ defs(Instruction inst) const {
 
 bool BL_BLX_immediate_cccc1011iiiiiiiiiiiiiiiiiiiiiiii_case_0::
 is_relative_branch(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // relative: 'true'
   return true;
 }
 
 int32_t BL_BLX_immediate_cccc1011iiiiiiiiiiiiiiiiiiiiiiii_case_0::
 branch_target_offset(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // relative_offset: "SignExtend(inst(23:0):'00'(1:0), 32) + 8"
   return (((((((inst.Bits() & 0x00FFFFFF)) << 2) | (0 & 0x00000003))) & 0x02000000)
        ? ((((((inst.Bits() & 0x00FFFFFF)) << 2) | (0 & 0x00000003))) | 0xFC000000)
@@ -1420,7 +1420,7 @@ branch_target_offset(Instruction inst) const {
 
 SafetyLevel BL_BLX_immediate_cccc1011iiiiiiiiiiiiiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => MAY_BE_SAFE
   if (true)
@@ -1432,7 +1432,7 @@ safety(Instruction inst) const {
 
 RegisterList BL_BLX_immediate_cccc1011iiiiiiiiiiiiiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{15}'
   return RegisterList().
    Add(Register(15));
@@ -1468,14 +1468,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    uses: {}}
 RegisterList BXJ_cccc000100101111111111110010mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel BXJ_cccc000100101111111111110010mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -1487,7 +1487,7 @@ safety(Instruction inst) const {
 
 RegisterList BXJ_cccc000100101111111111110010mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -1510,7 +1510,7 @@ uses(Instruction inst) const {
 //    violations: [implied by 'relative']}
 RegisterList B_cccc1010iiiiiiiiiiiiiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{15}'
   return RegisterList().
    Add(Register(15));
@@ -1518,14 +1518,14 @@ defs(Instruction inst) const {
 
 bool B_cccc1010iiiiiiiiiiiiiiiiiiiiiiii_case_0::
 is_relative_branch(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // relative: 'true'
   return true;
 }
 
 int32_t B_cccc1010iiiiiiiiiiiiiiiiiiiiiiii_case_0::
 branch_target_offset(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // relative_offset: "SignExtend(inst(23:0):'00'(1:0), 32) + 8"
   return (((((((inst.Bits() & 0x00FFFFFF)) << 2) | (0 & 0x00000003))) & 0x02000000)
        ? ((((((inst.Bits() & 0x00FFFFFF)) << 2) | (0 & 0x00000003))) | 0xFC000000)
@@ -1534,7 +1534,7 @@ branch_target_offset(Instruction inst) const {
 
 SafetyLevel B_cccc1010iiiiiiiiiiiiiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => MAY_BE_SAFE
   if (true)
@@ -1546,7 +1546,7 @@ safety(Instruction inst) const {
 
 RegisterList B_cccc1010iiiiiiiiiiiiiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{15}'
   return RegisterList().
    Add(Register(15));
@@ -1587,7 +1587,7 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'target']}
 RegisterList Bx_cccc000100101111111111110001mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{15}'
   return RegisterList().
    Add(Register(15));
@@ -1595,7 +1595,7 @@ defs(Instruction inst) const {
 
 SafetyLevel Bx_cccc000100101111111111110001mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(3:0)=1111 => FORBIDDEN_OPERANDS
   if ((inst.Bits() & 0x0000000F)  ==
@@ -1608,14 +1608,14 @@ safety(Instruction inst) const {
 
 Register Bx_cccc000100101111111111110001mmmm_case_0::
 branch_target_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // target: 'inst(3:0)'
   return Register((inst.Bits() & 0x0000000F));
 }
 
 RegisterList Bx_cccc000100101111111111110001mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -1653,14 +1653,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    uses: {}}
 RegisterList CDP2_11111110iiiiiiiiiiiiiiiiiii0iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel CDP2_11111110iiiiiiiiiiiiiiiiiii0iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -1672,7 +1672,7 @@ safety(Instruction inst) const {
 
 RegisterList CDP2_11111110iiiiiiiiiiiiiiiiiii0iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -1687,14 +1687,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList CDP_cccc1110oooonnnnddddccccooo0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel CDP_cccc1110oooonnnnddddccccooo0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -1706,7 +1706,7 @@ safety(Instruction inst) const {
 
 RegisterList CDP_cccc1110oooonnnnddddccccooo0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -1722,14 +1722,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList CLREX_11110101011111111111000000011111_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel CLREX_11110101011111111111000000011111_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -1741,7 +1741,7 @@ safety(Instruction inst) const {
 
 RegisterList CLREX_11110101011111111111000000011111_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -1761,7 +1761,7 @@ uses(Instruction inst) const {
 //    uses: {Rm}}
 RegisterList CLZ_cccc000101101111dddd11110001mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -1769,7 +1769,7 @@ defs(Instruction inst) const {
 
 SafetyLevel CLZ_cccc000101101111dddd11110001mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -1785,7 +1785,7 @@ safety(Instruction inst) const {
 
 RegisterList CLZ_cccc000101101111dddd11110001mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -1805,7 +1805,7 @@ uses(Instruction inst) const {
 //    uses: {Rn}}
 RegisterList CMN_immediate_cccc00110111nnnn0000iiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{16}'
   return RegisterList().
    Add(Register(16));
@@ -1813,7 +1813,7 @@ defs(Instruction inst) const {
 
 SafetyLevel CMN_immediate_cccc00110111nnnn0000iiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   return MAY_BE_SAFE;
 }
@@ -1821,7 +1821,7 @@ safety(Instruction inst) const {
 
 RegisterList CMN_immediate_cccc00110111nnnn0000iiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -1852,7 +1852,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList CMN_register_cccc00010111nnnn0000iiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{16
   //       if inst(20)
   //       else 32}'
@@ -1864,7 +1864,7 @@ defs(Instruction inst) const {
 
 SafetyLevel CMN_register_cccc00010111nnnn0000iiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   return MAY_BE_SAFE;
 }
@@ -1872,7 +1872,7 @@ safety(Instruction inst) const {
 
 RegisterList CMN_register_cccc00010111nnnn0000iiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -1897,7 +1897,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Rs}}
 RegisterList CMN_register_shifted_register_cccc00010111nnnn0000ssss0tt1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{16}'
   return RegisterList().
    Add(Register(16));
@@ -1905,7 +1905,7 @@ defs(Instruction inst) const {
 
 SafetyLevel CMN_register_shifted_register_cccc00010111nnnn0000ssss0tt1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -1924,7 +1924,7 @@ safety(Instruction inst) const {
 
 RegisterList CMN_register_shifted_register_cccc00010111nnnn0000ssss0tt1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -1946,7 +1946,7 @@ uses(Instruction inst) const {
 //    uses: {Rn}}
 RegisterList CMP_immediate_cccc00110101nnnn0000iiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{16}'
   return RegisterList().
    Add(Register(16));
@@ -1954,7 +1954,7 @@ defs(Instruction inst) const {
 
 SafetyLevel CMP_immediate_cccc00110101nnnn0000iiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   return MAY_BE_SAFE;
 }
@@ -1962,7 +1962,7 @@ safety(Instruction inst) const {
 
 RegisterList CMP_immediate_cccc00110101nnnn0000iiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -1993,7 +1993,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList CMP_register_cccc00010101nnnn0000iiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{16
   //       if inst(20)
   //       else 32}'
@@ -2005,7 +2005,7 @@ defs(Instruction inst) const {
 
 SafetyLevel CMP_register_cccc00010101nnnn0000iiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   return MAY_BE_SAFE;
 }
@@ -2013,7 +2013,7 @@ safety(Instruction inst) const {
 
 RegisterList CMP_register_cccc00010101nnnn0000iiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -2038,7 +2038,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Rs}}
 RegisterList CMP_register_shifted_register_cccc00010101nnnn0000ssss0tt1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{16}'
   return RegisterList().
    Add(Register(16));
@@ -2046,7 +2046,7 @@ defs(Instruction inst) const {
 
 SafetyLevel CMP_register_shifted_register_cccc00010101nnnn0000ssss0tt1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -2065,7 +2065,7 @@ safety(Instruction inst) const {
 
 RegisterList CMP_register_shifted_register_cccc00010101nnnn0000ssss0tt1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -2084,14 +2084,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList CPS_111100010000iii00000000iii0iiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel CPS_111100010000iii00000000iii0iiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -2103,7 +2103,7 @@ safety(Instruction inst) const {
 
 RegisterList CPS_111100010000iii00000000iii0iiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -2134,14 +2134,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList CVT_between_half_precision_and_single_precision_111100111d11ss10dddd011p00m0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel CVT_between_half_precision_and_single_precision_111100111d11ss10dddd011p00m0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(19:18)=~01 => UNDEFINED
   if ((inst.Bits() & 0x000C0000)  !=
@@ -2170,7 +2170,7 @@ safety(Instruction inst) const {
 
 RegisterList CVT_between_half_precision_and_single_precision_111100111d11ss10dddd011p00m0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -2186,14 +2186,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList DBG_cccc001100100000111100001111iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel DBG_cccc001100100000111100001111iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -2205,7 +2205,7 @@ safety(Instruction inst) const {
 
 RegisterList DBG_cccc001100100000111100001111iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -2222,14 +2222,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList DMB_1111010101111111111100000101xxxx_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel DMB_1111010101111111111100000101xxxx_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // not '1111'(3:0)  ==
   //          inst(3:0) ||
@@ -2263,7 +2263,7 @@ safety(Instruction inst) const {
 
 RegisterList DMB_1111010101111111111100000101xxxx_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -2280,14 +2280,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList DSB_1111010101111111111100000100xxxx_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel DSB_1111010101111111111100000100xxxx_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // not '1111'(3:0)  ==
   //          inst(3:0) ||
@@ -2321,7 +2321,7 @@ safety(Instruction inst) const {
 
 RegisterList DSB_1111010101111111111100000100xxxx_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -2349,7 +2349,7 @@ uses(Instruction inst) const {
 //    uses: {Rn}}
 RegisterList EOR_immediate_cccc0010001snnnnddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -2363,7 +2363,7 @@ defs(Instruction inst) const {
 
 SafetyLevel EOR_immediate_cccc0010001snnnnddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -2384,7 +2384,7 @@ safety(Instruction inst) const {
 
 RegisterList EOR_immediate_cccc0010001snnnnddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -2420,7 +2420,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList EOR_register_cccc0000001snnnnddddiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -2433,7 +2433,7 @@ defs(Instruction inst) const {
 
 SafetyLevel EOR_register_cccc0000001snnnnddddiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -2454,7 +2454,7 @@ safety(Instruction inst) const {
 
 RegisterList EOR_register_cccc0000001snnnnddddiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -2491,7 +2491,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Rs}}
 RegisterList EOR_register_shifted_register_cccc0000001snnnnddddssss0tt1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -2505,7 +2505,7 @@ defs(Instruction inst) const {
 
 SafetyLevel EOR_register_shifted_register_cccc0000001snnnnddddssss0tt1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -2527,7 +2527,7 @@ safety(Instruction inst) const {
 
 RegisterList EOR_register_shifted_register_cccc0000001snnnnddddssss0tt1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -2546,14 +2546,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList ERET_cccc0001011000000000000001101110_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel ERET_cccc0001011000000000000001101110_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -2565,7 +2565,7 @@ safety(Instruction inst) const {
 
 RegisterList ERET_cccc0001011000000000000001101110_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -2579,14 +2579,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList FICTITIOUS_FIRST_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel FICTITIOUS_FIRST_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -2598,7 +2598,7 @@ safety(Instruction inst) const {
 
 RegisterList FICTITIOUS_FIRST_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -2614,14 +2614,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList HVC_cccc00010100iiiiiiiiiiii0111iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel HVC_cccc00010100iiiiiiiiiiii0111iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -2633,7 +2633,7 @@ safety(Instruction inst) const {
 
 RegisterList HVC_cccc00010100iiiiiiiiiiii0111iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -2650,14 +2650,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList ISB_1111010101111111111100000110xxxx_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel ISB_1111010101111111111100000110xxxx_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(3:0)=~1111 => FORBIDDEN_OPERANDS
   if ((inst.Bits() & 0x0000000F)  !=
@@ -2670,7 +2670,7 @@ safety(Instruction inst) const {
 
 RegisterList ISB_1111010101111111111100000110xxxx_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -2686,14 +2686,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList LDC2_immediate_1111110pudw1nnnniiiiiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel LDC2_immediate_1111110pudw1nnnniiiiiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -2705,7 +2705,7 @@ safety(Instruction inst) const {
 
 RegisterList LDC2_immediate_1111110pudw1nnnniiiiiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -2721,14 +2721,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList LDC2_literal_1111110pudw11111iiiiiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel LDC2_literal_1111110pudw11111iiiiiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -2740,7 +2740,7 @@ safety(Instruction inst) const {
 
 RegisterList LDC2_literal_1111110pudw11111iiiiiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -2755,14 +2755,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList LDC_immediate_cccc110pudw1nnnnddddcccciiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel LDC_immediate_cccc110pudw1nnnnddddcccciiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -2774,7 +2774,7 @@ safety(Instruction inst) const {
 
 RegisterList LDC_immediate_cccc110pudw1nnnnddddcccciiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -2789,14 +2789,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList LDC_literal_cccc110pudw11111ddddcccciiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel LDC_literal_cccc110pudw11111ddddcccciiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -2808,7 +2808,7 @@ safety(Instruction inst) const {
 
 RegisterList LDC_literal_cccc110pudw11111ddddcccciiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -2842,14 +2842,14 @@ uses(Instruction inst) const {
 //    wback: W(21)=1}
 Register LDMDA_LDMFA_cccc100000w1nnnnrrrrrrrrrrrrrrrr_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDMDA_LDMFA_cccc100000w1nnnnrrrrrrrrrrrrrrrr_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: 'Union({inst(19:16)
   //       if inst(21)=1
   //       else 32}, RegisterList(inst(15:0)))'
@@ -2862,7 +2862,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDMDA_LDMFA_cccc100000w1nnnnrrrrrrrrrrrrrrrr_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -2890,7 +2890,7 @@ safety(Instruction inst) const {
 bool LDMDA_LDMFA_cccc100000w1nnnnrrrrrrrrrrrrrrrr_case_0::
 base_address_register_writeback_small_immediate(
       Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // small_imm_base_wb: 'inst(21)=1'
   return (inst.Bits() & 0x00200000)  ==
           0x00200000;
@@ -2898,7 +2898,7 @@ base_address_register_writeback_small_immediate(
 
 RegisterList LDMDA_LDMFA_cccc100000w1nnnnrrrrrrrrrrrrrrrr_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -2952,14 +2952,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    wback: W(21)=1}
 Register LDMDB_LDMEA_cccc100100w1nnnnrrrrrrrrrrrrrrrr_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDMDB_LDMEA_cccc100100w1nnnnrrrrrrrrrrrrrrrr_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: 'Union({inst(19:16)
   //       if inst(21)=1
   //       else 32}, RegisterList(inst(15:0)))'
@@ -2972,7 +2972,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDMDB_LDMEA_cccc100100w1nnnnrrrrrrrrrrrrrrrr_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -3000,7 +3000,7 @@ safety(Instruction inst) const {
 bool LDMDB_LDMEA_cccc100100w1nnnnrrrrrrrrrrrrrrrr_case_0::
 base_address_register_writeback_small_immediate(
       Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // small_imm_base_wb: 'inst(21)=1'
   return (inst.Bits() & 0x00200000)  ==
           0x00200000;
@@ -3008,7 +3008,7 @@ base_address_register_writeback_small_immediate(
 
 RegisterList LDMDB_LDMEA_cccc100100w1nnnnrrrrrrrrrrrrrrrr_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -3062,14 +3062,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    wback: W(21)=1}
 Register LDMIB_LDMED_cccc100110w1nnnnrrrrrrrrrrrrrrrr_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDMIB_LDMED_cccc100110w1nnnnrrrrrrrrrrrrrrrr_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: 'Union({inst(19:16)
   //       if inst(21)=1
   //       else 32}, RegisterList(inst(15:0)))'
@@ -3082,7 +3082,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDMIB_LDMED_cccc100110w1nnnnrrrrrrrrrrrrrrrr_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -3110,7 +3110,7 @@ safety(Instruction inst) const {
 bool LDMIB_LDMED_cccc100110w1nnnnrrrrrrrrrrrrrrrr_case_0::
 base_address_register_writeback_small_immediate(
       Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // small_imm_base_wb: 'inst(21)=1'
   return (inst.Bits() & 0x00200000)  ==
           0x00200000;
@@ -3118,7 +3118,7 @@ base_address_register_writeback_small_immediate(
 
 RegisterList LDMIB_LDMED_cccc100110w1nnnnrrrrrrrrrrrrrrrr_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -3172,14 +3172,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    wback: W(21)=1}
 Register LDM_LDMIA_LDMFD_cccc100010w1nnnnrrrrrrrrrrrrrrrr_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDM_LDMIA_LDMFD_cccc100010w1nnnnrrrrrrrrrrrrrrrr_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: 'Union({inst(19:16)
   //       if inst(21)=1
   //       else 32}, RegisterList(inst(15:0)))'
@@ -3192,7 +3192,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDM_LDMIA_LDMFD_cccc100010w1nnnnrrrrrrrrrrrrrrrr_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -3220,7 +3220,7 @@ safety(Instruction inst) const {
 bool LDM_LDMIA_LDMFD_cccc100010w1nnnnrrrrrrrrrrrrrrrr_case_0::
 base_address_register_writeback_small_immediate(
       Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // small_imm_base_wb: 'inst(21)=1'
   return (inst.Bits() & 0x00200000)  ==
           0x00200000;
@@ -3228,7 +3228,7 @@ base_address_register_writeback_small_immediate(
 
 RegisterList LDM_LDMIA_LDMFD_cccc100010w1nnnnrrrrrrrrrrrrrrrr_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -3263,14 +3263,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    uses: {}}
 RegisterList LDM_User_registers_cccc100pu101nnnn0rrrrrrrrrrrrrrr_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel LDM_User_registers_cccc100pu101nnnn0rrrrrrrrrrrrrrr_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -3282,7 +3282,7 @@ safety(Instruction inst) const {
 
 RegisterList LDM_User_registers_cccc100pu101nnnn0rrrrrrrrrrrrrrr_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -3297,14 +3297,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList LDM_exception_return_cccc100pu1w1nnnn1rrrrrrrrrrrrrrr_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel LDM_exception_return_cccc100pu1w1nnnn1rrrrrrrrrrrrrrr_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -3316,7 +3316,7 @@ safety(Instruction inst) const {
 
 RegisterList LDM_exception_return_cccc100pu1w1nnnn1rrrrrrrrrrrrrrr_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -3331,14 +3331,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList LDRBT_A1_cccc0100u111nnnnttttiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel LDRBT_A1_cccc0100u111nnnnttttiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -3350,7 +3350,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRBT_A1_cccc0100u111nnnnttttiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -3365,14 +3365,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList LDRBT_A2_cccc0110u111nnnnttttiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel LDRBT_A2_cccc0110u111nnnnttttiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -3384,7 +3384,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRBT_A2_cccc0110u111nnnnttttiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -3432,14 +3432,14 @@ uses(Instruction inst) const {
 //         W(21)=1}
 Register LDRB_immediate_cccc010pu1w1nnnnttttiiiiiiiiiiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDRB_immediate_cccc010pu1w1nnnnttttiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(19:16)
   //       if inst(24)=0 ||
   //       inst(21)=1
@@ -3456,7 +3456,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDRB_immediate_cccc010pu1w1nnnnttttiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) => DECODER_ERROR
@@ -3494,7 +3494,7 @@ safety(Instruction inst) const {
 bool LDRB_immediate_cccc010pu1w1nnnnttttiiiiiiiiiiii_case_0::
 base_address_register_writeback_small_immediate(
       Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // small_imm_base_wb: 'inst(24)=0 ||
   //       inst(21)=1'
   return ((inst.Bits() & 0x01000000)  ==
@@ -3505,7 +3505,7 @@ base_address_register_writeback_small_immediate(
 
 RegisterList LDRB_immediate_cccc010pu1w1nnnnttttiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -3552,14 +3552,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register LDRB_literal_cccc0101u1011111ttttiiiiiiiiiiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: '15'
   return Register(15);
 }
 
 RegisterList LDRB_literal_cccc0101u1011111ttttiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -3567,14 +3567,14 @@ defs(Instruction inst) const {
 
 bool LDRB_literal_cccc0101u1011111ttttiiiiiiiiiiii_case_0::
 is_literal_load(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // is_literal_load: 'true'
   return true;
 }
 
 SafetyLevel LDRB_literal_cccc0101u1011111ttttiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) => UNPREDICTABLE
@@ -3587,7 +3587,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRB_literal_cccc0101u1011111ttttiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{15}'
   return RegisterList().
    Add(Register(15));
@@ -3663,14 +3663,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //         W(21)=1}
 Register LDRB_register_cccc011pu1w1nnnnttttiiiiitt0mmmm_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDRB_register_cccc011pu1w1nnnnttttiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(19:16)
   //       if inst(24)=0 ||
   //       inst(21)=1
@@ -3687,7 +3687,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDRB_register_cccc011pu1w1nnnnttttiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(24)=0 &&
   //       inst(21)=1 => DECODER_ERROR
@@ -3744,7 +3744,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRB_register_cccc011pu1w1nnnnttttiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(19:16)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -3825,14 +3825,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //         (W(21)=1)}
 Register LDRD_immediate_cccc000pu1w0nnnnttttiiii1101iiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDRD_immediate_cccc000pu1w0nnnnttttiiii1101iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(15:12) + 1, inst(19:16)
   //       if (inst(24)=0) ||
   //       (inst(21)=1)
@@ -3850,7 +3850,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDRD_immediate_cccc000pu1w0nnnnttttiiii1101iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(19:16)=1111 => DECODER_ERROR
   if ((inst.Bits() & 0x000F0000)  ==
@@ -3896,7 +3896,7 @@ safety(Instruction inst) const {
 bool LDRD_immediate_cccc000pu1w0nnnnttttiiii1101iiii_case_0::
 base_address_register_writeback_small_immediate(
       Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // small_imm_base_wb: '(inst(24)=0) ||
   //       (inst(21)=1)'
   return (((inst.Bits() & 0x01000000)  ==
@@ -3907,7 +3907,7 @@ base_address_register_writeback_small_immediate(
 
 RegisterList LDRD_immediate_cccc000pu1w0nnnnttttiiii1101iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -3966,14 +3966,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register LDRD_literal_cccc0001u1001111ttttiiii1101iiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: '15'
   return Register(15);
 }
 
 RegisterList LDRD_literal_cccc0001u1001111ttttiiii1101iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(15:12) + 1}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12))).
@@ -3982,14 +3982,14 @@ defs(Instruction inst) const {
 
 bool LDRD_literal_cccc0001u1001111ttttiiii1101iiii_case_0::
 is_literal_load(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // is_literal_load: 'true'
   return true;
 }
 
 SafetyLevel LDRD_literal_cccc0001u1001111ttttiiii1101iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(15:12)(0)=1 => UNPREDICTABLE
   if ((((inst.Bits() & 0x0000F000) >> 12) & 0x00000001)  ==
@@ -4007,7 +4007,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRD_literal_cccc0001u1001111ttttiiii1101iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{15}'
   return RegisterList().
    Add(Register(15));
@@ -4090,14 +4090,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //         (W(21)=1)}
 Register LDRD_register_cccc000pu0w0nnnntttt00001101mmmm_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDRD_register_cccc000pu0w0nnnntttt00001101mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(15:12) + 1, inst(19:16)
   //       if (inst(24)=0) ||
   //       (inst(21)=1)
@@ -4115,7 +4115,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDRD_register_cccc000pu0w0nnnntttt00001101mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(15:12)(0)=1 => UNPREDICTABLE
   if ((((inst.Bits() & 0x0000F000) >> 12) & 0x00000001)  ==
@@ -4186,7 +4186,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRD_register_cccc000pu0w0nnnntttt00001101mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -4230,14 +4230,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register LDREXB_cccc00011101nnnntttt111110011111_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDREXB_cccc00011101nnnntttt111110011111_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -4245,7 +4245,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDREXB_cccc00011101nnnntttt111110011111_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -4261,7 +4261,7 @@ safety(Instruction inst) const {
 
 RegisterList LDREXB_cccc00011101nnnntttt111110011111_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -4310,14 +4310,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register LDREXD_cccc00011011nnnntttt111110011111_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDREXD_cccc00011011nnnntttt111110011111_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(15:12) + 1}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12))).
@@ -4326,7 +4326,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDREXD_cccc00011011nnnntttt111110011111_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(15:12)(0)=1 ||
   //       14  ==
@@ -4345,7 +4345,7 @@ safety(Instruction inst) const {
 
 RegisterList LDREXD_cccc00011011nnnntttt111110011111_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -4388,14 +4388,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register LDREX_cccc00011001nnnntttt111110011111_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDREX_cccc00011001nnnntttt111110011111_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -4403,7 +4403,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDREX_cccc00011001nnnntttt111110011111_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -4419,7 +4419,7 @@ safety(Instruction inst) const {
 
 RegisterList LDREX_cccc00011001nnnntttt111110011111_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -4496,14 +4496,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //         (W(21)=1)}
 Register LDRH_immediate_cccc000pu1w1nnnnttttiiii1011iiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDRH_immediate_cccc000pu1w1nnnnttttiiii1011iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(19:16)
   //       if (inst(24)=0) ||
   //       (inst(21)=1)
@@ -4520,7 +4520,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDRH_immediate_cccc000pu1w1nnnnttttiiii1011iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(19:16)=1111 => DECODER_ERROR
   if ((inst.Bits() & 0x000F0000)  ==
@@ -4561,7 +4561,7 @@ safety(Instruction inst) const {
 bool LDRH_immediate_cccc000pu1w1nnnnttttiiii1011iiii_case_0::
 base_address_register_writeback_small_immediate(
       Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // small_imm_base_wb: '(inst(24)=0) ||
   //       (inst(21)=1)'
   return (((inst.Bits() & 0x01000000)  ==
@@ -4572,7 +4572,7 @@ base_address_register_writeback_small_immediate(
 
 RegisterList LDRH_immediate_cccc000pu1w1nnnnttttiiii1011iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -4632,14 +4632,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register LDRH_literal_cccc000pu1w11111ttttiiii1011iiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: '15'
   return Register(15);
 }
 
 RegisterList LDRH_literal_cccc000pu1w11111ttttiiii1011iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -4647,14 +4647,14 @@ defs(Instruction inst) const {
 
 bool LDRH_literal_cccc000pu1w11111ttttiiii1011iiii_case_0::
 is_literal_load(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // is_literal_load: 'true'
   return true;
 }
 
 SafetyLevel LDRH_literal_cccc000pu1w11111ttttiiii1011iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(24)=0 &&
   //       inst(21)=1 => DECODER_ERROR
@@ -4680,7 +4680,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRH_literal_cccc000pu1w11111ttttiiii1011iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{15}'
   return RegisterList().
    Add(Register(15));
@@ -4753,14 +4753,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //         (W(21)=1)}
 Register LDRH_register_cccc000pu0w1nnnntttt00001011mmmm_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDRH_register_cccc000pu0w1nnnntttt00001011mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(19:16)
   //       if (inst(24)=0) ||
   //       (inst(21)=1)
@@ -4777,7 +4777,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDRH_register_cccc000pu0w1nnnntttt00001011mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(24)=0 &&
   //       inst(21)=1 => DECODER_ERROR
@@ -4834,7 +4834,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRH_register_cccc000pu0w1nnnntttt00001011mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -4912,14 +4912,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //         (W(21)=1)}
 Register LDRSB_immediate_cccc000pu1w1nnnnttttiiii1101iiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDRSB_immediate_cccc000pu1w1nnnnttttiiii1101iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(19:16)
   //       if (inst(24)=0) ||
   //       (inst(21)=1)
@@ -4936,7 +4936,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDRSB_immediate_cccc000pu1w1nnnnttttiiii1101iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(19:16)=1111 => DECODER_ERROR
   if ((inst.Bits() & 0x000F0000)  ==
@@ -4977,7 +4977,7 @@ safety(Instruction inst) const {
 bool LDRSB_immediate_cccc000pu1w1nnnnttttiiii1101iiii_case_0::
 base_address_register_writeback_small_immediate(
       Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // small_imm_base_wb: '(inst(24)=0) ||
   //       (inst(21)=1)'
   return (((inst.Bits() & 0x01000000)  ==
@@ -4988,7 +4988,7 @@ base_address_register_writeback_small_immediate(
 
 RegisterList LDRSB_immediate_cccc000pu1w1nnnnttttiiii1101iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -5048,14 +5048,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register LDRSB_literal_cccc0001u1011111ttttiiii1101iiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: '15'
   return Register(15);
 }
 
 RegisterList LDRSB_literal_cccc0001u1011111ttttiiii1101iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -5063,14 +5063,14 @@ defs(Instruction inst) const {
 
 bool LDRSB_literal_cccc0001u1011111ttttiiii1101iiii_case_0::
 is_literal_load(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // is_literal_load: 'true'
   return true;
 }
 
 SafetyLevel LDRSB_literal_cccc0001u1011111ttttiiii1101iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(24)=0 &&
   //       inst(21)=1 => DECODER_ERROR
@@ -5096,7 +5096,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRSB_literal_cccc0001u1011111ttttiiii1101iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{15}'
   return RegisterList().
    Add(Register(15));
@@ -5169,14 +5169,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //         (W(21)=1)}
 Register LDRSB_register_cccc000pu0w1nnnntttt00001101mmmm_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDRSB_register_cccc000pu0w1nnnntttt00001101mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(19:16)
   //       if (inst(24)=0) ||
   //       (inst(21)=1)
@@ -5193,7 +5193,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDRSB_register_cccc000pu0w1nnnntttt00001101mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(24)=0 &&
   //       inst(21)=1 => DECODER_ERROR
@@ -5250,7 +5250,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRSB_register_cccc000pu0w1nnnntttt00001101mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -5328,14 +5328,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //         (W(21)=1)}
 Register LDRSH_immediate_cccc000pu1w1nnnnttttiiii1111iiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDRSH_immediate_cccc000pu1w1nnnnttttiiii1111iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(19:16)
   //       if (inst(24)=0) ||
   //       (inst(21)=1)
@@ -5352,7 +5352,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDRSH_immediate_cccc000pu1w1nnnnttttiiii1111iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(19:16)=1111 => DECODER_ERROR
   if ((inst.Bits() & 0x000F0000)  ==
@@ -5393,7 +5393,7 @@ safety(Instruction inst) const {
 bool LDRSH_immediate_cccc000pu1w1nnnnttttiiii1111iiii_case_0::
 base_address_register_writeback_small_immediate(
       Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // small_imm_base_wb: '(inst(24)=0) ||
   //       (inst(21)=1)'
   return (((inst.Bits() & 0x01000000)  ==
@@ -5404,7 +5404,7 @@ base_address_register_writeback_small_immediate(
 
 RegisterList LDRSH_immediate_cccc000pu1w1nnnnttttiiii1111iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -5464,14 +5464,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register LDRSH_literal_cccc0001u1011111ttttiiii1111iiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: '15'
   return Register(15);
 }
 
 RegisterList LDRSH_literal_cccc0001u1011111ttttiiii1111iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -5479,14 +5479,14 @@ defs(Instruction inst) const {
 
 bool LDRSH_literal_cccc0001u1011111ttttiiii1111iiii_case_0::
 is_literal_load(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // is_literal_load: 'true'
   return true;
 }
 
 SafetyLevel LDRSH_literal_cccc0001u1011111ttttiiii1111iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(24)=0 &&
   //       inst(21)=1 => DECODER_ERROR
@@ -5512,7 +5512,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRSH_literal_cccc0001u1011111ttttiiii1111iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{15}'
   return RegisterList().
    Add(Register(15));
@@ -5585,14 +5585,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //         (W(21)=1)}
 Register LDRSH_register_cccc000pu0w1nnnntttt00001111mmmm_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDRSH_register_cccc000pu0w1nnnntttt00001111mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(19:16)
   //       if (inst(24)=0) ||
   //       (inst(21)=1)
@@ -5609,7 +5609,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDRSH_register_cccc000pu0w1nnnntttt00001111mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(24)=0 &&
   //       inst(21)=1 => DECODER_ERROR
@@ -5666,7 +5666,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRSH_register_cccc000pu0w1nnnntttt00001111mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -5702,14 +5702,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    uses: {}}
 RegisterList LDRT_A1_cccc0100u011nnnnttttiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel LDRT_A1_cccc0100u011nnnnttttiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -5721,7 +5721,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRT_A1_cccc0100u011nnnnttttiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -5736,14 +5736,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList LDRT_A2_cccc0110u011nnnnttttiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel LDRT_A2_cccc0110u011nnnnttttiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -5755,7 +5755,7 @@ safety(Instruction inst) const {
 
 RegisterList LDRT_A2_cccc0110u011nnnnttttiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -5810,14 +5810,14 @@ uses(Instruction inst) const {
 //         W(21)=1}
 Register LDR_immediate_cccc010pu0w1nnnnttttiiiiiiiiiiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDR_immediate_cccc010pu0w1nnnnttttiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(19:16)
   //       if inst(24)=0 ||
   //       inst(21)=1
@@ -5834,7 +5834,7 @@ defs(Instruction inst) const {
 
 bool LDR_immediate_cccc010pu0w1nnnnttttiiiiiiiiiiii_case_0::
 is_load_thread_address_pointer(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // is_load_tp: '9  ==
   //          inst(19:16) &&
   //       inst(24)=1 &&
@@ -5860,7 +5860,7 @@ is_load_thread_address_pointer(Instruction inst) const {
 
 SafetyLevel LDR_immediate_cccc010pu0w1nnnnttttiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) => DECODER_ERROR
@@ -5898,7 +5898,7 @@ safety(Instruction inst) const {
 bool LDR_immediate_cccc010pu0w1nnnnttttiiiiiiiiiiii_case_0::
 base_address_register_writeback_small_immediate(
       Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // small_imm_base_wb: 'inst(24)=0 ||
   //       inst(21)=1'
   return ((inst.Bits() & 0x01000000)  ==
@@ -5909,7 +5909,7 @@ base_address_register_writeback_small_immediate(
 
 RegisterList LDR_immediate_cccc010pu0w1nnnnttttiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -5956,14 +5956,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register LDR_literal_cccc0101u0011111ttttiiiiiiiiiiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: '15'
   return Register(15);
 }
 
 RegisterList LDR_literal_cccc0101u0011111ttttiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -5971,14 +5971,14 @@ defs(Instruction inst) const {
 
 bool LDR_literal_cccc0101u0011111ttttiiiiiiiiiiii_case_0::
 is_literal_load(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // is_literal_load: 'true'
   return true;
 }
 
 SafetyLevel LDR_literal_cccc0101u0011111ttttiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) => FORBIDDEN_OPERANDS
@@ -5991,7 +5991,7 @@ safety(Instruction inst) const {
 
 RegisterList LDR_literal_cccc0101u0011111ttttiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{15}'
   return RegisterList().
    Add(Register(15));
@@ -6070,14 +6070,14 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //         W(21)=1}
 Register LDR_register_cccc011pu0w1nnnnttttiiiiitt0mmmm_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList LDR_register_cccc011pu0w1nnnnttttiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(19:16)
   //       if inst(24)=0 ||
   //       inst(21)=1
@@ -6094,7 +6094,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LDR_register_cccc011pu0w1nnnnttttiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(24)=0 &&
   //       inst(21)=1 => DECODER_ERROR
@@ -6153,7 +6153,7 @@ safety(Instruction inst) const {
 
 RegisterList LDR_register_cccc011pu0w1nnnnttttiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(19:16)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -6208,7 +6208,7 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    uses: {Rm}}
 RegisterList LSL_immediate_cccc0001101s0000ddddiiiii000mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -6221,7 +6221,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LSL_immediate_cccc0001101s0000ddddiiiii000mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -6247,7 +6247,7 @@ safety(Instruction inst) const {
 
 RegisterList LSL_immediate_cccc0001101s0000ddddiiiii000mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -6274,7 +6274,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList LSL_register_cccc0001101s0000ddddmmmm0001nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -6288,7 +6288,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LSL_register_cccc0001101s0000ddddmmmm0001nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -6307,7 +6307,7 @@ safety(Instruction inst) const {
 
 RegisterList LSL_register_cccc0001101s0000ddddmmmm0001nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -6342,7 +6342,7 @@ uses(Instruction inst) const {
 //    uses: {Rm}}
 RegisterList LSR_immediate_cccc0001101s0000ddddiiiii010mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -6355,7 +6355,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LSR_immediate_cccc0001101s0000ddddiiiii010mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -6376,7 +6376,7 @@ safety(Instruction inst) const {
 
 RegisterList LSR_immediate_cccc0001101s0000ddddiiiii010mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -6403,7 +6403,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList LSR_register_cccc0001101s0000ddddmmmm0011nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -6417,7 +6417,7 @@ defs(Instruction inst) const {
 
 SafetyLevel LSR_register_cccc0001101s0000ddddmmmm0011nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -6436,7 +6436,7 @@ safety(Instruction inst) const {
 
 RegisterList LSR_register_cccc0001101s0000ddddmmmm0011nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -6454,14 +6454,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MCR2_11111110iii0iiiittttiiiiiii1iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel MCR2_11111110iii0iiiittttiiiiiii1iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -6473,7 +6473,7 @@ safety(Instruction inst) const {
 
 RegisterList MCR2_11111110iii0iiiittttiiiiiii1iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -6489,14 +6489,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MCRR2_111111000100ssssttttiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel MCRR2_111111000100ssssttttiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -6508,7 +6508,7 @@ safety(Instruction inst) const {
 
 RegisterList MCRR2_111111000100ssssttttiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -6524,14 +6524,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MCRR_cccc11000100ttttttttccccoooommmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel MCRR_cccc11000100ttttttttccccoooommmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -6543,7 +6543,7 @@ safety(Instruction inst) const {
 
 RegisterList MCRR_cccc11000100ttttttttccccoooommmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -6563,7 +6563,7 @@ uses(Instruction inst) const {
 //     error('Consider using DSB (defined in ARMv7) for memory barrier')]}
 RegisterList MCR_cccc1110ooo0nnnnttttccccooo1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
@@ -6592,7 +6592,7 @@ generate_diagnostics(ViolationSet violations,
 
 SafetyLevel MCR_cccc1110ooo0nnnnttttccccooo1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -6604,7 +6604,7 @@ safety(Instruction inst) const {
 
 RegisterList MCR_cccc1110ooo0nnnnttttccccooo1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -6661,7 +6661,7 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    uses: {Rn, Rm, Ra}}
 RegisterList MLA_A1_cccc0000001sddddaaaammmm1001nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(19:16), 16
   //       if inst(20)=1
   //       else 32}'
@@ -6675,7 +6675,7 @@ defs(Instruction inst) const {
 
 SafetyLevel MLA_A1_cccc0000001sddddaaaammmm1001nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -6705,7 +6705,7 @@ safety(Instruction inst) const {
 
 RegisterList MLA_A1_cccc0000001sddddaaaammmm1001nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(11:8), inst(15:12)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -6730,7 +6730,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Ra}}
 RegisterList MLS_A1_cccc00000110ddddaaaammmm1001nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -6738,7 +6738,7 @@ defs(Instruction inst) const {
 
 SafetyLevel MLS_A1_cccc00000110ddddaaaammmm1001nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -6760,7 +6760,7 @@ safety(Instruction inst) const {
 
 RegisterList MLS_A1_cccc00000110ddddaaaammmm1001nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(11:8), inst(15:12)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -6813,7 +6813,7 @@ uses(Instruction inst) const {
 //    unsigned: U(23)=1}
 RegisterList MOVE_scalar_to_ARM_core_register_cccc1110iii1nnnntttt1011nii10000_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -6821,7 +6821,7 @@ defs(Instruction inst) const {
 
 SafetyLevel MOVE_scalar_to_ARM_core_register_cccc1110iii1nnnntttt1011nii10000_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(23):inst(22:21):inst(6:5)(4:0)=10x00 ||
   //       inst(23):inst(22:21):inst(6:5)(4:0)=x0x10 => UNDEFINED
@@ -6862,7 +6862,7 @@ safety(Instruction inst) const {
 //    uses: {}}
 RegisterList MOVT_cccc00110100iiiiddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -6887,7 +6887,7 @@ dynamic_code_replacement_sentinel(
 
 SafetyLevel MOVT_cccc00110100iiiiddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(15:12)=1111 => UNPREDICTABLE
   if ((inst.Bits() & 0x0000F000)  ==
@@ -6900,7 +6900,7 @@ safety(Instruction inst) const {
 
 RegisterList MOVT_cccc00110100iiiiddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -6927,7 +6927,7 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MOVW_cccc00110000iiiiddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -6952,7 +6952,7 @@ dynamic_code_replacement_sentinel(
 
 SafetyLevel MOVW_cccc00110000iiiiddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(15:12)=1111 => UNPREDICTABLE
   if ((inst.Bits() & 0x0000F000)  ==
@@ -6965,7 +6965,7 @@ safety(Instruction inst) const {
 
 RegisterList MOVW_cccc00110000iiiiddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -6993,7 +6993,7 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MOV_immediate_A1_cccc0011101s0000ddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -7017,7 +7017,7 @@ dynamic_code_replacement_sentinel(
 
 SafetyLevel MOV_immediate_A1_cccc0011101s0000ddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -7038,7 +7038,7 @@ safety(Instruction inst) const {
 
 RegisterList MOV_immediate_A1_cccc0011101s0000ddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7063,7 +7063,7 @@ uses(Instruction inst) const {
 //    uses: {Rm}}
 RegisterList MOV_register_cccc0001101s0000dddd00000000mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -7076,7 +7076,7 @@ defs(Instruction inst) const {
 
 SafetyLevel MOV_register_cccc0001101s0000dddd00000000mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -7097,7 +7097,7 @@ safety(Instruction inst) const {
 
 RegisterList MOV_register_cccc0001101s0000dddd00000000mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -7114,14 +7114,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MRC2_11111110iii1iiiittttiiiiiii1iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel MRC2_11111110iii1iiiittttiiiiiii1iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -7133,7 +7133,7 @@ safety(Instruction inst) const {
 
 RegisterList MRC2_11111110iii1iiiittttiiiiiii1iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7148,14 +7148,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MRC_cccc1110ooo1nnnnttttccccooo1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel MRC_cccc1110ooo1nnnnttttccccooo1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -7167,7 +7167,7 @@ safety(Instruction inst) const {
 
 RegisterList MRC_cccc1110ooo1nnnnttttccccooo1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7183,14 +7183,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MRRC2_111111000101ssssttttiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel MRRC2_111111000101ssssttttiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -7202,7 +7202,7 @@ safety(Instruction inst) const {
 
 RegisterList MRRC2_111111000101ssssttttiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7218,14 +7218,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MRRC_cccc11000101ttttttttccccoooommmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel MRRC_cccc11000101ttttttttccccoooommmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -7237,7 +7237,7 @@ safety(Instruction inst) const {
 
 RegisterList MRRC_cccc11000101ttttttttccccoooommmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7253,14 +7253,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MRS_Banked_register_cccc00010r00mmmmdddd001m00000000_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel MRS_Banked_register_cccc00010r00mmmmdddd001m00000000_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -7272,7 +7272,7 @@ safety(Instruction inst) const {
 
 RegisterList MRS_Banked_register_cccc00010r00mmmmdddd001m00000000_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7288,14 +7288,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MRS_Banked_register_cccc00010r10mmmm1111001m0000nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel MRS_Banked_register_cccc00010r10mmmm1111001m0000nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -7307,7 +7307,7 @@ safety(Instruction inst) const {
 
 RegisterList MRS_Banked_register_cccc00010r10mmmm1111001m0000nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7327,7 +7327,7 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MRS_cccc00010r001111dddd000000000000_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -7335,7 +7335,7 @@ defs(Instruction inst) const {
 
 SafetyLevel MRS_cccc00010r001111dddd000000000000_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(22)=1 => FORBIDDEN_OPERANDS
   if ((inst.Bits() & 0x00400000)  ==
@@ -7353,7 +7353,7 @@ safety(Instruction inst) const {
 
 RegisterList MRS_cccc00010r001111dddd000000000000_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7378,7 +7378,7 @@ uses(Instruction inst) const {
 //    write_nzcvq: mask(1)=1}
 RegisterList MSR_immediate_cccc00110010mm001111iiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{16
   //       if inst(19:18)(1)=1
   //       else 32}'
@@ -7391,7 +7391,7 @@ defs(Instruction inst) const {
 
 SafetyLevel MSR_immediate_cccc00110010mm001111iiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(19:18)=00 => DECODER_ERROR
   if ((inst.Bits() & 0x000C0000)  ==
@@ -7404,7 +7404,7 @@ safety(Instruction inst) const {
 
 RegisterList MSR_immediate_cccc00110010mm001111iiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7419,14 +7419,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MSR_immediate_cccc00110r10mmmm1111iiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel MSR_immediate_cccc00110r10mmmm1111iiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -7438,7 +7438,7 @@ safety(Instruction inst) const {
 
 RegisterList MSR_immediate_cccc00110r10mmmm1111iiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7465,7 +7465,7 @@ uses(Instruction inst) const {
 //    write_nzcvq: mask(1)=1}
 RegisterList MSR_register_cccc00010010mm00111100000000nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{16
   //       if inst(19:18)(1)=1
   //       else 32}'
@@ -7478,7 +7478,7 @@ defs(Instruction inst) const {
 
 SafetyLevel MSR_register_cccc00010010mm00111100000000nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(19:18)=00 => UNPREDICTABLE
   if ((inst.Bits() & 0x000C0000)  ==
@@ -7496,7 +7496,7 @@ safety(Instruction inst) const {
 
 RegisterList MSR_register_cccc00010010mm00111100000000nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -7512,14 +7512,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MSR_register_cccc00010r10mmmm111100000000nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel MSR_register_cccc00010r10mmmm111100000000nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -7531,7 +7531,7 @@ safety(Instruction inst) const {
 
 RegisterList MSR_register_cccc00010r10mmmm111100000000nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7561,7 +7561,7 @@ uses(Instruction inst) const {
 //    uses: {Rm, Rn}}
 RegisterList MUL_A1_cccc0000000sdddd0000mmmm1001nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(19:16), 16
   //       if inst(20)=1
   //       else 32}'
@@ -7575,7 +7575,7 @@ defs(Instruction inst) const {
 
 SafetyLevel MUL_A1_cccc0000000sdddd0000mmmm1001nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -7602,7 +7602,7 @@ safety(Instruction inst) const {
 
 RegisterList MUL_A1_cccc0000000sdddd0000mmmm1001nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(11:8), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x00000F00) >> 8))).
@@ -7632,7 +7632,7 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList MVN_immediate_cccc0011111s0000ddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -7656,7 +7656,7 @@ dynamic_code_replacement_sentinel(
 
 SafetyLevel MVN_immediate_cccc0011111s0000ddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -7677,7 +7677,7 @@ safety(Instruction inst) const {
 
 RegisterList MVN_immediate_cccc0011111s0000ddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7710,7 +7710,7 @@ uses(Instruction inst) const {
 //    uses: {Rm}}
 RegisterList MVN_register_cccc0001111s0000ddddiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -7723,7 +7723,7 @@ defs(Instruction inst) const {
 
 SafetyLevel MVN_register_cccc0001111s0000ddddiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -7744,7 +7744,7 @@ safety(Instruction inst) const {
 
 RegisterList MVN_register_cccc0001111s0000ddddiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -7778,7 +7778,7 @@ uses(Instruction inst) const {
 //    uses: {Rm, Rs}}
 RegisterList MVN_register_shifted_register_cccc0001111s0000ddddssss0tt1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -7792,7 +7792,7 @@ defs(Instruction inst) const {
 
 SafetyLevel MVN_register_shifted_register_cccc0001111s0000ddddssss0tt1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -7811,7 +7811,7 @@ safety(Instruction inst) const {
 
 RegisterList MVN_register_shifted_register_cccc0001111s0000ddddssss0tt1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -7827,14 +7827,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList NOP_cccc0011001000001111000000000000_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel NOP_cccc0011001000001111000000000000_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   return MAY_BE_SAFE;
 }
@@ -7842,7 +7842,7 @@ safety(Instruction inst) const {
 
 RegisterList NOP_cccc0011001000001111000000000000_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7856,14 +7856,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList NOT_IMPLEMENTED_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel NOT_IMPLEMENTED_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => NOT_IMPLEMENTED
   if (true)
@@ -7875,7 +7875,7 @@ safety(Instruction inst) const {
 
 RegisterList NOT_IMPLEMENTED_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -7904,7 +7904,7 @@ uses(Instruction inst) const {
 //    uses: {Rn}}
 RegisterList ORR_immediate_cccc0011100snnnnddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -7928,7 +7928,7 @@ dynamic_code_replacement_sentinel(
 
 SafetyLevel ORR_immediate_cccc0011100snnnnddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -7949,7 +7949,7 @@ safety(Instruction inst) const {
 
 RegisterList ORR_immediate_cccc0011100snnnnddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -7985,7 +7985,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList ORR_register_cccc0001100snnnnddddiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -7998,7 +7998,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ORR_register_cccc0001100snnnnddddiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -8019,7 +8019,7 @@ safety(Instruction inst) const {
 
 RegisterList ORR_register_cccc0001100snnnnddddiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -8056,7 +8056,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Rs}}
 RegisterList ORR_register_shifted_register_cccc0001100snnnnddddssss0tt1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -8070,7 +8070,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ORR_register_shifted_register_cccc0001100snnnnddddssss0tt1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -8092,7 +8092,7 @@ safety(Instruction inst) const {
 
 RegisterList ORR_register_shifted_register_cccc0001100snnnnddddssss0tt1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -8125,7 +8125,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList PKH_cccc01101000nnnnddddiiiiit01mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -8133,7 +8133,7 @@ defs(Instruction inst) const {
 
 SafetyLevel PKH_cccc01101000nnnnddddiiiiit01mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -8152,7 +8152,7 @@ safety(Instruction inst) const {
 
 RegisterList PKH_cccc01101000nnnnddddiiiiit01mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -8183,21 +8183,21 @@ uses(Instruction inst) const {
 //    violations: [implied by 'base']}
 Register PLD_PLDW_immediate_11110101ur01nnnn1111iiiiiiiiiiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList PLD_PLDW_immediate_11110101ur01nnnn1111iiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 bool PLD_PLDW_immediate_11110101ur01nnnn1111iiiiiiiiiiii_case_0::
 is_literal_load(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // is_literal_load: '15  ==
   //          inst(19:16)'
   return ((((inst.Bits() & 0x000F0000) >> 16)) == (15));
@@ -8205,7 +8205,7 @@ is_literal_load(Instruction inst) const {
 
 SafetyLevel PLD_PLDW_immediate_11110101ur01nnnn1111iiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(19:16)=1111 => DECODER_ERROR
   if ((inst.Bits() & 0x000F0000)  ==
@@ -8218,7 +8218,7 @@ safety(Instruction inst) const {
 
 RegisterList PLD_PLDW_immediate_11110101ur01nnnn1111iiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -8267,21 +8267,21 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register PLD_PLDW_immediate_11110101ur01nnnn1111iiiiiiiiiiii_case_1::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList PLD_PLDW_immediate_11110101ur01nnnn1111iiiiiiiiiiii_case_1::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 bool PLD_PLDW_immediate_11110101ur01nnnn1111iiiiiiiiiiii_case_1::
 is_literal_load(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // is_literal_load: '15  ==
   //          inst(19:16)'
   return ((((inst.Bits() & 0x000F0000) >> 16)) == (15));
@@ -8289,7 +8289,7 @@ is_literal_load(Instruction inst) const {
 
 SafetyLevel PLD_PLDW_immediate_11110101ur01nnnn1111iiiiiiiiiiii_case_1::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // inst(19:16)=1111 => DECODER_ERROR
   if ((inst.Bits() & 0x000F0000)  ==
@@ -8302,7 +8302,7 @@ safety(Instruction inst) const {
 
 RegisterList PLD_PLDW_immediate_11110101ur01nnnn1111iiiiiiiiiiii_case_1::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -8356,21 +8356,21 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register PLD_PLDW_register_11110111u001nnnn1111iiiiitt0mmmm_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList PLD_PLDW_register_11110111u001nnnn1111iiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel PLD_PLDW_register_11110111u001nnnn1111iiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(3:0) ||
@@ -8393,7 +8393,7 @@ safety(Instruction inst) const {
 
 RegisterList PLD_PLDW_register_11110111u001nnnn1111iiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(19:16)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -8448,21 +8448,21 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register PLD_PLDW_register_11110111u101nnnn1111iiiiitt0mmmm_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList PLD_PLDW_register_11110111u101nnnn1111iiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel PLD_PLDW_register_11110111u101nnnn1111iiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(3:0) ||
@@ -8485,7 +8485,7 @@ safety(Instruction inst) const {
 
 RegisterList PLD_PLDW_register_11110111u101nnnn1111iiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(19:16)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -8531,28 +8531,28 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register PLD_literal_11110101u10111111111iiiiiiiiiiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: '15'
   return Register(15);
 }
 
 RegisterList PLD_literal_11110101u10111111111iiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 bool PLD_literal_11110101u10111111111iiiiiiiiiiii_case_0::
 is_literal_load(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // is_literal_load: 'true'
   return true;
 }
 
 SafetyLevel PLD_literal_11110101u10111111111iiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => MAY_BE_SAFE
   if (true)
@@ -8564,7 +8564,7 @@ safety(Instruction inst) const {
 
 RegisterList PLD_literal_11110101u10111111111iiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{15}'
   return RegisterList().
    Add(Register(15));
@@ -8611,21 +8611,21 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register PLI_immediate_literal_11110100u101nnnn1111iiiiiiiiiiii_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList PLI_immediate_literal_11110100u101nnnn1111iiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 bool PLI_immediate_literal_11110100u101nnnn1111iiiiiiiiiiii_case_0::
 is_literal_load(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // is_literal_load: '15  ==
   //          inst(19:16)'
   return ((((inst.Bits() & 0x000F0000) >> 16)) == (15));
@@ -8633,7 +8633,7 @@ is_literal_load(Instruction inst) const {
 
 SafetyLevel PLI_immediate_literal_11110100u101nnnn1111iiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => MAY_BE_SAFE
   if (true)
@@ -8645,7 +8645,7 @@ safety(Instruction inst) const {
 
 RegisterList PLI_immediate_literal_11110100u101nnnn1111iiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -8694,21 +8694,21 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    violations: [implied by 'base']}
 Register PLI_register_11110110u101nnnn1111iiiiitt0mmmm_case_0::
 base_address_register(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // base: 'inst(19:16)'
   return Register(((inst.Bits() & 0x000F0000) >> 16));
 }
 
 RegisterList PLI_register_11110110u101nnnn1111iiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel PLI_register_11110110u101nnnn1111iiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(3:0) => UNPREDICTABLE
@@ -8725,7 +8725,7 @@ safety(Instruction inst) const {
 
 RegisterList PLI_register_11110110u101nnnn1111iiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(19:16)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -8767,7 +8767,7 @@ get_violations(const nacl_arm_val::DecodedInstruction& first,
 //    uses: {Rn, Rm}}
 RegisterList QADD16_cccc01100010nnnndddd11110001mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -8775,7 +8775,7 @@ defs(Instruction inst) const {
 
 SafetyLevel QADD16_cccc01100010nnnndddd11110001mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -8794,7 +8794,7 @@ safety(Instruction inst) const {
 
 RegisterList QADD16_cccc01100010nnnndddd11110001mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -8817,7 +8817,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList QADD8_cccc01100010nnnndddd11111001mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -8825,7 +8825,7 @@ defs(Instruction inst) const {
 
 SafetyLevel QADD8_cccc01100010nnnndddd11111001mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -8844,7 +8844,7 @@ safety(Instruction inst) const {
 
 RegisterList QADD8_cccc01100010nnnndddd11111001mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -8867,7 +8867,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList QADD_cccc00010000nnnndddd00000101mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -8875,7 +8875,7 @@ defs(Instruction inst) const {
 
 SafetyLevel QADD_cccc00010000nnnndddd00000101mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -8894,7 +8894,7 @@ safety(Instruction inst) const {
 
 RegisterList QADD_cccc00010000nnnndddd00000101mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -8917,7 +8917,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList QASX_cccc01100010nnnndddd11110011mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -8925,7 +8925,7 @@ defs(Instruction inst) const {
 
 SafetyLevel QASX_cccc01100010nnnndddd11110011mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -8944,7 +8944,7 @@ safety(Instruction inst) const {
 
 RegisterList QASX_cccc01100010nnnndddd11110011mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -8967,7 +8967,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList QDADD_cccc00010100nnnndddd00000101mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -8975,7 +8975,7 @@ defs(Instruction inst) const {
 
 SafetyLevel QDADD_cccc00010100nnnndddd00000101mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -8994,7 +8994,7 @@ safety(Instruction inst) const {
 
 RegisterList QDADD_cccc00010100nnnndddd00000101mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -9017,7 +9017,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList QDSUB_cccc00010110nnnndddd00000101mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -9025,7 +9025,7 @@ defs(Instruction inst) const {
 
 SafetyLevel QDSUB_cccc00010110nnnndddd00000101mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -9044,7 +9044,7 @@ safety(Instruction inst) const {
 
 RegisterList QDSUB_cccc00010110nnnndddd00000101mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -9067,7 +9067,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList QSAX_cccc01100010nnnndddd11110101mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -9075,7 +9075,7 @@ defs(Instruction inst) const {
 
 SafetyLevel QSAX_cccc01100010nnnndddd11110101mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -9094,7 +9094,7 @@ safety(Instruction inst) const {
 
 RegisterList QSAX_cccc01100010nnnndddd11110101mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -9117,7 +9117,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList QSUB16_cccc01100010nnnndddd11110111mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -9125,7 +9125,7 @@ defs(Instruction inst) const {
 
 SafetyLevel QSUB16_cccc01100010nnnndddd11110111mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -9144,7 +9144,7 @@ safety(Instruction inst) const {
 
 RegisterList QSUB16_cccc01100010nnnndddd11110111mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -9167,7 +9167,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList QSUB8_cccc01100010nnnndddd11111111mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -9175,7 +9175,7 @@ defs(Instruction inst) const {
 
 SafetyLevel QSUB8_cccc01100010nnnndddd11111111mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -9194,7 +9194,7 @@ safety(Instruction inst) const {
 
 RegisterList QSUB8_cccc01100010nnnndddd11111111mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -9217,7 +9217,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList QSUB_cccc00010010nnnndddd00000101mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -9225,7 +9225,7 @@ defs(Instruction inst) const {
 
 SafetyLevel QSUB_cccc00010010nnnndddd00000101mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -9244,7 +9244,7 @@ safety(Instruction inst) const {
 
 RegisterList QSUB_cccc00010010nnnndddd00000101mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -9266,7 +9266,7 @@ uses(Instruction inst) const {
 //    uses: {Rm}}
 RegisterList RBIT_cccc011011111111dddd11110011mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -9274,7 +9274,7 @@ defs(Instruction inst) const {
 
 SafetyLevel RBIT_cccc011011111111dddd11110011mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -9290,7 +9290,7 @@ safety(Instruction inst) const {
 
 RegisterList RBIT_cccc011011111111dddd11110011mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -9311,7 +9311,7 @@ uses(Instruction inst) const {
 //    uses: {Rm}}
 RegisterList REV16_cccc011010111111dddd11111011mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -9319,7 +9319,7 @@ defs(Instruction inst) const {
 
 SafetyLevel REV16_cccc011010111111dddd11111011mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -9335,7 +9335,7 @@ safety(Instruction inst) const {
 
 RegisterList REV16_cccc011010111111dddd11111011mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -9356,7 +9356,7 @@ uses(Instruction inst) const {
 //    uses: {Rm}}
 RegisterList REVSH_cccc011011111111dddd11111011mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -9364,7 +9364,7 @@ defs(Instruction inst) const {
 
 SafetyLevel REVSH_cccc011011111111dddd11111011mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -9380,7 +9380,7 @@ safety(Instruction inst) const {
 
 RegisterList REVSH_cccc011011111111dddd11111011mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -9401,7 +9401,7 @@ uses(Instruction inst) const {
 //    uses: {Rm}}
 RegisterList REV_cccc011010111111dddd11110011mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -9409,7 +9409,7 @@ defs(Instruction inst) const {
 
 SafetyLevel REV_cccc011010111111dddd11110011mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -9425,7 +9425,7 @@ safety(Instruction inst) const {
 
 RegisterList REV_cccc011010111111dddd11110011mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -9442,14 +9442,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList RFE_1111100pu0w1nnnn0000101000000000_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel RFE_1111100pu0w1nnnn0000101000000000_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -9461,7 +9461,7 @@ safety(Instruction inst) const {
 
 RegisterList RFE_1111100pu0w1nnnn0000101000000000_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -9495,7 +9495,7 @@ uses(Instruction inst) const {
 //    uses: {Rm}}
 RegisterList ROR_immediate_cccc0001101s0000ddddiiiii110mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -9508,7 +9508,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ROR_immediate_cccc0001101s0000ddddiiiii110mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -9534,7 +9534,7 @@ safety(Instruction inst) const {
 
 RegisterList ROR_immediate_cccc0001101s0000ddddiiiii110mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -9561,7 +9561,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList ROR_register_cccc0001101s0000ddddmmmm0111nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -9575,7 +9575,7 @@ defs(Instruction inst) const {
 
 SafetyLevel ROR_register_cccc0001101s0000ddddmmmm0111nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -9594,7 +9594,7 @@ safety(Instruction inst) const {
 
 RegisterList ROR_register_cccc0001101s0000ddddmmmm0111nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -9621,7 +9621,7 @@ uses(Instruction inst) const {
 //    uses: {Rm}}
 RegisterList RRX_cccc0001101s0000dddd00000110mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -9634,7 +9634,7 @@ defs(Instruction inst) const {
 
 SafetyLevel RRX_cccc0001101s0000dddd00000110mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -9655,7 +9655,7 @@ safety(Instruction inst) const {
 
 RegisterList RRX_cccc0001101s0000dddd00000110mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -9684,7 +9684,7 @@ uses(Instruction inst) const {
 //    uses: {Rn}}
 RegisterList RSB_immediate_cccc0010011snnnnddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -9698,7 +9698,7 @@ defs(Instruction inst) const {
 
 SafetyLevel RSB_immediate_cccc0010011snnnnddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -9719,7 +9719,7 @@ safety(Instruction inst) const {
 
 RegisterList RSB_immediate_cccc0010011snnnnddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -9755,7 +9755,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList RSB_register_cccc0000011snnnnddddiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -9768,7 +9768,7 @@ defs(Instruction inst) const {
 
 SafetyLevel RSB_register_cccc0000011snnnnddddiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -9789,7 +9789,7 @@ safety(Instruction inst) const {
 
 RegisterList RSB_register_cccc0000011snnnnddddiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -9826,7 +9826,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Rs}}
 RegisterList RSB_register_shfited_register_cccc0000011snnnnddddssss0tt1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -9840,7 +9840,7 @@ defs(Instruction inst) const {
 
 SafetyLevel RSB_register_shfited_register_cccc0000011snnnnddddssss0tt1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -9862,7 +9862,7 @@ safety(Instruction inst) const {
 
 RegisterList RSB_register_shfited_register_cccc0000011snnnnddddssss0tt1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -9893,7 +9893,7 @@ uses(Instruction inst) const {
 //    uses: {Rn}}
 RegisterList RSC_immediate_cccc0010111snnnnddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -9907,7 +9907,7 @@ defs(Instruction inst) const {
 
 SafetyLevel RSC_immediate_cccc0010111snnnnddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -9928,7 +9928,7 @@ safety(Instruction inst) const {
 
 RegisterList RSC_immediate_cccc0010111snnnnddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -9964,7 +9964,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList RSC_register_cccc0000111snnnnddddiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -9977,7 +9977,7 @@ defs(Instruction inst) const {
 
 SafetyLevel RSC_register_cccc0000111snnnnddddiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -9998,7 +9998,7 @@ safety(Instruction inst) const {
 
 RegisterList RSC_register_cccc0000111snnnnddddiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10035,7 +10035,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Rs}}
 RegisterList RSC_register_shifted_register_cccc0000111snnnnddddssss0tt1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -10049,7 +10049,7 @@ defs(Instruction inst) const {
 
 SafetyLevel RSC_register_shifted_register_cccc0000111snnnnddddssss0tt1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -10071,7 +10071,7 @@ safety(Instruction inst) const {
 
 RegisterList RSC_register_shifted_register_cccc0000111snnnnddddssss0tt1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10095,7 +10095,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList SADD16_cccc01100001nnnndddd11110001mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -10103,7 +10103,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SADD16_cccc01100001nnnndddd11110001mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -10122,7 +10122,7 @@ safety(Instruction inst) const {
 
 RegisterList SADD16_cccc01100001nnnndddd11110001mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10145,7 +10145,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList SADD8_cccc01100001nnnndddd11111001mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -10153,7 +10153,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SADD8_cccc01100001nnnndddd11111001mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -10172,7 +10172,7 @@ safety(Instruction inst) const {
 
 RegisterList SADD8_cccc01100001nnnndddd11111001mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10195,7 +10195,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList SASX_cccc01100001nnnndddd11110011mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -10203,7 +10203,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SASX_cccc01100001nnnndddd11110011mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -10222,7 +10222,7 @@ safety(Instruction inst) const {
 
 RegisterList SASX_cccc01100001nnnndddd11110011mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10252,7 +10252,7 @@ uses(Instruction inst) const {
 //    uses: {Rn}}
 RegisterList SBC_immediate_cccc0010110snnnnddddiiiiiiiiiiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -10266,7 +10266,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SBC_immediate_cccc0010110snnnnddddiiiiiiiiiiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -10287,7 +10287,7 @@ safety(Instruction inst) const {
 
 RegisterList SBC_immediate_cccc0010110snnnnddddiiiiiiiiiiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -10323,7 +10323,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList SBC_register_cccc0000110snnnnddddiiiiitt0mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)
   //       else 32}'
@@ -10336,7 +10336,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SBC_register_cccc0000110snnnnddddiiiiitt0mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // (inst(15:12)=1111 &&
   //       inst(20)=1) => DECODER_ERROR
@@ -10357,7 +10357,7 @@ safety(Instruction inst) const {
 
 RegisterList SBC_register_cccc0000110snnnnddddiiiiitt0mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10394,7 +10394,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Rs}}
 RegisterList SBC_register_shifted_register_cccc0000110snnnnddddssss0tt1mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), 16
   //       if inst(20)=1
   //       else 32}'
@@ -10408,7 +10408,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SBC_register_shifted_register_cccc0000110snnnnddddssss0tt1mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -10430,7 +10430,7 @@ safety(Instruction inst) const {
 
 RegisterList SBC_register_shifted_register_cccc0000110snnnnddddssss0tt1mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10457,7 +10457,7 @@ uses(Instruction inst) const {
 //    widthm1: widthm1(20:16)}
 RegisterList SBFX_cccc0111101wwwwwddddlllll101nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -10465,7 +10465,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SBFX_cccc0111101wwwwwddddlllll101nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -10486,7 +10486,7 @@ safety(Instruction inst) const {
 
 RegisterList SBFX_cccc0111101wwwwwddddlllll101nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F)));
@@ -10509,7 +10509,7 @@ uses(Instruction inst) const {
 //    uses: {Rm, Rn}}
 RegisterList SDIV_cccc01110001dddd1111mmmm0001nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -10517,7 +10517,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SDIV_cccc01110001dddd1111mmmm0001nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -10536,7 +10536,7 @@ safety(Instruction inst) const {
 
 RegisterList SDIV_cccc01110001dddd1111mmmm0001nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(11:8), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x00000F00) >> 8))).
@@ -10559,7 +10559,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList SEL_cccc01101000nnnndddd11111011mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -10567,7 +10567,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SEL_cccc01101000nnnndddd11111011mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -10586,7 +10586,7 @@ safety(Instruction inst) const {
 
 RegisterList SEL_cccc01101000nnnndddd11111011mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10604,14 +10604,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList SETEND_1111000100000001000000i000000000_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel SETEND_1111000100000001000000i000000000_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -10623,7 +10623,7 @@ safety(Instruction inst) const {
 
 RegisterList SETEND_1111000100000001000000i000000000_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -10639,14 +10639,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList SEV_cccc0011001000001111000000000100_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel SEV_cccc0011001000001111000000000100_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -10658,7 +10658,7 @@ safety(Instruction inst) const {
 
 RegisterList SEV_cccc0011001000001111000000000100_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -10679,7 +10679,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList SHADD16_cccc01100011nnnndddd11110001mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -10687,7 +10687,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SHADD16_cccc01100011nnnndddd11110001mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -10706,7 +10706,7 @@ safety(Instruction inst) const {
 
 RegisterList SHADD16_cccc01100011nnnndddd11110001mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10729,7 +10729,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList SHADD8_cccc01100011nnnndddd11111001mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -10737,7 +10737,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SHADD8_cccc01100011nnnndddd11111001mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -10756,7 +10756,7 @@ safety(Instruction inst) const {
 
 RegisterList SHADD8_cccc01100011nnnndddd11111001mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10779,7 +10779,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList SHASX_cccc01100011nnnndddd11110011mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -10787,7 +10787,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SHASX_cccc01100011nnnndddd11110011mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -10806,7 +10806,7 @@ safety(Instruction inst) const {
 
 RegisterList SHASX_cccc01100011nnnndddd11110011mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10829,7 +10829,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList SHSAX_cccc01100011nnnndddd11110101mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -10837,7 +10837,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SHSAX_cccc01100011nnnndddd11110101mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -10856,7 +10856,7 @@ safety(Instruction inst) const {
 
 RegisterList SHSAX_cccc01100011nnnndddd11110101mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10879,7 +10879,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList SHSUB16_cccc01100011nnnndddd11110111mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -10887,7 +10887,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SHSUB16_cccc01100011nnnndddd11110111mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -10906,7 +10906,7 @@ safety(Instruction inst) const {
 
 RegisterList SHSUB16_cccc01100011nnnndddd11110111mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10929,7 +10929,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm}}
 RegisterList SHSUB8_cccc01100011nnnndddd11111111mmmm_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12)));
@@ -10937,7 +10937,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SHSUB8_cccc01100011nnnndddd11111111mmmm_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -10956,7 +10956,7 @@ safety(Instruction inst) const {
 
 RegisterList SHSUB8_cccc01100011nnnndddd11111111mmmm_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -10974,14 +10974,14 @@ uses(Instruction inst) const {
 //    uses: {}}
 RegisterList SMC_cccc000101100000000000000111iiii_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{}'
   return RegisterList();
 }
 
 SafetyLevel SMC_cccc000101100000000000000111iiii_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // true => FORBIDDEN
   if (true)
@@ -10993,7 +10993,7 @@ safety(Instruction inst) const {
 
 RegisterList SMC_cccc000101100000000000000111iiii_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{}'
   return RegisterList();
 }
@@ -11025,7 +11025,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Ra}}
 RegisterList SMLABB_SMLABT_SMLATB_SMLATT_cccc00010000ddddaaaammmm1xx0nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -11033,7 +11033,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SMLABB_SMLABT_SMLATB_SMLATT_cccc00010000ddddaaaammmm1xx0nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -11055,7 +11055,7 @@ safety(Instruction inst) const {
 
 RegisterList SMLABB_SMLABT_SMLATB_SMLATT_cccc00010000ddddaaaammmm1xx0nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(11:8), inst(15:12)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -11083,7 +11083,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Ra}}
 RegisterList SMLAD_cccc01110000ddddaaaammmm00m1nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -11091,7 +11091,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SMLAD_cccc01110000ddddaaaammmm00m1nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) => DECODER_ERROR
@@ -11115,7 +11115,7 @@ safety(Instruction inst) const {
 
 RegisterList SMLAD_cccc01110000ddddaaaammmm00m1nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(11:8), inst(15:12)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -11153,7 +11153,7 @@ uses(Instruction inst) const {
 //    uses: {RdLo, RdHi, Rn, Rm}}
 RegisterList SMLALBB_SMLALBT_SMLALTB_SMLALTT_cccc00010100hhhhllllmmmm1xx0nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12))).
@@ -11162,7 +11162,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SMLALBB_SMLALBT_SMLALTB_SMLALTT_cccc00010100hhhhllllmmmm1xx0nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -11189,7 +11189,7 @@ safety(Instruction inst) const {
 
 RegisterList SMLALBB_SMLALBT_SMLALTB_SMLALTT_cccc00010100hhhhllllmmmm1xx0nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(15:12), inst(19:16), inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12))).
@@ -11223,7 +11223,7 @@ uses(Instruction inst) const {
 //    uses: {RdHi, RdLo, Rm, Rn}}
 RegisterList SMLALD_cccc01110100hhhhllllmmmm00m1nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(19:16), inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -11232,7 +11232,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SMLALD_cccc01110100hhhhllllmmmm00m1nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -11259,7 +11259,7 @@ safety(Instruction inst) const {
 
 RegisterList SMLALD_cccc01110100hhhhllllmmmm00m1nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(15:12), inst(11:8), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -11303,7 +11303,7 @@ uses(Instruction inst) const {
 //    uses: {RdLo, RdHi, Rn, Rm}}
 RegisterList SMLAL_A1_cccc0000111shhhhllllmmmm1001nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(15:12), inst(19:16), 16
   //       if inst(20)=1
   //       else 32}'
@@ -11318,7 +11318,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SMLAL_A1_cccc0000111shhhhllllmmmm1001nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) ||
@@ -11356,7 +11356,7 @@ safety(Instruction inst) const {
 
 RegisterList SMLAL_A1_cccc0000111shhhhllllmmmm1001nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(15:12), inst(19:16), inst(3:0), inst(11:8)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x0000F000) >> 12))).
@@ -11392,7 +11392,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Ra}}
 RegisterList SMLAWB_SMLAWT_cccc00010010ddddaaaammmm1x00nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -11400,7 +11400,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SMLAWB_SMLAWT_cccc00010010ddddaaaammmm1x00nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -11422,7 +11422,7 @@ safety(Instruction inst) const {
 
 RegisterList SMLAWB_SMLAWT_cccc00010010ddddaaaammmm1x00nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(11:8), inst(15:12)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -11450,7 +11450,7 @@ uses(Instruction inst) const {
 //    uses: {Rn, Rm, Ra}}
 RegisterList SMLSD_cccc01110000ddddaaaammmm01m1nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(19:16)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16)));
@@ -11458,7 +11458,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SMLSD_cccc01110000ddddaaaammmm01m1nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(15:12) => DECODER_ERROR
@@ -11482,7 +11482,7 @@ safety(Instruction inst) const {
 
 RegisterList SMLSD_cccc01110000ddddaaaammmm01m1nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(3:0), inst(11:8), inst(15:12)}'
   return RegisterList().
    Add(Register((inst.Bits() & 0x0000000F))).
@@ -11515,7 +11515,7 @@ uses(Instruction inst) const {
 //    uses: {RdHi, RdLo, Rm, Rn}}
 RegisterList SMLSLD_cccc01110100hhhhllllmmmm01m1nnnn_case_0::
 defs(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // defs: '{inst(19:16), inst(15:12)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).
@@ -11524,7 +11524,7 @@ defs(Instruction inst) const {
 
 SafetyLevel SMLSLD_cccc01110100hhhhllllmmmm01m1nnnn_case_0::
 safety(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
 
   // 15  ==
   //          inst(19:16) ||
@@ -11551,7 +11551,7 @@ safety(Instruction inst) const {
 
 RegisterList SMLSLD_cccc01110100hhhhllllmmmm01m1nnnn_case_0::
 uses(Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);  // To silence compiler.
+  NACL_UNUSED_PARAMETER(inst);  // To silence compiler.
   // uses: '{inst(19:16), inst(15:12), inst(11:8), inst(3:0)}'
   return RegisterList().
    Add(Register(((inst.Bits() & 0x000F0000) >> 16))).

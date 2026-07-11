@@ -65,8 +65,8 @@ static void NaClSeccompBpfSigsysHandler(int nr, siginfo_t *info,
   int n;
   char *filename;
   int fatal = 1;
-  UNREFERENCED_PARAMETER(nr);
-  UNREFERENCED_PARAMETER(info);
+  NACL_UNUSED_PARAMETER(nr);
+  NACL_UNUSED_PARAMETER(info);
 
   syscall = ctx->uc_mcontext.gregs[REG_SYSCALL];
   switch (syscall) {

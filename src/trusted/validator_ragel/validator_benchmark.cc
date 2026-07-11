@@ -20,9 +20,9 @@
 Bool ProcessError(
     const uint8_t *begin, const uint8_t *end,
     uint32_t validation_info, void *user_data_ptr) {
-  UNREFERENCED_PARAMETER(begin);
-  UNREFERENCED_PARAMETER(end);
-  UNREFERENCED_PARAMETER(user_data_ptr);
+  NACL_UNUSED_PARAMETER(begin);
+  NACL_UNUSED_PARAMETER(end);
+  NACL_UNUSED_PARAMETER(user_data_ptr);
   if (validation_info & (VALIDATION_ERRORS_MASK | BAD_JUMP_TARGET))
     return FALSE;
   else

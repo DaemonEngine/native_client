@@ -174,7 +174,7 @@ void TestSingleStepping(struct NaClAppThread *natp) {
 
 /* ARM/MIPS do not have hardware single-stepping, so nothing to do here. */
 void TestSingleStepping(struct NaClAppThread *natp) {
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 }
 
 #else

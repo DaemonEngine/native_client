@@ -24,7 +24,7 @@ void  NaClPatchOneTrampoline(struct NaClApp *nap,
   size_t trampoline_size = ((uintptr_t) &NaCl_trampoline_seg_end
                             - (uintptr_t) &NaCl_trampoline_seg_code);
 
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 
   CHECK(trampoline_size == NACL_SYSCALL_BLOCK_SIZE);
   memcpy((void *) target_addr, &NaCl_trampoline_seg_code,
@@ -53,5 +53,5 @@ void NaClFillTrampolineRegion(struct NaClApp *nap) {
 
 
 void  NaClLoadSpringboard(struct NaClApp  *nap) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 }

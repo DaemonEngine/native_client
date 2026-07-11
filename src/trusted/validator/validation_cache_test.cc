@@ -105,7 +105,7 @@ void *MockCreateQuery(void *handle) {
 }
 
 void MockAddData(void *query, const unsigned char *data, size_t length) {
-  UNREFERENCED_PARAMETER(data);
+  NACL_UNUSED_PARAMETER(data);
   MockQuery *mquery = (MockQuery *) query;
   ASSERT_EQ(QUERY_MARKER, mquery->marker);
   EXPECT_EQ(QUERY_CREATED, mquery->state);
@@ -146,7 +146,7 @@ void MockDestroyQuery(void *query) {
 
 /* Hint that the validation should use the (fake) cache. */
 int MockCachingIsInexpensive(const struct NaClValidationMetadata *metadata) {
-  UNREFERENCED_PARAMETER(metadata);
+  NACL_UNUSED_PARAMETER(metadata);
   return 1;
 }
 

@@ -33,9 +33,9 @@
 #endif
 
 #if NACL_WINDOWS
-# define UNREFERENCED_PARAMETER(P) (P)
+# define NACL_UNUSED_PARAMETER(P) (P)
 #else
-# define UNREFERENCED_PARAMETER(P) do { (void) P; } while (0)
+# define NACL_UNUSED_PARAMETER(P) do { (void) P; } while (0)
 #endif
 
 #if NACL_WINDOWS

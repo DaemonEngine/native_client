@@ -215,7 +215,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_advanced_simd_data_proce
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_advanced_simd_element_or_structure_load_store_instructions(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00200000)  ==
           0x00000000 /* L(21)=0 */ &&
       (inst.Bits() & 0x00800000)  ==
@@ -519,7 +519,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_advanced_simd_element_or
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_branch_branch_with_link_and_block_data_transfer(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x03D00000)  ==
           0x00000000 /* op(25:20)=0000x0 */) {
     return STMDA_STMED_cccc100000w0nnnnrrrrrrrrrrrrrrrr_case_0_STMDA_STMED_instance_;
@@ -862,7 +862,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_data_processing_and_misc
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_data_processing_immediate(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x01F00000)  ==
           0x01100000 /* op(24:20)=10001 */ &&
       (inst.Bits() & 0x0000F000)  ==
@@ -984,7 +984,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_data_processing_immediat
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_data_processing_register(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x01F00000)  ==
           0x01100000 /* op1(24:20)=10001 */ &&
       (inst.Bits() & 0x0000F000)  ==
@@ -1143,7 +1143,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_data_processing_register
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_data_processing_register_shifted_register(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x01F00000)  ==
           0x01100000 /* op1(24:20)=10001 */ &&
       (inst.Bits() & 0x0000F000)  ==
@@ -1435,7 +1435,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_extension_register_load_
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_extra_load_store_instructions(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00000060)  ==
           0x00000020 /* op2(6:5)=01 */ &&
       (inst.Bits() & 0x00500000)  ==
@@ -1665,7 +1665,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_floating_point_data_proc
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_halfword_multiply_and_multiply_accumulate(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00600000)  ==
           0x00000000 /* op1(22:21)=00 */) {
     return SMLABB_SMLABT_SMLATB_SMLATT_cccc00010000ddddaaaammmm1xx0nnnn_case_0_SMLABB_SMLABT_SMLATB_SMLATT_instance_;
@@ -1710,7 +1710,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_halfword_multiply_and_mu
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_load_store_word_and_unsigned_byte(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x02000000)  ==
           0x00000000 /* A(25)=0 */ &&
       (inst.Bits() & 0x01700000)  ==
@@ -2375,7 +2375,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_miscellaneous_instructio
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_msr_immediate_and_hints(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00400000)  ==
           0x00000000 /* op(22)=0 */ &&
       (inst.Bits() & 0x000F0000)  ==
@@ -2500,7 +2500,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_msr_immediate_and_hints(
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_multiply_and_multiply_accumulate(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00F00000)  ==
           0x00400000 /* op(23:20)=0100 */) {
     return UMAAL_A1_cccc00000100hhhhllllmmmm1001nnnn_case_0_UMAAL_A1_instance_;
@@ -2564,7 +2564,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_multiply_and_multiply_ac
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_other_floating_point_data_processing_instructions(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x000F0000)  ==
           0x00000000 /* opc2(19:16)=0000 */ &&
       (inst.Bits() & 0x000000C0)  ==
@@ -2664,7 +2664,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_other_floating_point_dat
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_packing_unpacking_saturation_and_reversal(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00700000)  ==
           0x00000000 /* op1(22:20)=000 */ &&
       (inst.Bits() & 0x000000E0)  ==
@@ -2896,7 +2896,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_packing_unpacking_satura
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_parallel_addition_and_subtraction_signed(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00300000)  ==
           0x00100000 /* op1(21:20)=01 */ &&
       (inst.Bits() & 0x000000E0)  ==
@@ -3074,7 +3074,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_parallel_addition_and_su
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_parallel_addition_and_subtraction_unsigned(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00300000)  ==
           0x00100000 /* op1(21:20)=01 */ &&
       (inst.Bits() & 0x000000E0)  ==
@@ -3252,7 +3252,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_parallel_addition_and_su
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_saturating_addition_and_subtraction(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00600000)  ==
           0x00000000 /* op(22:21)=00 */ &&
       (inst.Bits() & 0x00000F00)  ==
@@ -3292,7 +3292,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_saturating_addition_and_
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_signed_multiply_signed_and_unsigned_divide(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00700000)  ==
           0x00000000 /* op1(22:20)=000 */ &&
       (inst.Bits() & 0x000000C0)  ==
@@ -3401,7 +3401,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_signed_multiply_signed_a
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_simd_dp_1imm(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00000020)  ==
           0x00000000 /* op(5)=0 */ &&
       (inst.Bits() & 0x00000D00)  ==
@@ -3497,7 +3497,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_simd_dp_1imm(
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_simd_dp_2misc(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00030000)  ==
           0x00000000 /* A(17:16)=00 */ &&
       (inst.Bits() & 0x00000780)  ==
@@ -3772,7 +3772,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_simd_dp_2misc(
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_simd_dp_2scalar(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00000F00)  ==
           0x00000000 /* A(11:8)=0000 */) {
     return VMLA_by_scalar_A1_1111001q1dssnnnndddd0p0fn1m0mmmm_case_1_VMLA_by_scalar_A1_instance_;
@@ -3864,7 +3864,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_simd_dp_2scalar(
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_simd_dp_2shift(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00000F00)  ==
           0x00000000 /* A(11:8)=0000 */) {
     return VSHR_1111001u1diiiiiidddd0000lqm1mmmm_case_0_VSHR_instance_;
@@ -4017,7 +4017,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_simd_dp_2shift(
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_simd_dp_3diff(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00000F00)  ==
           0x00000400 /* A(11:8)=0100 */ &&
       (inst.Bits() & 0x01000000)  ==
@@ -4110,7 +4110,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_simd_dp_3diff(
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_simd_dp_3same(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00000F00)  ==
           0x00000000 /* A(11:8)=0000 */ &&
       (inst.Bits() & 0x00000010)  ==
@@ -4662,7 +4662,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_simd_dp_3same(
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_synchronization_primitives(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00F00000)  ==
           0x00800000 /* op(23:20)=1000 */ &&
       (inst.Bits() & 0x00000F00)  ==
@@ -4741,7 +4741,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_synchronization_primitiv
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_transfer_between_arm_core_and_extension_register_8_16_and_32_bit(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00100000)  ==
           0x00000000 /* L(20)=0 */ &&
       (inst.Bits() & 0x00000100)  ==
@@ -4834,7 +4834,7 @@ const NamedClassDecoder& NamedArm32DecoderState::decode_transfer_between_arm_cor
  */
 const NamedClassDecoder& NamedArm32DecoderState::decode_transfer_between_arm_core_and_extension_registers_64_bit(
      const nacl_arm_dec::Instruction inst) const {
-  UNREFERENCED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(inst);
   if ((inst.Bits() & 0x00000100)  ==
           0x00000000 /* C(8)=0 */ &&
       (inst.Bits() & 0x000000D0)  ==

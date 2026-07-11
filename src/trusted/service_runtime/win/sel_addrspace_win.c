@@ -62,5 +62,5 @@ int NaClFindPrereservedSandboxMemory(void **p, size_t num_bytes) {
  * Nothing to do here on Windows.
  */
 void NaClAddrSpaceBeforeAlloc(size_t untrusted_size) {
-  UNREFERENCED_PARAMETER(untrusted_size);
+  NACL_UNUSED_PARAMETER(untrusted_size);
 }
