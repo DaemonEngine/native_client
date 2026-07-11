@@ -16,12 +16,6 @@
 
 #include "native_client/src/include/build_config.h"
 
-// Windows defines std::min and std::max in a different header
-// than gcc prior to Visual Studio 2013.
-#if NACL_WINDOWS
-#include <xutility>
-#endif
-
 #include <algorithm>
 #include <limits>
 
