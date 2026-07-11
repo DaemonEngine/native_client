@@ -80,7 +80,7 @@ class TestThreadCreateAndJoin : public PerfTest {
 
  private:
   static void *EmptyThread(void *thread_arg) {
-    UNREFERENCED_PARAMETER(thread_arg);
+    NACL_UNUSED_PARAMETER(thread_arg);
     return NULL;
   }
 };

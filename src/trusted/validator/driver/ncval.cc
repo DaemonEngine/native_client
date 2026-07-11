@@ -203,8 +203,8 @@ Bool ProcessInstruction(
 Bool ProcessError(
     const uint8_t *begin, const uint8_t *end,
     uint32_t validation_info, void *user_data_ptr) {
-  UNREFERENCED_PARAMETER(begin);
-  UNREFERENCED_PARAMETER(end);
+  NACL_UNUSED_PARAMETER(begin);
+  NACL_UNUSED_PARAMETER(end);
   UserData &user_data = *reinterpret_cast<UserData *>(user_data_ptr);
 
   // We do the same thing as in ProcessInstruction(): If we are not disabling
@@ -295,7 +295,7 @@ class NcvalArmProblemReporter : public ProblemReporter {
   void ReportProblemMessage(nacl_arm_dec::Violation violation,
                             uint32_t vaddr,
                             const char* message) {
-    UNREFERENCED_PARAMETER(violation);
+    NACL_UNUSED_PARAMETER(violation);
     if (errors->size() < max_errors) {
       errors->push_back(Error(vaddr, message));
     } else if (errors->size() == max_errors) {

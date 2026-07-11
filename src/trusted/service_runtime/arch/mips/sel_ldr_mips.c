@@ -34,7 +34,7 @@ void  NaClPatchOneTrampoline(struct NaClApp *nap,
   size_t tramp_size = ((uintptr_t) &NaCl_trampoline_seg_end
                        - (uintptr_t) &NaCl_trampoline_seg_code);
 
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 
   /*
    * We copy trampoline code to buffer so that we can patch it with address
@@ -91,6 +91,6 @@ void NaClFillTrampolineRegion(struct NaClApp *nap) {
 }
 
 void  NaClLoadSpringboard(struct NaClApp  *nap) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 }
 

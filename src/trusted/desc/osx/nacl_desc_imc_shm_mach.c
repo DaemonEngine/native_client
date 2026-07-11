@@ -198,7 +198,7 @@ static uintptr_t NaClDescImcShmMachMap(struct NaClDesc *vself,
 
   void *result;
   nacl_off64_t tmp_off64;
-  UNREFERENCED_PARAMETER(effp);
+  NACL_UNUSED_PARAMETER(effp);
 
   /*
    * shm must have NACL_ABI_MAP_SHARED in flags, and all calls through

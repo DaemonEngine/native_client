@@ -471,7 +471,7 @@ int NaClNanosleep(struct nacl_abi_timespec const *req,
   uint64_t                  resolution;
   DWORD                     resolution_gap = 0;
 
-  UNREFERENCED_PARAMETER(rem);
+  NACL_UNUSED_PARAMETER(rem);
 
   /* round up from ns resolution to ms resolution */
   /* TODO(bsy): report an error or loop if req->tv_sec does not fit in DWORD */

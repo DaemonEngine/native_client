@@ -321,7 +321,7 @@ int test_prot_mapping(int fd, size_t map_size, void *test_spec) {
 
 int test_prot_ronly_rw(int fd, size_t map_size, void *test_spec) {
   char *addr;
-  UNREFERENCED_PARAMETER(test_spec);
+  NACL_UNUSED_PARAMETER(test_spec);
 
   addr = (char *) mmap(NULL, map_size, PROT_READ, MAP_SHARED, fd, 0);
   CHECK(addr != MAP_FAILED);

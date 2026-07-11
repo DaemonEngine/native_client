@@ -55,13 +55,13 @@ void NaClClearMachThreadForThreadIndex(uint32_t nacl_thread_index);
 static INLINE void NaClSetCurrentMachThreadForThreadIndex(
     uint32_t nacl_thread_index) {
   /* No-op for x86-32. */
-  UNREFERENCED_PARAMETER(nacl_thread_index);
+  NACL_UNUSED_PARAMETER(nacl_thread_index);
 }
 
 static INLINE void NaClClearMachThreadForThreadIndex(
     uint32_t nacl_thread_index) {
   /* No-op for x86-32. */
-  UNREFERENCED_PARAMETER(nacl_thread_index);
+  NACL_UNUSED_PARAMETER(nacl_thread_index);
 }
 
 #endif

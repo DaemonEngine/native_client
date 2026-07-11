@@ -19,7 +19,7 @@
 #include "native_client/tests/minnacl/minimal_test_syscalls.h"
 
 static int32_t MySyscallInvoke(struct NaClAppThread *natp) {
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 
   printf("Inside custom test 'invoke' syscall\n");
   fflush(stdout);
@@ -28,7 +28,7 @@ static int32_t MySyscallInvoke(struct NaClAppThread *natp) {
 }
 
 static int32_t MySyscallExit(struct NaClAppThread *natp) {
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 
   printf("Inside custom test 'exit' syscall\n");
   fflush(stdout);

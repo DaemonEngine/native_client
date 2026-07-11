@@ -24,8 +24,8 @@ static void failWithErrno(const char* message) {
 int main(int argc, char* argv[]) {
   NaClHandle handle;
 
-  UNREFERENCED_PARAMETER(argc);
-  UNREFERENCED_PARAMETER(argv);
+  NACL_UNUSED_PARAMETER(argc);
+  NACL_UNUSED_PARAMETER(argv);
 
   /* Check not executable shared memory. */
   handle = NaClCreateMemoryObject(MEMORY_SIZE, 0);

@@ -459,7 +459,7 @@ void  NaClLoadTrampoline(struct NaClApp *nap, enum NaClAslrMode aslr_mode) {
     NaClLog(LOG_FATAL, "NaClMakePcrelThunk failed!\n");
   }
 #else
-  UNREFERENCED_PARAMETER(aslr_mode);
+  NACL_UNUSED_PARAMETER(aslr_mode);
 #endif
 #if NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86 && NACL_BUILD_SUBARCH == 64
   if (!NaClMakeDispatchAddrs(nap)) {

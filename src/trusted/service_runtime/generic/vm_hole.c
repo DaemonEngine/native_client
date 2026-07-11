@@ -8,17 +8,17 @@
 
 
 void NaClVmHoleWaitToStartThread(struct NaClApp *nap) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 }
 
 void NaClVmHoleThreadStackIsSafe(struct NaClApp *nap) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 }
 
 void NaClVmHoleOpeningMu(struct NaClApp *nap) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 }
 
 void NaClVmHoleClosingMu(struct NaClApp *nap) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 }

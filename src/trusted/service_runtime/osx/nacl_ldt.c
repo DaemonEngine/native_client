@@ -211,7 +211,7 @@ void NaClLdtPrintSelector(uint16_t selector) {
   printf("  64-bit code %s\n", (entry.code_64_bit ? "yes" : "no"));
   printf("  op size %s\n", (entry.op_size_32 ? "32" : "16"));
 #else
-  UNREFERENCED_PARAMETER(selector);
+  NACL_UNUSED_PARAMETER(selector);
 #endif
 }
 

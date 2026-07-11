@@ -67,7 +67,7 @@ void NaClDescSemaphoreDtor(struct NaClRefCount *vself) {
 
 int NaClDescSemaphoreFstat(struct NaClDesc          *vself,
                            struct nacl_abi_stat     *statbuf) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
 
   memset(statbuf, 0, sizeof *statbuf);
   statbuf->nacl_abi_st_mode = NACL_ABI_S_IFSEMA;
@@ -89,7 +89,7 @@ int NaClDescSemaphoreSemWait(struct NaClDesc          *vself) {
 }
 
 int NaClDescSemaphoreGetValue(struct NaClDesc         *vself) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
 
   NaClLog(LOG_ERROR, "SemGetValue is not implemented yet\n");
   return -NACL_ABI_EINVAL;

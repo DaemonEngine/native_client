@@ -78,8 +78,8 @@ void ActualVsBaselineTester::ProcessMatch() {
 bool ActualVsBaselineTester::ApplySanityChecks(
       nacl_arm_dec::Instruction inst,
       const NamedClassDecoder& decoder) {
-  UNREFERENCED_PARAMETER(inst);
-  UNREFERENCED_PARAMETER(decoder);
+  NACL_UNUSED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(decoder);
   EXPECT_TRUE(false) << "Sanity Checks shouldn't be applied!";
   return false;
 }

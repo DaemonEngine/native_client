@@ -132,13 +132,13 @@ static void TrapSignalHandler(int signal,
 }
 
 static void ThreadCreateHook(struct NaClAppThread *natp) {
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 
   SetTrapFlag();
 }
 
 static void ThreadExitHook(struct NaClAppThread *natp) {
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 }
 
 static void ProcessExitHook(void) {

@@ -206,7 +206,7 @@ static size_t ReadAndCheckLineRange(struct NaClHostDesc *d,
 
 /* visitor for computing number of bytes needed to hold line |ix| */
 static size_t BytesNeededForLineRangeOp(void *params, size_t ix) {
-  UNREFERENCED_PARAMETER(params);
+  NACL_UNUSED_PARAMETER(params);
   return strlen(quotes[ix]);
 }
 
@@ -345,7 +345,7 @@ static int CheckedPWriteFn(ssize_t (*fn)(struct NaClHostDesc *d,
 static size_t BasicReadWriteTest(struct NaClHostDesc *d, void *test_specifics) {
   size_t error_count = 0;
 
-  UNREFERENCED_PARAMETER(test_specifics);
+  NACL_UNUSED_PARAMETER(test_specifics);
 
   CheckedSeek(d, ((nacl_off64_t) 0), 0);
   error_count += ReadAndCheckLineRange(d, 0, LINES_AT_ZERO);
@@ -406,7 +406,7 @@ size_t BasicPReadTest(struct NaClHostDesc *d, void *test_specifics) {
   static size_t const kNullBytesInHole = 17;
   size_t available_bytes;
 
-  UNREFERENCED_PARAMETER(test_specifics);
+  NACL_UNUSED_PARAMETER(test_specifics);
 
   offset_last_line = BytesNeededForLineRange(0, LINES_AT_ZERO - 1);
   memset(buffer, 0, sizeof buffer);

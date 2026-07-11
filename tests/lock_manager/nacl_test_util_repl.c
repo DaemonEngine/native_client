@@ -531,7 +531,7 @@ struct NaClSexpNode *SetFilesImpl(struct NaClSexpCons *cons,
 
 struct NaClSexpNode *QuoteImpl(struct NaClSexpCons *cons,
                                struct WorkState *ws) {
-  UNREFERENCED_PARAMETER(ws);
+  NACL_UNUSED_PARAMETER(ws);
   if (NaClSexpListLength(cons) != 2) {
     error_cons(ws, "quote takes a single argument", cons);
     return NULL;

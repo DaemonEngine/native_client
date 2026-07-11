@@ -410,12 +410,12 @@ kern_return_t nacl_catch_exception_raise(
     exception_data_t code,
     mach_msg_type_number_t code_count) {
   /* MIG generated code expects this, but should never be called. */
-  UNREFERENCED_PARAMETER(exception_port);
-  UNREFERENCED_PARAMETER(thread);
-  UNREFERENCED_PARAMETER(task);
-  UNREFERENCED_PARAMETER(exception);
-  UNREFERENCED_PARAMETER(code);
-  UNREFERENCED_PARAMETER(code_count);
+  NACL_UNUSED_PARAMETER(exception_port);
+  NACL_UNUSED_PARAMETER(thread);
+  NACL_UNUSED_PARAMETER(task);
+  NACL_UNUSED_PARAMETER(exception);
+  NACL_UNUSED_PARAMETER(code);
+  NACL_UNUSED_PARAMETER(code_count);
   NaClLog(LOG_FATAL, "nacl_catch_exception_raise: "
                      "Unrequested message received.\n");
   return KERN_FAILURE;
@@ -432,15 +432,15 @@ kern_return_t nacl_catch_exception_raise_state(
     thread_state_t new_state,
     mach_msg_type_number_t *new_state_count) {
   /* MIG generated code expects this, but should never be called. */
-  UNREFERENCED_PARAMETER(exception_port);
-  UNREFERENCED_PARAMETER(exception);
-  UNREFERENCED_PARAMETER(code);
-  UNREFERENCED_PARAMETER(code_count);
-  UNREFERENCED_PARAMETER(flavor);
-  UNREFERENCED_PARAMETER(old_state);
-  UNREFERENCED_PARAMETER(old_state_count);
-  UNREFERENCED_PARAMETER(new_state);
-  UNREFERENCED_PARAMETER(new_state_count);
+  NACL_UNUSED_PARAMETER(exception_port);
+  NACL_UNUSED_PARAMETER(exception);
+  NACL_UNUSED_PARAMETER(code);
+  NACL_UNUSED_PARAMETER(code_count);
+  NACL_UNUSED_PARAMETER(flavor);
+  NACL_UNUSED_PARAMETER(old_state);
+  NACL_UNUSED_PARAMETER(old_state_count);
+  NACL_UNUSED_PARAMETER(new_state);
+  NACL_UNUSED_PARAMETER(new_state_count);
   NaClLog(LOG_FATAL, "nacl_catch_exception_raise_state: "
                      "Unrequested message received.\n");
   return KERN_FAILURE;

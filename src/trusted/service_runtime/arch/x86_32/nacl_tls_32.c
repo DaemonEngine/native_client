@@ -99,7 +99,7 @@ struct NaClAppThread *NaClTlsGetCurrentThread(void) {
  * the thread's identity.
  */
 void NaClTlsSetCurrentThread(struct NaClAppThread *natp) {
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 }
 
 #endif

@@ -88,7 +88,7 @@ static int NaClThreadIdxAllocate(void) {
 uint32_t NaClTlsAllocate(struct NaClAppThread *natp) {
   int idx = NaClThreadIdxAllocate();
 
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 
   NaClLog(2, "NaClTlsAllocate: idx %d\n", idx);
   if (-1 == idx) {

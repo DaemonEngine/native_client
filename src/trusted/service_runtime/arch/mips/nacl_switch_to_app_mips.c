@@ -19,7 +19,7 @@ void NaClInitSwitchToApp(struct NaClApp *nap) {
  /*
   * We don't need anything here.
   */
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 }
 
 NORETURN void NaClStartThreadInApp(struct NaClAppThread *natp,

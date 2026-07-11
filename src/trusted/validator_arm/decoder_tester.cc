@@ -29,8 +29,8 @@ DecoderTester::DecoderTester()
 bool DecoderTester::PassesParsePreconditions(
     nacl_arm_dec::Instruction inst,
     const NamedClassDecoder& decoder) {
-  UNREFERENCED_PARAMETER(inst);
-  UNREFERENCED_PARAMETER(decoder);
+  NACL_UNUSED_PARAMETER(inst);
+  NACL_UNUSED_PARAMETER(decoder);
   return true;
 }
 

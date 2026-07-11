@@ -36,10 +36,10 @@ class EarlyExitProblemSink : public nacl_mips_val::ProblemSink {
                               nacl_mips_dec::SafetyLevel safety,
                               const nacl::string &problem_code,
                               uint32_t ref_vaddr) {
-    UNREFERENCED_PARAMETER(vaddr);
-    UNREFERENCED_PARAMETER(safety);
-    UNREFERENCED_PARAMETER(problem_code);
-    UNREFERENCED_PARAMETER(ref_vaddr);
+    NACL_UNUSED_PARAMETER(vaddr);
+    NACL_UNUSED_PARAMETER(safety);
+    NACL_UNUSED_PARAMETER(problem_code);
+    NACL_UNUSED_PARAMETER(ref_vaddr);
 
     problems_ = true;
   }
@@ -62,9 +62,9 @@ class StuboutProblemSink : public nacl_mips_val::ProblemSink {
                               nacl_mips_dec::SafetyLevel safety,
                               const nacl::string &problem_code,
                               uint32_t ref_vaddr) {
-    UNREFERENCED_PARAMETER(safety);
-    UNREFERENCED_PARAMETER(problem_code);
-    UNREFERENCED_PARAMETER(ref_vaddr);
+    NACL_UNUSED_PARAMETER(safety);
+    NACL_UNUSED_PARAMETER(problem_code);
+    NACL_UNUSED_PARAMETER(ref_vaddr);
     stub_out_instr(vaddr);
 
     problems_ = true;
@@ -179,11 +179,11 @@ static NaClValidationStatus ValidatorCodeReplacementNotImplemented(
      uint8_t *data_new,
      size_t size,
      const NaClCPUFeatures *cpu_features) {
-  UNREFERENCED_PARAMETER(guest_addr);
-  UNREFERENCED_PARAMETER(data_old);
-  UNREFERENCED_PARAMETER(data_new);
-  UNREFERENCED_PARAMETER(size);
-  UNREFERENCED_PARAMETER(cpu_features);
+  NACL_UNUSED_PARAMETER(guest_addr);
+  NACL_UNUSED_PARAMETER(data_old);
+  NACL_UNUSED_PARAMETER(data_new);
+  NACL_UNUSED_PARAMETER(size);
+  NACL_UNUSED_PARAMETER(cpu_features);
   return NaClValidationFailedNotImplemented;
 }
 
@@ -194,12 +194,12 @@ static NaClValidationStatus ValidatorCopyNotImplemented(
      size_t size,
      const NaClCPUFeatures *cpu_features,
      NaClCopyInstructionFunc copy_func) {
-  UNREFERENCED_PARAMETER(guest_addr);
-  UNREFERENCED_PARAMETER(data_old);
-  UNREFERENCED_PARAMETER(data_new);
-  UNREFERENCED_PARAMETER(size);
-  UNREFERENCED_PARAMETER(cpu_features);
-  UNREFERENCED_PARAMETER(copy_func);
+  NACL_UNUSED_PARAMETER(guest_addr);
+  NACL_UNUSED_PARAMETER(data_old);
+  NACL_UNUSED_PARAMETER(data_new);
+  NACL_UNUSED_PARAMETER(size);
+  NACL_UNUSED_PARAMETER(cpu_features);
+  NACL_UNUSED_PARAMETER(copy_func);
   return NaClValidationFailedNotImplemented;
 }
 
@@ -209,11 +209,11 @@ static NaClValidationStatus IsOnInstBoundaryMips(
     const uint8_t *data,
     size_t size,
     const NaClCPUFeatures *f) {
-  UNREFERENCED_PARAMETER(guest_addr);
-  UNREFERENCED_PARAMETER(addr);
-  UNREFERENCED_PARAMETER(data);
-  UNREFERENCED_PARAMETER(size);
-  UNREFERENCED_PARAMETER(f);
+  NACL_UNUSED_PARAMETER(guest_addr);
+  NACL_UNUSED_PARAMETER(addr);
+  NACL_UNUSED_PARAMETER(data);
+  NACL_UNUSED_PARAMETER(size);
+  NACL_UNUSED_PARAMETER(f);
   return NaClValidationFailedNotImplemented;
 }
 
@@ -239,9 +239,9 @@ const struct NaClValidatorInterface *NaClValidatorCreateMips() {
  * moved to be part of sel_ldr, not the validator.
  */
 int NaClCopyInstruction(uint8_t *dst, uint8_t *src, uint8_t sz) {
-  UNREFERENCED_PARAMETER(dst);
-  UNREFERENCED_PARAMETER(src);
-  UNREFERENCED_PARAMETER(sz);
+  NACL_UNUSED_PARAMETER(dst);
+  NACL_UNUSED_PARAMETER(src);
+  NACL_UNUSED_PARAMETER(sz);
 
   return 0;
 }

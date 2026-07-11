@@ -147,5 +147,5 @@ void NaClLoadSpringboard(struct NaClApp  *nap) {
   /*
    * There is no springboard for x86-64.
    */
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 }

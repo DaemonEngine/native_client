@@ -69,7 +69,7 @@ void NaClAddSyscall(struct NaClApp *nap, uint32_t num,
 }
 
 int32_t NaClSysNull(struct NaClAppThread *natp) {
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
   return 0;
 }
 
@@ -132,7 +132,7 @@ int NaClHighResolutionTimerEnabled(void) {
 
 int32_t NaClSysGetpid(struct NaClAppThread *natp) {
   int32_t pid;
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 
   if (NaClAclBypassChecks) {
     pid = GETPID();
@@ -287,7 +287,7 @@ int32_t NaClSysSecondTlsGet(struct NaClAppThread *natp) {
 int NaClSysThreadNice(struct NaClAppThread *natp,
                       const int            nice) {
   /* Note: implementation of nacl_thread_nice is OS dependent. */
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
   return nacl_thread_nice(nice);
 }
 
@@ -696,7 +696,7 @@ cleanup:
 }
 
 int32_t NaClSysSchedYield(struct NaClAppThread *natp) {
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 
   NaClThreadYield();
   return 0;
@@ -922,7 +922,7 @@ int32_t NaClSysTestInfoLeak(struct NaClAppThread *natp) {
 
 #endif
 
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 
   return -NACL_ABI_ENOSYS;
 }
@@ -943,7 +943,7 @@ int32_t NaClSysTestCrash(struct NaClAppThread *natp, int crash_type) {
    * a SIGSEGV, because they'll see a SIGILL instead.
    */
   volatile int *volatile p = 0;
-  UNREFERENCED_PARAMETER(natp);
+  NACL_UNUSED_PARAMETER(natp);
 
   switch (crash_type) {
     case NACL_TEST_CRASH_MEMORY:

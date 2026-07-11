@@ -163,7 +163,7 @@ void RegsApplySandboxConstraints(struct NaClSignalContext *regs) {
   regs->stack_ptr = r15 + (uint32_t) regs->stack_ptr;
   regs->rbp = r15 + (uint32_t) regs->rbp;
 #else
-  UNREFERENCED_PARAMETER(regs);
+  NACL_UNUSED_PARAMETER(regs);
 #endif
 }
 #endif
@@ -198,7 +198,7 @@ static void RegsNormalizeFlags(struct NaClSignalContext *regs) {
   regs->cpsr &= REGS_ARM_USER_CPSR_FLAGS_MASK;
 #elif NACL_ARCH(NACL_BUILD_ARCH) == NACL_mips
   /* No flags field on MIPS. */
-  UNREFERENCED_PARAMETER(regs);
+  NACL_UNUSED_PARAMETER(regs);
 #endif
 }
 

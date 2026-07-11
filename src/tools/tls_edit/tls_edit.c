@@ -85,7 +85,7 @@ static void EditMipsCode(void *code, size_t code_length) {
 
 static Bool ConsiderOneInsn(const uint8_t *insn_begin, const uint8_t *insn_end,
                             uint32_t validation_info, void *data) {
-  UNREFERENCED_PARAMETER(data);
+  NACL_UNUSED_PARAMETER(data);
   if (insn_begin[0] == 0x65) {  /* GS prefix */
     if (insn_end - insn_begin < 6) {
       ReportError(insn_begin, "Unexpected GS prefix");

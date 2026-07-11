@@ -158,7 +158,7 @@ static void NaClDescXferableDataDescDtor(struct NaClRefCount *vself) {
 
 int NaClDescImcDescFstat(struct NaClDesc          *vself,
                          struct nacl_abi_stat     *statbuf) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
 
   memset(statbuf, 0, sizeof *statbuf);
   statbuf->nacl_abi_st_mode = (NACL_ABI_S_IFSOCK |
@@ -169,7 +169,7 @@ int NaClDescImcDescFstat(struct NaClDesc          *vself,
 
 static int NaClDescXferableDataDescFstat(struct NaClDesc          *vself,
                                          struct nacl_abi_stat     *statbuf) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
 
   memset(statbuf, 0, sizeof *statbuf);
   statbuf->nacl_abi_st_mode = NACL_ABI_S_IFDSOCK;
@@ -181,7 +181,7 @@ static int NaClDescXferableDataDescExternalizeSize(struct NaClDesc  *vself,
                                                    size_t           *nhandles) {
   int rv;
 
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
   NaClLog(4, "Entered NaClDescXferableDataDescExternalizeSize\n");
   rv = NaClDescExternalizeSize(vself, nbytes, nhandles);
   if (0 != rv) {

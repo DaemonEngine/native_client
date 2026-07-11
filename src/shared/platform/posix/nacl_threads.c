@@ -107,7 +107,7 @@ void NaClThreadDtor(struct NaClThread *ntp) {
    * and the underlying thread library are responsible for ensuring
    * that resources such as the thread stack are properly released.
    */
-  UNREFERENCED_PARAMETER(ntp);
+  NACL_UNUSED_PARAMETER(ntp);
 }
 
 void NaClThreadJoin(struct NaClThread *ntp) {

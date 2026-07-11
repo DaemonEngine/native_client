@@ -17,9 +17,9 @@
 static void NaClDescEffTrustedMemUnmapMemory(struct NaClDescEffector  *vself,
                                              uintptr_t                sysaddr,
                                              size_t                   nbytes) {
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(sysaddr);
-  UNREFERENCED_PARAMETER(nbytes);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(sysaddr);
+  NACL_UNUSED_PARAMETER(nbytes);
   NaClLog(8, "TrustedMem effector's UnmapMemory called, nothing to do\n");
 }
 

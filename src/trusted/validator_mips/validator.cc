@@ -55,7 +55,7 @@ enum PatternMatch {
 static PatternMatch CheckSafety(const SfiValidator &sfi,
                                 const DecodedInstruction &inst,
                                 ProblemSink *out) {
-  UNREFERENCED_PARAMETER(sfi);
+  NACL_UNUSED_PARAMETER(sfi);
   if (nacl_mips_dec::MAY_BE_SAFE != inst.safety()) {
     out->ReportProblem(inst.addr(), inst.safety(), kProblemUnsafe);
     return PATTERN_UNSAFE;
@@ -141,7 +141,7 @@ static PatternMatch CheckJmpReg(const SfiValidator &sfi,
                                 const DecodedInstruction &first,
                                 const DecodedInstruction &second,
                                 ProblemSink *out) {
-  UNREFERENCED_PARAMETER(sfi);
+  NACL_UNUSED_PARAMETER(sfi);
   if (second.IsJmpReg()) {
     if (first.IsMask(second.TargetReg(), Register::JumpMask())) {
       return PATTERN_SAFE;
@@ -161,7 +161,7 @@ static PatternMatch CheckDataRegisterUpdate(const SfiValidator &sfi,
                                             const DecodedInstruction &first,
                                             const DecodedInstruction &second,
                                             ProblemSink *out) {
-  UNREFERENCED_PARAMETER(sfi);
+  NACL_UNUSED_PARAMETER(sfi);
   if (first.DestGprReg().Equals(Register::Sp())
       && !first.IsMask(first.DestGprReg(), Register::LoadStoreMask())) {
     if (second.IsMask(first.DestGprReg(), Register::LoadStoreMask())) {
@@ -180,7 +180,7 @@ static PatternMatch CheckDataRegisterDslot(const SfiValidator &sfi,
                                            const DecodedInstruction &first,
                                            const DecodedInstruction &second,
                                            ProblemSink *out) {
-  UNREFERENCED_PARAMETER(sfi);
+  NACL_UNUSED_PARAMETER(sfi);
   if (second.DestGprReg().Equals(Register::Sp())
       && !second.IsMask(second.DestGprReg(), Register::LoadStoreMask())) {
     if (first.HasDelaySlot()) {
@@ -223,7 +223,7 @@ static PatternMatch CheckLoadStore(const SfiValidator &sfi,
 static PatternMatch CheckLoadThreadPointer(const SfiValidator &sfi,
                                            const DecodedInstruction &instr,
                                            ProblemSink *out) {
-  UNREFERENCED_PARAMETER(sfi);
+  NACL_UNUSED_PARAMETER(sfi);
   if (!instr.IsLoadStore())
     return NO_MATCH;
 
@@ -249,7 +249,7 @@ static PatternMatch CheckBranchInDelaySlot(const SfiValidator &sfi,
                                    const DecodedInstruction &first,
                                    const DecodedInstruction &second,
                                    ProblemSink *out) {
-  UNREFERENCED_PARAMETER(sfi);
+  NACL_UNUSED_PARAMETER(sfi);
   if (first.HasDelaySlot() && second.HasDelaySlot()) {
     out->ReportProblem(second.addr(), second.safety(),
                        kProblemBranchInDelaySlot);

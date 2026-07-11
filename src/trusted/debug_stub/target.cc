@@ -331,7 +331,7 @@ bool Target::IsOnValidInstBoundary(uint32_t addr) {
                   NACL_INSTR_BLOCK_SIZE,
                   nap_->cpu_features) == NaClValidationSucceeded;
 #else
-  UNREFERENCED_PARAMETER(addr);
+  NACL_UNUSED_PARAMETER(addr);
   return true;
 #endif
 }

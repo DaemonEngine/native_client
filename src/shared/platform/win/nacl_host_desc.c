@@ -1410,7 +1410,7 @@ int NaClHostDescStat(char const *path, nacl_host_stat_t *nhsp) {
 }
 
 int NaClHostDescMkdir(const char *path, int mode) {
-  UNREFERENCED_PARAMETER(mode);
+  NACL_UNUSED_PARAMETER(mode);
   if (_mkdir(path) != 0)
     return -NaClXlateErrno(errno);
   return 0;

@@ -69,7 +69,7 @@ static void NaClDescConnCapFdDtor(struct NaClRefCount *vself) {
 
 static int NaClDescConnCapFdFstat(struct NaClDesc       *vself,
                                   struct nacl_abi_stat  *statbuf) {
-  UNREFERENCED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(vself);
 
   memset(statbuf, 0, sizeof *statbuf);
   statbuf->nacl_abi_st_mode = NACL_ABI_S_IFSOCKADDR | NACL_ABI_S_IRWXU;
@@ -245,8 +245,8 @@ cleanup:
 
 static int NaClDescConnCapFdAcceptConn(struct NaClDesc  *vself,
                                        struct NaClDesc  **out_desc) {
-  UNREFERENCED_PARAMETER(vself);
-  UNREFERENCED_PARAMETER(out_desc);
+  NACL_UNUSED_PARAMETER(vself);
+  NACL_UNUSED_PARAMETER(out_desc);
 
   NaClLog(LOG_ERROR, "NaClDescConnCapFdAcceptConn: not IMC\n");
   return -NACL_ABI_EINVAL;

@@ -20,7 +20,7 @@ void NaClInitSwitchToApp(struct NaClApp *nap) {
    * We don't need anything here.  We might need it in future if e.g.
    * we start letting untrusted code use NEON extensions.
    */
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
 }
 
 NORETURN void NaClStartThreadInApp(struct NaClAppThread *natp,

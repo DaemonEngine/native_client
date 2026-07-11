@@ -77,7 +77,7 @@ NaClSyncStatus NaClSemPost(struct NaClSemaphore *sem) {
 }
 
 int32_t NaClSemGetValue(struct NaClSemaphore *sem) {
-  UNREFERENCED_PARAMETER(sem);
+  NACL_UNUSED_PARAMETER(sem);
   return -1;
   /*
   * TODO(gregoryd) - sem_getvalue is declared but not implemented on OSX

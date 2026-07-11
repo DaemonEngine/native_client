@@ -20,7 +20,7 @@ NaClErrorCode NaClAllocateSpaceAslr(void **mem, size_t addrsp_size,
   int result;
   void *tmp_mem = (void *) NACL_TRAMPOLINE_START;
 
-  UNREFERENCED_PARAMETER(aslr_mode);
+  NACL_UNUSED_PARAMETER(aslr_mode);
   CHECK(NULL != mem);
 
   /*

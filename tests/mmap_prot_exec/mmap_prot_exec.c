@@ -20,7 +20,7 @@
 /* Get macros for NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86 etc. */
 #include "native_client/src/include/nacl_base.h"
 
-/* Get UNREFERENCED_PARAMETER definition. */
+/* Get NACL_UNUSED_PARAMETER definition. */
 #include "native_client/src/include/nacl_compiler_annotations.h"
 
 /* Get macro for NACL_ARRAY_SIZE. */
@@ -254,7 +254,7 @@ int map_shared_test(int d, size_t map_size, void *test_specifics) {
   char *v1ptr;
   char *v2ptr;
 
-  UNREFERENCED_PARAMETER(test_specifics);
+  NACL_UNUSED_PARAMETER(test_specifics);
 
   if (MAP_FAILED ==
       (view1 = mmap(NULL,
@@ -444,7 +444,7 @@ int map_private_test_ro(int d, size_t file_size, void *test_specifics) {
 int map_rw_ronly_file_test(int d, size_t file_size, void *test_specifics) {
   void *view;
 
-  UNREFERENCED_PARAMETER(test_specifics);
+  NACL_UNUSED_PARAMETER(test_specifics);
   errno = 0;
   view = mmap(NULL, file_size, PROT_READ | PROT_WRITE, MAP_SHARED, d,
               /* offset */ 0);

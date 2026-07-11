@@ -54,8 +54,8 @@ class DCSocketTransport : public port::ITransport {
 
   virtual void WaitForDebugStubEvent(struct NaClApp *nap,
                                      bool ignore_gdb) {
-    UNREFERENCED_PARAMETER(nap);
-    UNREFERENCED_PARAMETER(ignore_gdb);
+    NACL_UNUSED_PARAMETER(nap);
+    NACL_UNUSED_PARAMETER(ignore_gdb);
   }
 
   virtual void Disconnect() {}

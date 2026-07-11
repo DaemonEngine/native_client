@@ -80,7 +80,7 @@ void NaClDebugStubSetPipe(NaClHandle handle) {
 }
 
 void WINAPI NaClStubThread(void *thread_arg) {
-  UNREFERENCED_PARAMETER(thread_arg);
+  NACL_UNUSED_PARAMETER(thread_arg);
   while (1) {
     // Wait for a connection.
     if (!g_transport->AcceptConnection()) continue;

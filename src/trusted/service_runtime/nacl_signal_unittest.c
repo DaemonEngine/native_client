@@ -67,7 +67,7 @@ void WINAPI Exec_RW(void *ptr) {
 
   PtrUnion_t ptrUnion;
 
-  UNREFERENCED_PARAMETER(ptr);
+  NACL_UNUSED_PARAMETER(ptr);
 
   /* Allocate a READ/WRITE page */
   page = Alloc1Page(PROT_READ | PROT_WRITE);
@@ -85,7 +85,7 @@ void WINAPI Exec_RW(void *ptr) {
 void WINAPI Write_RX(void *ptr) {
   void *page;
 
-  UNREFERENCED_PARAMETER(ptr);
+  NACL_UNUSED_PARAMETER(ptr);
   /* Allocate a READ/EXEC page */
   page = Alloc1Page(PROT_READ | PROT_EXEC);
 
@@ -103,7 +103,7 @@ void WINAPI Write_RX(void *ptr) {
 void WINAPI ReadWriteUnmapped(void *ptr) {
   int *page;
 
-  UNREFERENCED_PARAMETER(ptr);
+  NACL_UNUSED_PARAMETER(ptr);
 
   /* Allocate and free so we know it can't be valid. */
   page = (int *) Alloc1Page(PROT_READ | PROT_WRITE);
@@ -151,8 +151,8 @@ void Attempt(const char *str, void (WINAPI *start_fn)(void *), int sig) {
 
 void Handler(int signal_number, const struct NaClSignalContext *context,
              int is_untrusted) {
-  UNREFERENCED_PARAMETER(context);
-  UNREFERENCED_PARAMETER(is_untrusted);
+  NACL_UNUSED_PARAMETER(context);
+  NACL_UNUSED_PARAMETER(is_untrusted);
 
   g_SigFound = signal_number;
 
@@ -173,8 +173,8 @@ int main(int argc, const char *argv[]) {
   const int kAccessUnmappedPageSignal = SIGSEGV;
   const int kDivideByZeroSignal = SIGFPE;
 
-  UNREFERENCED_PARAMETER(argc);
-  UNREFERENCED_PARAMETER(argv);
+  NACL_UNUSED_PARAMETER(argc);
+  NACL_UNUSED_PARAMETER(argv);
 
   NaClLogModuleInit();
   NaClTimeInit();

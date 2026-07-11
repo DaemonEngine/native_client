@@ -218,7 +218,7 @@ int NaClSysCommonAddrRangeContainsExecutablePages(struct NaClApp *nap,
    * callers (as of this writing) does this, but we truncate it down
    * to an allocation boundary to be sure.
    */
-  UNREFERENCED_PARAMETER(length);
+  NACL_UNUSED_PARAMETER(length);
   usraddr = NaClTruncAllocPage(usraddr);
   return usraddr < nap->dynamic_text_end;
 }
@@ -1033,7 +1033,7 @@ static int32_t MunmapInternal(struct NaClApp *nap,
 #else
 static int32_t MunmapInternal(struct NaClApp *nap,
                               uintptr_t sysaddr, size_t length) {
-  UNREFERENCED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(nap);
   NaClLog(3, "MunmapInternal(0x%08"NACL_PRIxPTR", 0x%"NACL_PRIxS")\n",
           (uintptr_t) sysaddr, length);
   /*

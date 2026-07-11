@@ -13,68 +13,68 @@ namespace nacl_arm_dec {
 
 // ClassDecoder
 RegisterList ClassDecoder::defs(Instruction i) const {
-  UNREFERENCED_PARAMETER(i);
+  NACL_UNUSED_PARAMETER(i);
   return RegisterList::Everything();
 }
 
 RegisterList ClassDecoder::uses(Instruction i) const {
-  UNREFERENCED_PARAMETER(i);
+  NACL_UNUSED_PARAMETER(i);
   return RegisterList();
 }
 
 bool ClassDecoder::base_address_register_writeback_small_immediate(
     Instruction i) const {
-  UNREFERENCED_PARAMETER(i);
+  NACL_UNUSED_PARAMETER(i);
   return false;
 }
 
 Register ClassDecoder::base_address_register(Instruction i) const {
-  UNREFERENCED_PARAMETER(i);
+  NACL_UNUSED_PARAMETER(i);
   return Register::None();
 }
 
 bool ClassDecoder::is_literal_load(Instruction i) const {
-  UNREFERENCED_PARAMETER(i);
+  NACL_UNUSED_PARAMETER(i);
   return false;
 }
 
 Register ClassDecoder::branch_target_register(Instruction i) const {
-  UNREFERENCED_PARAMETER(i);
+  NACL_UNUSED_PARAMETER(i);
   return Register::None();
 }
 
 bool ClassDecoder::is_relative_branch(Instruction i) const {
-  UNREFERENCED_PARAMETER(i);
+  NACL_UNUSED_PARAMETER(i);
   return false;
 }
 
 int32_t ClassDecoder::branch_target_offset(Instruction i) const {
-  UNREFERENCED_PARAMETER(i);
+  NACL_UNUSED_PARAMETER(i);
   return 0;
 }
 
 bool ClassDecoder::is_literal_pool_head(Instruction i) const {
-  UNREFERENCED_PARAMETER(i);
+  NACL_UNUSED_PARAMETER(i);
   return false;
 }
 
 bool ClassDecoder::clears_bits(Instruction i, uint32_t mask) const {
-  UNREFERENCED_PARAMETER(i);
-  UNREFERENCED_PARAMETER(mask);
+  NACL_UNUSED_PARAMETER(i);
+  NACL_UNUSED_PARAMETER(mask);
   return false;
 }
 
 bool ClassDecoder::sets_Z_if_bits_clear(Instruction i,
                                         Register r,
                                         uint32_t mask) const {
-  UNREFERENCED_PARAMETER(i);
-  UNREFERENCED_PARAMETER(r);
-  UNREFERENCED_PARAMETER(mask);
+  NACL_UNUSED_PARAMETER(i);
+  NACL_UNUSED_PARAMETER(r);
+  NACL_UNUSED_PARAMETER(mask);
   return false;
 }
 
 bool ClassDecoder::is_load_thread_address_pointer(Instruction i) const {
-  UNREFERENCED_PARAMETER(i);
+  NACL_UNUSED_PARAMETER(i);
   return false;
 }
 
@@ -90,7 +90,7 @@ ViolationSet ClassDecoder::get_violations(
     nacl_arm_val::AddressSet* branches,
     nacl_arm_val::AddressSet* critical,
     uint32_t* next_inst_addr) const {
-  UNREFERENCED_PARAMETER(next_inst_addr);
+  NACL_UNUSED_PARAMETER(next_inst_addr);
   ViolationSet violations = kNoViolations;
 
   // Start by checking safety.

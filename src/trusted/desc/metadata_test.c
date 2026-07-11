@@ -255,7 +255,7 @@ void WINAPI child_thread_fn(void *child_thread_state) {
    * create and send a desc with flags, and then with metadata string,
    * and then with both.
    */
-  UNREFERENCED_PARAMETER(child_thread_state);
+  NACL_UNUSED_PARAMETER(child_thread_state);
   sender_thread();
   return;
 }

@@ -43,11 +43,11 @@ kern_return_t catch_exception_raise(mach_port_t port,
                                     exception_type_t exception_type,
                                     exception_data_t exception_code,
                                     mach_msg_type_number_t code_count) {
-  UNREFERENCED_PARAMETER(port);
-  UNREFERENCED_PARAMETER(crashing_thread);
-  UNREFERENCED_PARAMETER(exception_type);
-  UNREFERENCED_PARAMETER(exception_code);
-  UNREFERENCED_PARAMETER(code_count);
+  NACL_UNUSED_PARAMETER(port);
+  NACL_UNUSED_PARAMETER(crashing_thread);
+  NACL_UNUSED_PARAMETER(exception_type);
+  NACL_UNUSED_PARAMETER(exception_code);
+  NACL_UNUSED_PARAMETER(code_count);
 
   CHECK(task == mach_task_self());
   CHECK(g_expect_crash);

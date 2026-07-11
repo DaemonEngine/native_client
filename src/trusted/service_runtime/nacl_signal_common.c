@@ -297,13 +297,13 @@ void NaClSignalSetUpExceptionFrame(volatile struct NaClExceptionFrame *frame,
   frame->context_ptr = context_user_addr;
   frame->portable.frame_ptr = (uint32_t) regs->ebp;
 #elif NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86 && NACL_BUILD_SUBARCH == 64
-  UNREFERENCED_PARAMETER(context_user_addr);
+  NACL_UNUSED_PARAMETER(context_user_addr);
   frame->portable.frame_ptr = (uint32_t) regs->rbp;
 #elif NACL_ARCH(NACL_BUILD_ARCH) == NACL_arm
-  UNREFERENCED_PARAMETER(context_user_addr);
+  NACL_UNUSED_PARAMETER(context_user_addr);
   frame->portable.frame_ptr = regs->r11;
 #elif NACL_ARCH(NACL_BUILD_ARCH) == NACL_mips
-  UNREFERENCED_PARAMETER(context_user_addr);
+  NACL_UNUSED_PARAMETER(context_user_addr);
   frame->portable.frame_ptr = regs->frame_ptr;
 #else
 # error Unsupported architecture

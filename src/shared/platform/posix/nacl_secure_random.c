@@ -80,9 +80,9 @@ int NaClSecureRngCtor(struct NaClSecureRng *self) {
 int NaClSecureRngTestingCtor(struct NaClSecureRng *self,
                              uint8_t              *seed_material,
                              size_t               seed_bytes) {
-  UNREFERENCED_PARAMETER(self);
-  UNREFERENCED_PARAMETER(seed_material);
-  UNREFERENCED_PARAMETER(seed_bytes);
+  NACL_UNUSED_PARAMETER(self);
+  NACL_UNUSED_PARAMETER(seed_material);
+  NACL_UNUSED_PARAMETER(seed_bytes);
   return 0;
 }
 

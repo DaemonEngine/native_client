@@ -228,7 +228,7 @@ void* NaClMap(struct NaClDescEffector* effp,
     PROT_READ | PROT_WRITE | PROT_EXEC
   };
   int adjusted = 0;
-  UNREFERENCED_PARAMETER(effp);
+  NACL_UNUSED_PARAMETER(effp);
 
   if (flags & NACL_ABI_MAP_SHARED) {
     adjusted |= MAP_SHARED;
