@@ -520,7 +520,7 @@ int NaClReceiveDatagram(NaClHandle handle, NaClMessageHeader* message,
    * If handle is a bound socket, it is a named pipe in non-blocking mode.
    * Set is_bound_socket to true if handle has been created by BoundSocket().
    */
-  if (!GetNamedPipeHandleState(handle, &state, NULL, NULL, NULL, NULL, NULL)) {
+  if (!GetNamedPipeHandleState(handle, &state, NULL, NULL, NULL, NULL, 0)) {
     return -1;
   }
 
