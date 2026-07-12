@@ -14,6 +14,8 @@
 #elif NACL_OSX
 # include <mach/mach.h>
 # include <mach/mach_vm.h>
+#elif NACL_WINDOWS
+# include <share.h>
 #endif
 
 #include "gtest/gtest.h"
