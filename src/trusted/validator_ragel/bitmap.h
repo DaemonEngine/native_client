@@ -16,9 +16,9 @@
 #include "native_client/src/include/portability.h"
 
 #if defined(_MSC_VER)
-# define FORCEINLINE __forceinline
+# define NACL_FORCEINLINE __forceinline
 #else
-# define FORCEINLINE __inline __attribute__ ((always_inline))
+# define NACL_FORCEINLINE __inline __attribute__ ((always_inline))
 #endif
 
 typedef NACL_CONCAT(NACL_CONCAT(uint, NACL_HOST_WORDSIZE), _t) bitmap_word;
@@ -29,30 +29,30 @@ static INLINE bitmap_word *BitmapAllocate(size_t indexes) {
   return calloc(word_count, sizeof(bitmap_word));
 }
 
-static FORCEINLINE int BitmapIsBitSet(bitmap_word *bitmap, size_t index) {
+static NACL_FORCEINLINE int BitmapIsBitSet(bitmap_word *bitmap, size_t index) {
   return (bitmap[index / NACL_HOST_WORDSIZE] &
                        (((bitmap_word)1) << (index % NACL_HOST_WORDSIZE))) != 0;
 }
 
-static FORCEINLINE void BitmapSetBit(bitmap_word *bitmap, size_t index) {
+static NACL_FORCEINLINE void BitmapSetBit(bitmap_word *bitmap, size_t index) {
   bitmap[index / NACL_HOST_WORDSIZE] |=
                                ((bitmap_word)1) << (index % NACL_HOST_WORDSIZE);
 }
 
-static FORCEINLINE void BitmapClearBit(bitmap_word *bitmap, size_t index) {
+static NACL_FORCEINLINE void BitmapClearBit(bitmap_word *bitmap, size_t index) {
   bitmap[index / NACL_HOST_WORDSIZE] &=
                             ~(((bitmap_word)1) << (index % NACL_HOST_WORDSIZE));
 }
 
 /* All the bits must be in a single 32-bit bundle.  */
-static FORCEINLINE int BitmapIsAnyBitSet(bitmap_word *bitmap,
+static NACL_FORCEINLINE int BitmapIsAnyBitSet(bitmap_word *bitmap,
                                          size_t index, size_t bits) {
   return (bitmap[index / NACL_HOST_WORDSIZE] &
        (((((bitmap_word)1) << bits) - 1) << (index % NACL_HOST_WORDSIZE))) != 0;
 }
 
 /* All the bits must be in a single 32-bit bundle. */
-static FORCEINLINE void BitmapSetBits(bitmap_word *bitmap,
+static NACL_FORCEINLINE void BitmapSetBits(bitmap_word *bitmap,
                                       size_t index,
                                       size_t bits) {
   bitmap[index / NACL_HOST_WORDSIZE] |=
@@ -60,7 +60,7 @@ static FORCEINLINE void BitmapSetBits(bitmap_word *bitmap,
 }
 
 /* All the bits must be in a single 32-bit bundle. */
-static FORCEINLINE void BitmapClearBits(bitmap_word *bitmap,
+static NACL_FORCEINLINE void BitmapClearBits(bitmap_word *bitmap,
                                         size_t index, size_t bits) {
   bitmap[index / NACL_HOST_WORDSIZE] &=
             ~(((((bitmap_word)1) << bits) - 1) << (index % NACL_HOST_WORDSIZE));

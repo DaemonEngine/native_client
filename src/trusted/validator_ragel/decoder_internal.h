@@ -66,7 +66,7 @@ enum ImmediateMode {
   IMM64
 };
 
-static FORCEINLINE uint64_t DecodeDisplacementValue(
+static NACL_FORCEINLINE uint64_t DecodeDisplacementValue(
     enum DisplacementMode disp_mode, const uint8_t *disp_ptr) {
   switch(disp_mode) {
     case DISPNONE: return 0;
@@ -80,7 +80,7 @@ static FORCEINLINE uint64_t DecodeDisplacementValue(
 }
 
 
-static FORCEINLINE uint64_t DecodeImmediateValue(enum ImmediateMode imm_mode,
+static NACL_FORCEINLINE uint64_t DecodeImmediateValue(enum ImmediateMode imm_mode,
                                                  const uint8_t *imm_ptr) {
   switch(imm_mode) {
     case IMMNONE: return 0;

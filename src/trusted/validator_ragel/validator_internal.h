@@ -154,7 +154,7 @@ extern const NaClCPUFeaturesX86 kValidatorCPUIDFeatures;
  *
  * Returns TRUE iff the jump passes the early validity check.
  */
-static FORCEINLINE int MarkJumpTarget(size_t jump_dest,
+static NACL_FORCEINLINE int MarkJumpTarget(size_t jump_dest,
                                       bitmap_word *jump_dests,
                                       size_t size) {
   if ((jump_dest & kBundleMask) == 0) {
@@ -170,7 +170,7 @@ static FORCEINLINE int MarkJumpTarget(size_t jump_dest,
 /*
  * Mark the given address as valid jump target address.
  */
-static FORCEINLINE void MarkValidJumpTarget(size_t address,
+static NACL_FORCEINLINE void MarkValidJumpTarget(size_t address,
                                             bitmap_word *valid_targets) {
   BitmapSetBit(valid_targets, address);
 }
@@ -178,7 +178,7 @@ static FORCEINLINE void MarkValidJumpTarget(size_t address,
 /*
  * Mark the given address as invalid jump target address (that is: unmark it).
  */
-static FORCEINLINE void UnmarkValidJumpTarget(size_t address,
+static NACL_FORCEINLINE void UnmarkValidJumpTarget(size_t address,
                                               bitmap_word *valid_targets) {
   BitmapClearBit(valid_targets, address);
 }
@@ -187,7 +187,7 @@ static FORCEINLINE void UnmarkValidJumpTarget(size_t address,
  * Mark the given addresses as invalid jump target addresses (that is: unmark
  * them).
  */
-static FORCEINLINE void UnmarkValidJumpTargets(size_t address,
+static NACL_FORCEINLINE void UnmarkValidJumpTargets(size_t address,
                                                size_t bytes,
                                                bitmap_word *valid_targets) {
   BitmapClearBits(valid_targets, address, bytes);
@@ -232,7 +232,7 @@ static INLINE Bool ProcessInvalidJumpTargets(
  * instruction here and x86 encoding guarantees rel8 field is the last one
  * in a current instruction.
  */
-static FORCEINLINE void Rel8Operand(const uint8_t *rip,
+static NACL_FORCEINLINE void Rel8Operand(const uint8_t *rip,
                                     const uint8_t codeblock[],
                                     bitmap_word *jump_dests,
                                     size_t jumpdests_size,
@@ -251,7 +251,7 @@ static FORCEINLINE void Rel8Operand(const uint8_t *rip,
  * instruction here and x86 encoding guarantees rel32 field is the last one
  * in a current instruction.
  */
-static FORCEINLINE void Rel32Operand(const uint8_t *rip,
+static NACL_FORCEINLINE void Rel32Operand(const uint8_t *rip,
                                      const uint8_t codeblock[],
                                      bitmap_word *jump_dests,
                                      size_t jumpdests_size,
