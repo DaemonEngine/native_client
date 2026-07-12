@@ -786,7 +786,7 @@ static INLINE void CheckMemoryAccess(ptrdiff_t instruction_begin,
   }
 }
 
-static FORCEINLINE uint32_t CheckValidityOfRegularInstruction(
+static NACL_FORCEINLINE uint32_t CheckValidityOfRegularInstruction(
     enum OperandName restricted_register) {
   /*
    * Restricted %rsp or %rbp must be %rsp or %rbp must be restored from

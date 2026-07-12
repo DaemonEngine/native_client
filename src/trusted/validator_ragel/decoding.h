@@ -20,9 +20,9 @@
 #include "native_client/src/trusted/validator_ragel/decoder.h"
 
 #if defined(_MSC_VER)
-# define FORCEINLINE __forceinline
+# define NACL_FORCEINLINE __forceinline
 #else
-# define FORCEINLINE __inline __attribute__ ((always_inline))
+# define NACL_FORCEINLINE __inline __attribute__ ((always_inline))
 #endif
 
 
@@ -32,7 +32,7 @@
  * bits 0-2: register number
  * bits 3-7: actual opcode
  */
-static FORCEINLINE uint8_t RegFromOpcode(uint8_t modrm) {
+static NACL_FORCEINLINE uint8_t RegFromOpcode(uint8_t modrm) {
   return modrm & 0x07;
 }
 
@@ -43,15 +43,15 @@ static FORCEINLINE uint8_t RegFromOpcode(uint8_t modrm) {
  * bits 3-5: reg
  * bits 6-7: mod
  */
-static FORCEINLINE uint8_t ModFromModRM(uint8_t modrm) {
+static NACL_FORCEINLINE uint8_t ModFromModRM(uint8_t modrm) {
   return modrm >> 6;
 }
 
-static FORCEINLINE uint8_t RegFromModRM(uint8_t modrm) {
+static NACL_FORCEINLINE uint8_t RegFromModRM(uint8_t modrm) {
   return (modrm >> 3) & 0x07;
 }
 
-static FORCEINLINE uint8_t RMFromModRM(uint8_t modrm) {
+static NACL_FORCEINLINE uint8_t RMFromModRM(uint8_t modrm) {
   return modrm & 0x07;
 }
 
@@ -62,15 +62,15 @@ static FORCEINLINE uint8_t RMFromModRM(uint8_t modrm) {
  * bits 3-5: index
  * bits 6-7: scale
  */
-static FORCEINLINE uint8_t ScaleFromSIB(uint8_t sib) {
+static NACL_FORCEINLINE uint8_t ScaleFromSIB(uint8_t sib) {
   return sib >> 6;
 }
 
-static FORCEINLINE uint8_t IndexFromSIB(uint8_t sib) {
+static NACL_FORCEINLINE uint8_t IndexFromSIB(uint8_t sib) {
   return (sib >> 3) & 0x07;
 }
 
-static FORCEINLINE uint8_t BaseFromSIB(uint8_t sib) {
+static NACL_FORCEINLINE uint8_t BaseFromSIB(uint8_t sib) {
   return sib & 0x07;
 }
 
@@ -92,17 +92,17 @@ enum {
 };
 
 /* How much to add to "base register" number: 0 or 8  */
-static FORCEINLINE uint8_t BaseExtentionFromREX(uint8_t rex) {
+static NACL_FORCEINLINE uint8_t BaseExtentionFromREX(uint8_t rex) {
   return (rex & REX_B) << 3;
 }
 
 /* How much to add to "index register" number: 0 or 8  */
-static FORCEINLINE uint8_t IndexExtentionFromREX(uint8_t rex) {
+static NACL_FORCEINLINE uint8_t IndexExtentionFromREX(uint8_t rex) {
   return (rex & REX_X) << 2;
 }
 
 /* How much to add to "register operand" number: 0 or 8  */
-static FORCEINLINE uint8_t RegisterExtentionFromREX(uint8_t rex) {
+static NACL_FORCEINLINE uint8_t RegisterExtentionFromREX(uint8_t rex) {
   return (rex & REX_R) << 1;
 }
 
@@ -129,17 +129,17 @@ enum {
 };
 
 /* How much to add to "base register" number: 0 or 8  */
-static FORCEINLINE uint8_t BaseExtentionFromVEX(uint8_t vex2) {
+static NACL_FORCEINLINE uint8_t BaseExtentionFromVEX(uint8_t vex2) {
   return ((~vex2) & VEX_B) >> 2;
 }
 
 /* How much to add to "index register" number: 0 or 8  */
-static FORCEINLINE uint8_t IndexExtentionFromVEX(uint8_t vex2) {
+static NACL_FORCEINLINE uint8_t IndexExtentionFromVEX(uint8_t vex2) {
   return ((~vex2) & VEX_X) >> 3;
 }
 
 /* How much to add to "register operand" number: 0 or 8  */
-static FORCEINLINE uint8_t RegisterExtentionFromVEX(uint8_t vex2) {
+static NACL_FORCEINLINE uint8_t RegisterExtentionFromVEX(uint8_t vex2) {
   return ((~vex2) & VEX_R) >> 4;
 }
 
@@ -163,11 +163,11 @@ enum {
 };
 
 
-static FORCEINLINE uint8_t GetOperandFromVexIA32(uint8_t vex3) {
+static NACL_FORCEINLINE uint8_t GetOperandFromVexIA32(uint8_t vex3) {
   return ((~vex3) & VEX_VVVV) >> 3;
 }
 
-static FORCEINLINE uint8_t GetOperandFromVexAMD64(uint8_t vex3) {
+static NACL_FORCEINLINE uint8_t GetOperandFromVexAMD64(uint8_t vex3) {
   return ((~vex3) & VEX_VVVV) >> 3;
 }
 
@@ -178,7 +178,7 @@ static FORCEINLINE uint8_t GetOperandFromVexAMD64(uint8_t vex3) {
  * bits 2-3: 0
  * bits 4-7: register number
  */
-static FORCEINLINE uint8_t RegisterFromIS4(uint8_t is4) {
+static NACL_FORCEINLINE uint8_t RegisterFromIS4(uint8_t is4) {
   return is4 >> 4;
 }
 
@@ -214,30 +214,30 @@ static FORCEINLINE uint8_t RegisterFromIS4(uint8_t is4) {
  * Conversion from intXX_t to uint64_t is always safe (same as before: see
  * see 6.2.1.2 in C90 specification and 6.3.1.3.2 in C99 specification).
  */
-static FORCEINLINE uint64_t SignExtend8Bit(uint64_t value) {
+static NACL_FORCEINLINE uint64_t SignExtend8Bit(uint64_t value) {
   return (int8_t)value;
 }
 
-static FORCEINLINE uint64_t SignExtend16Bit(uint64_t value) {
+static NACL_FORCEINLINE uint64_t SignExtend16Bit(uint64_t value) {
   return (int16_t)value;
 }
 
-static FORCEINLINE uint64_t SignExtend32Bit(uint64_t value) {
+static NACL_FORCEINLINE uint64_t SignExtend32Bit(uint64_t value) {
   return (int32_t)value;
 }
 
-static FORCEINLINE uint64_t AnyFieldValue8bit(const uint8_t *start) {
+static NACL_FORCEINLINE uint64_t AnyFieldValue8bit(const uint8_t *start) {
   return *start;
 }
 
-static FORCEINLINE uint64_t AnyFieldValue16bit(const uint8_t *start) {
+static NACL_FORCEINLINE uint64_t AnyFieldValue16bit(const uint8_t *start) {
   return (start[0] + 256U * start[1]);
 }
 
-static FORCEINLINE uint64_t AnyFieldValue32bit(const uint8_t *start) {
+static NACL_FORCEINLINE uint64_t AnyFieldValue32bit(const uint8_t *start) {
   return (start[0] + 256U * (start[1] + 256U * (start[2] + 256U * (start[3]))));
 }
-static FORCEINLINE uint64_t AnyFieldValue64bit(const uint8_t *start) {
+static NACL_FORCEINLINE uint64_t AnyFieldValue64bit(const uint8_t *start) {
   return (*start + 256ULL * (start[1] + 256ULL * (start[2] + 256ULL *
           (start[3] + 256ULL * (start[4] + 256ULL * (start[5] + 256ULL *
            (start[6] + 256ULL * start[7])))))));

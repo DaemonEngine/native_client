@@ -177,7 +177,7 @@ It's “more interesting” not because it's complex or non-obvious. The interes
 &nbsp;&nbsp;&nbsp;&nbsp;<code>Rel32Operand(current_position&nbsp;+&nbsp;1,&nbsp;codeblock,&nbsp;jump_dests,&nbsp;size,</code><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;instruction_info_collected);</code></br />
 &nbsp;&nbsp;<code>}</code><hr />
-<code>static&nbsp;FORCEINLINE&nbsp;int&nbsp;MarkJumpTarget(size_t&nbsp;jump_dest,</code></br>
+<code>static&nbsp;NACL_FORCEINLINE&nbsp;int&nbsp;MarkJumpTarget(size_t&nbsp;jump_dest,</code></br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap_word&nbsp;*jump_dests,</code></br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;size)&nbsp;{</code></br>
 &nbsp;&nbsp;<code>if&nbsp;((jump_dest&nbsp;&amp;&nbsp;kBundleMask)&nbsp;==&nbsp;0)&nbsp;{</code></br>
@@ -189,7 +189,7 @@ It's “more interesting” not because it's complex or non-obvious. The interes
 &nbsp;&nbsp;<code>BitmapSetBit(jump_dests,&nbsp;jump_dest);</code></br>
 &nbsp;&nbsp;<code>return&nbsp;TRUE;</code></br>
 <code>}</code></br>
-<code>static&nbsp;FORCEINLINE&nbsp;void&nbsp;Rel8Operand(const&nbsp;uint8_t&nbsp;*rip,</code><br />
+<code>static&nbsp;NACL_FORCEINLINE&nbsp;void&nbsp;Rel8Operand(const&nbsp;uint8_t&nbsp;*rip,</code><br />
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;uint8_t&nbsp;codeblock[],</code><br />
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap_word&nbsp;*jump_dests,</code><br />
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;jumpdests_size,</code><br />
@@ -201,7 +201,7 @@ It's “more interesting” not because it's complex or non-obvious. The interes
 &nbsp;&nbsp;<code>else</code><br />
 &nbsp;&nbsp;&nbsp;&nbsp;<code>*instruction_info_collected&nbsp;|=&nbsp;RELATIVE_8BIT&nbsp;|&nbsp;DIRECT_JUMP_OUT_OF_RANGE;</code><br />
 <code>}</code><br /><br /><br />
-<code>static&nbsp;FORCEINLINE&nbsp;void&nbsp;Rel32Operand(const&nbsp;uint8_t&nbsp;*rip,</code><br />
+<code>static&nbsp;NACL_FORCEINLINE&nbsp;void&nbsp;Rel32Operand(const&nbsp;uint8_t&nbsp;*rip,</code><br />
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;uint8_t&nbsp;codeblock[],</code><br />
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap_word&nbsp;*jump_dests,</code><br />
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;jumpdests_size,</code><br />
