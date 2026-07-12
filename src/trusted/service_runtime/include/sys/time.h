@@ -43,13 +43,13 @@ typedef long int  nacl_abi_clock_t;  /* to be deprecated */
  * as a 24 byte trusted array, which is incorrect. This alignment causes
  * the trusted array to be correctly considered 32 bytes in length.
  */
-#if defined(NACL_WINDOWS) && NACL_WINDOWS != 0
+#ifdef _MSC_VER
 __declspec(align(8))
 #endif
 struct nacl_abi_timeval {
   nacl_abi_time_t      nacl_abi_tv_sec;
   nacl_abi_suseconds_t nacl_abi_tv_usec;
-#if defined(NACL_WINDOWS) && NACL_WINDOWS != 0
+#ifdef _MSC_VER
 };
 #else
 } __attribute__((aligned(8)));
