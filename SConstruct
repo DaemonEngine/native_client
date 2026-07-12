@@ -2344,7 +2344,7 @@ def MakeWindowsEnv(platform=None):
           # would conflict with Winsock 1.x included by windows.h.
           ['WIN32_LEAN_AND_MEAN', ''],
       ],
-      LIBS = ['ws2_32', 'advapi32'],
+      LIBS = ['ws2_32', 'advapi32', 'winmm'],
       # TODO(bsy) remove 4355 once cross-repo
       # NACL_ALLOW_THIS_IN_INITIALIZER_LIST changes go in.
       CCFLAGS = ['/EHsc', '/wd4355', '/wd4800']
