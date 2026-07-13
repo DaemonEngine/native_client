@@ -139,31 +139,31 @@ done
 echo @@@STEP_LINK@download@http://gsdview.appspot.com/${GSD_BUCKET}/${UPLOAD_LOC}/@@@
 
 echo @@@BUILD_STEP archive_extract_packages@@@
-${NATIVE_PYTHON} build/package_version/package_version.py \
+${NATIVE_PYTHON} tools/build/package_version/package_version.py \
   archive --archive-package=${TOOLCHAINNAME}/nacl_x86_glibc --extract \
   --extra-archive gdb_i686_w64_mingw32.tgz \
   tools/toolchain.tar.bz2,${TOOL_TOOLCHAIN}@https://storage.googleapis.com/${GSD_BUCKET}/${UPLOAD_LOC}/toolchain_win_x86.tar.bz2 \
   tools/core_sdk.tar.bz2,${CORE_SDK}@https://storage.googleapis.com/${GSD_BUCKET}/${UPLOAD_LOC}/core_sdk_win_x86.tar.bz2
 
-${NATIVE_PYTHON} build/package_version/package_version.py \
+${NATIVE_PYTHON} tools/build/package_version/package_version.py \
   archive --archive-package=${TOOLCHAINNAME}/nacl_x86_glibc_raw --extract \
   --extra-archive gdb_i686_w64_mingw32.tgz \
   tools/toolchain.tar.bz2,${TOOL_TOOLCHAIN}@https://storage.googleapis.com/${GSD_BUCKET}/${UPLOAD_LOC}/toolchain_win_x86.tar.bz2
 
 echo @@@BUILD_STEP upload_package_info@@@
-${NATIVE_PYTHON} build/package_version/package_version.py \
+${NATIVE_PYTHON} tools/build/package_version/package_version.py \
   --cloud-bucket=${GSD_BUCKET} --annotate \
   upload --skip-missing \
   --upload-package=${TOOLCHAINNAME}/nacl_x86_glibc --revision=${UPLOAD_REV}
 
-${NATIVE_PYTHON} build/package_version/package_version.py \
+${NATIVE_PYTHON} tools/build/package_version/package_version.py \
   --cloud-bucket=${GSD_BUCKET} --annotate \
   upload --skip-missing \
   --upload-package=${TOOLCHAINNAME}/nacl_x86_glibc_raw --revision=${UPLOAD_REV}
 
 # Before we start testing, put in dummy mock archives so gyp can still untar
 # the entire package.
-python3 build/package_version/package_version.py fillemptytars \
+python3 tools/build/package_version/package_version.py fillemptytars \
   --fill-package nacl_x86_glibc
 
 # sync_backports is obsolete and should probably be removed.

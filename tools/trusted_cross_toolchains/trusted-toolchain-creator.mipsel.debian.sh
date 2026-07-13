@@ -555,7 +555,7 @@ UploadArchive() {
   local URL=https://storage.googleapis.com/${GS_FILE}
   set -x
   gsutil cp -a public-read ${TAR_ARCHIVE} gs://${GS_FILE}
-  local package_version=build/package_version/package_version.py
+  local package_version=tools/build/package_version/package_version.py
   ${package_version} archive --archive-package linux_x86/mips_trusted \
       ${TAR_ARCHIVE}@${URL}
   ${package_version} upload --upload-package linux_x86/mips_trusted \

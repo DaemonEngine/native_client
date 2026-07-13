@@ -88,7 +88,7 @@ def SetupLinuxEnvironment(context):
     # Override the trusted compiler for mips, clang does not support mips
     context['clang'] = False
     # Ensure the trusted mips toolchain is installed.
-    cmd = ['build/package_version/package_version.py', '--packages',
+    cmd = ['tools/build/package_version/package_version.py', '--packages',
            'linux_x86/mips_trusted', 'sync', '-x']
     Command(context, cmd)
 
