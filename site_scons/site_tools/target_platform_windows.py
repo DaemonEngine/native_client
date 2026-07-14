@@ -310,9 +310,6 @@ def generate(env):
   )
 
   env.SetDefault(
-      # Command line option to include a header
-      CCFLAG_INCLUDE='/FI',
-
       # Generate PDBs matching target name by default.
       PDB='${TARGET.base}.pdb',
 
