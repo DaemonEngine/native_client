@@ -116,7 +116,6 @@ def generate(env):
   env.Replace(
       TARGET_PLATFORM='MAC',
       COMPONENT_PLATFORM_SETUP=ComponentPlatformSetup,
-      CCFLAG_INCLUDE='-include',     # Command line option to include a header
 
       # Code coverage related.
       COVERAGE_CCFLAGS=['--coverage', '-DCOVERAGE'],

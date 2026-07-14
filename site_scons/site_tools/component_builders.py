@@ -120,11 +120,6 @@ def _ComponentPlatformSetup(env, builder_name, **kwargs):
   for k, v in kwargs.items():
     env[k] = v
 
-  # Add compiler flags for included headers, if any
-  env['INCLUDES'] = env.Flatten(env.subst_list(['$INCLUDES']))
-  for h in env['INCLUDES']:
-    env.Append(CCFLAGS=['${CCFLAG_INCLUDE}%s' % h])
-
   # This supports a NaCl convention that was previously supported with a
   # modification to SCons.  Previously, EXTRA_LIBS was interpolated into LIBS
   # using the ${EXTRA_LIBS} syntax.  It appears, however, that SCons naturally
@@ -239,9 +234,6 @@ def ComponentObject(self, *args, **kwargs):
   else:
     o = env.SharedObject(*args, **kwargs)
 
-  # Add dependencies on includes
-  env.Depends(o, env['INCLUDES'])
-
   return o
 
 #------------------------------------------------------------------------------
@@ -271,9 +263,6 @@ def ComponentLibrary(self, lib_name, *args, **kwargs):
     #                we should not be modifying the env as a side-effect
     # BUG: http://code.google.com/p/nativeclient/issues/detail?id=2424
     env.FilterOut(LINKFLAGS=['-static'])
-
-  # Add dependencies on includes
-  env.Depends(lib_outputs, env['INCLUDES'])
 
   # Scan library outputs for files we need to link against this library, and
   # files we need to run executables linked against this library.
@@ -409,9 +398,6 @@ def ComponentTestProgram(self, prog_name, *args, **kwargs):
   # Call env.Program()
   out_nodes = env.Program(prog_name, *args, **kwargs)
 
-  # Add dependencies on includes
-  env.Depends(out_nodes, env['INCLUDES'])
-
   # Publish output
   env.Publish(prog_name, 'run', out_nodes[0])
   env.Publish(prog_name, 'debug', out_nodes[1:])
@@ -483,9 +469,6 @@ def ComponentProgram(self, prog_name, *args, **kwargs):
 
   # Call env.Program()
   out_nodes = env.Program(prog_name, *args, **kwargs)
-
-  # Add dependencies on includes
-  env.Depends(out_nodes, env['INCLUDES'])
 
   # Add dependencies on libraries marked as implicitly included in the link.
   # These are libraries that are not passed on the command line, but are

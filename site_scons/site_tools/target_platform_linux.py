@@ -50,7 +50,6 @@ def generate(env):
   env.Replace(
       TARGET_PLATFORM='LINUX',
       COMPONENT_PLATFORM_SETUP=ComponentPlatformSetup,
-      CCFLAG_INCLUDE='-include',     # Command line option to include a header
 
       # Code coverage related.
       COVERAGE_CCFLAGS=['-ftest-coverage', '-fprofile-arcs', '-DCOVERAGE'],
