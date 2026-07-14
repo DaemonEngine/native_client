@@ -35,9 +35,11 @@ const char ** NaClGetEnviron(void) {
   /* Mac dynamic libraries cannot access the environ variable directly. */
   envp = (const char **) *_NSGetEnviron();
 #else
+# if NACL_LINUX
   /* Overzealous code style check is overzealous. */
   /* @IGNORE_LINES_FOR_CODE_HYGIENE[1] */
   extern char **environ;
+# endif
   envp = (const char **) environ;
 #endif
   return envp;
