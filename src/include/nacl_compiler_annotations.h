@@ -55,11 +55,15 @@
 #endif
 
 #if NACL_WINDOWS
-# define THREAD __declspec(thread)
 # include <windows.h>
 #else
-# define THREAD __thread
 # define WINAPI
+#endif
+
+#ifdef _MSC_VER
+# define THREAD __declspec(thread)
+#else
+# define THREAD __thread
 #endif
 
 #if NACL_WINDOWS
