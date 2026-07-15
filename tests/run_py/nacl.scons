@@ -21,11 +21,6 @@ elif env.Bit('nacl_glibc'):
   # With the new glibc port, it won't work at all.
   Return()
 
-if 'TRUSTED_ENV' in env and env['TRUSTED_ENV'].Bit('windows'):
-  # To find readelf. Saigo also has a readelf but it's named x86_64-nacl-readelf (etc.)
-  env = env.Clone()
-  env.PrependENVPath('PATH', env['TRUSTED_ENV']['MINGW_BIN'])
-
 sel_ldr = env.GetSelLdr()
 if sel_ldr is None:
   print('WARNING: no sel_ldr found. Skipping test %s' % name)
@@ -48,6 +43,12 @@ run_py_options = [
     '--loader', sel_ldr,
     '--elf_loader', elf_ldr,
     ]
+
+if 'TRUSTED_ENV' in env and env['TRUSTED_ENV'].Bit('windows'):
+  # To find readelf. Saigo also has a readelf but it's named x86_64-nacl-readelf (etc.)
+  env = env.Clone()
+  env.PrependENVPath('PATH', env['TRUSTED_ENV']['MINGW_BIN'])
+
 node = env.CommandTest(
     name,
     command=['${PYTHON}', '${SCONSTRUCT_DIR}/run.py'] + run_py_options + [exe],
