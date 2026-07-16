@@ -11,6 +11,34 @@
 #include "native_client/src/trusted/service_runtime/nacl_stack_safety.h"
 #include "native_client/src/trusted/service_runtime/win/exception_patch/ntdll_patch.h"
 
+#ifdef __MINGW32__
+// Use VEH instead of SEH for this test on MinGW
+
+// volatile because GCC reordered the assignment after the 'crash'...
+static const void *volatile continueLabel;
+
+static LONG TheHandler(PEXCEPTION_POINTERS exc) {
+  if (exc->ExceptionRecord->ExceptionCode == EXCEPTION_ACCESS_VIOLATION) {
+    // of course this is not really guaranteed to work
+    exc->ContextRecord->Rip = (uintptr_t) continueLabel;
+    return EXCEPTION_CONTINUE_EXECUTION;
+  } else {
+    return EXCEPTION_CONTINUE_SEARCH;
+  }
+}
+
+static void TryCrash(void) {
+  void *handlerHandle = AddVectoredExceptionHandler(/*First=*/0, TheHandler);
+  CHECK(handlerHandle);
+  continueLabel = &&cleanup;
+  *(volatile int *) 0 = 0;
+cleanup:
+  continueLabel = NULL;
+  printf("Caught exception OK\n");
+  CHECK(RemoveVectoredExceptionHandler(handlerHandle));
+}
+
+#else
 
 static void TryCrash(void) {
   __try {
@@ -19,6 +47,8 @@ static void TryCrash(void) {
     printf("Caught exception OK\n");
   }
 }
+
+#endif
 
 static void TestCrashes(void) {
   printf("Raising fault with 'trusted stack'...\n");
