@@ -17,8 +17,9 @@ extra_libs = []
 # OS-specific qualification routines
 #
 if env.Bit('windows'):
-  pql_inputs += ['win/nacl_os_qualify.c',
-                 'win/nacl_dep_qualify.c']
+  pql_inputs += ['win/nacl_os_qualify.c']
+  if env.Bit('build_x86_64'):
+    pql_inputs += ['win/nacl_dep_qualify.c']
 else:
   pql_inputs += ['posix/nacl_dep_qualify.c']
   if env.Bit('mac'):

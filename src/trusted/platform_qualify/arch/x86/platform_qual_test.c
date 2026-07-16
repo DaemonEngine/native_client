@@ -29,6 +29,8 @@
 #include "native_client/src/trusted/service_runtime/sel_memory.h"
 
 void TestDEPCheckFailurePath(void) {
+  /* DEP is not guaranteed to work on x86-32. */
+#if !(NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86 && NACL_BUILD_SUBARCH == 32)
   size_t size = NACL_PAGESIZE;
   void *page;
   CHECK(NaClPageAlloc(&page, size) == 0);
@@ -36,13 +38,11 @@ void TestDEPCheckFailurePath(void) {
   CHECK(NaClMprotect(page, size, PROT_READ | PROT_WRITE | PROT_EXEC) == 0);
   CHECK(!NaClAttemptToExecuteDataAtAddr(page, size));
 
-  /* DEP is not guaranteed to work on x86-32. */
-  if (!(NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86 && NACL_BUILD_SUBARCH == 32)) {
-    CHECK(NaClMprotect(page, size, PROT_READ | PROT_WRITE) == 0);
-    CHECK(NaClAttemptToExecuteDataAtAddr(page, size));
-  }
+  CHECK(NaClMprotect(page, size, PROT_READ | PROT_WRITE) == 0);
+  CHECK(NaClAttemptToExecuteDataAtAddr(page, size));
 
   NaClPageFree(page, size);
+#endif
 }
 
 int main(void) {
