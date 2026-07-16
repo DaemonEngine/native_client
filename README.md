@@ -46,7 +46,6 @@ Many of the original project pages are no longer available. Some documentation a
 Currently the Linux amd64, Windows amd64 and Linux armhf platforms are well-tested.
 However there are issues with platform qualification for ARM.
 For Windows i686 and Linux i686 it builds at least.
-`run.py` can be used but you must build a loader first yourself (auto-build doesn't work).
 
 ## Dependencies
 - SCons
@@ -131,6 +130,47 @@ Specify the path to the MinGW installation with `mingw_dir=...`. For example:
 ```
 python -m SCons --mode=nacl,opt-windows --no-clang saigo=1 werror=0 mingw_dir=C:\mingw\x86_64-msvcrt-12.2.0 platform=x86-64 sel_ldr irt_core`
 ```
+
+### ARM testing
+There are some special build system features that facilitate testing for the
+32-bit ARM Linux target.
+
+#### Running tests with user-mode QEMU
+
+Some unit tests can run directly on an x86-based host with the help of user-mode QEMU. You
+don't need to pass any extra arguments to the build system, just install the necessary
+software, which may be named something like "qemu-user". Then issue a normal testing command e.g.
+```
+scons --mode=opt-host,nacl saigo=1 platform=arm werror=0 --keep-going small_tests
+```
+
+This is useful but there are many tests that it cannot run, for example because they involve
+spawning multiple process. Also it is important to test on a full machine to exercise the
+arcane kernel interactions such as `longjmp`ing out of a signal handler.
+
+#### Running tests on a different machine than they were built
+To test on an emulated or slow ARM machine, you can build the binaries on another system first
+and then copy everything to the test machine. You need to copy both the build system files and
+the compiled artifacts. Then on the test machine, you only need to install SCons to run tests,
+using the `built_elsewhere=1` flag. For example,
+
+```
+# on build machine
+scons --mode=opt-linux,nacl saigo=1 platform=arm all_programs -j8
+rsync -az --info=progress2 * testuser@testhost:/home/testuser/nacl-test
+```
+
+Then on the test machine,
+```
+scons --mode=opt-linux,nacl saigo=1 platform=arm small_tests medium_tests large_tests
+```
+
+## Using `run.py`
+Once you have built the loader and IRT, you can use `run.py` to run an nexe like a normal
+program. It specifies relaxed I/O permissions so the nexe can print to stdout, etc.
+
+Note that if you did not build the dependencies, the script will try to build them
+with a PNaCl toolchain (not the Saigo that we want) and probably fail.
 
 --
 
