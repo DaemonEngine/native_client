@@ -172,4 +172,8 @@ def AddLibDeps(env, platform, libraries):
     VisitLibrary(library)
 
   closure.reverse()
+  if env.Bit('mingw'):
+    # There are circular dependencies such as gio <-> platform.
+    # How does this work for any other compiler?
+    closure *= 2
   return closure

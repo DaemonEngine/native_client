@@ -272,6 +272,9 @@ def SetUpArgumentBits(env):
   BitFromArgument(env, 'bitcode', default=False,
     desc='We are building bitcode')
 
+  BitFromArgument(env, 'mingw', default=False,
+    desc='Use MinGW toolchain for trusted build')
+
   BitFromArgument(env, 'pnacl_native_clang_driver', default=False,
     desc='Use the (experimental) native PNaCl Clang driver')
 
@@ -1881,6 +1884,10 @@ def CommandTest(env, name, command, size='small', direct_emulation=True,
   command = ['${PYTHON}', test_script] + script_flags + command
   if 'test_wrapper' in ARGUMENTS:
     command = ApplyTestWrapperCommand(command, extra_deps)
+  if env.Bit('mingw') and 'mingw_dir' in ARGUMENTS:
+     # get DLLs needed at runtime
+     env = env.Clone()
+     env.PrependENVPath('PATH', os.path.join(ARGUMENTS['mingw_dir'], 'bin'))
   return env.AutoDepsCommand(name, command,
                              extra_deps=extra_deps, posix_path=posix_path,
                              disabled=env.Bit('do_not_run_tests'))
@@ -2323,8 +2330,9 @@ def MakeWindowsEnv(platform=None):
       # Windows /SAFESEH linking requires either an .sxdata section be
       # present or that @feat.00 be defined as a local, absolute symbol
       # with an odd value.
-      ASCOM = ('$ASPPCOM /E /D__ASSEMBLER__ | '
-               '$WINASM -defsym @feat.00=1 -o $TARGET'),
+      ASCOM = '$ASPPCOM -D__ASSEMBLER__ -Wa,-defsym,@feat.00=1' if base_env.Bit('mingw')
+      else '$ASPPCOM /E /D__ASSEMBLER__ | '
+           '$WINASM -defsym @feat.00=1 -o $TARGET',
       PDB = '${TARGET.base}.pdb',
       # Strict doesn't currently work for Windows since some of the system
       # libraries like wsock32 are magical.
@@ -2345,24 +2353,37 @@ def MakeWindowsEnv(platform=None):
           ['WIN32_LEAN_AND_MEAN', ''],
       ],
       LIBS = ['ws2_32', 'advapi32', 'winmm'],
-      # TODO(bsy) remove 4355 once cross-repo
-      # NACL_ALLOW_THIS_IN_INITIALIZER_LIST changes go in.
-      CCFLAGS = ['/EHsc', '/wd4355', '/wd4800']
   )
+  if windows_env.Bit('mingw'):
+    # Some C++-using binaries are linked with the C compiler
+    windows_env.Append(LIBS = ['stdc++'])
+  else:
+    # TODO(bsy) remove 4355 once cross-repo
+    # NACL_ALLOW_THIS_IN_INITIALIZER_LIST changes go in.
+    windows_env.Append(CCFLAGS = ['/EHsc', '/wd4355', '/wd4800'])
+
   if windows_env.Bit('werror'):
-    windows_env.Append(CCFLAGS = '/WX')
+    if windows_env.Bit('mingw'):
+      windows_env.Append(CCFLAGS='-Werror')
+    else:
+      windows_env.Append(CCFLAGS = '/WX')
 
   # This linker option allows us to ensure our builds are compatible with
   # Chromium, which uses it.
   if windows_env.Bit('build_x86_32'):
     windows_env.Append(LINKFLAGS = "/safeseh")
 
+  mingw_dir = os.path.abspath(ARGUMENTS.get('mingw_dir', 'You.must.provide.the.mingw_dir.argument'))
+  windows_env['MINGW_BIN'] = os.path.join(mingw_dir, 'bin')
+  if 'mingw_dir' in ARGUMENTS:
+    assert os.path.isdir(ARGUMENTS['mingw_dir'])
+    windows_env.PrependENVPath('PATH', windows_env['MINGW_BIN'])
+
   # We use the GNU assembler (gas) on Windows so that we can use the
   # same .S assembly files on all platforms.  Microsoft's assembler uses
   # a completely different syntax for x86 code.
-  mingw_dir = os.path.abspath(ARGUMENTS.get('mingw_dir', 'You.must.provide.the.mingw_dir.argument'))
-  windows_env['MINGW_BIN'] = os.path.join(mingw_dir, 'bin')
-  windows_env['WINASM'] = os.path.join(windows_env['MINGW_BIN'], 'as.exe')
+  if not windows_env.Bit('mingw'):
+    windows_env.Replace(WINASM = os.path.join(windows_env['MINGW_BIN'], 'as.exe'))
 
   return windows_env
 

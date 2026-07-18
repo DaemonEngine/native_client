@@ -244,6 +244,7 @@ def generate(env):
   # itself.  A more principled fix would be nice.
 
   use_msvc_tools = (env['PLATFORM'] in ('win32', 'cygwin')
+                    and not env.Bit('mingw')
                     and not env.Bit('built_elsewhere')
                     and not env.Bit('force_no_trusted_build'))
 
@@ -264,6 +265,8 @@ def generate(env):
     env.Tool('as')
     env.Tool('msvs')
     env.Tool('windows_hard_link')
+  elif env.Bit('mingw'):
+    env.Tool('mingw')
 
   pre_msvc_env = env['ENV'].copy()
 
@@ -271,7 +274,7 @@ def generate(env):
     env.Tool('msvc')
     env.Tool('mslib')
     env.Tool('mslink')
-  else:
+  elif not env.Bit('mingw'):
     # Make sure we have all the builders even when MSVC is not available.
     # Without these (fake) builders, SCons cannot be run on a Windows bot
     # that does not have MSVC installed - even if MSVC is never invoked.
@@ -309,7 +312,7 @@ def generate(env):
                               '$MSVSSCONSCOM "$MSVSBUILDTARGET"']),
   )
 
-  env.SetDefault(
+  if not env.Bit('mingw'): env.SetDefault(
       # Generate PDBs matching target name by default.
       PDB='${TARGET.base}.pdb',
 
@@ -375,7 +378,20 @@ def generate(env):
       SHMANIFEST_COMSTR='$SHMANIFEST_COM',
   )
 
-  env.Append(
+  # TODO: manifests for mingw
+  if env.Bit('mingw'): env.Append(
+      CCFLAGS_DEBUG=['-g'],
+      #CCFLAGS_OPTIMIZED=['-Os'],  # doesn't link?
+      CCFLAGS_OPTIMIZED=['-O1'],
+
+      CPPDEFINES=[
+          ['_FORTIFY_SOURCE', '2']
+      ],
+
+      COMPONENT_LIBRARY_LINK_SUFFIXES=['.a'],
+      COMPONENT_LIBRARY_DEBUG_SUFFIXES=[],
+  )
+  else: env.Append(
       # Turn up the warning level
       CCFLAGS=['/W3'],
 

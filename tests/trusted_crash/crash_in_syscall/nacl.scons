@@ -25,7 +25,7 @@ trusted_env = env['TRUSTED_ENV']
 
 extra_libs = []
 if trusted_env.Bit('windows'):
-  extra_libs.append('dbghelp.lib')
+  extra_libs.append('dbghelp' if trusted_env.Bit('mingw') else 'dbghelp.lib')
 runner = trusted_env.ComponentProgram(
     'test_host', ['test_host.c'],
     EXTRA_LIBS=['sel'] + extra_libs)
