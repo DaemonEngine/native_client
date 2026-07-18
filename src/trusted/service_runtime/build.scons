@@ -99,7 +99,11 @@ elif env.Bit('build_x86_64'):
     # We assemble the .asm assembly file with the Microsoft assembler
     # because we need to generate x86-64 Windows unwind info, which
     # the GNU assembler we use elsewhere does not support.
-    win64_asm_env = env.Clone(ASCOM='ml64 $ASFLAGS /c /Fo$TARGET $SOURCES')
+    win64_asm_env = env.Clone()
+    if env.Bit('mingw'):
+      # HACK: still using Microsoft assembler here
+      win64_asm_env.Tool('msvs')
+    win64_asm_env.Replace(ASCOM='ml64 $ASFLAGS /c /Fo$TARGET $SOURCES')
     ldr_inputs += [
         'arch/x86_64/sel_addrspace_win_x86_64.c',
         'arch/x86_64/fnstcw.S',
