@@ -61,8 +61,8 @@ For Windows i686 and Linux i686 it builds at least.
 - For Linux: LLVM, if using `--clang` (default). Must be installed in `/usr/bin`.
 - For Linux: GCC, if using `--no-clang`
 - For Linux: GNU Binutils
-- For Windows: Visual Studio
 - For Windows: MinGW
+- For Windows, if using MSVC: Visual Studio
 
 
 ## SCons usage
@@ -135,13 +135,15 @@ appropriate architecture (the latter is solely used for the assembler). Python m
 python -m pip install scons pywin32
 ```
 
-You can use the traditional MSVC compiler with `--no-clang`, or `clang-cl` with `--clang`.
+When using Visual Studio, you can use the traditional MSVC compiler with `--no-clang`, or `clang-cl` with `--clang`.
 Specify the path to the MinGW installation with `mingw_dir=...`. For example:
 
 ```
 python -m SCons --mode=nacl,opt-windows --no-clang saigo=1 werror=0 mingw_dir=C:\mingw\x86_64-msvcrt-12.2.0 platform=x86-64 sel_ldr irt_core`
 ```
 
+When using MinGW, you must pass `mingw=1` and `--no-clang`. You can locate the toolchain by either
+passing `mingw_dir=...` or putting it in the PATH. MinGW only works with `platform=x86_64`.
 
 ### ARM testing
 
