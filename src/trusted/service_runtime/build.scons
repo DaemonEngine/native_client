@@ -96,22 +96,22 @@ elif env.Bit('build_x86_64'):
       'arch/x86_64/tramp_64.S',
       ]
   if env.Bit('windows'):
-    # We assemble the .asm assembly file with the Microsoft assembler
-    # because we need to generate x86-64 Windows unwind info, which
-    # the GNU assembler we use elsewhere does not support.
-    win64_asm_env = env.Clone()
-    if env.Bit('mingw'):
-      # HACK: still using Microsoft assembler here
-      win64_asm_env.Tool('msvs')
-    win64_asm_env.Replace(ASCOM='ml64 $ASFLAGS /c /Fo$TARGET $SOURCES')
+    # Back in ~2012 the GNU assembler did not support x86-64 Windows unwind info, which
+    # is why a .asm assembly file with the Microsoft assembler is used.
+    # But now the GNU assembler can handler it so we have an equivalent .S version.
+    # Some test targets that exercise the unwind info:
+    # run_crash_in_syscall_test run_log_fatal_in_syscall_test run_check_failure_in_syscall_test run_jump_to_zero_in_syscall_test run_jump_into_sandbox_in_syscall_crash_test
     ldr_inputs += [
         'arch/x86_64/sel_addrspace_win_x86_64.c',
         'arch/x86_64/fnstcw.S',
         'arch/x86_64/fxsaverstor.S']
-    if not env.Bit('force_no_trusted_build'):
+    if env.Bit('mingw'):
+      ldr_inputs += ['arch/x86_64/nacl_switch_unwind_win.S']
+    elif not env.Bit('force_no_trusted_build'):
       # This use of win64_asm_env causes an invocation of MSVC, even if sel_ldr
       # would not otherwise be actually built. So don't include it if we aren't
       # actually building sel_ldr
+      win64_asm_env = env.Clone(ASCOM='ml64 $ASFLAGS /c /Fo$TARGET $SOURCES')
       ldr_inputs += [
         win64_asm_env.ComponentObject('arch/x86_64/nacl_switch_unwind_win.asm')]
   else:
