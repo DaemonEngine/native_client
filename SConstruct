@@ -1177,6 +1177,9 @@ def GetToolchainDir(env, platform_build_dir=None, toolchain_name=None,
       target_env = 'nacl_%s' % target_arch
     toolchain_name = '%s_%s_raw' % (target_env, lib_name)
 
+  if toolchain_name.startswith('saigo_newlib') and (env.Bit('host_windows') or env.Bit('host_mac')):
+    toolchain_name += '_old'
+
   # Get the absolute path for the platform build directory and toolchain.
   toolchain_sub_dir = os.path.join('toolchain',
                                    platform_build_dir,
