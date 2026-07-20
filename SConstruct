@@ -2456,14 +2456,18 @@ def MakeMacEnv(platform=None):
                '-mmacosx-version-min=' + mac_deployment_target]
   mac_env.Append(CCFLAGS=sdk_flags, ASFLAGS=sdk_flags, LINKFLAGS=sdk_flags)
 
-  subarch_flag = '-m%s' % mac_env['BUILD_SUBARCH']
+  arch_map = {
+      '32': ['-m32'],
+      '64': ['-arch', 'x86_64'],
+  }
+  arch_flags = arch_map[mac_env['BUILD_SUBARCH']]
   mac_env.Append(
       # '-Wno-gnu' is required for the statement expression defining dirfd
       # for OSX -- otherwise, a warning is generated.
-      CCFLAGS=[subarch_flag, '-fPIC', '-Wno-gnu'],
-      CXXFLAGS=['-stdlib=libc++'],
-      ASFLAGS=[subarch_flag],
-      LINKFLAGS=[subarch_flag, '-fPIC', '-stdlib=libc++'],
+      CCFLAGS=[*arch_flags, '-fPIC', '-Wno-gnu'],
+      CXXFLAGS=[*arch_flags, '-stdlib=libc++'],
+      ASFLAGS=[*arch_flags],
+      LINKFLAGS=[*arch_flags, '-fPIC', '-stdlib=libc++'],
       CPPDEFINES = [# defining _DARWIN_C_SOURCE breaks 10.4
                     #['_DARWIN_C_SOURCE', '1'],
                     #['__STDC_LIMIT_MACROS', '1']
