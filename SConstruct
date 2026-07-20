@@ -2467,7 +2467,7 @@ def MakeMacEnv(platform=None):
     # This invocation matches the model in //build/config/mac/mac_sdk.gni.
     mac_sdk_sysroot, mac_sdk_version = subprocess.check_output([
         sys.executable,
-        os.path.join(os.path.pardir, 'build', 'mac', 'find_sdk.py'),
+        os.path.join('build', 'mac', 'find_sdk.py'),
         '--print_sdk_path',
         mac_sdk_min
         ], encoding='utf-8').splitlines()
