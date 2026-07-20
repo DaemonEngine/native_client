@@ -10,6 +10,7 @@ This module is automatically included by the component_setup tool.
 
 
 import builtins
+import platform
 import sys
 import types
 import SCons
@@ -244,6 +245,7 @@ def generate(env):
              exclusive_groups=('host_platform'))
   DeclareBit('host_mac', 'Host platform is mac.',
              exclusive_groups=('host_platform'))
+  DeclareBit('host_mac_arm64', 'Host platform is ARM-based mac.')
   DeclareBit('host_windows', 'Host platform is windows.',
              exclusive_groups=('host_platform'))
 
@@ -259,3 +261,5 @@ def generate(env):
   }
   if HOST_PLATFORM in host_platform_to_bit:
     env.SetBits(host_platform_to_bit[HOST_PLATFORM])
+  if env.Bit('host_mac') and platform.machine() == 'arm64':
+    env.SetBits('host_mac_arm64')
