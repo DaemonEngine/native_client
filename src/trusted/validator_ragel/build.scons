@@ -141,10 +141,14 @@ assert bitness in [32, 64]
 python_can_load_dll = python_bitness == bitness and not env.Bit('asan')
 
 if python_can_load_dll:
+  if env.Bit('host_mac') and platform.machine() == 'arm64':
+    python = ['arch', '-x86_64', '/usr/bin/python3']
+  else:
+    python = ['${PYTHON}']
   validator_py_test = env.AutoDepsCommand(
         'validator_py_out',
-        ['${PYTHON}',
-         env.File('validator.py'),
+        python +
+        [env.File('validator.py'),
          validator_dll])
 
   env.AddNodeToTestSuite(
