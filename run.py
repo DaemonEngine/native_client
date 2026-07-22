@@ -34,6 +34,8 @@ def SetupEnvironment():
   # Path to PNaCl toolchain
   env.pnacl_base = os.path.join(env.toolchain_base, 'pnacl_newlib')
 
+  env.saigo_base = os.path.join(env.toolchain_base, 'saigo_newlib_raw')
+
   # QEMU
   env.qemu_arm_args = ['qemu-armhf', '-L', '/usr/arm-linux-gnueabihf/']
 
@@ -585,13 +587,16 @@ def FindReadElf():
   '''Returns the path of "readelf" binary.'''
 
   candidates = []
-  # Use PNaCl's if it available.
-  candidates.append(
-    os.path.join(env.pnacl_base, 'bin', 'pnacl-readelf'))
 
-  # Otherwise, look for the system readelf
-  for path in os.environ['PATH'].split(os.pathsep):
-    candidates.append(os.path.join(path, 'readelf'))
+  # Look for Saigo or PNaCl readelf or the system one
+  # The architecture the toolchain was built for generally doesn't matter.
+  readelves = ['x86_64-nacl-readelf', 'pnacl-readelf', 'readelf']
+  toolchain_paths = [os.path.join(env.saigo_base, 'bin'),
+                     os.path.join(env.pnacl_base, 'bin')]
+
+  for path in toolchain_paths + os.environ['PATH'].split(os.pathsep):
+    for basename in readelves:
+      candidates.append(os.path.join(path, basename))
 
   for readelf in candidates:
     if pynacl.platform.IsWindows():
