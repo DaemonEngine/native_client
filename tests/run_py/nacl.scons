@@ -45,9 +45,9 @@ run_py_options = [
     ]
 
 if 'TRUSTED_ENV' in env and env['TRUSTED_ENV'].Bit('windows'):
-  # To find readelf. Saigo also has a readelf but it's named x86_64-nacl-readelf (etc.)
+  # To find MinGW's readelf, but this shouldn't be needed since the NaCl toolchain has one
   env = env.Clone()
-  env.PrependENVPath('PATH', env['TRUSTED_ENV']['MINGW_BIN'])
+  env.AppendENVPath('PATH', env['TRUSTED_ENV']['MINGW_BIN'])
 
 node = env.CommandTest(
     name,
