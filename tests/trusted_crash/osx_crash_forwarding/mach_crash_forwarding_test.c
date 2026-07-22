@@ -118,6 +118,10 @@ void RegisterExceptionHandler(void) {
 int main(int argc, char **argv) {
   struct NaClApp app;
 
+  /* Turn off buffering to aid debugging. */
+  setvbuf(stdout, NULL, _IONBF, 0);
+  setvbuf(stderr, NULL, _IONBF, 0);
+
   /* Register file-local handler first (so it ends up second in the chain). */
   if (strcmp(argv[1], "unforwarded_trusted") != 0) {
     RegisterExceptionHandler();
