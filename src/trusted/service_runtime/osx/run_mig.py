@@ -103,7 +103,7 @@ def Main(args):
   parser.add_argument('dst_header')
   parser.add_argument('dst_server')
   parsed = parser.parse_args(args)
-  Generate(args[0], args[1], args[2], parsed.sdk, parsed.mig_path,
+  Generate(parsed.src_defs, parsed.dst_header, parsed.dst_server, parsed.sdk, parsed.mig_path,
            parsed.clang_path, parsed.migcom_path)
 
 
