@@ -1,0 +1,28 @@
+trigger:
+  branches:
+    include:
+      - '*'
+
+
+strategy:
+  matrix:
+    Mac:
+      VM_IMAGE: 'macOS-14'
+
+pool:
+  vmImage: $(VM_IMAGE)
+
+steps:
+- bash: |
+    set -e
+    python3 -m venv pyenv
+    pyenv/bin/pip install SCons
+    mkdir -p toolchain/mac_x86
+    cd toolchain/mac_x86
+    curl -fL https://github.com/DaemonEngine/saigo-nacl-sdk/releases/download/v21.0-20260707/saigocc-macos-amd64_21.0-20260707.tar.xz -o a.tar.xz
+    tar -xJf a.tar.xz
+    ls -l
+    mv saigo* saigo_newlib_raw
+    cd ../..
+    pyenv/bin/python -m SCons werror=0 platform=x86_64 saigo=1 --mode=opt-host,nacl --verbose all_programs -j`sysctl -n hw.logicalcpu`
+    pyenv/bin/python -m SCons werror=0 platform=x86_64 saigo=1 --mode=opt-host,nacl --verbose all_tests -j`sysctl -n hw.logicalcpu` --keep-going
