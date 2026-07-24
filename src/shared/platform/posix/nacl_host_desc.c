@@ -300,6 +300,7 @@ uintptr_t NaClHostDescMap(struct NaClHostDesc *d,
           (uintptr_t) map_addr);
 
   if (MAP_FAILED == map_addr) {
+    int err = errno;
     NaClLog(LOG_INFO,
             ("NaClHostDescMap: "
              "mmap(0x%08"NACL_PRIxPTR", 0x%"NACL_PRIxS", "
@@ -307,8 +308,8 @@ uintptr_t NaClHostDescMap(struct NaClHostDesc *d,
              " failed, errno %d.\n"),
             (uintptr_t) start_addr, len, host_prot, host_flags, desc,
             (int64_t) offset,
-            errno);
-    return -NaClXlateErrno(errno);
+            err);
+    return -NaClXlateErrno(err);
   }
   if (0 != (flags & NACL_ABI_MAP_FIXED) && map_addr != start_addr) {
     NaClLog(LOG_FATAL,
