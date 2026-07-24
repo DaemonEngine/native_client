@@ -383,7 +383,7 @@ static kern_return_t ForwardException(
   CHECK(target_behavior == EXCEPTION_DEFAULT);
 
   /* Forward the exception. */
-  kr = exception_raise(target_port, thread, task, exception, code, code_count);
+  kr = nacl_exception_raise(target_port, thread, task, exception, code, code_count);
 
   /*
    * Don't set the thread state. See the comment in
@@ -527,11 +527,11 @@ static void *MachExceptionHandlerThread(void *arg) {
   kern_return_t result;
   union {
     mach_msg_header_t header;
-    union __RequestUnion__nacl_exc_subsystem nacl_exc_subsystem_request;
+    union __RequestUnion__nacl_nacl_exc_subsystem nacl_exc_subsystem_request;
   } request;
   union {
     mach_msg_header_t header;
-    union __ReplyUnion__nacl_exc_subsystem nacl_exc_subsystem_reply;
+    union __ReplyUnion__nacl_nacl_exc_subsystem nacl_exc_subsystem_reply;
   } reply;
 
   for (;;) {

@@ -23,8 +23,8 @@ def MkDirs(path):
     pass
 
 
-def Generate(src_defs, dst_header, dst_server, sdk, mig_path, clang_path,
-             migcom_path):
+def Generate(src_defs, dst_header, dst_server, dst_user,
+             sdk, mig_path, clang_path, migcom_path):
   """Generate interface headers and server from a .defs file using MIG.
 
   Args:
@@ -35,9 +35,11 @@ def Generate(src_defs, dst_header, dst_server, sdk, mig_path, clang_path,
   """
   dst_header = os.path.abspath(dst_header)
   dst_server = os.path.abspath(dst_server)
+  dst_user = os.path.abspath(dst_user)
   # Create directories containing output.
   MkDirs(os.path.dirname(dst_header))
   MkDirs(os.path.dirname(dst_server))
+  MkDirs(os.path.dirname(dst_user))
 
   # Load exc.defs (input)
   fh = open(src_defs, 'r')
@@ -49,6 +51,8 @@ def Generate(src_defs, dst_header, dst_server, sdk, mig_path, clang_path,
   (defs, count) = re.subn('ServerPrefix catch_;',
                           'ServerPrefix nacl_catch_;', defs)
   assert count == 1
+  assert 'userprefix' not in defs.lower()
+  defs = 'UserPrefix nacl_;\n' + defs
   # Change the message name from exc to nacl_exc to avoid other collisions.
   # (But keep the message id base 2401 the same to match the OS.)
   (defs, count) = re.subn('exc 2401;',
@@ -66,7 +70,7 @@ def Generate(src_defs, dst_header, dst_server, sdk, mig_path, clang_path,
     # Run the 'Mach Interface Generator'.
     args = [mig_path,
             '-server', dst_server,
-            '-user', '/dev/null',
+            '-user', dst_user,
             '-header', dst_header]
 
     # If SDKROOT is set to an SDK that Xcode doesn't know about, it might
@@ -102,9 +106,10 @@ def Main(args):
   parser.add_argument('src_defs')
   parser.add_argument('dst_header')
   parser.add_argument('dst_server')
+  parser.add_argument('dst_user')
   parsed = parser.parse_args(args)
-  Generate(parsed.src_defs, parsed.dst_header, parsed.dst_server, parsed.sdk, parsed.mig_path,
-           parsed.clang_path, parsed.migcom_path)
+  Generate(parsed.src_defs, parsed.dst_header, parsed.dst_server, parsed.dst_user,
+           parsed.sdk, parsed.mig_path, parsed.clang_path, parsed.migcom_path)
 
 
 if __name__ == '__main__':
