@@ -355,6 +355,7 @@ void NaClLogDoLogV_mu(int         detail_level,
                       char const  *fmt,
                       va_list     ap) {
   struct Gio  *s;
+  int saved_errno = errno;
 
   if (0 == g_abort_count) {
     s = NaClLogGetGio_mu();
@@ -367,6 +368,8 @@ void NaClLogDoLogV_mu(int         detail_level,
     (void) vfprintf(stderr, fmt, ap);
     (void) fflush(stderr);
   }
+
+  errno = saved_errno;
 
   if (LOG_FATAL == detail_level) {
     ++g_abort_count;
