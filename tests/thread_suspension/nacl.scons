@@ -31,7 +31,10 @@ node = env.CommandTest('thread_suspension_test.out',
 
 # This test is flaky on mac10.7-newlib-dbg-asan.
 # See https://code.google.com/p/nativeclient/issues/detail?id=3906
+# Under Rosetta it very nearly passes; only the FLAGS register is wrong due to
+# the optimization described at https://dougallj.wordpress.com/2022/11/09/why-is-rosetta-2-fast/
 is_broken= (not env.Bit('nacl_static_link') or
+            env.Bit('host_mac_arm64') or
             (env.Bit('asan') and env.Bit('host_mac')))
 
 env.AddNodeToTestSuite(node, ['small_tests', 'nonpexe_tests'],
