@@ -23,7 +23,9 @@ test_host = trusted_env.ComponentProgram(
 # This test is disabled for Valgrind because Valgrind does not
 # recognise the HLT instruction and produces SIGILL for it rather than
 # the SIGSEGV that this test expects.
+# Under Rosetta emulation resuming a faulted thread doesn't seem to work.
 is_broken = (not env.Bit('nacl_static_link') or
+             env.Bit('host_mac_arm64') or
              env.IsRunningUnderValgrind())
 
 node = env.CommandTest('faulted_thread_queue_test.out',
