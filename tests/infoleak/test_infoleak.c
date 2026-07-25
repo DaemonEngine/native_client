@@ -45,6 +45,16 @@ static void infoleak_clear_state(void) {
   __asm__ volatile("ldmxcsr %0" :: "m" (zero));
 }
 
+// Rosetta doesn't let you unmask floating point exceptions - MXCSR bits 7-12 are stuck on.
+static uint32_t minimal_mxcsr(void) {
+  const uint32_t zero = 0;
+  volatile uint32_t mxcsr;
+  __asm__ volatile("ldmxcsr %0" :: "m" (zero));
+  __asm__("stmxcsr %0" : "=m" (mxcsr));
+  printf("Minimal MXCSR: 0x%x\n", mxcsr);
+  return mxcsr;
+}
+
 __attribute__((noinline)) static bool infoleak_check_state(void) {
   bool ok = true;
   fsave_block fsave;
@@ -70,8 +80,8 @@ __attribute__((noinline)) static bool infoleak_check_state(void) {
     printf("SSE state leaked information!\n");
     ok = false;
   }
-  if (mxcsr != 0) {
-    printf("MXCSR state leaked information!\n");
+  if (mxcsr != minimal_mxcsr()) {
+    printf("MXCSR state leaked information! 0x%x\n", mxcsr);
     ok = false;
   }
   return ok;
