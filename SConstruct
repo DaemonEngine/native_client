@@ -2477,7 +2477,7 @@ def MakeMacEnv(platform=None):
   # This should be kept in synch with mac_deployment_target
   # in build/common.gypi, which in turn should be kept in synch
   # with chromium/src/build/common.gypi.
-  mac_deployment_target = '10.6'
+  mac_deployment_target = '10.12'
 
   sdk_flags = ['-isysroot', mac_sdk_sysroot,
                '-mmacosx-version-min=' + mac_deployment_target]

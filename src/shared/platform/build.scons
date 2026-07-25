@@ -60,7 +60,6 @@ if env.Bit('windows'):
   )
 elif env.Bit('linux'):
   platform_inputs += [
-    'linux/nacl_clock.c',
     'linux/nacl_host_dir.c',
     'linux/nacl_semaphore.c',
     ]
@@ -69,7 +68,6 @@ elif env.Bit('linux'):
     cputime_test_enabled = False
 elif env.Bit('mac'):
   platform_inputs += [
-    'osx/nacl_clock.c',
     'osx/nacl_host_dir.c',
     'osx/nacl_semaphore.c',
     ]
@@ -80,6 +78,7 @@ if env.Bit('posix'):
     'posix/aligned_malloc.c',
     'posix/condition_variable.c',
     'posix/lock.c',
+    'posix/nacl_clock.c',
     'posix/nacl_error.c',
     'posix/nacl_exit.c',
     'posix/nacl_fast_mutex.c',
