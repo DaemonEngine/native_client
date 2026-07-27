@@ -2077,6 +2077,9 @@ def MakeGTestEnv(env):
     gtest_env.FilterOut(CCFLAGS=['-pedantic', '-Wundef'])
   gtest_env.FilterOut(CXXFLAGS=['-fno-rtti', '-Weffc++'])
 
+  if gtest_env.Bit('windows') and not gtest_env.Bit('mingw'):
+    gtest_env.Append(CPPDEFINES=['_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING'])
+
   # gtest is incompatible with static linking due to obscure libstdc++
   # linking interactions.
   # See http://code.google.com/p/nativeclient/issues/detail?id=1987
