@@ -73,7 +73,7 @@ static void PrintSymbolForAddress(DWORD64 addr) {
   has_symbol = SymFromAddr(GetCurrentProcess(),
                            addr, &sym_displacement, symbol);
   if (has_symbol) {
-    fprintf(stderr, "%s + 0x%x\n", symbol->Name, sym_displacement);
+    fprintf(stderr, "%s + 0x%" NACL_PRIx64 "\n", symbol->Name, sym_displacement);
   } else {
     fprintf(stderr, "<no symbol>\n");
   }
@@ -127,7 +127,7 @@ static void Backtrace(CONTEXT *initial_context) {
     }
     fprintf(stderr, "#%i: ip=%p stack=%llx frame=%llx ",
             frame_number,
-            frame.AddrPC.Offset,
+            (void *) frame.AddrPC.Offset,
             frame.AddrStack.Offset,
             frame.AddrFrame.Offset);
     PrintSymbolForAddress(frame.AddrPC.Offset);
@@ -163,7 +163,7 @@ static void Backtrace(CONTEXT *initial_context) {
       /* frame_size must be signed for the check to be useful. */
       long long frame_size = frame.AddrFrame.Offset - frame.AddrStack.Offset;
       if (frame_number > 0 && frame_size < 32) {
-        fprintf(stderr, "Error: frame_size=%i, which is too small\n",
+        fprintf(stderr, "Error: frame_size=%lli, which is too small\n",
                 frame_size);
         failed = 1;
       }

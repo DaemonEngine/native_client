@@ -417,7 +417,7 @@ int main(int ac, char **av) {
   char const *test_dir_name = "/tmp/nacl_host_desc_mmap_win_test";
   struct NaClHostDesc hd;
   int test_passed;
-  size_t error_count;
+  int error_count;
   size_t ix;
   int opt;
   int num_runs = 1;
