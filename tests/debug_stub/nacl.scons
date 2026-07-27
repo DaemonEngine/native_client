@@ -30,8 +30,7 @@ if env.GetEmulator():
   # qualification tests because they fail under qemu-arm.
   sel_ldr_command = [env.GetEmulator()] + sel_ldr_command + ['-Q']
 
-is_broken = (not env.Bit('nacl_static_link') or env.GetSelLdr() is None or
-             env.Bit('host_windows'))
+is_broken = not env.Bit('nacl_static_link') or env.GetSelLdr() is None
 
 if env.Bit('build_arm') or env.Bit('build_mips32'):
   # Use the system's 'nm' tool.  The NaCl toolchain will not be
@@ -54,7 +53,7 @@ node = env.CommandTest(
     extra_deps=[env.File('gdb_rsp.py')],
     # Don't run the host Python through qemu-arm.
     direct_emulation=False,
-    size='medium')
+    size='huge' if env.Bit('host_windows') else 'medium')
 env.AddNodeToTestSuite(node, ['medium_tests', 'nonpexe_tests'],
                        'run_debug_stub_test', is_broken=is_broken)
 env.TestBindsFixedTcpPort(node)
