@@ -13,7 +13,7 @@ int main(void) {
      least on ARM) and generates an illegal instruction, which
      generates SIGILL instead of SIGSEGV, and LLVM also optimises away
      the rest of the function. */
-  *(volatile int *) 0 = 0;
+  *(volatile int *) 4 = 0;
   fprintf(stderr, "[CRASH_TEST] FAIL: Survived crash attempt\n");
   return 1;
 }

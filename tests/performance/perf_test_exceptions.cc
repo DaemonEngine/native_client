@@ -26,7 +26,7 @@ class TestCatchingFault : public PerfTest {
     if (!setjmp(return_jmp_buf_)) {
       // Cause crash.
       for (;;)
-        *(volatile int *) 0 = 0;
+        *(volatile int *) 4 = 0;
     }
   }
 

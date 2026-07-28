@@ -31,7 +31,7 @@ static void TryCrash(void) {
   void *handlerHandle = AddVectoredExceptionHandler(/*First=*/0, TheHandler);
   CHECK(handlerHandle);
   continueLabel = &&cleanup;
-  *(volatile int *) 0 = 0;
+  *(volatile int *) 4 = 0;
 cleanup:
   continueLabel = NULL;
   printf("Caught exception OK\n");
@@ -42,7 +42,7 @@ cleanup:
 
 static void TryCrash(void) {
   __try {
-    *(volatile int *) 0 = 0;
+    *(volatile int *) 4 = 0;
   } __except (EXCEPTION_EXECUTE_HANDLER) {
     printf("Caught exception OK\n");
   }

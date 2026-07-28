@@ -18,7 +18,7 @@
 static int g_counter = 0;
 
 void CauseFault(void) {
-  *(int *) 0 = 0;
+  *(volatile int *) 4 = 0;
 }
 
 void ReplacementHandler(void) {

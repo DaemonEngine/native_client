@@ -14,7 +14,7 @@
 static void SimpleAbort(void) {
   while (1) {
     /* Exit by causing a crash. */
-    *(volatile int *) 0 = 0;
+    *(volatile int *) 4 = 0;
   }
 }
 
