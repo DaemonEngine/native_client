@@ -45,7 +45,8 @@ void ReplacementHandler(void) {
      */
     void (*exit_fast)(void)
       = (void (*)(void)) NaCl_exception_dispatcher_exit_fast;
-    fputs("** intended_exit_status=untrusted_segfault", stderr);
+    // fast fail exception code: 0xC0000409
+    fputs("** intended_exit_status=3221226505", stderr);
     exit_fast();
   }
 }

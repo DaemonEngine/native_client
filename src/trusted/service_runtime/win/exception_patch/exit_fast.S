@@ -10,6 +10,12 @@
  * This routine terminates the process safely and is patched onto
  * NTDLL's KiUserExceptionDispatcher.
  *
+ * For Windows 8+ there is the new __fastfail intrinsic (int 0x29) to
+ * immediately terminate the process. On an old Windows where that is
+ * not available, the unrecognized interrupt should be treated like
+ * a generic exception and the next two paragraphs apply (except that
+ * the faulting instruction is INT instead of HLT).
+ *
  * To terminate the process safely, we set %rsp to zero and then
  * execute a HLT instruction.  If we do not set %rsp to zero, the HLT
  * instruction will cause the kernel to rerun the fault handler after
@@ -28,6 +34,8 @@
         .globl IDENTIFIER(NaCl_exception_dispatcher_exit_fast)
 IDENTIFIER(NaCl_exception_dispatcher_exit_fast):
         xor %rsp, %rsp
-        hlt
+        mov $0x6c43614e, %rcx
+        int $0x29
+        hlt  /* should be unreachable even on old Windows */
         .globl IDENTIFIER(NaCl_exception_dispatcher_exit_fast_end)
 IDENTIFIER(NaCl_exception_dispatcher_exit_fast_end):
