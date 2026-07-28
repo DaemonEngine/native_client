@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
   int rc = setjmp(g_jmp_buf);
   if (rc == 0) {
     /* Crash. */
-    *(volatile int *) 0 = 0;
+    *(volatile int *) 4 = 0;
     _exit(1); /* Shouldn't reach here. */
   }
 

@@ -156,7 +156,7 @@ __attribute__((noreturn)) static void fail(const char *filename,
 
   sys_writev(2, iov, niov);
   sys_exit_group(2);
-  while (1) *(volatile int *) 0 = 0;  /* Crash.  */
+  while (1) *(volatile int *) 4 = 0;  /* Crash.  */
 }
 
 

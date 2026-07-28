@@ -122,7 +122,7 @@ int main(int argc, char **argv) {
     g_expect_untrusted = 0;
     RegisterExceptionHandler();
     /* Cause a crash. */
-    *(volatile int *) 0 = 0;
+    *(volatile int *) 4 = 0;
   }
 
   if (argc != 3) {

@@ -36,7 +36,7 @@ void test_bad_handler(void) {
   assert(rc == 0);
   fprintf(stderr, "** intended_exit_status=untrusted_segfault\n");
   /* Cause crash. */
-  *(volatile int *) 0 = 0;
+  *(volatile int *) 4 = 0;
 }
 
 
@@ -155,7 +155,7 @@ void test_stack_in_rwdata(void) {
   assert(rc == 0);
   fprintf(stderr, "** intended_exit_status=1\n");
   /* Cause crash. */
-  *(volatile int *) 0 = 0;
+  *(volatile int *) 4 = 0;
 }
 
 
@@ -172,7 +172,7 @@ void test_stack_in_rodata(void) {
   assert(rc == 0);
   fprintf(stderr, "** intended_exit_status=unwritable_exception_stack\n");
   /* Cause crash. */
-  *(volatile int *) 0 = 0;
+  *(volatile int *) 4 = 0;
 }
 
 
@@ -211,7 +211,7 @@ void test_stack_in_code(void) {
   assert(rc == 0);
   fprintf(stderr, "** intended_exit_status=unwritable_exception_stack\n");
   /* Cause crash. */
-  *(volatile int *) 0 = 0;
+  *(volatile int *) 4 = 0;
 }
 
 

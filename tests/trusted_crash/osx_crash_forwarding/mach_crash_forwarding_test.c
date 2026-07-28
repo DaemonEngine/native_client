@@ -129,7 +129,7 @@ int main(int argc, char **argv) {
   if (argc == 2 && strcmp(argv[1], "early_trusted") == 0) {
     g_expect_crash = 1;
     /* Cause a crash. */
-    *(volatile int *) 0 = 0;
+    *(volatile int *) 4 = 0;
   }
 
   if (argc != 3) {
