@@ -22,7 +22,17 @@ void CauseFault(void) {
 }
 
 void ReplacementHandler(void) {
-  printf("In replacement handler (%i)\n", g_counter++);
+  if (++g_counter > 5) {
+    volatile unsigned x = 0;
+    /* Arrived here more times than expected. Time out the test to show what is
+       happening and make sure it fails */
+    while (1) {
+      ++x;
+    }
+  }
+
+  puts("In replacement handler");
+
   if (g_counter < 5) {
     /*
      * Cause a fault to demonstrate that ReplacementHandler() gets
@@ -35,7 +45,7 @@ void ReplacementHandler(void) {
      */
     void (*exit_fast)(void)
       = (void (*)(void)) NaCl_exception_dispatcher_exit_fast;
-    fprintf(stderr, "** intended_exit_status=untrusted_segfault\n");
+    fputs("** intended_exit_status=untrusted_segfault", stderr);
     exit_fast();
   }
 }
