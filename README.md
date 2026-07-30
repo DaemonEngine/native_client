@@ -180,7 +180,7 @@ rsync -az --info=progress2 * testuser@testhost:/home/testuser/nacl-test
 Then on the test machine,
 
 ```
-scons --mode=opt-linux,nacl saigo=1 platform=arm small_tests medium_tests large_tests
+scons --mode=opt-linux,nacl saigo=1 platform=arm built_elsewhere=1 naclsdk_validate=0 small_tests medium_tests large_tests
 ```
 
 
