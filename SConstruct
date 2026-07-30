@@ -1328,10 +1328,12 @@ def ApplyTLSEdit(env, nexe_name, raw_nexe):
     tls_edit_exe = env.File(env.SConstructAbsPath(tls_edit_forced))
   else:
     tls_edit_exe = env['BUILD_ENV'].File('${STAGING_DIR}/tls_edit${PROGSUFFIX}')
-  return env.Command(
+  node = env.Command(
       nexe_name,
       [tls_edit_exe, raw_nexe],
       '${SOURCES[0]} --verbose ${SOURCES[1:]} ${TARGET}')
+  env.Alias('all_programs', node)  # Technically incorrect for the IRT which is not a program.
+  return node
 
 pre_base_env.AddMethod(ApplyTLSEdit)
 
