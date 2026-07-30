@@ -132,6 +132,8 @@ def GetArch3264(machine=None):
   machine = machine.lower()
   if machine == 'arm64' and GetOS() == OS_MAC:
     machine = ARCH3264_X86_64 # force Intel cross build
+  elif machine == 'aarch64' and GetOS() == OS_LINUX:
+    machine = ARCH3264_ARM
   assert machine in ARCH3264_DICT, "Unrecognized arch machine: %s" % machine
   return ARCH3264_DICT[machine]
 
