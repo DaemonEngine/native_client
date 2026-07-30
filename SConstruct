@@ -2537,7 +2537,7 @@ def SetUpLinuxEnvX86(env):
                   LD='i686-linux-gnu-ld')
 
 def SetUpLinuxEnvArm(env):
-  if not platform.machine().startswith('arm'):
+  if not platform.machine().startswith('a'):
     # Allow emulation on non-ARM hosts.
     env.Replace(EMULATOR='qemu-armhf -L /usr/arm-linux-gnueabihf/ -cpu cortex-a9')
   if env.Bit('built_elsewhere'):
