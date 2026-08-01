@@ -32,7 +32,7 @@
  */
 static int my_errno;
 #define SYS_ERRNO my_errno
-#include "third_party/lss/linux_syscall_support.h"
+#include "native_client/src/third_party/linux-syscall-support/linux_syscall_support.h"
 
 #define MAX_PHNUM               16
 
