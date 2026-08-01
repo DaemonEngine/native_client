@@ -77,5 +77,8 @@ def generate(env):
       COMPONENT_LIBRARY_DEBUG_SUFFIXES=[],
   )
 
+  if not env.Bit('clang'):
+    env.Append(CCFLAGS=['-Wno-maybe-uninitialized'])
+
   # Restore saved flags.
   env.Append(**saved)
