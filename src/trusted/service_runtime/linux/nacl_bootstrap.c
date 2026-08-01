@@ -679,6 +679,7 @@ asm(".pushsection \".text\",\"ax\",%progbits\n"
     ".type _start,#function\n"
     "_start:\n"
 #if defined(__thumb2__)
+# error FIXME: implement a way to start in Thumb mode (odd entry address in ELF header or bx instruction)
     ".thumb\n"
     ".syntax unified\n"
 #endif

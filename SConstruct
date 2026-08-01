@@ -2548,10 +2548,6 @@ def SetUpLinuxEnvArm(env):
     env.Prepend(CCFLAGS=sysroot_flags,
                 ASFLAGS=[],
                 )
-    # Note we let the compiler choose whether it's -marm or -mthumb by
-    # default.  The hope is this will have the best chance of testing
-    # the prevailing compilation mode used for Chromium et al.
-    # TODO(dschuff): gn seems to use mthumb, try changing later
     if env.Bit('clang'):
       env.Prepend(CCFLAGS=['--target=arm-linux-gnueabihf'])
       env.Prepend(LINKFLAGS=['--target=arm-linux-gnueabihf'])
@@ -2560,6 +2556,7 @@ def SetUpLinuxEnvArm(env):
                   CXX='arm-linux-gnueabihf-g++',
                   LD='arm-linux-gnueabihf-ld')
     env.Prepend(CCFLAGS=['-march=armv7-a','-mfloat-abi=hard',
+                         '-marm',  # don't use Thumb mode
                          '-mtune=generic-armv7-a', '-mfpu=neon'])
 
 def SetUpAndroidEnv(env):
