@@ -150,6 +150,8 @@ ACCEPTABLE_ARGUMENTS = set([
     # When building with MSan, this can be set to values 0 (fastest, least
     # useful reports) through 2 (slowest, most useful reports). Default is 1.
     'msan_track_origins',
+    # Path to GDB to use on NaCl targets
+    'nacl_gdb',
     # colon-separated list of linker flags, e.g. "-lfoo:-Wl,-u,bar".
     'nacl_linkflags',
     # prefix to add in-front of perf tracking trace labels.
