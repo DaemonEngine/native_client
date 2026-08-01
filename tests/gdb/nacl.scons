@@ -15,10 +15,6 @@ if 'TRUSTED_ENV' not in env:
 if env.UnderWindowsCoverage():
   Return()
 
-# ARM bots don't have gdb to run these tests
-if env.Bit('build_arm'):
-  Return()
-
 if 'nacl_gdb' in SCons.Script.ARGUMENTS:
   env.Replace(GDB=SCons.Script.ARGUMENTS['nacl_gdb'])
 elif env.Bit('build_arm') or env.Bit('build_mips32'):
