@@ -59,9 +59,9 @@ void FindLowestMappedRange(uintptr_t *start, uintptr_t *end) {
 // See FIRST_USER_ADDRESS in kernel. It is supposed to impossible to reserve pages
 // lower than this (though sometimes you can due to bugs...) and causes EINVAL.
 #if NACL_ARCH(NACL_BUILD_ARCH) == NACL_arm
-#  define MIN_VALID_ADDRESS (2u * NACL_PAGESIZE)
+const uintptr_t MIN_VALID_ADDRESS = 2 * NACL_PAGESIZE;
 #else
-#  define MIN_VALID_ADDRESS 0u
+const uintptr_t MIN_VALID_ADDRESS = 0;
 #endif
 
 int IsPageMappable(uintptr_t addr) {
