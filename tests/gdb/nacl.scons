@@ -117,34 +117,29 @@ def AddGdbTest(name, is_broken=False, is_thread_test=False):
                                     (env.Bit('nacl_glibc') and
                                      env.Bit('build_arm'))))
 
+# Platforms where single stepping is not implemented. This is needed not just
+# for stepi itself, but also for `continue` - without the single step, the
+# breakpoint is erased upon continuing. Also it's broken if a thread
+# is created after continuing (https://github.com/DaemonEngine/native_client/issues/57).
+no_step = env.Bit('build_arm') or env.Bit('build_mips32')
 
 AddGdbTest('complete')
 AddGdbTest('detach')
-AddGdbTest('disconnect')
 
-using_clang = env.Bit('bitcode') or env.Bit('nacl_clang')
+# This *could* work on ARM but the final breakpoint is just placed slightly off.
+AddGdbTest('disconnect', is_broken=env.Bit('build_arm'))
+
+using_clang = env.Bit('bitcode') or (env.Bit('nacl_clang') and not env.Bit('saigo'))
 
 # https://code.google.com/p/nativeclient/issues/detail?id=4059
 AddGdbTest('invalid_memory',
            is_broken = (using_clang and not env.UsingEmulator()))
 AddGdbTest('kill')
-# TODO(crbug.com/1101347): This fails on ARM bots.
-AddGdbTest('remote_get', is_broken=env.Bit('build_arm') and not env.UsingEmulator())
+AddGdbTest('remote_get')
 
-# Single-stepping does work reliably with ARM and MIPS in qemu due to the code
-# cache not being flushable.
-AddGdbTest('stepi_after_break', is_broken=env.UsingEmulator())
+AddGdbTest('stepi_after_break', is_broken=no_step)
 
-# This fails on ARM+PNaCl. The set_global_var function appears to be
-# getting the wrong argument value (68K vs 1), so the value of
-# global_var doesn't match the expected value.
-# TODO(mseaborn): Investigate and enable this test.
-# http://code.google.com/p/nativeclient/issues/detail?id=3252
-# This test also fails with arm-nacl-clang:
-# https://code.google.com/p/nativeclient/issues/detail?id=4059
-AddGdbTest('print_symbol',
-           is_broken=((using_clang and env.Bit('build_arm'))
-                      or env.UsingEmulator()))
+AddGdbTest('print_symbol', is_broken=no_step)
 
 # This fails on ARM+PNaCl because it gets an
 # unexpected value for a function argument from
@@ -154,35 +149,19 @@ AddGdbTest('print_symbol',
 AddGdbTest('stack_trace',
            is_broken=using_clang and env.Bit('build_arm'))
 
-# This fails on ARM+nacl-clang
-# https://code.google.com/p/nativeclient/issues/detail?id=4059
-AddGdbTest('step_from_func_start',
-           is_broken=(env.UsingEmulator() or
-                      (env.Bit('nacl_clang') and env.Bit('build_arm'))))
+AddGdbTest('step_from_func_start', is_broken=no_step)
 
 # This fails on MIPS, since GDB for MIPS executes inferior calls on stack
 # (call dummy location in MIPS GDB is set as ON_STACK method). Since the stack
 # is not executable under NaCl, this makes inferior call impossible to execute.
 AddGdbTest('call_from_gdb', is_broken=env.Bit('build_mips32'))
 
-# This fails on ARM/MIPS+PNaCl because it is reading
-# local_var before it has been initialised.
-# TODO(mseaborn): Investigate and enable this test.
-# http://code.google.com/p/nativeclient/issues/detail?id=3252
-# This test also fails with arm-nacl-clang:
-# https://code.google.com/p/nativeclient/issues/detail?id=4059
-AddGdbTest('change_variable',
-           is_broken=((using_clang and env.Bit('build_arm')) or
-                      env.Bit('build_mips32') or
-                      env.UsingEmulator()))
+AddGdbTest('change_variable', is_broken=no_step)
 
 if not env.Bit('nacl_static_link'):
   AddGdbTest('execute_nacl_manifest_twice')
 
-# This test hangs under qemu-arm because thread suspension doesn't
-# work on qemu-arm.
-AddGdbTest('break_continue_thread', is_thread_test=True,
-           is_broken=env.UsingEmulator())
+AddGdbTest('break_continue_thread', is_thread_test=True, is_broken=no_step)
 
 AddGdbTest('syscall_thread', is_thread_test=True)
 
