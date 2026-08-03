@@ -50,10 +50,14 @@ Many of the original project pages are no longer available. Some documentation a
 
 ## Status
 
-Currently the Linux amd64, Windows amd64 and Linux armhf platforms are well-tested.
-However there are issues with platform qualification for ARM.
-For Windows i686 and Linux i686 it builds at least.
-
+Linux amd64: Well-tested, everything works
+Linux i686: Builds
+Linux armhf: Well-tested, debugger support incomplete, platform qualification issues
+Linux arm64: Well-tested, can run armhf version well if CPU supports 32-bit programs
+MacOS amd64: All tests passed on a CI bot. Probably everything works fine. Debugger untested
+MacOS arm64: Well-tested, runs via Rosetta (so a couple obscure x86 features are not usable for client code), no debugger
+Windows amd64: Well-tested, everything works
+Windows i686: Builds, lightly tested
 
 ## Dependencies
 - SCons
@@ -61,6 +65,7 @@ For Windows i686 and Linux i686 it builds at least.
 - For Linux: LLVM, if using `--clang` (default). Must be installed in `/usr/bin`.
 - For Linux: GCC, if using `--no-clang`
 - For Linux: GNU Binutils
+- For Mac: Xcode Command Line Tools
 - For Windows: MinGW
 - For Windows, if using MSVC: Visual Studio
 
@@ -80,7 +85,7 @@ used command line arguments for our build:
   - `nacl`: NaCl toolchain to build the sandboxed code
 - `saigo=1` to use the Saigo NaCl toolchain. This is the only NaCl toolchain we support so you must always add this when using the `nacl` mode.
 - `--platform=x86`, `--platform=x86-64`, or `--platform=arm`: choose target architecture.
-- `--verbose`: show compiler command lines and other stuff
+- `--verbose`: show compiler and test command lines and other stuff
 - `-j<N>` build parallelism
 - Target names, e.g. `sel_ldr` (NaCl loader), `irt_core`, `small_tests`, `medium_tests`, `all_programs`, `large_tests`, `huge_tests`, `run_<something>_test`
 
