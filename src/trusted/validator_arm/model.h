@@ -404,14 +404,17 @@ class Instruction {
 };
 
 // Checks if instruction is a valid constant pool head.
-inline bool IsBreakPointAndConstantPoolHead(Instruction i) {
-  return ((i.Bits(31, 0) == kLiteralPoolHead) ||
-          (i.Bits(31, 0) == kBreakpoint));
+inline bool IsConstantPoolHead(Instruction i) {
+  return i.Bits(31, 0) == kLiteralPoolHead;
 }
 
 // Same as above, but with integer contents of instruction as argument.
+inline bool IsConstantPoolHead(uint32_t i) {
+  return IsConstantPoolHead(Instruction(i));
+}
+
 inline bool IsBreakPointAndConstantPoolHead(uint32_t i) {
-  return IsBreakPointAndConstantPoolHead(Instruction(i));
+  return i == kBreakpoint || IsConstantPoolHead(i);
 }
 
 }  // namespace nacl_arm_dec

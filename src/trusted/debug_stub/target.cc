@@ -137,7 +137,7 @@ bool Target::AddBreakpoint(uint32_t user_address) {
   if (!IPlatform::GetMemory(sys_bundle_addr, sizeof(uint32_t), &bundle_head))
     return false;
 
-  if (nacl_arm_dec::IsBreakPointAndConstantPoolHead(bundle_head)) {
+  if (nacl_arm_dec::IsConstantPoolHead(bundle_head)) {
     NaClLog(LOG_ERROR,
             "Failed to set breakpoint at 0x%x, within constant pool\n",
             user_address);
