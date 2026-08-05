@@ -559,7 +559,7 @@ uses(Instruction inst) const {
 //    is_literal_pool_head: LiteralPoolHeadConstant()  ==
 //            inst,
 //    safety: [inst(31:28)=~1110 => UNPREDICTABLE,
-//      not IsBreakPointAndConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
+//      not IsConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
 //    uses: {},
 //    violations: [implied by 'is_literal_pool_head']}
 
@@ -587,8 +587,8 @@ safety(Instruction inst) const {
           0xE0000000)
     return UNPREDICTABLE;
 
-  // not IsBreakPointAndConstantPoolHead(inst) => FORBIDDEN_OPERANDS
-  if (!(nacl_arm_dec::IsBreakPointAndConstantPoolHead(inst.Bits())))
+  // not IsConstantPoolHead(inst) => FORBIDDEN_OPERANDS
+  if (!(nacl_arm_dec::IsConstantPoolHead(inst.Bits())))
     return FORBIDDEN_OPERANDS;
 
   return MAY_BE_SAFE;

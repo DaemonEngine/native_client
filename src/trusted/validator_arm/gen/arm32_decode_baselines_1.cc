@@ -1208,7 +1208,7 @@ uses(Instruction inst) const {
 //    pattern: cccc00010010iiiiiiiiiiii0111iiii,
 //    rule: BKPT,
 //    safety: [cond(31:28)=~1110 => UNPREDICTABLE,
-//      not IsBreakPointAndConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
+//      not IsConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
 //    uses: {},
 //    violations: [implied by 'is_literal_pool_head']}
 RegisterList BKPT_cccc00010010iiiiiiiiiiii0111iiii_case_0::
@@ -1235,8 +1235,8 @@ safety(Instruction inst) const {
           0xE0000000)
     return UNPREDICTABLE;
 
-  // not IsBreakPointAndConstantPoolHead(inst) => FORBIDDEN_OPERANDS
-  if (!(nacl_arm_dec::IsBreakPointAndConstantPoolHead(inst.Bits())))
+  // not IsConstantPoolHead(inst) => FORBIDDEN_OPERANDS
+  if (!(nacl_arm_dec::IsConstantPoolHead(inst.Bits())))
     return FORBIDDEN_OPERANDS;
 
   return MAY_BE_SAFE;

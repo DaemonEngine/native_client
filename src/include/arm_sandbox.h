@@ -18,6 +18,14 @@
 #define NATIVE_CLIENT_SRC_INCLUDE_ARM_SANDBOX_H_ 1
 
 /*
+ * UDF #0x0010: generic breakpoint.
+ *
+ * The Linux kernel treats 0x10  specially - generates SIGTRAP instead of SIGILL.
+ * Usable statically by users or dynamically by the runtime.
+ */
+#define NACL_INSTR_ARM_BREAKPOINT        0xE7F001F0
+
+/*
  * Specially chosen BKPT and UDF instructions that also correspond to
  * BKPT and UDF when decoded as Thumb instructions.
  * All other BKPT/UDF values are disallowed by the validator out of paranoia.
@@ -28,6 +36,9 @@
  *
  * Treated as a roadblock by the validator: all words that follow it in
  * a bundle aren't validated and can't be branched to.
+ * TODO: also change this to a UDF instruction. But it also has to be changed
+ * in the toolchain (linker?). It is only generated when there is a jump
+ * of distance over 32MB.
  */
 #define NACL_INSTR_ARM_LITERAL_POOL_HEAD 0xE125BE70
 
@@ -40,13 +51,6 @@
  * one of these (unlike NACL_INSTR_ARM_POOL_HEAD), because the validator
  * validates the instructions that follow.
  */
-
-/*
- * BKPT #0x5BEF: generic breakpoint.
- *
- * Usable statically by users or dynamically by the runtime.
- */
-#define NACL_INSTR_ARM_BREAKPOINT        0xE125BE7F
 
 /*
  * UDF #0xEDEF: halt-fill.

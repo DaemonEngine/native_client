@@ -266,8 +266,7 @@ static Abi::BPDef breakpoint_x86 = {
   breakpoint_code_x86
 };
 
-// We use an illegal instruction rather than BKPT because BKPT cannot
-// be caught under qemu-arm whereas illegal instructions can.
+// We use an illegal instruction for debugger breakpoints.
 static uint32_t breakpoint_code_arm[] = { NACL_INSTR_ARM_ABORT_NOW };
 static Abi::BPDef breakpoint_arm = {
   sizeof(breakpoint_code_arm),

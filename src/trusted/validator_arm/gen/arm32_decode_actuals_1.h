@@ -1382,7 +1382,7 @@ class Actual_BIC_immediate_cccc0011110snnnnddddiiiiiiiiiiii_case_1
 //    is_literal_pool_head: LiteralPoolHeadConstant()  ==
 //            inst,
 //    safety: [inst(31:28)=~1110 => UNPREDICTABLE,
-//      not IsBreakPointAndConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
+//      not IsConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
 //    uses: {},
 //    violations: [implied by 'is_literal_pool_head']}
 //
@@ -1402,7 +1402,7 @@ class Actual_BIC_immediate_cccc0011110snnnnddddiiiiiiiiiiii_case_1
 //    pattern: cccc00010010iiiiiiiiiiii0111iiii,
 //    rule: BKPT,
 //    safety: [cond(31:28)=~1110 => UNPREDICTABLE,
-//      not IsBreakPointAndConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
+//      not IsConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
 //    uses: {},
 //    violations: [implied by 'is_literal_pool_head']}
 class Actual_BKPT_cccc00010010iiiiiiiiiiii0111iiii_case_1

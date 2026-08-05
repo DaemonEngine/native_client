@@ -1254,13 +1254,6 @@ TEST_F(ValidatorTests, LiteralPoolHeadIsBreakpoint) {
           "it needs to act as a roadblock");
 }
 
-TEST_F(ValidatorTests, Breakpoint) {
-  EXPECT_EQ(nacl_arm_dec::kBreakpoint & 0xFFF000F0,
-            0xE1200070)  // BKPT #0
-      << ("the breakpoint instruction should be a breakpoint: "
-          "it needs to trap");
-}
-
 TEST_F(ValidatorTests, HaltFill) {
   EXPECT_EQ(nacl_arm_dec::kHaltFill & 0xFFF000F0,
             0xE7F000F0)  // UDF #0
@@ -1286,10 +1279,10 @@ TEST_F(ValidatorTests, UDFAndBKPTValidateAsExpected) {
     arm_inst bkpt_inst = 0xE1200070 | ((i & 0xFFF0) << 4) | (i & 0xF);
     arm_inst udf_inst  = 0xE7F000F0 | ((i & 0xFFF0) << 4) | (i & 0xF);
     EXPECT_EQ(validate(&bkpt_inst, 1, kDefaultBaseAddr),
-              ((bkpt_inst == kLiteralPoolHead) ||
-               (bkpt_inst == nacl_arm_dec::kBreakpoint)));
+              (bkpt_inst == kLiteralPoolHead));
     EXPECT_EQ(validate(&udf_inst, 1, kDefaultBaseAddr),
               ((udf_inst == nacl_arm_dec::kHaltFill) ||
+               (udf_inst == nacl_arm_dec::kBreakpoint) ||
                (udf_inst == nacl_arm_dec::kAbortNow)));
     // Tautological note: kFailValidation should fail validation.
   }

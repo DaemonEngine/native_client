@@ -613,7 +613,7 @@ bool ERET_cccc0001011000000000000001101110_case_0TesterCase11
 //       pattern: cccc00010010iiiiiiiiiiii0111iiii,
 //       rule: BKPT,
 //       safety: [cond(31:28)=~1110 => UNPREDICTABLE,
-//         not IsBreakPointAndConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
+//         not IsConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
 //       uses: {},
 //       violations: [implied by 'is_literal_pool_head']}
 class BKPT_cccc00010010iiiiiiiiiiii0111iiii_case_0TesterCase12
@@ -988,7 +988,7 @@ class ERET_cccc0001011000000000000001101110_case_0Tester_Case11
 //       pattern: cccc00010010iiiiiiiiiiii0111iiii,
 //       rule: BKPT,
 //       safety: [cond(31:28)=~1110 => UNPREDICTABLE,
-//         not IsBreakPointAndConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
+//         not IsConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
 //       uses: {},
 //       violations: [implied by 'is_literal_pool_head']}
 class BKPT_cccc00010010iiiiiiiiiiii0111iiii_case_0Tester_Case12
@@ -1286,7 +1286,7 @@ TEST_F(Arm32DecoderStateTests,
 //       pattern: cccc00010010iiiiiiiiiiii0111iiii,
 //       rule: BKPT,
 //       safety: [cond(31:28)=~1110 => UNPREDICTABLE,
-//         not IsBreakPointAndConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
+//         not IsConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
 //       uses: {},
 //       violations: [implied by 'is_literal_pool_head']}
 TEST_F(Arm32DecoderStateTests,
