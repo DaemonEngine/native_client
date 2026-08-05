@@ -413,10 +413,6 @@ inline bool IsConstantPoolHead(uint32_t i) {
   return IsConstantPoolHead(Instruction(i));
 }
 
-inline bool IsBreakPointAndConstantPoolHead(uint32_t i) {
-  return i == kBreakpoint || IsConstantPoolHead(i);
-}
-
 }  // namespace nacl_arm_dec
 
 #endif  // NATIVE_CLIENT_SRC_TRUSTED_VALIDATOR_ARM_V2_MODEL_H
