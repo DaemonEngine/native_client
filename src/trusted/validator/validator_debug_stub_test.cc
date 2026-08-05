@@ -398,13 +398,13 @@ static const uint32_t offset_pseudo_arm[kCodeSize/4] = {
   NACL_INSTR_ARM_NOP
 };
 
-// 2 Constant pools using both markers.
+// 2 Constant pools.
 static const uint32_t constant_pools_arm[kCodeSize/4] = {
   NACL_INSTR_ARM_LITERAL_POOL_HEAD,
   0xEF000000,  // SVC #0
   0xEF000000,
   0xEF000000,
-  NACL_INSTR_ARM_BREAKPOINT,
+  NACL_INSTR_ARM_LITERAL_POOL_HEAD,
   0xEF000000,
   0xEF000000,
   0xEF000000,
@@ -412,7 +412,7 @@ static const uint32_t constant_pools_arm[kCodeSize/4] = {
 
 // Constant pool followed by a code bundle.
 static const uint32_t constant_pool_first_arm[kCodeSize/4] = {
-  NACL_INSTR_ARM_BREAKPOINT,
+  NACL_INSTR_ARM_LITERAL_POOL_HEAD,
   0xEF000000,  // SVC #0
   0xEF000000,
   0xEF000000,
@@ -428,7 +428,7 @@ static const uint32_t constant_pool_second_arm[kCodeSize/4] = {
   NACL_INSTR_ARM_NOP,  // 04
   NACL_INSTR_ARM_NOP,  // 08
   NACL_INSTR_ARM_NOP,  // 0c
-  NACL_INSTR_ARM_BREAKPOINT,
+  NACL_INSTR_ARM_LITERAL_POOL_HEAD,
   0xEF000000,  // SVC #0
   0xEF000000,
   0xEF000000

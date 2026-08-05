@@ -305,10 +305,10 @@ void test_arm_breakpoint(void) {
           ".word " NACL_TO_STRING(NACL_INSTR_ARM_NOP) "\n"
           ".word " NACL_TO_STRING(NACL_INSTR_ARM_NOP) "\n"
           ".word " NACL_TO_STRING(NACL_INSTR_ARM_NOP) "\n"
-          /* These are the two constant pool markers. */
+          /* These are the constant pool marker. */
           ".word " NACL_TO_STRING(NACL_INSTR_ARM_LITERAL_POOL_HEAD) "\n"
           ".p2align 4\n"
-          ".word " NACL_TO_STRING(NACL_INSTR_ARM_BREAKPOINT) "\n"
+          ".word " NACL_TO_STRING(NACL_INSTR_ARM_LITERAL_POOL_HEAD) "\n"
           ".p2align 4\n");
 #endif
 }
