@@ -182,8 +182,8 @@ def _generate_source(filename, table=None):
                       'dgen_actuals.py',
                       'dgen_baselines.py',
                       ],
-              action=['${SOURCES[1].abspath} ${SOURCES[0].abspath} '
-                      '${TARGET.abspath} Arm32DecoderState ' +
+              action=['${SOURCES[1]} ${SOURCES[0]} '
+                      '${TARGET} Arm32DecoderState ' +
                       cl_args])
 
 for source in GEN_OTHER_LIST:
@@ -221,7 +221,7 @@ gtest_env.ComponentProgram('address_set_test_binary',
 
 address_set_test = gtest_env.Command(target='address_set_test.out',
                                      source=['address_set_test_binary'],
-                                     action=['${SOURCES[0].abspath}'])
+                                     action=['${SOURCES[0]}'])
 
 # TODO(cbiffle): get this wrapped in QEMU.
 #env.AddNodeToTestSuite(address_set_test, ['small_tests'], 'address_set_test')
