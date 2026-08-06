@@ -435,7 +435,7 @@ bool SfiValidator::is_valid_inst_boundary(const CodeSegment& code,
       code.base() + offset)[0];
 
   // Check if addr falls within a constant pool.
-  if (nacl_arm_dec::IsBreakPointAndConstantPoolHead(instr))
+  if (nacl_arm_dec::IsConstantPoolHead(instr))
     return false;
 
   nacl_arm_dec::ViolationSet violations =

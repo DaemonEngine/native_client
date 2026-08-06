@@ -152,7 +152,7 @@ _ID_PATTERN = re.compile(r'^[a-zA-z][a-zA-z0-9_]*$')
 _STRING_PATTERN = re.compile(r'^\'(.*)\'$')
 
 # When true, catch all bugs when parsing and report line.
-_CATCH_EXCEPTIONS = True
+_CATCH_EXCEPTIONS = False
 
 # List of file level decoder actions that must be specified in every
 # specification file, because they are used somewhere else than in table rows.

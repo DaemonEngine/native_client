@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python2
 #
 # Copyright 2012 The Native Client Authors.  All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
@@ -45,15 +45,7 @@ import dgen_baselines
 import dgen_decoder
 
 def _localize_filename(filename):
-  """ Strips off directories above 'native_client', returning
-      a location neutral name for the file
-  """
-  m = re.match(r'.*/(native_client/.*)', filename)
-  if m:
-    return m.group(1)
-  else:
-    # Don't know localized
-    return filename
+  return 'native_client/' + filename
 
 def install_actuals_and_baselines(decoder, cl_args):
   if not decoder.primary:

@@ -947,7 +947,7 @@
    defs := {};
    uses := {};
    safety := cond=~1110 => UNPREDICTABLE &
-             not IsBreakPointAndConstantPoolHead(inst) => FORBIDDEN_OPERANDS;
+             not IsConstantPoolHead(inst) => FORBIDDEN_OPERANDS;
    arch := v5T;
 +--
 | op2(6:4) B(9) op(22:21) op1(19:16)

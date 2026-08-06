@@ -685,7 +685,7 @@ class BIC_register_shifted_register_cccc0001110snnnnddddssss0tt1mmmm_case_0
 //    pattern: cccc00010010iiiiiiiiiiii0111iiii,
 //    rule: BKPT,
 //    safety: [cond(31:28)=~1110 => UNPREDICTABLE,
-//      not IsBreakPointAndConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
+//      not IsConstantPoolHead(inst) => FORBIDDEN_OPERANDS],
 //    uses: {},
 //    violations: [implied by 'is_literal_pool_head']}
 class BKPT_cccc00010010iiiiiiiiiiii0111iiii_case_0
