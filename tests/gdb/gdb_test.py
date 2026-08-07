@@ -3,6 +3,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import atexit
 import json
 import optparse
 import os
@@ -205,6 +206,7 @@ class Gdb(object):
     self._gdb = subprocess.Popen(args,
                                  stdin=subprocess.PIPE,
                                  stdout=subprocess.PIPE)
+    atexit.register(self.KillProcess)
     self._expected_success = True
 
   def Wait(self):
@@ -289,6 +291,7 @@ class Gdb(object):
   def KillProcess(self):
     self._expected_success = False
     KillProcess(self._gdb)
+    atexit.unregister(self.KillProcess)
 
   def Eval(self, expression):
     return self.Command('-data-evaluate-expression ' + expression)[b'value']
