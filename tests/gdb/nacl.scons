@@ -105,6 +105,10 @@ def AddGdbTest(name, is_broken=False, is_thread_test=False):
 # is created after continuing (https://github.com/DaemonEngine/native_client/issues/57).
 no_step = env.Bit('build_arm') or env.Bit('build_mips32')
 
+# Currently GDB builds lack XML support which is needed for some ARM register
+# info - see https://github.com/DaemonEngine/saigo-nacl-sdk/issues/9
+no_xml = env.Bit('build_arm') and env.Bit('saigo')
+
 AddGdbTest('complete')
 AddGdbTest('detach')
 
@@ -115,7 +119,7 @@ using_clang = env.Bit('bitcode') or (env.Bit('nacl_clang') and not env.Bit('saig
 
 # https://code.google.com/p/nativeclient/issues/detail?id=4059
 AddGdbTest('invalid_memory',
-           is_broken = (using_clang and not env.UsingEmulator()))
+           is_broken = no_xml or (using_clang and not env.UsingEmulator()))
 AddGdbTest('kill')
 AddGdbTest('remote_get')
 
@@ -129,7 +133,7 @@ AddGdbTest('print_symbol', is_broken=no_step)
 # TODO(mseaborn): Investigate and enable this test.
 # http://code.google.com/p/nativeclient/issues/detail?id=3252
 AddGdbTest('stack_trace',
-           is_broken=using_clang and env.Bit('build_arm'))
+           is_broken=no_xml or (using_clang and env.Bit('build_arm')))
 
 AddGdbTest('step_from_func_start', is_broken=no_step)
 
