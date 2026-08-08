@@ -388,7 +388,7 @@ def SetUpArgumentBits(env):
       'to run the specified test(s) without actually running them.  This '
       'argument is a counterpart to built_elsewhere.')
 
-  BitFromArgument(env, 'no_gdb_tests', default=True,
+  BitFromArgument(env, 'no_gdb_tests', default=env.Bit('host_mac_arm64'),
     desc='Prevents GDB tests from running.  If GDB is not available, you can '
       'test everything else by specifying this flag.')
 
