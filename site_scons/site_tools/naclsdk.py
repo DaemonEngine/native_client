@@ -112,6 +112,13 @@ def _SetEnvForNativeSdk(env, sdk_path):
   cc = 'clang' if env.Bit('nacl_clang') else 'gcc'
   cxx = 'clang++' if env.Bit('nacl_clang') else 'g++'
 
+  def FindRenamedTool(tool):
+    # For ones renamed in https://github.com/DaemonEngine/saigo-nacl-sdk/releases/tag/v21.0-20260805
+    newname = os.path.join(bin_path, 'nacl-' + tool)
+    if os.path.exists(newname) or os.path.exists(newname + '.exe'):
+      return newname
+    return os.path.join(bin_path, '%s-%s' % (tool_prefix, tool))
+
   env.Replace(# Replace header and lib paths.
               # where to put nacl extra sdk headers
               # TODO(robertm): switch to using the mechanism that
@@ -125,18 +132,17 @@ def _SetEnvForNativeSdk(env, sdk_path):
               AR=os.path.join(bin_path, '%s-ar' % tool_prefix),
               AS=os.path.join(bin_path, '%s-as' % tool_prefix),
               ASPP=os.path.join(bin_path, '%s-%s' % (tool_prefix, cc)),
-              FILECHECK=os.path.join(bin_path, 'FileCheck'),
-              GDB=os.path.join(bin_path, '%s-gdb' % tool_prefix),
+              GDB=os.path.join(bin_path, 'nacl-gdb'),
               # NOTE: use g++ for linking so we can handle C AND C++.
               LINK=os.path.join(bin_path, '%s-%s' % (tool_prefix, cxx)),
               # Grrr... and sometimes we really need ld.
               LD=os.path.join(bin_path, '%s-ld' % tool_prefix) + ld_mode_flag,
-              RANLIB=os.path.join(bin_path, '%s-ranlib' % tool_prefix),
-              NM=os.path.join(bin_path, '%s-nm' % tool_prefix),
-              OBJDUMP=os.path.join(bin_path, '%s-objdump' % tool_prefix),
-              OBJCOPY=os.path.join(bin_path, '%s-objcopy' % tool_prefix),
+              RANLIB=FindRenamedTool('ranlib'),
+              NM=FindRenamedTool('nm'),
+              OBJDUMP=FindRenamedTool('objdump'),
+              OBJCOPY='false',
               STRIP=os.path.join(bin_path, '%s-strip' % tool_prefix),
-              ADDR2LINE=os.path.join(bin_path, '%s-addr2line' % tool_prefix),
+              ADDR2LINE='false',
               BASE_LINKFLAGS=[cc_mode_flag],
               BASE_CFLAGS=[cc_mode_flag],
               BASE_CXXFLAGS=[cc_mode_flag],
@@ -754,21 +760,6 @@ def generate(env):
     env.Replace(INSTALL=FakeInstall)
   else:
     _SetEnvForNativeSdk(env, root)
-
-  # Daemon: don't depend on a second NaCl toolchain!
-  if (env.Bit('bitcode') or env.Bit('nacl_clang')) and env.Bit('build_x86') and \
-     not env.Bit('no_gdb_tests') and 'nacl_gdb' not in SCons.Script.ARGUMENTS:
-    # Get GDB from the nacl-gcc glibc toolchain even when using PNaCl.
-    # TODO(mseaborn): We really want the nacl-gdb binary to be in a
-    # separate tarball from the nacl-gcc toolchain, then this step
-    # will not be necessary.
-    # See http://code.google.com/p/nativeclient/issues/detail?id=2773
-    temp_env = env.Clone()
-    temp_env.ClearBits('bitcode', 'nacl_clang', 'saigo')
-    temp_env.SetBits('nacl_glibc')
-    temp_root = temp_env.GetToolchainDir()
-    _SetEnvForNativeSdk(temp_env, temp_root)
-    env.Replace(GDB=temp_env['GDB'])
 
   env.Prepend(LIBPATH='${NACL_SDK_LIB}')
 
