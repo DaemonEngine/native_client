@@ -590,7 +590,7 @@ def FindReadElf():
 
   # Look for Saigo or PNaCl readelf or the system one
   # The architecture the toolchain was built for generally doesn't matter.
-  readelves = ['x86_64-nacl-readelf', 'pnacl-readelf', 'readelf']
+  readelves = ['nacl-readelf', 'x86_64-nacl-readelf', 'pnacl-readelf', 'readelf']
   toolchain_paths = [os.path.join(env.saigo_base, 'bin'),
                      os.path.join(env.pnacl_base, 'bin')]
 
