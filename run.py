@@ -470,6 +470,9 @@ def Run(args, cwd=None, verbose=True, exit_on_failure=False,
     # PNaCl toolchain executables (pnacl-translate, readelf) are scripts
     # not binaries, so it doesn't want to run on Windows without a shell.
     use_shell = True if pynacl.platform.IsWindows() else False
+    if use_shell:
+      args = args[:]
+      args[0] = os.path.normpath(args[0])  # Must use \ not /
     p = subprocess.Popen(args, stdin=stdin_redir, stdout=stdout_redir,
                          stderr=stderr_redir, cwd=cwd, shell=use_shell,
                          encoding='utf-8')
