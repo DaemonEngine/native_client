@@ -545,7 +545,7 @@ for bits in ['32', '64']:
          '--bits', bits,
          tests_mask] + update_option)
 
-    env.AddNodeToTestSuite(
+    if UsingNaclMode(): env.AddNodeToTestSuite(
         dis_section_test,
         ['small_tests', 'validator_tests'],
         is_broken=env.Bit('built_elsewhere'),  # OBJDUMP is stubbed out
