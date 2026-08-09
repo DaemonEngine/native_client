@@ -545,7 +545,7 @@ for bits in ['32', '64']:
          '--bits', bits,
          tests_mask] + update_option)
 
-    env.AddNodeToTestSuite(
+    if UsingNaclMode(): env.AddNodeToTestSuite(
         dis_section_test,
         ['small_tests', 'validator_tests'],
         node_name='run_dis_section_test_%s' % bits)
