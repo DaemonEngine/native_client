@@ -1369,21 +1369,10 @@ def ExtractPublishedFiles(env, target_name):
 
 pre_base_env.AddMethod(ExtractPublishedFiles)
 
-
-# Only include the chrome side of the build if present.
-if os.path.exists(pre_base_env.File(
-    '#/../ppapi/native_client/chrome_main.scons').abspath):
-  SConscript('#/../ppapi/native_client/chrome_main.scons',
-      exports=['pre_base_env'])
-  enable_chrome = True
-else:
-  def AddChromeFilesFromGroup(env, file_group):
-    pass
-  pre_base_env.AddMethod(AddChromeFilesFromGroup)
-  enable_chrome = False
-DeclareBit('enable_chrome_side',
-           'Is the chrome side present.')
-pre_base_env.SetBitFromOption('enable_chrome_side', enable_chrome)
+# TODO: remove
+def AddChromeFilesFromGroup(env, file_group):
+  pass
+pre_base_env.AddMethod(AddChromeFilesFromGroup)
 
 def ProgramNameForNmf(env, basename):
   """ Create an architecture-specific filename that can be used in an NMF URL.
@@ -2987,11 +2976,7 @@ def AllowInlineAssembly(env):
 
 nacl_env.AddMethod(AllowInlineAssembly)
 
-
-# TODO(mseaborn): Enable this unconditionally once the C code on the
-# Chromium side compiles successfully with this warning.
-if not enable_chrome:
-  nacl_env.Append(CFLAGS=['-Wstrict-prototypes'])
+nacl_env.Append(CFLAGS=['-Wstrict-prototypes'])
 
 # This is the address at which a user executable is expected to place its
 # data segment in order to be compatible with the integrated runtime (IRT)
@@ -3533,20 +3518,6 @@ nacl_env.AddMethod(NaClAddObject, 'AddObjectToSdk')
 def AddImplicitLibs(env):
   implicit_libs = []
 
-  # Require the pnacl_irt_shim for pnacl x86-64 and arm.
-  # Use -B to have the compiler look for the fresh libpnacl_irt_shim.a.
-  if ( env.Bit('bitcode') and
-       (env.Bit('build_x86_64') or env.Bit('build_arm'))
-       and env['NACL_BUILD_FAMILY'] != 'UNTRUSTED_IRT'):
-    # Note: without this hack ibpnacl_irt_shim.a will be deleted
-    #       when "built_elsewhere=1"
-    #       Since we force the build in a previous step the dependency
-    #       is not really needed.
-    #       Note: the "precious" mechanism did not work in this case
-    if not env.Bit('built_elsewhere'):
-      if env.Bit('enable_chrome_side'):
-        implicit_libs += ['libpnacl_irt_shim.a']
-
   if not env.Bit('nacl_glibc'):
     # These are automatically linked in by the compiler, either directly
     # or via the linker script that is -lc.  In the non-glibc build, we
@@ -3607,8 +3578,6 @@ nacl_irt_test_env = nacl_env.Clone(
     BUILD_SCONSCRIPTS = [],
     )
 nacl_irt_test_env.SetBits('tests_use_irt')
-if nacl_irt_test_env.Bit('enable_chrome_side'):
-  nacl_irt_test_env.Replace(TESTRUNNER_LIBS=['testrunner_browser'])
 
 nacl_irt_test_env.Append(BUILD_SCONSCRIPTS=irt_variant_tests)
 nacl_irt_test_env.AddChromeFilesFromGroup('irt_variant_test_scons_files')
