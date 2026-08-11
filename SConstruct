@@ -642,17 +642,6 @@ nacl_glibc_skiplist = set([
     'run_timefuncs_test',
     # Needs further investigation.
     'sdk_minimal_test',
-    # This test fails with nacl-glibc: glibc reports an internal
-    # sanity check failure in free().
-    # TODO(robertm): This needs further investigation.
-    'run_ppapi_event_test',
-    'run_ppapi_geturl_valid_test',
-    'run_ppapi_geturl_invalid_test',
-    # http://code.google.com/p/chromium/issues/detail?id=108131
-    # we would need to list all of the glibc components as
-    # web accessible resources in the extensions's manifest.json,
-    # not just the nexe and nmf file.
-    'run_ppapi_extension_mime_handler_browser_test',
     ])
 nacl_glibc_skiplist.update(['%s_irt' % test for test in nacl_glibc_skiplist])
 
@@ -814,8 +803,6 @@ tests_to_disable_qemu = set([
     # Note, for now these tests disable both the irt and non-irt variants
     'run_egyptian_cotton_test',
     'run_many_threads_sequential_test',
-    # subprocess needs to also have qemu prefix, which isn't supported
-    'run_subprocess_test',
     'run_thread_suspension_test',
     'run_dynamic_modify_test',
     'run_irt_ext_libc_test', # Flaky for saigo
