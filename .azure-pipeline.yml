@@ -26,10 +26,10 @@ strategy:
     Linux armhf GCC:
       # There is an IO bug in qemu-arm from ubuntu-22.04.
       VM_IMAGE: 'ubuntu-24.04'
-      SDK_PLATFORM: linux-amd64
+      SDK_PLATFORM: arm-xxx
       APT_PACKAGES: g++-arm-linux-gnueabihf qemu-user
-      SCONS_BUILD_ARGS: platform=arm --mode=opt-host --no-clang werror=0
-      SCONS_TESTS: small_tests medium_tests
+      SCONS_BUILD_ARGS: platform=arm --mode=opt-host,nacl --no-clang werror=0
+      SCONS_TESTS: no_gdb_tests=1 small_tests medium_tests
       VPYTHON: pyenv/bin/python
     Linux amd64 Clang:
       VM_IMAGE: 'ubuntu-22.04'
@@ -86,7 +86,12 @@ steps:
     mkdir sdk
     (
       cd sdk
-      curl -fsSL https://github.com/DaemonEngine/saigo-nacl-sdk/releases/download/v21.0-20260805/saigosdk-$(SDK_PLATFORM)_21.0-20260805.tar.xz -o sdk.tar.xz
+      if [ "$(SDK_PLATFORM)" = "arm-xxx" ]; then
+        sdk_url='https://dl.illwieckz.net/b/saigo/preview/saigo_newlib_20241119.txz'
+      else
+        sdk_url='https://github.com/DaemonEngine/saigo-nacl-sdk/releases/download/v21.0-20260805/saigosdk-$(SDK_PLATFORM)_21.0-20260805.tar.xz'
+      fi
+      curl -fsSL "$sdk_url" -o sdk.tar.xz
       tar -xJf sdk.tar.xz
       rm sdk.tar.xz
       mv * sdk  # Rename the top-level dir to sdk
