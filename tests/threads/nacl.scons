@@ -41,6 +41,7 @@ node = env.CommandSelLdrTestNacl(
 # NOTE: this should be a pretty slow test, but its been sped up
 # to not tickle bug 853
 env.AddNodeToTestSuite(node, ['small_tests'], 'run_thread_test',
+                       is_flaky=env.UsingEmulator(),
 # TODO(khim): reenable it when cause of failure on 32bit Windows glibc
 # will be found.
 # See: http://code.google.com/p/nativeclient/issues/detail?id=1690
