@@ -995,6 +995,7 @@ DeclareBit('build_x86', 'Building binaries for the x86 architecture')
 
 DeclareBit('build_arm', 'Building binaries for the arm architecture')
 
+DeclareBit('bootstrap', 'Use nacl_helper_bootstrap on Linux')
 
 def MakeArchSpecificEnv(platform=None):
   env = pre_base_env.Clone()
@@ -1006,6 +1007,8 @@ def MakeArchSpecificEnv(platform=None):
     subarch = '64'
   else:
     subarch = '32'
+
+  env.SetBitFromOption('bootstrap', not pynacl.platform.IsArch64Bit(platform))
 
   env.Replace(BUILD_FULLARCH=platform)
   env.Replace(BUILD_ARCHITECTURE=arch)
@@ -1250,9 +1253,7 @@ pre_base_env.AddMethod(SupportsSeccompBpfSandbox)
 
 
 def GetBootstrap(env):
-  if env.Bit('msan'):
-    # Bootstrap doens't currently work with MSan. However, MSan is only
-    # available on x86_64 where we don't need bootstrap anyway.
+  if not env.Bit('bootstrap'):
     return None, None
   bootstrap = ARGUMENTS.get('force_bootstrap')
   if bootstrap:
