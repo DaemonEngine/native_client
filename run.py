@@ -274,16 +274,16 @@ def RunSelLdr(args, quiet_args=[], collate=False, stdin_string=None):
       prefix += ['-d', 'in_asm,op,exec,cpu']
     args = ['-Q'] + args
 
-  # Use the bootstrap loader on linux.
+  loader = [env.sel_ldr]
+  # Use the bootstrap loader on linux, if it exists.
   if pynacl.platform.IsLinux():
     bootstrap = os.path.join(os.path.dirname(env.sel_ldr),
                              'nacl_helper_bootstrap')
-    loader = [bootstrap, env.sel_ldr]
-    template_digits = 'X' * 16
-    bootstrap_loader_args = ['--r_debug=0x' + template_digits,
-                             '--reserved_at_zero=0x' + template_digits]
-  else:
-    loader = [env.sel_ldr]
+    if os.path.isfile(bootstrap):
+      loader = [bootstrap, env.sel_ldr]
+      template_digits = 'X' * 16
+      bootstrap_loader_args = ['--r_debug=0x' + template_digits,
+                               '--reserved_at_zero=0x' + template_digits]
   return Run(prefix + loader + bootstrap_loader_args + quiet_args + args,
              exit_on_failure=(not collate),
              capture_stdout=collate, capture_stderr=collate,
