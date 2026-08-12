@@ -2213,7 +2213,6 @@ Automagically generated help:
 
 
 def SetUpClang(env):
-  env['CLANG_DIR'] = '/usr/bin'
   env['CLANG_OPTS'] = []
   if env.Bit('asan'):
     if not (env.Bit('host_linux') or env.Bit('host_mac')):
@@ -2238,13 +2237,8 @@ def SetUpClang(env):
     env['CC'] = 'clang-cl ${CLANG_OPTS}'
     env['CXX'] = 'clang-cl ${CLANG_OPTS}'
   else:
-    env['CC'] = '${CLANG_DIR}/clang ${CLANG_OPTS}'
-    env['CXX'] = '${CLANG_DIR}/clang++ ${CLANG_OPTS}'
-    # Make sure we find Clang-supplied libraries like -lprofile_rt
-    # in the Clang build we use, rather than from the system.
-    # The system-installed versions go with the system-installed Clang
-    # and might not be compatible with the Clang we're running.
-    env.Append(LIBPATH=['${CLANG_DIR}/../lib'])
+    env['CC'] = 'clang ${CLANG_OPTS}'
+    env['CXX'] = 'clang++ ${CLANG_OPTS}'
 
 def GenerateOptimizationLevels(env):
   if env.Bit('clang') and not env.Bit('built_elsewhere'):
