@@ -569,7 +569,6 @@ if env.Bit('linux'):
       ['linux/nacl_bootstrap_prereservation_test.c'],
       EXTRA_LIBS=['sel'])
 
-  bootstrap, bootstrap_arg = env.GetBootstrap()
   node = env.CommandTest(
       'nacl_bootstrap_prereservation_test.out',
       command=env.AddBootstrap(nacl_bootstrap_prereservation_test_exe, []))
