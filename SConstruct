@@ -2543,6 +2543,16 @@ def SetUpLinuxEnvX86(env):
                   CXX='i686-linux-gnu-g++',
                   LD='i686-linux-gnu-ld')
 
+def SetUpLinuxEnvX8664(env):
+  if env.Bit('built_elsewhere'):
+    SetUpNoBuildEnv(env)
+  else:
+    # Assumes x86-64 is the native platform for now
+    env.Prepend(
+        CCFLAGS = ['-m64'] + sysroot_flags,
+        LINKFLAGS = ['-m64'] + sysroot_flags,
+    )
+
 def SetUpLinuxEnvArm(env):
   if not platform.machine().startswith('a'):
     # Allow emulation on non-ARM hosts.
@@ -2747,10 +2757,7 @@ def MakeGenericLinuxEnv(platform=None):
   if linux_env.Bit('build_x86_32'):
     SetUpLinuxEnvX86(linux_env)
   elif linux_env.Bit('build_x86_64'):
-    linux_env.Prepend(
-        CCFLAGS = ['-m64'] + sysroot_flags,
-        LINKFLAGS = ['-m64'] + sysroot_flags,
-        )
+    SetUpLinuxEnvX8664(linux_env)
   elif linux_env.Bit('build_arm'):
     SetUpLinuxEnvArm(linux_env)
   elif linux_env.Bit('build_mips32'):
