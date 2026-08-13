@@ -65,7 +65,8 @@ def _StubOutEnvToolsForBuiltElsewhere(env):
   env.Replace(CC='true', CXX='true', LINK='true', AR='true',
               RANLIB='true', AS='true', ASPP='true', LD='true',
               STRIP='true', OBJDUMP='true', OBJCOPY='true',
-              PNACLOPT='true', PNACLFINALIZE='true')
+              PNACLOPT='true', PNACLFINALIZE='true',
+              GDB='false')
 
 
 def _SetEnvForNativeSdk(env, sdk_path):
