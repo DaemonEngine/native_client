@@ -43,6 +43,5 @@ node = env.CommandTest(
     'sigpipe_test.out',
     command=[sigpipe_test_exe])
 env.AddNodeToTestSuite(
-    node, ['small_tests'], 'run_sigpipe_test',
-    is_broken=env.UsingEmulator())
+    node, ['small_tests'], 'run_sigpipe_test')
 

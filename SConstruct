@@ -802,10 +802,8 @@ tests_to_disable_qemu = set([
     # Note, for now these tests disable both the irt and non-irt variants
     'run_egyptian_cotton_test',
     'run_many_threads_sequential_test',
-    'run_thread_suspension_test',
     'run_dynamic_modify_test',
     'run_irt_ext_libc_test', # Flaky for saigo
-    'run_nacl_desc_io_alloc_ctor_test',
 ])
 
 tests_to_disable = set()
