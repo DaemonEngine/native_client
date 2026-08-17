@@ -529,7 +529,7 @@ for bits in ['32', '64']:
 
     env.AddNodeToTestSuite(
         rdfa_targeted_test,
-        ['small_tests', 'validator_tests'],
+        ['large_tests', 'validator_tests'],
         node_name='run_rdfa_targeted_tests_%s' % bits)
 
     if env.Bit('regenerate_golden'):
