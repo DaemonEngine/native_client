@@ -548,6 +548,7 @@ for bits in ['32', '64']:
     env.AddNodeToTestSuite(
         dis_section_test,
         ['small_tests', 'validator_tests'],
+        is_broken=env.Bit('built_elsewhere'),  # OBJDUMP is stubbed out
         node_name='run_dis_section_test_%s' % bits)
 
     if env.Bit('regenerate_golden'):
