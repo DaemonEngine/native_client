@@ -139,15 +139,6 @@ def ComponentPlatformSetup(env, builder_name):
     else:
       env.Append(CPPDEFINES=['_USRDLL', '_WINDLL'])
 
-  if (not env.get('COMPONENT_TEST_SUBSYSTEM_WINDOWS') and
-      builder_name == 'ComponentTestProgram'):
-    env.FilterOut(
-        LINKFLAGS=['/SUBSYSTEM:WINDOWS'],
-    )
-    env.Append(
-        LINKFLAGS=['/SUBSYSTEM:CONSOLE'],
-    )
-
   # Make sure link methods are lists, so we can append to them below
   def MakeList(env, name):
     if name in env:
