@@ -115,13 +115,15 @@ static thread_return_t OS_API_TYPE ThreadEntryPoint(thread_param_t p) {
   ++g_running_thread_count;
 
   /* Wait for all threads to be running. */
-  WaitForThreads(param->total_num_threads);
-
-  /*
-   * All of the threads have started and have written to their own TLS.
-   * Read our TLS and give it back to the main thread.
-   */
-  param->p_tls_data_return[my_thread_num] = tls_data;
+  if (WaitForThreads(param->total_num_threads)) {
+    /*
+     * All of the threads have started and have written to their own TLS.
+     * Read our TLS and give it back to the main thread.
+     */
+    param->p_tls_data_return[my_thread_num] = tls_data;
+  } else {
+    NaClLog(LOG_ERROR, "WaitForThreads timed out\n");
+  }
 
   return 0;
 }
