@@ -41,12 +41,6 @@ if env.Bit('build_arm'):
 partly_invalid_nexe = env.ComponentProgram('partly_invalid', 'partly_invalid.c',
                                            EXTRA_LIBS=['${NONIRT_LIBS}'])
 
-# This alias is to ensure this test works with built_elsewhere=1,
-# because with that option CommandSelLdrTestNacl() assumes all its
-# inputs have already been built (which is not necessarily a good
-# idea, but apparently true for all other cases so far).
-env.Alias('all_test_programs', node)
-
 # For speed, SConstruct disables the validator (using '-cc') for
 # Valgrind+nacl-glibc tests, which breaks one test below.
 is_validation_disabled = env.IsRunningUnderValgrind() and env.Bit('nacl_glibc')

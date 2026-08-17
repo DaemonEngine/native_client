@@ -308,120 +308,6 @@ def ComponentLibrary(self, lib_name, *args, **kwargs):
 
 #------------------------------------------------------------------------------
 
-
-def ComponentTestProgramDeferred(env):
-  """Deferred build steps for test program.
-
-  Args:
-    env: Environment from ComponentTestProgram().
-
-  Sets up the aliases to compile and run the test program.
-  """
-  prog_name = env['PROGRAM_BASENAME']
-
-  # Install program and resources
-  all_outputs = []
-  components = _RetrieveComponents(prog_name)
-  for resource, dest_dir in env.get('COMPONENT_TEST_RESOURCES').items():
-    all_outputs += env.ReplicatePublished(dest_dir, components, resource)
-
-  # Add installed program and resources to the alias
-  env.Alias(prog_name, all_outputs)
-
-  # Add target properties
-  env.SetTargetProperty(
-      prog_name,
-      # The copy of the program we care about is the one in the tests dir
-      EXE='$TESTS_DIR/$PROGRAM_NAME',
-      RUN_CMDLINE='$COMPONENT_TEST_CMDLINE',
-      RUN_DIR='$TESTS_DIR',
-      TARGET_PATH='$TESTS_DIR/$PROGRAM_NAME',
-  )
-
-  # Add an alias for running the test in the test directory, if the test is
-  # runnable and has a test command line.
-  if env.get('COMPONENT_TEST_RUNNABLE') and env.get('COMPONENT_TEST_CMDLINE'):
-    env.Replace(
-        COMMAND_OUTPUT_CMDLINE=env['COMPONENT_TEST_CMDLINE'],
-        COMMAND_OUTPUT_RUN_DIR='$TESTS_DIR',
-    )
-    test_out_name = '$TEST_OUTPUT_DIR/${PROGRAM_BASENAME}.out.txt'
-    if (env.GetOption('component_test_retest')
-        and env.File(test_out_name).exists()):
-      # Delete old test results, so test will rerun.
-      env.Execute(SCons.Script.Delete(test_out_name))
-
-    # Set timeout based on test size
-    timeout = env.get('COMPONENT_TEST_TIMEOUT')
-    if type(timeout) is dict:
-      timeout = timeout.get(env.get('COMPONENT_TEST_SIZE'))
-    if timeout:
-      env['COMMAND_OUTPUT_TIMEOUT'] = timeout
-
-    # Test program is the first run resource we replicated.  (Duplicate
-    # replicate is not harmful, and is a handy way to pick out the correct
-    # file from all those we replicated above.)
-    test_program = env.ReplicatePublished('$TESTS_DIR', prog_name, 'run')
-
-    # Run the test.  Note that we need to refer to the file by name, so that
-    # SCons will recreate the file node after we've deleted it; if we used the
-    # env.File() we created in the if statement above, SCons would still think
-    # it exists and not rerun the test.
-    test_out = env.CommandOutput(test_out_name, test_program)
-
-    # Running the test requires the test and its libs copied to the tests dir
-    env.Depends(test_out, all_outputs)
-    env.ComponentTestOutput('run_' + prog_name, test_out)
-
-    # Add target properties
-    env.SetTargetProperty(prog_name, RUN_TARGET='run_' + prog_name)
-
-
-def ComponentTestProgram(self, prog_name, *args, **kwargs):
-  """Pseudo-builder for test program to handle platform-dependent type.
-
-  Args:
-    self: Environment in which we were called.
-    prog_name: Test program name.
-    args: Positional arguments.
-    kwargs: Keyword arguments.
-
-  Returns:
-    Output node list from env.Program().
-  """
-  # Clone and modify environment
-  env = _ComponentPlatformSetup(self, 'ComponentTestProgram', **kwargs)
-
-  env['PROGRAM_BASENAME'] = prog_name
-  env['PROGRAM_NAME'] = '$PROGPREFIX$PROGRAM_BASENAME$PROGSUFFIX'
-
-  # Call env.Program()
-  out_nodes = env.Program(prog_name, *args, **kwargs)
-
-  # Publish output
-  env.Publish(prog_name, 'run', out_nodes[0])
-  env.Publish(prog_name, 'debug', out_nodes[1:])
-
-  # Add an alias to build the program to the right groups
-  a = env.Alias(prog_name, out_nodes)
-  for group in env['COMPONENT_TEST_PROGRAM_GROUPS']:
-    SCons.Script.Alias(group, a)
-
-  # Store list of components for this program
-  env._StoreComponents(prog_name)
-
-  # Let component_targets know this target is available in the current mode
-  env.SetTargetProperty(prog_name, TARGET_PATH=out_nodes[0])
-
-  # Set up deferred call to replicate resources and run test
-  env.Defer(ComponentTestProgramDeferred)
-
-  # Return the output node
-  return out_nodes
-
-#------------------------------------------------------------------------------
-
-
 def ComponentProgramDeferred(env):
   """Deferred build steps for program.
 
@@ -580,7 +466,6 @@ def generate(env):
       COMPONENT_PACKAGE_GROUPS=['all_packages'],
       COMPONENT_LIBRARY_GROUPS=['all_libraries'],
       COMPONENT_PROGRAM_GROUPS=['all_programs'],
-      COMPONENT_TEST_PROGRAM_GROUPS=['all_test_programs'],
       COMPONENT_TEST_OUTPUT_GROUPS=['run_all_tests'],
 
       # Additional components whose resources should be copied into program
@@ -598,21 +483,7 @@ def generate(env):
           'run': '$STAGING_DIR',
           'debug': '$STAGING_DIR',
       },
-      COMPONENT_TEST_RESOURCES={
-          'run': '$TESTS_DIR',
-          'debug': '$TESTS_DIR',
-          'test_input': '$TESTS_DIR',
-      },
   )
-
-  # Add command line option for retest
-  SCons.Script.AddOption(
-      '--retest',
-      dest='component_test_retest',
-      action='store_true',
-      help='force all tests to rerun')
-  SCons.Script.Help('  --retest                    '
-                    'Rerun specified tests, ignoring cached results.\n')
 
   # Defer per-environment initialization, but do before building SConscripts
   env.Defer(_InitializeComponentBuilders)
@@ -625,13 +496,11 @@ def generate(env):
   env.AddMethod(ComponentLibrary)
   env.AddMethod(ComponentProgram)
   env.AddMethod(ComponentProgramAlias)
-  env.AddMethod(ComponentTestProgram)
   env.AddMethod(ComponentTestOutput)
 
   # Add our target groups
   AddTargetGroup('all_libraries', 'libraries can be built')
   AddTargetGroup('all_programs', 'programs can be built')
-  AddTargetGroup('all_test_programs', 'tests can be built')
   AddTargetGroup('all_packages', 'packages can be built')
   AddTargetGroup('run_all_tests', 'tests can be run')
   AddTargetGroup('run_disabled_tests', 'tests are disabled')
