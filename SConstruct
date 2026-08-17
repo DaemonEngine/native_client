@@ -3863,7 +3863,7 @@ PnaclSetEmulatorForSandboxedTranslator(selected_envs)
 BuildEnvironments(selected_envs)
 
 # Change default to build everything, but not run tests.
-Default(['all_programs', 'all_bundles', 'all_libraries'])
+Default(['all_programs', 'all_libraries'])
 
 
 # Sanity check whether we are ready to build nacl modules
