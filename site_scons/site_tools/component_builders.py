@@ -146,70 +146,6 @@ def _ComponentPlatformSetup(env, builder_name, **kwargs):
 
 #------------------------------------------------------------------------------
 
-# TODO: Should be possible to refactor programs, test programs, libs to all
-# publish as packages, for simplicity and code reuse.
-
-
-def ComponentPackageDeferred(env):
-  """Deferred build steps for component package.
-
-  Args:
-    env: Environment from ComponentPackage().
-
-  Sets up the aliases to build the package.
-  """
-  package_name = env['PACKAGE_NAME']
-
-  # Install program and resources
-  all_outputs = []
-  package_filter = env.Flatten(env.subst_list('$COMPONENT_PACKAGE_FILTER'))
-  components = _RetrieveComponents(package_name, package_filter)
-  for resource, dest_dir in env.get('COMPONENT_PACKAGE_RESOURCES').items():
-    all_outputs += env.ReplicatePublished(dest_dir, components, resource)
-
-  # Add installed program and resources to the alias
-  env.Alias(package_name, all_outputs)
-
-
-def ComponentPackage(self, package_name, dest_dir, **kwargs):
-  """Pseudo-builder for package containing other components.
-
-  Args:
-    self: Environment in which we were called.
-    package_name: Name of package.
-    dest_dir: Destination directory for package.
-    kwargs: Keyword arguments.
-
-  Returns:
-    The alias node for the package.
-  """
-  # Clone and modify environment
-  env = _ComponentPlatformSetup(self, 'ComponentPackage', **kwargs)
-
-  env.Replace(
-      PACKAGE_NAME=package_name,
-      PACKAGE_DIR=dest_dir,
-  )
-
-  # Add an empty alias for the package and add it to the right groups
-  a = env.Alias(package_name, [])
-  for group in env['COMPONENT_PACKAGE_GROUPS']:
-    SCons.Script.Alias(group, a)
-
-  # Store list of components for this program
-  env._StoreComponents(package_name)
-
-  # Let component_targets know this target is available in the current mode
-  env.SetTargetProperty(package_name, TARGET_PATH=dest_dir)
-
-  # Set up deferred call to replicate resources
-  env.Defer(ComponentPackageDeferred)
-
-  # Return the alias, since it's the only node we have
-  return a
-
-#------------------------------------------------------------------------------
-
 
 def ComponentObject(self, *args, **kwargs):
   """Pseudo-builder for object to handle platform-dependent type.
@@ -463,7 +399,6 @@ def generate(env):
       LIBPATH=['$LIB_DIR'],
 
       # Default alias groups for component builders
-      COMPONENT_PACKAGE_GROUPS=['all_packages'],
       COMPONENT_LIBRARY_GROUPS=['all_libraries'],
       COMPONENT_PROGRAM_GROUPS=['all_programs'],
       COMPONENT_TEST_OUTPUT_GROUPS=['run_all_tests'],
@@ -491,7 +426,6 @@ def generate(env):
 
   # Add our pseudo-builder methods
   env.AddMethod(_StoreComponents)
-  env.AddMethod(ComponentPackage)
   env.AddMethod(ComponentObject)
   env.AddMethod(ComponentLibrary)
   env.AddMethod(ComponentProgram)
@@ -501,9 +435,4 @@ def generate(env):
   # Add our target groups
   AddTargetGroup('all_libraries', 'libraries can be built')
   AddTargetGroup('all_programs', 'programs can be built')
-  AddTargetGroup('all_packages', 'packages can be built')
   AddTargetGroup('run_all_tests', 'tests can be run')
-  AddTargetGroup('run_disabled_tests', 'tests are disabled')
-  AddTargetGroup('run_small_tests', 'small tests can be run')
-  AddTargetGroup('run_medium_tests', 'medium tests can be run')
-  AddTargetGroup('run_large_tests', 'large tests can be run')
