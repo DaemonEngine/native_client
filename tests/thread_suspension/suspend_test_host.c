@@ -439,6 +439,8 @@ static void TestGettingRegisterSnapshotInSyscallContextSwitch(
   struct NaClAppThread *natp;
   struct NaClSignalContext regs;
   int iteration;
+  int inside = 0;
+  int outside = 0;
 
   g_simple_syscall_should_exit = 0;
   g_simple_syscall_called = 0;
@@ -460,14 +462,27 @@ static void TestGettingRegisterSnapshotInSyscallContextSwitch(
      * otherwise there is a small set of instructions that untrusted
      * code executes.
      */
-    if (!NaClAppThreadIsSuspendedInSyscall(natp)) {
+    if (NaClAppThreadIsSuspendedInSyscall(natp)) {
+      ++inside;
+    } else {
       regs.prog_ctr = test_shm->expected_regs.prog_ctr;
+#if NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86 && NACL_BUILD_SUBARCH == 64
+      /*
+       * The compiler turns the call to the trampoline into push rip
+       * followed by jump, so there are two possible values for the stack
+       * pointer in untrusted code.
+       */
+      regs.stack_ptr = test_shm->expected_regs.stack_ptr;
+#endif
       RegsUnsetNonCalleeSavedRegisters(&regs);
+      ++outside;
     }
     RegsAssertEqual(&regs, &test_shm->expected_regs);
 
     NaClUntrustedThreadsResumeAll(nap);
   }
+
+  printf("Suspended outside syscall %dx, inside syscall %dx\n", outside, inside);
 
   g_simple_syscall_should_exit = 1;
   WaitForThreadToExitFully(nap);
