@@ -19,9 +19,11 @@ strategy:
       VPYTHON: pyenv/bin/python
     Linux i686 GCC:
       VM_IMAGE: 'ubuntu-22.04'
+      APT_ARCHITECTURE: i386
       SDK_PLATFORM: linux-amd64
-      APT_PACKAGES: g++-i686-linux-gnu
+      APT_PACKAGES: g++-i686-linux-gnu libc6:i386
       SCONS_BUILD_ARGS: platform=x86-32 --mode=opt-host,nacl --no-clang werror=0
+      SCONS_TESTS: small_tests medium_tests large_tests
       VPYTHON: pyenv/bin/python
     Linux armhf GCC:
       # There is an IO bug in qemu-arm from ubuntu-22.04.
