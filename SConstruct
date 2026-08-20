@@ -642,17 +642,6 @@ nacl_glibc_skiplist = set([
     'run_timefuncs_test',
     # Needs further investigation.
     'sdk_minimal_test',
-    # This test fails with nacl-glibc: glibc reports an internal
-    # sanity check failure in free().
-    # TODO(robertm): This needs further investigation.
-    'run_ppapi_event_test',
-    'run_ppapi_geturl_valid_test',
-    'run_ppapi_geturl_invalid_test',
-    # http://code.google.com/p/chromium/issues/detail?id=108131
-    # we would need to list all of the glibc components as
-    # web accessible resources in the extensions's manifest.json,
-    # not just the nexe and nmf file.
-    'run_ppapi_extension_mime_handler_browser_test',
     ])
 nacl_glibc_skiplist.update(['%s_irt' % test for test in nacl_glibc_skiplist])
 
@@ -814,8 +803,6 @@ tests_to_disable_qemu = set([
     # Note, for now these tests disable both the irt and non-irt variants
     'run_egyptian_cotton_test',
     'run_many_threads_sequential_test',
-    # subprocess needs to also have qemu prefix, which isn't supported
-    'run_subprocess_test',
     'run_thread_suspension_test',
     'run_dynamic_modify_test',
     'run_irt_ext_libc_test', # Flaky for saigo
@@ -1370,21 +1357,10 @@ def ExtractPublishedFiles(env, target_name):
 
 pre_base_env.AddMethod(ExtractPublishedFiles)
 
-
-# Only include the chrome side of the build if present.
-if os.path.exists(pre_base_env.File(
-    '#/../ppapi/native_client/chrome_main.scons').abspath):
-  SConscript('#/../ppapi/native_client/chrome_main.scons',
-      exports=['pre_base_env'])
-  enable_chrome = True
-else:
-  def AddChromeFilesFromGroup(env, file_group):
-    pass
-  pre_base_env.AddMethod(AddChromeFilesFromGroup)
-  enable_chrome = False
-DeclareBit('enable_chrome_side',
-           'Is the chrome side present.')
-pre_base_env.SetBitFromOption('enable_chrome_side', enable_chrome)
+# TODO: remove
+def AddChromeFilesFromGroup(env, file_group):
+  pass
+pre_base_env.AddMethod(AddChromeFilesFromGroup)
 
 def ProgramNameForNmf(env, basename):
   """ Create an architecture-specific filename that can be used in an NMF URL.
@@ -2238,7 +2214,6 @@ Automagically generated help:
 
 
 def SetUpClang(env):
-  env['CLANG_DIR'] = '/usr/bin'
   env['CLANG_OPTS'] = []
   if env.Bit('asan'):
     if not (env.Bit('host_linux') or env.Bit('host_mac')):
@@ -2247,24 +2222,6 @@ def SetUpClang(env):
                            '-gline-tables-only',
                            '-fno-omit-frame-pointer',
                            '-DADDRESS_SANITIZER'])
-    if env.Bit('host_mac'):
-      # The built executables will try to find this library at runtime
-      # in the directory containing the executable itself.  In the
-      # Chromium build, the library just gets copied into that
-      # directory.  Here, there isn't a single directory from which
-      # all the test binaries are run (sel_ldr is run from staging/
-      # but other trusted test binaries are run from their respective
-      # obj/.../ directories).  So instead just point the dynamic linker
-      # at the right directory using an environment variable.
-      # Be sure to check and update clang_lib_version whenever updating
-      # tools/clang revs in DEPS.
-      clang_lib_version = '4.0.0'
-      clang_lib_dir = str(env.Dir('${CLANG_DIR}/../lib/clang/%s/lib/darwin' %
-                                  clang_lib_version).abspath)
-      env['ENV']['DYLD_LIBRARY_PATH'] = clang_lib_dir
-      if 'PROPAGATE_ENV' not in env:
-        env['PROPAGATE_ENV'] = []
-      env['PROPAGATE_ENV'].append('DYLD_LIBRARY_PATH')
 
   if env.Bit('msan'):
     if not env.Bit('host_linux') or not env.Bit('build_x86_64'):
@@ -2281,13 +2238,8 @@ def SetUpClang(env):
     env['CC'] = 'clang-cl ${CLANG_OPTS}'
     env['CXX'] = 'clang-cl ${CLANG_OPTS}'
   else:
-    env['CC'] = '${CLANG_DIR}/clang ${CLANG_OPTS}'
-    env['CXX'] = '${CLANG_DIR}/clang++ ${CLANG_OPTS}'
-    # Make sure we find Clang-supplied libraries like -lprofile_rt
-    # in the Clang build we use, rather than from the system.
-    # The system-installed versions go with the system-installed Clang
-    # and might not be compatible with the Clang we're running.
-    env.Append(LIBPATH=['${CLANG_DIR}/../lib'])
+    env['CC'] = 'clang ${CLANG_OPTS}'
+    env['CXX'] = 'clang++ ${CLANG_OPTS}'
 
 def GenerateOptimizationLevels(env):
   if env.Bit('clang') and not env.Bit('built_elsewhere'):
@@ -2988,11 +2940,7 @@ def AllowInlineAssembly(env):
 
 nacl_env.AddMethod(AllowInlineAssembly)
 
-
-# TODO(mseaborn): Enable this unconditionally once the C code on the
-# Chromium side compiles successfully with this warning.
-if not enable_chrome:
-  nacl_env.Append(CFLAGS=['-Wstrict-prototypes'])
+nacl_env.Append(CFLAGS=['-Wstrict-prototypes'])
 
 # This is the address at which a user executable is expected to place its
 # data segment in order to be compatible with the integrated runtime (IRT)
@@ -3534,20 +3482,6 @@ nacl_env.AddMethod(NaClAddObject, 'AddObjectToSdk')
 def AddImplicitLibs(env):
   implicit_libs = []
 
-  # Require the pnacl_irt_shim for pnacl x86-64 and arm.
-  # Use -B to have the compiler look for the fresh libpnacl_irt_shim.a.
-  if ( env.Bit('bitcode') and
-       (env.Bit('build_x86_64') or env.Bit('build_arm'))
-       and env['NACL_BUILD_FAMILY'] != 'UNTRUSTED_IRT'):
-    # Note: without this hack ibpnacl_irt_shim.a will be deleted
-    #       when "built_elsewhere=1"
-    #       Since we force the build in a previous step the dependency
-    #       is not really needed.
-    #       Note: the "precious" mechanism did not work in this case
-    if not env.Bit('built_elsewhere'):
-      if env.Bit('enable_chrome_side'):
-        implicit_libs += ['libpnacl_irt_shim.a']
-
   if not env.Bit('nacl_glibc'):
     # These are automatically linked in by the compiler, either directly
     # or via the linker script that is -lc.  In the non-glibc build, we
@@ -3608,8 +3542,6 @@ nacl_irt_test_env = nacl_env.Clone(
     BUILD_SCONSCRIPTS = [],
     )
 nacl_irt_test_env.SetBits('tests_use_irt')
-if nacl_irt_test_env.Bit('enable_chrome_side'):
-  nacl_irt_test_env.Replace(TESTRUNNER_LIBS=['testrunner_browser'])
 
 nacl_irt_test_env.Append(BUILD_SCONSCRIPTS=irt_variant_tests)
 nacl_irt_test_env.AddChromeFilesFromGroup('irt_variant_test_scons_files')
@@ -3778,11 +3710,6 @@ def LinkTrustedEnv(selected_envs):
   if 'TRUSTED' in family_map:
     for env in selected_envs:
       env['TRUSTED_ENV'] = family_map['TRUSTED']
-      # Propagate some environment variables from the trusted environment,
-      # in case some (e.g. Mac's DYLD_LIBRARY_PATH) are necessary for
-      # running sel_ldr et al in untrusted environments' tests.
-      for var in env['TRUSTED_ENV'].get('PROPAGATE_ENV', []):
-        env['ENV'][var] = env['TRUSTED_ENV']['ENV'][var]
   if 'TRUSTED' not in family_map or 'UNTRUSTED' not in family_map:
     Banner('Warning: "--mode" did not specify both trusted and untrusted '
            'build environments.  As a result, many tests will not be run.')
