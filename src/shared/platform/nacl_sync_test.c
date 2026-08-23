@@ -80,6 +80,8 @@
  */
 uint32_t g_timeout_milliseconds = 500;
 
+volatile int g_done = 0;
+
 /*
  * TimeOutThread is responsible for doing deadlock detection.  If the
  * main thread hits a deadlock, then this thread will time out and
@@ -114,7 +116,9 @@ void WINAPI TimeOutThread(void *thread_state) {
    * If we reach here, we assume that the main thread has deadlocked
    * and so we optimistically report that via the exit status.
    */
-  exit(time_out_exit_status);
+  if (!g_done) {
+    exit(time_out_exit_status);
+  }
 }
 
 /*
@@ -178,7 +182,7 @@ int TestLockTrylock(void) {
 int TestTrylockLock(void) {
   struct NaClMutex mu;
   struct NaClThread nt;
-  printf("TestLockTrylock\n");
+  printf("TestTrylockLock\n");
   printf("Constructing mutex\n");
   if (!NaClMutexCtor(&mu)) return 1;
   printf("Trylocking mutex\n");
@@ -200,7 +204,7 @@ int TestTrylockLock(void) {
 int TestTrylockTrylock(void) {
   struct NaClMutex mu;
   struct NaClThread nt;
-  printf("TestLockTrylock\n");
+  printf("TestTrylockTrylock\n");
   printf("Constructing mutex\n");
   if (!NaClMutexCtor(&mu)) return 1;
   printf("Trylocking mutex\n");
@@ -276,6 +280,7 @@ int main(int ac, char **av) {
   }
   NaClPlatformInit();
   retcode = (*test_fn)();
+  g_done = 1;
   NaClPlatformFini();
   return retcode;
 }

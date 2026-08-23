@@ -2520,42 +2520,47 @@ def which(cmd, paths=os.environ.get('PATH', '').split(os.pathsep)):
        return True
   return False
 
+def SetUpNoBuildEnv(env):
+  def FakeInstall(dest, source, env):
+    print('Not installing', dest)
+  # Replace build commands with no-ops
+  env.Replace(CC='true', CXX='true', LD='true',
+              AR='true', RANLIB='true', INSTALL=FakeInstall)
+
 def SetUpLinuxEnvX86(env):
   if env.Bit('built_elsewhere'):
-    def FakeInstall(dest, source, env):
-      print('Not installing', dest)
-      # Replace build commands with no-ops
-    env.Replace(CC='true', CXX='true', LD='true',
-                AR='true', RANLIB='true', INSTALL=FakeInstall)
+    SetUpNoBuildEnv(env)
   else:
-    env.Prepend(CCFLAGS=sysroot_flags,
-                ASFLAGS=[],
-                )
+    env.Prepend(CCFLAGS=sysroot_flags)
     if env.Bit('clang'):
       # TODO use --target=i386-linux-gnu or whetever?
       env.Prepend(
-          CCFLAGS = ['-m32'] + sysroot_flags,
-          LINKFLAGS = ['-m32'] + sysroot_flags,
+          CCFLAGS = ['-m32'],
+          LINKFLAGS = ['-m32'],
       )
     else:
       env.Replace(CC='i686-linux-gnu-gcc',
                   CXX='i686-linux-gnu-g++',
                   LD='i686-linux-gnu-ld')
 
+def SetUpLinuxEnvX8664(env):
+  if env.Bit('built_elsewhere'):
+    SetUpNoBuildEnv(env)
+  else:
+    # Assumes x86-64 is the native platform for now
+    env.Prepend(
+        CCFLAGS = ['-m64'] + sysroot_flags,
+        LINKFLAGS = ['-m64'] + sysroot_flags,
+    )
+
 def SetUpLinuxEnvArm(env):
   if not platform.machine().startswith('a'):
     # Allow emulation on non-ARM hosts.
     env.Replace(EMULATOR='qemu-armhf -L /usr/arm-linux-gnueabihf/ -cpu cortex-a9')
   if env.Bit('built_elsewhere'):
-    def FakeInstall(dest, source, env):
-      print('Not installing', dest)
-      # Replace build commands with no-ops
-    env.Replace(CC='true', CXX='true', LD='true',
-                AR='true', RANLIB='true', INSTALL=FakeInstall)
+    SetUpNoBuildEnv(env)
   else:
-    env.Prepend(CCFLAGS=sysroot_flags,
-                ASFLAGS=[],
-                )
+    env.Prepend(CCFLAGS=sysroot_flags)
     if env.Bit('clang'):
       env.Prepend(CCFLAGS=['--target=arm-linux-gnueabihf'])
       env.Prepend(LINKFLAGS=['--target=arm-linux-gnueabihf'])
@@ -2752,10 +2757,7 @@ def MakeGenericLinuxEnv(platform=None):
   if linux_env.Bit('build_x86_32'):
     SetUpLinuxEnvX86(linux_env)
   elif linux_env.Bit('build_x86_64'):
-    linux_env.Prepend(
-        CCFLAGS = ['-m64'] + sysroot_flags,
-        LINKFLAGS = ['-m64'] + sysroot_flags,
-        )
+    SetUpLinuxEnvX8664(linux_env)
   elif linux_env.Bit('build_arm'):
     SetUpLinuxEnvArm(linux_env)
   elif linux_env.Bit('build_mips32'):
