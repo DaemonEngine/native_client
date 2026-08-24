@@ -77,7 +77,7 @@
  * The first 64KB (16 pages) are inaccessible.  On x86, this is to prevent
  * addr16/data16 attacks.
  */
-#define NACL_SYSCALL_START_ADDR       (16 << NACL_PAGESHIFT)
+#define NACL_SYSCALL_START_ADDR       (1 << NACL_MAP_PAGESHIFT)
 /* Macro for the start address of a specific trampoline.  */
 #define NACL_SYSCALL_ADDR(syscall_number) \
     (NACL_SYSCALL_START_ADDR + (syscall_number << NACL_SYSCALL_BLOCK_SHIFT))
