@@ -15,8 +15,8 @@
 #define BAREBONES_H_
 
 #define NACL_INSTR_BLOCK_SHIFT         5
-#define NACL_PAGESHIFT                12
-#define NACL_SYSCALL_START_ADDR       (16 << NACL_PAGESHIFT)
+#define NACL_MAP_PAGESHIFT            16
+#define NACL_SYSCALL_START_ADDR       (1 << NACL_MAP_PAGESHIFT)
 #define NACL_SYSCALL_ADDR(syscall_number)                               \
      (NACL_SYSCALL_START_ADDR + (syscall_number << NACL_INSTR_BLOCK_SHIFT))
 
