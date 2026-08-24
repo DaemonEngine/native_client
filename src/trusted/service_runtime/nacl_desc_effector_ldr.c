@@ -47,8 +47,7 @@ static void NaClDescEffLdrUnmapMemory(struct NaClDescEffector  *vself,
        addr += NACL_MAP_PAGESIZE) {
     usraddr = NaClSysToUser(self->nap, addr);
 
-    map_region = NaClVmmapFindPage(&self->nap->mem_map,
-                                   usraddr >> NACL_PAGESHIFT);
+    map_region = NaClVmmapFindPage(&self->nap->mem_map, usraddr);
     /*
      * When mapping beyond the end of file, the mapping will be rounded to
      * the 64k page boundary and the remaining space will be marked as

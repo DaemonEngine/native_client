@@ -126,7 +126,7 @@ NaClErrorCode NaClMemoryProtection(struct NaClApp *nap) {
   /* Add the zero page to the mmap */
   NaClVmmapAdd(&nap->mem_map,
                0,
-               NACL_SYSCALL_START_ADDR >> NACL_PAGESHIFT,
+               NACL_SYSCALL_START_ADDR,
                PROT_NONE,
                NACL_ABI_MAP_PRIVATE,
                NULL,
@@ -158,8 +158,8 @@ NaClErrorCode NaClMemoryProtection(struct NaClApp *nap) {
     return LOAD_MPROTECT_FAIL;
   }
   NaClVmmapAdd(&nap->mem_map,
-               NaClSysToUser(nap, start_addr) >> NACL_PAGESHIFT,
-               region_size >> NACL_PAGESHIFT,
+               NaClSysToUser(nap, start_addr),
+               region_size,
                NACL_ABI_PROT_READ | NACL_ABI_PROT_EXEC,
                NACL_ABI_MAP_PRIVATE,
                NULL,
@@ -184,8 +184,8 @@ NaClErrorCode NaClMemoryProtection(struct NaClApp *nap) {
      * NaClSysCommonAddrRangeContainsExecutablePages_mu().
      */
     NaClVmmapAdd(&nap->mem_map,
-                 NaClSysToUser(nap, start_addr) >> NACL_PAGESHIFT,
-                 region_size >> NACL_PAGESHIFT,
+                 NaClSysToUser(nap, start_addr),
+                 region_size,
                  NACL_ABI_PROT_READ | NACL_ABI_PROT_EXEC,
                  NACL_ABI_MAP_PRIVATE,
                  nap->text_shm,
@@ -228,8 +228,8 @@ NaClErrorCode NaClMemoryProtection(struct NaClApp *nap) {
       return LOAD_MPROTECT_FAIL;
     }
     NaClVmmapAdd(&nap->mem_map,
-                 NaClSysToUser(nap, start_addr) >> NACL_PAGESHIFT,
-                 region_size >> NACL_PAGESHIFT,
+                 NaClSysToUser(nap, start_addr),
+                 region_size,
                  NACL_ABI_PROT_READ,
                  NACL_ABI_MAP_PRIVATE,
                  NULL,
@@ -264,8 +264,8 @@ NaClErrorCode NaClMemoryProtection(struct NaClApp *nap) {
       return LOAD_MPROTECT_FAIL;
     }
     NaClVmmapAdd(&nap->mem_map,
-                 NaClSysToUser(nap, start_addr) >> NACL_PAGESHIFT,
-                 region_size >> NACL_PAGESHIFT,
+                 NaClSysToUser(nap, start_addr),
+                 region_size,
                  NACL_ABI_PROT_READ | NACL_ABI_PROT_WRITE,
                  NACL_ABI_MAP_PRIVATE,
                  NULL,

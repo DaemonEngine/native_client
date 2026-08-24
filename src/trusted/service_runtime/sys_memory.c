@@ -109,7 +109,6 @@ int32_t NaClSysMmapIntern(struct NaClApp        *nap,
   int                         allowed_flags;
   struct NaClDesc             *ndp;
   uintptr_t                   usraddr;
-  uintptr_t                   usrpage;
   uintptr_t                   sysaddr;
   uintptr_t                   endaddr;
   int                         mapping_code;
@@ -366,39 +365,34 @@ int32_t NaClSysMmapIntern(struct NaClApp        *nap,
        * Pick a hole in addr space of appropriate size, anywhere.
        * We pick one that's best for the system.
        */
-      usrpage = NaClVmmapFindMapSpace(&nap->mem_map,
-                                      alloc_rounded_length >> NACL_PAGESHIFT);
-      NaClLog(4, "NaClSysMmap: FindMapSpace: page 0x%05"NACL_PRIxPTR"\n",
-              usrpage);
-      if (0 == usrpage) {
+      usraddr = NaClVmmapFindMapSpace(&nap->mem_map,
+                                      alloc_rounded_length);
+      NaClLog(4, "NaClSysMmap: new starting addr: 0x%08"NACL_PRIxPTR
+              "\n", usraddr);
+      if (0 == usraddr) {
         map_result = (uintptr_t) -NACL_ABI_ENOMEM;
         goto cleanup;
       }
-      usraddr = usrpage << NACL_PAGESHIFT;
-      NaClLog(4, "NaClSysMmap: new starting addr: 0x%08"NACL_PRIxPTR
-              "\n", usraddr);
     } else {
       /*
        * user supplied an addr, but it's to be treated as a hint; we
        * find a hole of the right size in the app's address space,
        * according to the usual mmap semantics.
        */
-      usrpage = NaClVmmapFindMapSpaceAboveHint(&nap->mem_map,
+      usraddr = NaClVmmapFindMapSpaceAboveHint(&nap->mem_map,
                                                usraddr,
-                                               (alloc_rounded_length
-                                                >> NACL_PAGESHIFT));
-      NaClLog(4, "NaClSysMmap: FindSpaceAboveHint: page 0x%05"NACL_PRIxPTR"\n",
-              usrpage);
-      if (0 == usrpage) {
+                                               alloc_rounded_length);
+      NaClLog(4, "NaClSysMmap: FindSpaceAboveHint: addr 0x%08"NACL_PRIxPTR"\n",
+              usraddr);
+      if (0 == usraddr) {
         NaClLog(4, "NaClSysMmap: hint failed, doing generic allocation\n");
-        usrpage = NaClVmmapFindMapSpace(&nap->mem_map,
-                                        alloc_rounded_length >> NACL_PAGESHIFT);
+        usraddr = NaClVmmapFindMapSpace(&nap->mem_map,
+                                        alloc_rounded_length);
       }
-      if (0 == usrpage) {
+      if (0 == usraddr) {
         map_result = (uintptr_t) -NACL_ABI_ENOMEM;
         goto cleanup;
       }
-      usraddr = usrpage << NACL_PAGESHIFT;
       NaClLog(4, "NaClSysMmap: new starting addr: 0x%08"NACL_PRIxPTR"\n",
               usraddr);
     }
@@ -763,8 +757,8 @@ int32_t NaClSysMmapIntern(struct NaClApp        *nap,
 
   if (alloc_rounded_length > 0) {
     NaClVmmapAddWithOverwrite(&nap->mem_map,
-                              NaClSysToUser(nap, sysaddr) >> NACL_PAGESHIFT,
-                              alloc_rounded_length >> NACL_PAGESHIFT,
+                              NaClSysToUser(nap, sysaddr),
+                              alloc_rounded_length,
                               prot,
                               flags,
                               ndp,
@@ -837,7 +831,7 @@ static int32_t MunmapInternal(struct NaClApp *nap,
 
     usraddr = NaClSysToUser(nap, addr);
 
-    entry = NaClVmmapFindPage(&nap->mem_map, usraddr >> NACL_PAGESHIFT);
+    entry = NaClVmmapFindPage(&nap->mem_map, usraddr);
     if (NULL == entry) {
       continue;
     }
@@ -882,8 +876,8 @@ static int32_t MunmapInternal(struct NaClApp *nap,
       }
     }
     NaClVmmapRemove(&nap->mem_map,
-                    usraddr >> NACL_PAGESHIFT,
-                    NACL_PAGES_PER_MAP);
+                    usraddr,
+                    NACL_MAP_PAGESIZE);
   }
   return 0;
 }
@@ -908,8 +902,8 @@ static int32_t MunmapInternal(struct NaClApp *nap,
     return -NaClXlateErrno(errno);
   }
   NaClVmmapRemove(&nap->mem_map,
-                  NaClSysToUser(nap, (uintptr_t) sysaddr) >> NACL_PAGESHIFT,
-                  length >> NACL_PAGESHIFT);
+                  NaClSysToUser(nap, (uintptr_t) sysaddr),
+                  length);
   return 0;
 }
 #endif
@@ -1012,7 +1006,7 @@ static int32_t MprotectInternal(struct NaClApp *nap,
 
     usraddr = NaClSysToUser(nap, addr);
 
-    entry = NaClVmmapFindPage(&nap->mem_map, usraddr >> NACL_PAGESHIFT);
+    entry = NaClVmmapFindPage(&nap->mem_map, usraddr);
     if (NULL == entry) {
       continue;
     }
@@ -1100,7 +1094,7 @@ static int32_t MprotectInternal(struct NaClApp *nap,
   last_page_num = (usraddr + length) >> NACL_PAGESHIFT;
 
   NaClVmmapFindPageIter(&nap->mem_map,
-                        usraddr >> NACL_PAGESHIFT,
+                        usraddr,
                         &iter);
   entry = NaClVmmapIterStar(&iter);
 
@@ -1192,8 +1186,8 @@ int32_t NaClSysMprotectInternal(struct NaClApp  *nap,
   }
 
   if (!NaClVmmapChangeProt(&nap->mem_map,
-                           NaClSysToUser(nap, sysaddr) >> NACL_PAGESHIFT,
-                           length >> NACL_PAGESHIFT,
+                           NaClSysToUser(nap, sysaddr),
+                           length,
                            prot)) {
     NaClLog(4, "mprotect: no such region\n");
     retval = -NACL_ABI_EACCES;
