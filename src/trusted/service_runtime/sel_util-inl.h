@@ -21,16 +21,8 @@ static INLINE size_t  NaClRoundPage(size_t    nbytes) {
   return (nbytes + NACL_PAGESIZE - 1) & ~((size_t) NACL_PAGESIZE - 1);
 }
 
-static INLINE uint32_t  NaClRoundPage32(uint32_t    nbytes) {
-  return (nbytes + NACL_PAGESIZE - 1) & ~((size_t) NACL_PAGESIZE - 1);
-}
-
 static INLINE size_t  NaClRoundAllocPage(size_t    nbytes) {
   return (nbytes + NACL_MAP_PAGESIZE - 1) & ~((size_t) NACL_MAP_PAGESIZE - 1);
-}
-
-static INLINE uint32_t  NaClRoundAllocPage32(uint32_t    nbytes) {
-  return (nbytes + NACL_MAP_PAGESIZE - 1) & ~((uint32_t)NACL_MAP_PAGESIZE - 1);
 }
 
 static INLINE size_t NaClTruncPage(size_t  nbytes) {
@@ -39,10 +31,6 @@ static INLINE size_t NaClTruncPage(size_t  nbytes) {
 
 static INLINE size_t NaClTruncAllocPage(size_t  nbytes) {
   return nbytes & ~((size_t) NACL_MAP_PAGESIZE - 1);
-}
-
-static INLINE size_t  NaClBytesToPages(size_t nbytes) {
-  return (nbytes + NACL_PAGESIZE - 1) >> NACL_PAGESHIFT;
 }
 
 static INLINE int /* bool */ NaClIsPageMultiple(uintptr_t addr_or_size) {
