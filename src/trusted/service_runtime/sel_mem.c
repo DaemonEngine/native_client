@@ -33,6 +33,10 @@
 #define START_ENTRIES   5   /* tramp+text, rodata, data, bss, stack */
 #define REMOVE_MARKED_DEBUG 0
 
+static size_t PageDiv(struct NaClVmmap *self, uintptr_t n) {
+  CHECK((n & self->page_mask) == 0);
+  return n >> self->page_shift;
+}
 
 /*
  * The memory map structure is a simple array of memory regions which
@@ -126,6 +130,8 @@ int NaClVmmapCtor(struct NaClVmmap *self) {
   }
   self->nvalid = 0;
   self->is_sorted = 1;
+  self->page_shift = NACL_PAGESHIFT;
+  self->page_mask = NACL_PAGESIZE - 1;
   return 1;
 }
 
@@ -266,14 +272,16 @@ void NaClVmmapMakeSorted(struct NaClVmmap  *self) {
 }
 
 void NaClVmmapAdd(struct NaClVmmap  *self,
-                  uintptr_t         page_num,
-                  size_t            npages,
+                  uintptr_t         untrusted_start_addr,
+                  size_t            nbytes,
                   int               prot,
                   int               flags,
                   struct NaClDesc   *desc,
                   nacl_off64_t      offset,
                   nacl_off64_t      file_size) {
   struct NaClVmmapEntry *entry;
+  size_t page_num = PageDiv(self, untrusted_start_addr);
+  size_t npages = PageDiv(self, nbytes);
 
   NaClLog(2,
           ("NaClVmmapAdd(0x%08"NACL_PRIxPTR", 0x%"NACL_PRIxPTR", "
@@ -308,8 +316,8 @@ void NaClVmmapAdd(struct NaClVmmap  *self,
  * system paging file.
  */
 static void NaClVmmapUpdate(struct NaClVmmap  *self,
-                            uintptr_t         page_num,
-                            size_t            npages,
+                            uintptr_t         untrusted_start_addr,
+                            size_t            nbytes,
                             int               prot,
                             int               flags,
                             int               remove,
@@ -318,6 +326,8 @@ static void NaClVmmapUpdate(struct NaClVmmap  *self,
                             nacl_off64_t      file_size) {
   /* update existing entries or create new entry as needed */
   size_t                i;
+  uintptr_t             page_num = PageDiv(self, untrusted_start_addr);
+  size_t                npages = PageDiv(self, nbytes);
   uintptr_t             new_region_end_page = page_num + npages;
 
   NaClLog(2,
@@ -334,7 +344,7 @@ static void NaClVmmapUpdate(struct NaClVmmap  *self,
     struct NaClVmmapEntry *ent = self->vmentry[i];
     uintptr_t             ent_end_page = ent->page_num + ent->npages;
     nacl_off64_t          additional_offset =
-        (new_region_end_page - ent->page_num) << NACL_PAGESHIFT;
+        (new_region_end_page - ent->page_num) << self->page_shift;
 
 
     if (ent->page_num < page_num && new_region_end_page < ent_end_page) {
@@ -343,8 +353,8 @@ static void NaClVmmapUpdate(struct NaClVmmap  *self,
        * the middle.
        */
       NaClVmmapAdd(self,
-                   new_region_end_page,
-                   ent_end_page - new_region_end_page,
+                   new_region_end_page << self->page_shift,
+                   (ent_end_page - new_region_end_page) << self->page_shift,
                    ent->prot,
                    ent->flags,
                    ent->desc,
@@ -373,23 +383,23 @@ static void NaClVmmapUpdate(struct NaClVmmap  *self,
   }
 
   if (!remove) {
-    NaClVmmapAdd(self, page_num, npages, prot, flags, desc, offset, file_size);
+    NaClVmmapAdd(self, untrusted_start_addr, nbytes, prot, flags, desc, offset, file_size);
   }
 
   NaClVmmapRemoveMarked(self);
 }
 
 void NaClVmmapAddWithOverwrite(struct NaClVmmap   *self,
-                               uintptr_t          page_num,
-                               size_t             npages,
+                               uintptr_t          untrusted_start_addr,
+                               size_t             nbytes,
                                int                prot,
                                int                flags,
                                struct NaClDesc    *desc,
                                nacl_off64_t       offset,
                                nacl_off64_t       file_size) {
   NaClVmmapUpdate(self,
-                  page_num,
-                  npages,
+                  untrusted_start_addr,
+                  nbytes,
                   prot,
                   flags,
                   /* remove= */ 0,
@@ -399,11 +409,11 @@ void NaClVmmapAddWithOverwrite(struct NaClVmmap   *self,
 }
 
 void NaClVmmapRemove(struct NaClVmmap   *self,
-                     uintptr_t          page_num,
-                     size_t             npages) {
+                     uintptr_t          untrusted_start_addr,
+                     size_t             nbytes) {
   NaClVmmapUpdate(self,
-                  page_num,
-                  npages,
+                  untrusted_start_addr,
+                  nbytes,
                   /* prot= */ 0,
                   /* flags= */ 0,
                   /* remove= */ 1,
@@ -456,11 +466,13 @@ static int NaClVmmapCheckExistingMapping(struct NaClVmmap  *self,
 }
 
 int NaClVmmapChangeProt(struct NaClVmmap   *self,
-                        uintptr_t          page_num,
-                        size_t             npages,
+                        uintptr_t          untrusted_start_addr,
+                        size_t             nbytes,
                         int                prot) {
   size_t      i;
   size_t      nvalid;
+  uintptr_t   page_num = PageDiv(self, untrusted_start_addr);
+  uintptr_t   npages = PageDiv(self, nbytes);
   uintptr_t   new_region_end_page = page_num + npages;
 
   /*
@@ -489,13 +501,13 @@ int NaClVmmapChangeProt(struct NaClVmmap   *self,
     struct NaClVmmapEntry *ent = self->vmentry[i];
     uintptr_t             ent_end_page = ent->page_num + ent->npages;
     nacl_off64_t          additional_offset =
-        (new_region_end_page - ent->page_num) << NACL_PAGESHIFT;
+        (new_region_end_page - ent->page_num) << self->page_shift;
 
     if (ent->page_num < page_num && new_region_end_page < ent_end_page) {
       /* Split existing mapping into two parts */
       NaClVmmapAdd(self,
-                   new_region_end_page,
-                   ent_end_page - new_region_end_page,
+                   new_region_end_page << self->page_shift,
+                   (ent_end_page - new_region_end_page) << self->page_shift,
                    ent->prot,
                    ent->flags,
                    ent->desc,
@@ -504,8 +516,8 @@ int NaClVmmapChangeProt(struct NaClVmmap   *self,
       ent->npages = page_num - ent->page_num;
       /* Add the new mapping into the middle. */
       NaClVmmapAdd(self,
-                   page_num,
-                   npages,
+                   page_num << self->page_shift,
+                   npages << self->page_shift,
                    prot,
                    ent->flags,
                    ent->desc,
@@ -517,8 +529,8 @@ int NaClVmmapChangeProt(struct NaClVmmap   *self,
       ent->npages = page_num - ent->page_num;
       /* Add the overlapping part of the mapping. */
       NaClVmmapAdd(self,
-                   page_num,
-                   ent_end_page - page_num,
+                   page_num << self->page_shift,
+                   (ent_end_page - page_num) << self->page_shift,
                    prot,
                    ent->flags,
                    ent->desc,
@@ -532,8 +544,8 @@ int NaClVmmapChangeProt(struct NaClVmmap   *self,
       /* New mapping overlaps start of existing mapping, split it. */
       DCHECK(page_num == ent->page_num);
       NaClVmmapAdd(self,
-                   page_num,
-                   npages,
+                   page_num << self->page_shift,
+                   npages << self->page_shift,
                    prot,
                    ent->flags,
                    ent->desc,
@@ -604,10 +616,11 @@ static int NaClVmmapContainCmpEntries(void const *vkey,
 }
 
 struct NaClVmmapEntry const *NaClVmmapFindPage(struct NaClVmmap *self,
-                                               uintptr_t        pnum) {
+                                               uintptr_t        untrusted_addr) {
   struct NaClVmmapEntry key;
   struct NaClVmmapEntry *kptr;
   struct NaClVmmapEntry *const *result_ptr;
+  uintptr_t pnum = PageDiv(self, untrusted_addr);
 
   NaClVmmapMakeSorted(self);
   key.page_num = pnum;
@@ -623,11 +636,12 @@ struct NaClVmmapEntry const *NaClVmmapFindPage(struct NaClVmmap *self,
 
 
 struct NaClVmmapIter *NaClVmmapFindPageIter(struct NaClVmmap      *self,
-                                            uintptr_t             pnum,
+                                            uintptr_t             untrusted_addr,
                                             struct NaClVmmapIter  *space) {
   struct NaClVmmapEntry key;
   struct NaClVmmapEntry *kptr;
   struct NaClVmmapEntry **result_ptr;
+  uintptr_t pnum = PageDiv(self, untrusted_addr);
 
   NaClVmmapMakeSorted(self);
   key.page_num = pnum;
@@ -699,11 +713,12 @@ void  NaClVmmapVisit(struct NaClVmmap *self,
  * Linear search, from high addresses down.
  */
 uintptr_t NaClVmmapFindSpace(struct NaClVmmap *self,
-                             size_t           num_pages) {
+                             size_t           num_bytes) {
   size_t                i;
   struct NaClVmmapEntry *vmep;
   uintptr_t             end_page;
   uintptr_t             start_page;
+  size_t num_pages = PageDiv(self, num_bytes);
 
   if (0 == self->nvalid)
     return 0;
@@ -713,14 +728,14 @@ uintptr_t NaClVmmapFindSpace(struct NaClVmmap *self,
     end_page = vmep->page_num + vmep->npages;  /* end page from previous */
     start_page = self->vmentry[i]->page_num;  /* start page from current */
     if (start_page - end_page >= num_pages) {
-      return start_page - num_pages;
+      return (start_page - num_pages) << self->page_shift;
     }
   }
   return 0;
   /*
    * in user addresses, page 0 is always trampoline, and user
-   * addresses are contained in system addresses, so returning a
-   * system page number of 0 can serve as error indicator: it is at
+   * addresses are contained in system addresses, so returning an
+   * address of 0 can serve as error indicator: it is at
    * worst the trampoline page, and likely to be below it.
    */
 }
@@ -735,11 +750,12 @@ uintptr_t NaClVmmapFindSpace(struct NaClVmmap *self,
  * fixed, and the heap is the only thing that grows.
  */
 uintptr_t NaClVmmapFindMapSpace(struct NaClVmmap *self,
-                                size_t           num_pages) {
+                                size_t           num_bytes) {
   size_t                i;
   struct NaClVmmapEntry *vmep;
   uintptr_t             end_page;
   uintptr_t             start_page;
+  size_t num_pages = PageDiv(self, num_bytes); // FIXME just round directly to map size?
 
   if (0 == self->nvalid)
     return 0;
@@ -752,7 +768,7 @@ uintptr_t NaClVmmapFindMapSpace(struct NaClVmmap *self,
     end_page = NaClRoundPageNumUpToMapMultiple(end_page);
 
     start_page = self->vmentry[i]->page_num;  /* start page from current */
-    if (NACL_MAP_PAGESHIFT > NACL_PAGESHIFT) {
+    if (NACL_MAP_PAGESHIFT > self->page_shift) {
 
       start_page = NaClTruncPageNumDownToMapMultiple(start_page);
 
@@ -761,14 +777,14 @@ uintptr_t NaClVmmapFindMapSpace(struct NaClVmmap *self,
       }
     }
     if (start_page - end_page >= num_pages) {
-      return start_page - num_pages;
+      return (start_page - num_pages) << self->page_shift;
     }
   }
   return 0;
   /*
    * in user addresses, page 0 is always trampoline, and user
-   * addresses are contained in system addresses, so returning a
-   * system page number of 0 can serve as error indicator: it is at
+   * addresses are contained in system addresses, so returning an
+   * address of 0 can serve as error indicator: it is at
    * worst the trampoline page, and likely to be below it.
    */
 }
@@ -779,17 +795,18 @@ uintptr_t NaClVmmapFindMapSpace(struct NaClVmmap *self,
  */
 uintptr_t NaClVmmapFindMapSpaceAboveHint(struct NaClVmmap *self,
                                          uintptr_t        uaddr,
-                                         size_t           num_pages) {
+                                         size_t           num_bytes) {
   size_t                nvalid;
   size_t                i;
   struct NaClVmmapEntry *vmep;
   uintptr_t             usr_page;
   uintptr_t             start_page;
   uintptr_t             end_page;
+  size_t num_pages = PageDiv(self, num_bytes); // FIXME just round directly to map size?
 
   NaClVmmapMakeSorted(self);
 
-  usr_page = uaddr >> NACL_PAGESHIFT;
+  usr_page = uaddr >> self->page_shift;
   num_pages = NaClRoundPageNumUpToMapMultiple(num_pages);
 
   nvalid = self->nvalid;
@@ -800,7 +817,7 @@ uintptr_t NaClVmmapFindMapSpaceAboveHint(struct NaClVmmap *self,
     end_page = NaClRoundPageNumUpToMapMultiple(end_page);
 
     start_page = self->vmentry[i]->page_num;
-    if (NACL_MAP_PAGESHIFT > NACL_PAGESHIFT) {
+    if (NACL_MAP_PAGESHIFT > self->page_shift) {
 
       start_page = NaClTruncPageNumDownToMapMultiple(start_page);
 
@@ -813,7 +830,7 @@ uintptr_t NaClVmmapFindMapSpaceAboveHint(struct NaClVmmap *self,
     }
     if (usr_page <= end_page && (start_page - end_page) >= num_pages) {
       /* found a gap at or after uaddr that's big enough */
-      return end_page;
+      return end_page << self->page_shift;
     }
   }
   return 0;
