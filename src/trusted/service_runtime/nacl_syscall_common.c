@@ -21,6 +21,7 @@
 
 #include "native_client/src/trusted/service_runtime/nacl_syscall_common.h"
 
+#include "native_client/src/include/concurrency_ops.h"
 #include "native_client/src/include/nacl_macros.h"
 #include "native_client/src/include/portability_process.h"
 #include "native_client/src/include/portability_string.h"
@@ -159,8 +160,6 @@ int32_t NaClSysExit(struct NaClAppThread  *natp,
 
 int32_t NaClSysThreadExit(struct NaClAppThread  *natp,
                           uint32_t              stack_flag_addr) {
-  uint32_t  zero = 0;
-
   NaClLog(4, "NaClSysThreadExit(0x%08"NACL_PRIxPTR", "
           "0x%08"NACL_PRIx32"\n",
           (uintptr_t) natp, stack_flag_addr);
@@ -170,10 +169,18 @@ int32_t NaClSysThreadExit(struct NaClAppThread  *natp,
    */
 
   if (0 != stack_flag_addr) {
-    if (!NaClCopyOutToUser(natp->nap, (uintptr_t) stack_flag_addr,
-                           &zero, sizeof zero)) {
-      NaClLog(4, "NaClSysThreadExit: ignoring invalid stack_flag_addr\n");
+    uintptr_t sys_addr = NaClUserToSysAddrRange(natp->nap,
+                                                (uintptr_t) stack_flag_addr,
+                                                4);
+    if (sys_addr == kNaClBadAddress || sys_addr % 4 != 0) {
+      NaClLog(LOG_ERROR, "NaClSysThreadExit: invalid stack_flag_addr\n");
+      return -NACL_ABI_EINVAL;
     }
+    NaClWriteMemoryBarrier();
+    /* Not using CopyOutToUser since this should be atomic */
+    NaClCopyTakeLock(natp->nap);
+    *(uint32_t *) sys_addr = 0;
+    NaClCopyDropLock(natp->nap); 
   }
 
   NaClAppThreadTeardown(natp);
