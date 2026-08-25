@@ -120,6 +120,14 @@ static int do_thread_creation_test(struct threading_environment *env) {
     return 1;
   }
 
+  /*
+   * The IRT thread exit hook is called near the end of pthread_exit, after
+   * the pthread implementation already marked the thread dead. So it can
+   * still be running after the thread was joined. Note: num_threads_exited
+   * is declared volatile.
+   */
+  while (env->num_threads_exited == 0) {}
+
   if (env->num_threads_exited != 1) {
     irt_ext_test_print("do_thread_creation_test: Thread Exit was not"
                        " recorded in the environment.\n");
