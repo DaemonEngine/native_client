@@ -45,160 +45,17 @@ static INLINE size_t  size_min(size_t a, size_t b) {
   return (a < b) ? a : b;
 }
 
+/*
+ * No changing the break address, only inspecting the initial one.
+ * This is kept around for some tests that inspect the ELF layout.
+ */
 int32_t NaClSysBrk(struct NaClAppThread *natp,
                    uintptr_t            new_break) {
   struct NaClApp        *nap = natp->nap;
-  uintptr_t             break_addr;
-  int32_t               rv = -NACL_ABI_EINVAL;
-  struct NaClVmmapIter  iter;
-  struct NaClVmmapEntry *ent;
-  struct NaClVmmapEntry *next_ent;
-  uintptr_t             sys_break;
-  uintptr_t             sys_new_break;
-  uintptr_t             usr_last_data_page;
-  uintptr_t             usr_new_last_data_page;
-  uintptr_t             last_internal_data_addr;
-  uintptr_t             last_internal_page;
-  uintptr_t             start_new_region;
-  uintptr_t             region_size;
-
-  /*
-   * The sysbrk() IRT interface is deprecated and is not enabled for
-   * ABI-stable PNaCl pexes, so for security hardening, disable the
-   * syscall under PNaCl too.
-   */
-  if (nap->pnacl_mode)
+  if (new_break != 0)
     return -NACL_ABI_ENOSYS;
 
-  break_addr = nap->break_addr;
-
-  NaClLog(3, "Entered NaClSysBrk(new_break 0x%08"NACL_PRIxPTR")\n",
-          new_break);
-
-  sys_new_break = NaClUserToSysAddr(nap, new_break);
-  NaClLog(3, "sys_new_break 0x%08"NACL_PRIxPTR"\n", sys_new_break);
-
-  if (kNaClBadAddress == sys_new_break) {
-    goto cleanup_no_lock;
-  }
-  if (NACL_SYNC_OK != NaClMutexLock(&nap->mu)) {
-    NaClLog(LOG_ERROR, "Could not get app lock for 0x%08"NACL_PRIxPTR"\n",
-            (uintptr_t) nap);
-    goto cleanup_no_lock;
-  }
-  if (new_break < nap->data_end) {
-    NaClLog(4, "new_break before data_end (0x%"NACL_PRIxPTR")\n",
-            nap->data_end);
-    goto cleanup;
-  }
-  if (new_break <= nap->break_addr) {
-    /* freeing memory */
-    NaClLog(4, "new_break before break (0x%"NACL_PRIxPTR"); freeing\n",
-            nap->break_addr);
-    nap->break_addr = new_break;
-    break_addr = new_break;
-  } else {
-    /*
-     * See if page containing new_break is in mem_map; if so, we are
-     * essentially done -- just update break_addr.  Otherwise, we
-     * extend the VM map entry from the page containing the current
-     * break to the page containing new_break.
-     */
-
-    sys_break = NaClUserToSys(nap, nap->break_addr);
-
-    usr_last_data_page = (nap->break_addr - 1) >> NACL_PAGESHIFT;
-
-    usr_new_last_data_page = (new_break - 1) >> NACL_PAGESHIFT;
-
-    last_internal_data_addr = NaClRoundAllocPage(new_break) - 1;
-    last_internal_page = last_internal_data_addr >> NACL_PAGESHIFT;
-
-    NaClLog(4, ("current break sys addr 0x%08"NACL_PRIxPTR", "
-                "usr last data page 0x%"NACL_PRIxPTR"\n"),
-            sys_break, usr_last_data_page);
-    NaClLog(4, "new break usr last data page 0x%"NACL_PRIxPTR"\n",
-            usr_new_last_data_page);
-    NaClLog(4, "last internal data addr 0x%08"NACL_PRIxPTR"\n",
-            last_internal_data_addr);
-
-    if (NULL == NaClVmmapFindPageIter(&nap->mem_map,
-                                      usr_last_data_page,
-                                      &iter)
-        || NaClVmmapIterAtEnd(&iter)) {
-      NaClLog(LOG_FATAL, ("current break (0x%08"NACL_PRIxPTR", "
-                          "sys 0x%08"NACL_PRIxPTR") "
-                          "not in address map\n"),
-              nap->break_addr, sys_break);
-    }
-    ent = NaClVmmapIterStar(&iter);
-    NaClLog(4, ("segment containing current break"
-                ": page_num 0x%08"NACL_PRIxPTR", npages 0x%"NACL_PRIxS"\n"),
-            ent->page_num, ent->npages);
-    if (usr_new_last_data_page < ent->page_num + ent->npages) {
-      NaClLog(4, "new break within break segment, just bumping addr\n");
-      nap->break_addr = new_break;
-      break_addr = new_break;
-    } else {
-      NaClVmmapIterIncr(&iter);
-      if (!NaClVmmapIterAtEnd(&iter)
-          && ((next_ent = NaClVmmapIterStar(&iter))->page_num
-              <= last_internal_page)) {
-        /* ran into next segment! */
-        NaClLog(4,
-                ("new break request of usr address "
-                 "0x%08"NACL_PRIxPTR" / usr page 0x%"NACL_PRIxPTR
-                 " runs into next region, page_num 0x%"NACL_PRIxPTR", "
-                 "npages 0x%"NACL_PRIxS"\n"),
-                new_break, usr_new_last_data_page,
-                next_ent->page_num, next_ent->npages);
-        goto cleanup;
-      }
-      NaClLog(4,
-              "extending segment: page_num 0x%08"NACL_PRIxPTR", "
-              "npages 0x%"NACL_PRIxS"\n",
-              ent->page_num, ent->npages);
-      /* go ahead and extend ent to cover, and make pages accessible */
-      start_new_region = (ent->page_num + ent->npages) << NACL_PAGESHIFT;
-      ent->npages = (last_internal_page - ent->page_num + 1);
-      region_size = (((last_internal_page + 1) << NACL_PAGESHIFT)
-                     - start_new_region);
-      if (0 != NaClMprotect((void *) NaClUserToSys(nap, start_new_region),
-                            region_size,
-                            PROT_READ | PROT_WRITE)) {
-        NaClLog(LOG_FATAL,
-                ("Could not mprotect(0x%08"NACL_PRIxPTR", "
-                 "0x%08"NACL_PRIxPTR", "
-                 "PROT_READ|PROT_WRITE)\n"),
-                start_new_region,
-                region_size);
-      }
-      NaClLog(4, "segment now: page_num 0x%08"NACL_PRIxPTR", "
-              "npages 0x%"NACL_PRIxS"\n",
-              ent->page_num, ent->npages);
-      nap->break_addr = new_break;
-      break_addr = new_break;
-    }
-    /*
-     * Zero out memory between old break and new break.
-     */
-    CHECK(sys_new_break > sys_break);
-    memset((void *) sys_break, 0, sys_new_break - sys_break);
-  }
-
-cleanup:
-  NaClXMutexUnlock(&nap->mu);
-cleanup_no_lock:
-
-  /*
-   * This cast is safe because the incoming value (new_break) cannot
-   * exceed the user address space--even though its type (uintptr_t)
-   * theoretically allows larger values.
-   */
-  rv = (int32_t) break_addr;
-
-  NaClLog(3, "NaClSysBrk: returning 0x%08"NACL_PRIx32"\n", rv);
-  return rv;
+  return (int32_t) NaClUserToSys(nap, nap->break_addr);
 }
 
 int NaClSysCommonAddrRangeContainsExecutablePages(struct NaClApp *nap,

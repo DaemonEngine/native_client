@@ -121,7 +121,7 @@ int main(void) {
   myprint("\nsysbrk()\n");
   i = (int) sysbrk((void *) sysbrkBase);
   PrintInt(i);
-  if (sysbrkBase != i) Error("bad sysbrk() value\n");
+  if (i != -ENOSYS) Error("sysbrk() didn't return failure value\n");
 
   myprint("\nmmap()\n");
   i = (int) mmap(0, kMmapSize,

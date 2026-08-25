@@ -32,11 +32,8 @@ extern void null_syscall(void);
 
 /**
  *  @nacl
- *  Sets the system break to the given address and return the address after
- *  the update.  If new_break is NULL, simply returns the current break address.
- *  @param new_break The address to set the break to.
- *  @return On success, sysbrk returns the value of the break address.  On
- *  failure, it returns -1 and sets errno appropriately.
+ *  Returns the initial break address if argument is NULL.
+ *  Otherwise it returns an error
  */
 extern void *sysbrk(void *new_break);
 
