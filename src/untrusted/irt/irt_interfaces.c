@@ -68,15 +68,6 @@ static const struct nacl_irt_interface irt_interfaces[] = {
     sizeof(nacl_irt_dev_filename_v0_2), file_access_filter },
   { NACL_IRT_DEV_FILENAME_v0_3, &nacl_irt_dev_filename,
     sizeof(nacl_irt_dev_filename), file_access_filter },
-  /*
-   * The old versions of "irt-memory", v0.1 and v0.2, which contain
-   * the deprecated sysbrk() function, are disabled under PNaCl.  See:
-   * https://code.google.com/p/nativeclient/issues/detail?id=3542
-   */
-  { NACL_IRT_MEMORY_v0_1, &nacl_irt_memory_v0_1, sizeof(nacl_irt_memory_v0_1),
-    non_pnacl_filter },
-  { NACL_IRT_MEMORY_v0_2, &nacl_irt_memory_v0_2, sizeof(nacl_irt_memory_v0_2),
-    non_pnacl_filter },
   { NACL_IRT_MEMORY_v0_3, &nacl_irt_memory, sizeof(nacl_irt_memory), NULL },
   /*
    * "irt-dyncode" is not supported under PNaCl because dynamically
