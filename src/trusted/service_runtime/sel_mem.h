@@ -143,12 +143,7 @@ void  NaClVmmapVisit(struct NaClVmmap   *self,
 /*
  * Returns address starting at which there is a hole of at least
  * num_bytes in size.  Linear search from high addresses on down.
- */
-uintptr_t NaClVmmapFindSpace(struct NaClVmmap *self,
-                             size_t           num_bytes);
-
-/*
- * Just lke NaClVmmapFindSpace, except usage is intended for
+ * Usage is intended for
  * NaClHostDescMap, so the starting address of the region found must
  * be NACL_MAP_PAGESIZE aligned.
  */
