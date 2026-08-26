@@ -415,6 +415,7 @@ void NaClVmmapRemove(struct NaClVmmap   *self,
 /*
  * NaClVmmapCheckMapping checks whether there is an existing mapping with
  * maximum protection equivalent or higher to the given one.
+ * Precondition: mappings are sorted
  */
 static int NaClVmmapCheckExistingMapping(struct NaClVmmap  *self,
                                          uintptr_t         page_num,
@@ -428,30 +429,28 @@ static int NaClVmmapCheckExistingMapping(struct NaClVmmap  *self,
            ", 0x%"NACL_PRIxS", 0x%x)\n"),
           (uintptr_t) self, page_num, npages, prot);
 
-  if (0 == self->nvalid) {
-    return 0;
-  }
-  NaClVmmapMakeSorted(self);
-
   for (i = 0; i < self->nvalid; ++i) {
     struct NaClVmmapEntry   *ent = self->vmentry[i];
     uintptr_t               ent_end_page = ent->page_num + ent->npages;
-    int                     flags = NaClVmmapEntryMaxProt(ent);
+    int                     legal_flags;
 
-    if (ent->page_num <= page_num && region_end_page <= ent_end_page) {
-      /* The mapping is inside existing entry. */
-      return 0 == (prot & (~flags));
-    } else if (ent->page_num <= page_num && page_num < ent_end_page) {
-      /* The mapping overlaps the entry. */
-      if (0 != (prot & (~flags))) {
-        return 0;
-      }
-      page_num = ent_end_page;
-      npages = region_end_page - ent_end_page;
+    if (page_num >= ent_end_page) {
+      continue;
     } else if (page_num < ent->page_num) {
-      /* The mapping without backing store. */
+      return 0;  /* found unmapped region */
+    }
+
+    legal_flags = NaClVmmapEntryMaxProt(ent);
+    if (prot & ~legal_flags) {
       return 0;
     }
+
+    if (ent_end_page >= region_end_page) {
+      return 1;
+    }
+
+    page_num = ent_end_page;
+    npages = region_end_page - ent_end_page;
   }
   return 0;
 }
@@ -469,6 +468,7 @@ int NaClVmmapChangeProt(struct NaClVmmap   *self,
    * NaClVmmapChangeProt proceeds to ensure that valid mapping exists
    * as modifications cannot be rolled back.
    */
+  NaClVmmapMakeSorted(self);
   if (!NaClVmmapCheckExistingMapping(self, page_num, npages, prot)) {
     return 0;
   }
@@ -477,7 +477,6 @@ int NaClVmmapChangeProt(struct NaClVmmap   *self,
           ("NaClVmmapChangeProt(0x%08"NACL_PRIxPTR", 0x%"NACL_PRIxPTR
            ", 0x%"NACL_PRIxS", 0x%x)\n"),
           (uintptr_t) self, page_num, npages, prot);
-  NaClVmmapMakeSorted(self);
 
   /*
    * This loop & interval boundary tests closely follow those in
@@ -512,7 +511,7 @@ int NaClVmmapChangeProt(struct NaClVmmap   *self,
                    ent->desc,
                    ent->offset + (page_num - ent->page_num),
                    ent->file_size);
-      break;
+      return 1;
     } else if (ent->page_num < page_num && page_num < ent_end_page) {
       /* New mapping overlaps end of existing mapping. */
       ent->npages = page_num - ent->page_num;
@@ -531,6 +530,7 @@ int NaClVmmapChangeProt(struct NaClVmmap   *self,
     } else if (ent->page_num < new_region_end_page &&
                new_region_end_page < ent_end_page) {
       /* New mapping overlaps start of existing mapping, split it. */
+      DCHECK(page_num == ent->page_num);
       NaClVmmapAdd(self,
                    page_num,
                    npages,
@@ -542,18 +542,21 @@ int NaClVmmapChangeProt(struct NaClVmmap   *self,
       ent->page_num = new_region_end_page;
       ent->npages = ent_end_page - new_region_end_page;
       ent->offset += additional_offset;
-      break;
+      return 1;
+
     } else if (page_num <= ent->page_num &&
                ent_end_page <= new_region_end_page) {
+      DCHECK(page_num == ent->page_num);
       /* New mapping covers all of the existing mapping. */
       page_num = ent_end_page;
       npages = new_region_end_page - ent_end_page;
       ent->prot = prot;
     } else {
       /* No overlap */
-      assert(new_region_end_page <= ent->page_num || ent_end_page <= page_num);
+      DCHECK(ent_end_page <= page_num);
     }
   }
+  DCHECK(npages == 0);
   return 1;
 }
 
