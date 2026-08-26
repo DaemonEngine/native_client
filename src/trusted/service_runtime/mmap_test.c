@@ -394,6 +394,26 @@ int main(int argc, char **argv) {
    */
 
   /*
+   * Check mprotect failures due to partially unmapped regions.
+   */
+  addr = NaClSysMmapIntern(nap, (void *) (500 << 20),
+		           NACL_MAP_PAGESIZE * 10,
+			   NACL_ABI_PROT_READ | NACL_ABI_PROT_WRITE,
+			   NACL_ABI_MAP_ANONYMOUS | NACL_ABI_MAP_PRIVATE | NACL_ABI_MAP_FIXED,
+			   -1, 0);
+  ASSERT_EQ(addr, 500 << 20);
+  errcode = NaClSysMprotectInternal(nap, addr - NACL_MAP_PAGESIZE, 3 * NACL_MAP_PAGESIZE, NACL_ABI_PROT_READ);
+  ASSERT_EQ(errcode, -NACL_ABI_EACCES);
+  errcode = NaClSysMprotectInternal(nap, addr + 5 * NACL_MAP_PAGESIZE, 6 * NACL_MAP_PAGESIZE, NACL_ABI_PROT_READ);
+  ASSERT_EQ(errcode, -NACL_ABI_EACCES);
+  /* Now successful ones */
+  errcode = NaClSysMprotectInternal(nap, addr + NACL_MAP_PAGESIZE, 3 * NACL_MAP_PAGESIZE, NACL_ABI_PROT_READ);
+  ASSERT_EQ(errcode, 0);
+  errcode = NaClSysMprotectInternal(nap, addr + 5 * NACL_MAP_PAGESIZE, 5 * NACL_MAP_PAGESIZE, NACL_ABI_PROT_READ);
+  ASSERT_EQ(errcode, 0);
+  
+
+  /*
    * Check use of hint.
    */
   addr = NaClSysMmapIntern(nap, (void *) (uintptr_t) initial_addr,
@@ -443,13 +463,13 @@ int main(int argc, char **argv) {
   errcode = NaClSysMunmap(natp, initial_addr, 2 * NACL_MAP_PAGESIZE);
   ASSERT_EQ(errcode, 0);
 
-  /* Check that we cannot make the read-only data segment writable */
+  /* Make the read-only data segment writable */
   ent = mem_map->vmentry[2];
   errcode = NaClSysMprotectInternal(nap, (uint32_t) (ent->page_num <<
                                                      NACL_PAGESHIFT),
-                                    ent->npages * NACL_MAP_PAGESIZE,
+                                    ent->npages * NACL_PAGESIZE,
                                     NACL_ABI_PROT_WRITE);
-  ASSERT_EQ(errcode, -NACL_ABI_EACCES);
+  ASSERT_EQ(errcode, 0);
 
 #if NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86 && NACL_BUILD_SUBARCH == 64
   CheckForGuardRegion(nap->mem_start - ((size_t) 40 << 30), (size_t) 40 << 30);
