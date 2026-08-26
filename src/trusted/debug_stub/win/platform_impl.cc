@@ -21,74 +21,6 @@
  * Define the OS specific portions of IPlatform interface.
  */
 
- /*
-  * Find files mappings and replaces them with memory which can be made
-  * writable.  Works only with code regions where debugger need to set
-  * breakpoints.
-  */
-
-static bool UnmapFiles(struct NaClApp *nap, void *ptr, uint32_t len) {
-  DWORD old_flags;
-  uintptr_t max_step;
-  uintptr_t user_ptr = NaClSysToUser(nap, reinterpret_cast<uintptr_t>(ptr));
-  if (user_ptr + len <= user_ptr || user_ptr + len > nap->dynamic_text_end) {
-    return false;
-  }
-  uintptr_t user_ptr_end = user_ptr + len;
-  uintptr_t start_page = user_ptr >> NACL_PAGESHIFT;
-  uintptr_t end_page = ((user_ptr_end - 1) >> NACL_PAGESHIFT) + 1;
-  uintptr_t page_len = end_page - start_page;
-  uintptr_t current_page = start_page;
-  char buf[0x10000];
-  while (page_len > 0) {
-    const NaClVmmapEntry *entry =
-        NaClVmmapFindPage(&nap->mem_map, current_page);
-    if (entry == NULL) {
-      current_page++;
-      page_len--;
-      continue;
-    }
-    max_step = entry->npages - (current_page - entry->page_num);
-    if (max_step > page_len) {
-      max_step = page_len;
-    }
-    if (entry->flags != 0) {
-      for (uintptr_t i = 0; i < max_step; i++) {
-        void *addr = reinterpret_cast<void *>(
-            NaClUserToSys(nap, (current_page + i) << NACL_PAGESHIFT));
-        size_t size = 0x10000;
-        nacl_off64_t file_size = entry->file_size -
-            ((current_page + i - entry->page_num) << NACL_PAGESHIFT);
-        if (static_cast<nacl_off64_t>(size) > file_size) {
-          size = static_cast<size_t>(file_size);
-        }
-        // fill buffer with hlt.
-        memset(buf, 0xf4, 0x10000);
-        memcpy(buf, addr, size);
-        if (!UnmapViewOfFile(addr)) {
-          return false;
-        }
-        if (NULL == VirtualAlloc(addr, 0x10000,
-                                 MEM_COMMIT, PAGE_EXECUTE_READWRITE)) {
-          NaClLog(LOG_FATAL,
-                  "UnmapFiles: VirtualAlloc failed with %d\n",
-                  GetLastError());
-        }
-        memcpy(addr, buf, 0x10000);
-        if (!VirtualProtect(addr, 0x10000,
-                            PAGE_EXECUTE_READ, &old_flags)) {
-          NaClLog(LOG_FATAL,
-                  "UnmapFiles: VirtualProtect failed with %d\n",
-                  GetLastError());
-        }
-      }
-    }
-    current_page += max_step;
-    page_len -= max_step;
-  }
-  return true;
-}
-
 static bool CheckReadRights(void *ptr, uint32_t len) {
   MEMORY_BASIC_INFORMATION memory_info;
   SIZE_T offset;
@@ -152,14 +84,6 @@ bool IPlatform::SetMemory(struct NaClApp *nap, uint64_t virt, uint32_t len,
   if (oldFlags == (DWORD) -1) {
     oldFlags = Reprotect(reinterpret_cast<void *>(virt), len,
                          PAGE_WRITECOPY);
-    if (oldFlags == (DWORD) -1) {
-      // Windows XP doesn't support PAGE_EXECUTE_WRITECOPY so we fallback to
-      // unmapping files and mapping normal memory instead.
-      if (UnmapFiles(nap, reinterpret_cast<void *>(virt), len)) {
-        oldFlags = Reprotect(reinterpret_cast<void *>(virt), len,
-                             PAGE_WRITECOPY);
-      }
-    }
   }
 
   if (oldFlags == (DWORD) -1) return false;
