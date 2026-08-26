@@ -52,12 +52,4 @@ static INLINE size_t NaClRoundHostAllocPage(size_t  nbytes) {
 #endif  /* !NACL_WINDOWS */
 }
 
-static INLINE size_t NaClRoundPageNumUpToMapMultiple(size_t npages) {
-  return (npages + NACL_PAGES_PER_MAP - 1) & ~((size_t) NACL_PAGES_PER_MAP - 1);
-}
-
-static INLINE size_t NaClTruncPageNumDownToMapMultiple(size_t npages) {
-  return npages & ~((size_t) NACL_PAGES_PER_MAP - 1);
-}
-
 #endif  /* NATIVE_CLIENT_SRC_TRUSTED_SERVICE_RUNTIME_SEL_UTIL_INL_H_ */

@@ -23,10 +23,9 @@ struct NaClDesc;
 #define NACL_MAP_COPY   0x100
 
 /*
- * Implementation is based on setting properties and query properties by
- * page numbers (addr >> page_shift) and the number of pages
- * affected (for setting properties). FIXME: this is pointless - just
- * use the untrusted addresses/byte sizes instead of page numbers.
+ * Data structure for keeping track of the memory regions currently mapped in
+ * untrusted address space. None of the functions here actually maps memory or
+ * changes protection.
  *
  * Initially, the address space is empty, with all memory
  * inaccessible.  As the program is loaded, pages are marked
@@ -40,8 +39,8 @@ struct NaClDesc;
  */
 
 struct NaClVmmapEntry {
-  uintptr_t         page_num;   /* base virtual addr >> page_shift */
-  size_t            npages;     /* number of pages */
+  uintptr_t         base;       /* base virtual addr */
+  size_t            nbytes;     /* size */
   int               prot;       /* mprotect attribute */
   int               flags;      /* mapping flags */
   int               removed;    /* flag set in NaClVmmapUpdate */
@@ -54,7 +53,6 @@ struct NaClVmmap {
   struct NaClVmmapEntry **vmentry;       /* must not overlap */
   size_t                nvalid, size;
   int                   is_sorted;
-  int                   page_shift;
   uintptr_t             page_mask;
 };
 

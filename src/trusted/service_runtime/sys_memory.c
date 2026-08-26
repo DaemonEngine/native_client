@@ -826,7 +826,6 @@ static int32_t MunmapInternal(struct NaClApp *nap,
   uintptr_t usraddr;
   for (addr = sysaddr; addr < endaddr; addr += NACL_MAP_PAGESIZE) {
     struct NaClVmmapEntry const *entry;
-    uintptr_t                   page_num;
     uintptr_t                   offset;
 
     usraddr = NaClSysToUser(nap, addr);
@@ -839,8 +838,7 @@ static int32_t MunmapInternal(struct NaClApp *nap,
             ("NaClSysMunmap: addr 0x%08x, desc 0x%08"NACL_PRIxPTR"\n"),
             addr, (uintptr_t) entry->desc);
 
-    page_num = usraddr - (entry->page_num << NACL_PAGESHIFT);
-    offset = (uintptr_t) entry->offset + page_num;
+    offset = (uintptr_t) entry->offset + (usraddr - entry->base);
 
     if (NULL != entry->desc &&
         offset < (uintptr_t) entry->file_size) {
@@ -1001,7 +999,6 @@ static int32_t MprotectInternal(struct NaClApp *nap,
    */
   for (addr = sysaddr; addr < endaddr; addr += NACL_MAP_PAGESIZE) {
     struct NaClVmmapEntry const *entry;
-    uintptr_t                   page_num;
     uintptr_t                   offset;
 
     usraddr = NaClSysToUser(nap, addr);
@@ -1013,8 +1010,7 @@ static int32_t MprotectInternal(struct NaClApp *nap,
     NaClLog(3, "MprotectInternal: addr 0x%08x, desc 0x%08"NACL_PRIxPTR"\n",
             addr, (uintptr_t) entry->desc);
 
-    page_num = usraddr - (entry->page_num << NACL_PAGESHIFT);
-    offset = (uintptr_t) entry->offset + page_num;
+    offset = (uintptr_t) entry->offset + (usraddr - entry->base);
 
     if (NULL == entry->desc) {
       flProtect = NaClflProtectMap(prot);
@@ -1083,7 +1079,7 @@ static int32_t MprotectInternal(struct NaClApp *nap,
 static int32_t MprotectInternal(struct NaClApp *nap,
                                 uintptr_t sysaddr, size_t length, int prot) {
   uintptr_t               usraddr;
-  uintptr_t               last_page_num;
+  uintptr_t               last_usraddr;
   int                     host_prot;
   struct NaClVmmapIter    iter;
   struct NaClVmmapEntry   *entry;
@@ -1091,32 +1087,29 @@ static int32_t MprotectInternal(struct NaClApp *nap,
   host_prot = NaClProtMap(prot);
 
   usraddr = NaClSysToUser(nap, sysaddr);
-  last_page_num = (usraddr + length) >> NACL_PAGESHIFT;
+  last_usraddr = usraddr + length;
 
   NaClVmmapFindPageIter(&nap->mem_map,
                         usraddr,
                         &iter);
   entry = NaClVmmapIterStar(&iter);
 
-  CHECK(usraddr == (entry->page_num << NACL_PAGESHIFT));
+  CHECK(usraddr == entry->base);
 
   for (; !NaClVmmapIterAtEnd(&iter) &&
-           (NaClVmmapIterStar(&iter))->page_num < last_page_num;
+           (NaClVmmapIterStar(&iter))->base < last_usraddr;
        NaClVmmapIterIncr(&iter)) {
     uintptr_t addr;
-    size_t    entry_len;
 
     entry = NaClVmmapIterStar(&iter);
-
-    addr = NaClUserToSys(nap, entry->page_num << NACL_PAGESHIFT);
-    entry_len = entry->npages << NACL_PAGESHIFT;
+    addr = NaClUserToSys(nap, entry->base);
 
     NaClLog(3, "MprotectInternal: "
             "addr 0x%08"NACL_PRIxPTR", desc 0x%08"NACL_PRIxPTR"\n",
             addr, (uintptr_t) entry->desc);
 
     if (NULL == entry->desc) {
-      if (0 != mprotect((void *) addr, entry_len, host_prot)) {
+      if (0 != mprotect((void *) addr, entry->nbytes, host_prot)) {
         NaClLog(LOG_FATAL, "MprotectInternal: "
                 "mprotect on anonymous memory failed, errno = %d\n", errno);
         return -NaClXlateErrno(errno);
@@ -1128,7 +1121,7 @@ static int32_t MprotectInternal(struct NaClApp *nap,
 
       file_bytes = entry->file_size - entry->offset;
       rounded_file_bytes = NaClRoundPage((size_t) file_bytes);
-      prot_len = size_min(rounded_file_bytes, entry_len);
+      prot_len = size_min(rounded_file_bytes, entry->nbytes);
 
       if (0 != mprotect((void *) addr, prot_len, host_prot)) {
         NaClLog(LOG_FATAL, "MprotectInternal: "
@@ -1138,7 +1131,7 @@ static int32_t MprotectInternal(struct NaClApp *nap,
     }
   }
 
-  CHECK((entry->page_num + entry->npages) == last_page_num);
+  CHECK((entry->base + entry->nbytes) == last_usraddr);
 
   return 0;
 }
