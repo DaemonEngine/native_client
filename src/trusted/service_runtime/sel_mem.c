@@ -708,39 +708,6 @@ void  NaClVmmapVisit(struct NaClVmmap *self,
   }
 }
 
-
-/*
- * Linear search, from high addresses down.
- */
-uintptr_t NaClVmmapFindSpace(struct NaClVmmap *self,
-                             size_t           num_bytes) {
-  size_t                i;
-  struct NaClVmmapEntry *vmep;
-  uintptr_t             end_page;
-  uintptr_t             start_page;
-  size_t num_pages = PageDiv(self, num_bytes);
-
-  if (0 == self->nvalid)
-    return 0;
-  NaClVmmapMakeSorted(self);
-  for (i = self->nvalid; --i > 0; ) {
-    vmep = self->vmentry[i-1];
-    end_page = vmep->page_num + vmep->npages;  /* end page from previous */
-    start_page = self->vmentry[i]->page_num;  /* start page from current */
-    if (start_page - end_page >= num_pages) {
-      return (start_page - num_pages) << self->page_shift;
-    }
-  }
-  return 0;
-  /*
-   * in user addresses, page 0 is always trampoline, and user
-   * addresses are contained in system addresses, so returning an
-   * address of 0 can serve as error indicator: it is at
-   * worst the trampoline page, and likely to be below it.
-   */
-}
-
-
 /*
  * Linear search, from high addresses down.  For mmap, so the starting
  * address of the region found must be NACL_MAP_PAGESIZE aligned.
