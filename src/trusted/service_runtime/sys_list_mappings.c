@@ -91,8 +91,8 @@ static void NaClSysListMappingsVisit(void *statev,
   struct NaClSysListMappingsState *state =
       (struct NaClSysListMappingsState *) statev;
 
-  uint32_t start = (uint32_t) (vmep->page_num << NACL_PAGESHIFT);
-  uint32_t size = (uint32_t) (vmep->npages << NACL_PAGESHIFT);
+  uint32_t start = (uint32_t) vmep->base;
+  uint32_t size = (uint32_t) vmep->nbytes;
   uint32_t max_prot = NaClVmmapEntryMaxProt(vmep);
   /* Skip dynamic code region as its parts will be visited separately. */
   if (state->nap->dynamic_text_start == start &&

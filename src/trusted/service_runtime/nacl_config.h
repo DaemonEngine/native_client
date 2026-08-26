@@ -40,9 +40,6 @@
 # error "NACL_MAP_PAGESHIFT smaller than NACL_PAGESHIFT"
 #endif
 
-/* NACL_MAP_PAGESIFT >= NACL_PAGESHIFT must hold */
-#define NACL_PAGES_PER_MAP            (1 << (NACL_MAP_PAGESHIFT-NACL_PAGESHIFT))
-
 #define NACL_MEMORY_ALLOC_RETRY_MAX   256 /* see win/sel_memory.c */
 
 /*

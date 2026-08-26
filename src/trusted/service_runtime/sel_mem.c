@@ -23,6 +23,7 @@
 #include "native_client/src/shared/platform/nacl_host_desc.h"
 #include "native_client/src/trusted/desc/nacl_desc_base.h"
 #include "native_client/src/trusted/desc/nacl_desc_io.h"
+#include "native_client/src/trusted/service_runtime/arch/sel_ldr_arch.h"
 #include "native_client/src/trusted/service_runtime/sel_mem.h"
 #include "native_client/src/trusted/service_runtime/sel_util.h"
 #include "native_client/src/trusted/service_runtime/nacl_config.h"
@@ -33,9 +34,10 @@
 #define START_ENTRIES   5   /* tramp+text, rodata, data, bss, stack */
 #define REMOVE_MARKED_DEBUG 0
 
-static size_t PageDiv(struct NaClVmmap *self, uintptr_t n) {
-  CHECK((n & self->page_mask) == 0);
-  return n >> self->page_shift;
+static void PageCheck(struct NaClVmmap *self, uintptr_t n) {
+  if (n & self->page_mask) {
+    NaClLog(LOG_FATAL, "sel_mem.c: argument not page multiple");
+  }
 }
 
 /*
@@ -43,12 +45,9 @@ static size_t PageDiv(struct NaClVmmap *self, uintptr_t n) {
  * may have different access protections.  We do not yet merge regions
  * with the same access protections together to reduce the region
  * number, but may do so in the future.
- *
- * Regions are described by (relative) starting page number, the
- * number of pages, and the protection that the pages should have.
  */
-struct NaClVmmapEntry *NaClVmmapEntryMake(uintptr_t         page_num,
-                                          size_t            npages,
+struct NaClVmmapEntry *NaClVmmapEntryMake(uintptr_t         base,
+                                          size_t            nbytes,
                                           int               prot,
                                           int               flags,
                                           struct NaClDesc   *desc,
@@ -59,14 +58,21 @@ struct NaClVmmapEntry *NaClVmmapEntryMake(uintptr_t         page_num,
   NaClLog(4,
           "NaClVmmapEntryMake(0x%"NACL_PRIxPTR",0x%"NACL_PRIxS","
           "0x%x,0x%x,0x%"NACL_PRIxPTR",0x%"NACL_PRIx64")\n",
-          page_num, npages, prot, flags, (uintptr_t) desc, offset);
+          base, nbytes, prot, flags, (uintptr_t) desc, offset);
   entry = (struct NaClVmmapEntry *) malloc(sizeof *entry);
   if (NULL == entry) {
     return 0;
   }
   NaClLog(4, "entry: 0x%"NACL_PRIxPTR"\n", (uintptr_t) entry);
-  entry->page_num = page_num;
-  entry->npages = npages;
+  /*
+   * On x86-64 the end address can wrap around and overflow a 32-bit integer
+   * (this happens with the stack allocation), but on 32-bit flatforms there
+   * is less address space. So generally we should not overflow a size_t on
+   * any platform.
+   */
+  CHECK(base + nbytes <= (((size_t) 1) << NACL_MAX_ADDR_BITS));
+  entry->base = base;
+  entry->nbytes = nbytes;
   entry->prot = prot;
   entry->flags = flags;
   entry->removed = 0;
@@ -86,7 +92,7 @@ void  NaClVmmapEntryFree(struct NaClVmmapEntry *entry) {
            "): (0x%"NACL_PRIxPTR",0x%"NACL_PRIxS","
            "0x%x,0x%x,0x%"NACL_PRIxPTR",0x%"NACL_PRIx64")\n"),
           (uintptr_t) entry,
-          entry->page_num, entry->npages, entry->prot,
+          entry->base, entry->nbytes, entry->prot,
           entry->flags, (uintptr_t) entry->desc, entry->offset);
 
   if (entry->desc != NULL) {
@@ -103,8 +109,8 @@ void NaClVmentryPrint(void                  *state,
                       struct NaClVmmapEntry *vmep) {
   NACL_UNUSED_PARAMETER(state);
 
-  printf("page num 0x%06x\n", (uint32_t)vmep->page_num);
-  printf("num pages %d\n", (uint32_t)vmep->npages);
+  printf("base addr 0x%08x\n", (uint32_t)vmep->base);
+  printf("size %d\n", (uint32_t)vmep->nbytes);
   printf("prot bits %x\n", vmep->prot);
   printf("flags %x\n", vmep->flags);
   fflush(stdout);
@@ -130,7 +136,6 @@ int NaClVmmapCtor(struct NaClVmmap *self) {
   }
   self->nvalid = 0;
   self->is_sorted = 1;
-  self->page_shift = NACL_PAGESHIFT;
   self->page_mask = NACL_PAGESIZE - 1;
   return 1;
 }
@@ -158,7 +163,10 @@ static int NaClVmmapCmpEntries(void const  *vleft,
   struct NaClVmmapEntry const *const *right =
       (struct NaClVmmapEntry const *const *) vright;
 
-  return (int) ((*left)->page_num - (*right)->page_num);
+  if ((*left)->base < (*right)->base) {
+    return -1;
+  }
+  return (*left)->base > (*right)->base;
 }
 
 
@@ -280,15 +288,15 @@ void NaClVmmapAdd(struct NaClVmmap  *self,
                   nacl_off64_t      offset,
                   nacl_off64_t      file_size) {
   struct NaClVmmapEntry *entry;
-  size_t page_num = PageDiv(self, untrusted_start_addr);
-  size_t npages = PageDiv(self, nbytes);
 
   NaClLog(2,
           ("NaClVmmapAdd(0x%08"NACL_PRIxPTR", 0x%"NACL_PRIxPTR", "
            "0x%"NACL_PRIxS", 0x%x, 0x%x, 0x%"NACL_PRIxPTR", "
            "0x%"NACL_PRIx64")\n"),
-          (uintptr_t) self, page_num, npages, prot, flags,
+          (uintptr_t) self, untrusted_start_addr, nbytes, prot, flags,
           (uintptr_t) desc, offset);
+  PageCheck(self, untrusted_start_addr);
+  PageCheck(self, nbytes);
   if (self->nvalid == self->size) {
     size_t                    new_size = 2 * self->size;
     struct NaClVmmapEntry     **new_map;
@@ -302,7 +310,7 @@ void NaClVmmapAdd(struct NaClVmmap  *self,
     self->size = new_size;
   }
   /* self->nvalid < self->size */
-  entry = NaClVmmapEntryMake(page_num, npages, prot, flags,
+  entry = NaClVmmapEntryMake(untrusted_start_addr, nbytes, prot, flags,
       desc, offset, file_size);
 
   self->vmentry[self->nvalid] = entry;
@@ -326,59 +334,57 @@ static void NaClVmmapUpdate(struct NaClVmmap  *self,
                             nacl_off64_t      file_size) {
   /* update existing entries or create new entry as needed */
   size_t                i;
-  uintptr_t             page_num = PageDiv(self, untrusted_start_addr);
-  size_t                npages = PageDiv(self, nbytes);
-  uintptr_t             new_region_end_page = page_num + npages;
+  uintptr_t             untrusted_end_addr = untrusted_start_addr + nbytes;
 
   NaClLog(2,
           ("NaClVmmapUpdate(0x%08"NACL_PRIxPTR", 0x%"NACL_PRIxPTR", "
            "0x%"NACL_PRIxS", 0x%x, 0x%x, %d, 0x%"NACL_PRIxPTR", "
            "0x%"NACL_PRIx64")\n"),
-          (uintptr_t) self, page_num, npages, prot, flags,
+          (uintptr_t) self, untrusted_start_addr, nbytes, prot, flags,
           remove, (uintptr_t) desc, offset);
   NaClVmmapMakeSorted(self);
 
-  CHECK(npages > 0);
+  PageCheck(self, untrusted_start_addr);
+  PageCheck(self, nbytes);
+  CHECK(untrusted_end_addr > untrusted_start_addr);
 
   for (i = 0; i < self->nvalid; i++) {
     struct NaClVmmapEntry *ent = self->vmentry[i];
-    uintptr_t             ent_end_page = ent->page_num + ent->npages;
-    nacl_off64_t          additional_offset =
-        (new_region_end_page - ent->page_num) << self->page_shift;
+    uintptr_t             ent_end_addr = ent->base + ent->nbytes;
+    nacl_off64_t          additional_offset = untrusted_end_addr - ent->base;
 
-
-    if (ent->page_num < page_num && new_region_end_page < ent_end_page) {
+    if (ent->base < untrusted_start_addr && untrusted_end_addr < ent_end_addr) {
       /*
        * Split existing mapping into two parts, with new mapping in
        * the middle.
        */
       NaClVmmapAdd(self,
-                   new_region_end_page << self->page_shift,
-                   (ent_end_page - new_region_end_page) << self->page_shift,
+                   untrusted_end_addr,
+                   ent_end_addr - untrusted_end_addr,
                    ent->prot,
                    ent->flags,
                    ent->desc,
                    ent->offset + additional_offset,
                    ent->file_size);
-      ent->npages = page_num - ent->page_num;
+      ent->nbytes = untrusted_start_addr - ent->base;
       break;
-    } else if (ent->page_num < page_num && page_num < ent_end_page) {
+    } else if (ent->base < untrusted_start_addr && untrusted_start_addr < ent_end_addr) {
       /* New mapping overlaps end of existing mapping. */
-      ent->npages = page_num - ent->page_num;
-    } else if (ent->page_num < new_region_end_page &&
-               new_region_end_page < ent_end_page) {
+      ent->nbytes = untrusted_start_addr - ent->base;
+    } else if (ent->base < untrusted_end_addr &&
+               untrusted_end_addr < ent_end_addr) {
       /* New mapping overlaps start of existing mapping. */
-      ent->page_num = new_region_end_page;
-      ent->npages = ent_end_page - new_region_end_page;
+      ent->base = untrusted_end_addr;
+      ent->nbytes = ent_end_addr - untrusted_end_addr;
       ent->offset += additional_offset;
       break;
-    } else if (page_num <= ent->page_num &&
-               ent_end_page <= new_region_end_page) {
+    } else if (untrusted_start_addr <= ent->base &&
+               ent_end_addr <= untrusted_end_addr) {
       /* New mapping covers all of the existing mapping. */
       ent->removed = 1;
     } else {
       /* No overlap */
-      assert(new_region_end_page <= ent->page_num || ent_end_page <= page_num);
+      assert(untrusted_end_addr <= ent->base || ent_end_addr <= untrusted_start_addr);
     }
   }
 
@@ -428,25 +434,25 @@ void NaClVmmapRemove(struct NaClVmmap   *self,
  * Precondition: mappings are sorted
  */
 static int NaClVmmapCheckExistingMapping(struct NaClVmmap  *self,
-                                         uintptr_t         page_num,
-                                         size_t            npages,
+                                         uintptr_t         start_addr,
+                                         size_t            nbytes,
                                          int               prot) {
   size_t      i;
-  uintptr_t   region_end_page = page_num + npages;
+  uintptr_t   end_addr = start_addr + nbytes;
 
   NaClLog(2,
           ("NaClVmmapCheckExistingMapping(0x%08"NACL_PRIxPTR", 0x%"NACL_PRIxPTR
            ", 0x%"NACL_PRIxS", 0x%x)\n"),
-          (uintptr_t) self, page_num, npages, prot);
+          (uintptr_t) self, start_addr, nbytes, prot);
 
   for (i = 0; i < self->nvalid; ++i) {
     struct NaClVmmapEntry   *ent = self->vmentry[i];
-    uintptr_t               ent_end_page = ent->page_num + ent->npages;
+    uintptr_t               ent_end_addr = ent->base + ent->nbytes;
     int                     legal_flags;
 
-    if (page_num >= ent_end_page) {
+    if (start_addr >= ent_end_addr) {
       continue;
-    } else if (page_num < ent->page_num) {
+    } else if (start_addr < ent->base) {
       return 0;  /* found unmapped region */
     }
 
@@ -455,12 +461,12 @@ static int NaClVmmapCheckExistingMapping(struct NaClVmmap  *self,
       return 0;
     }
 
-    if (ent_end_page >= region_end_page) {
+    if (ent_end_addr >= end_addr) {
       return 1;
     }
 
-    page_num = ent_end_page;
-    npages = region_end_page - ent_end_page;
+    start_addr = ent_end_addr;
+    nbytes = end_addr - ent_end_addr;
   }
   return 0;
 }
@@ -471,9 +477,10 @@ int NaClVmmapChangeProt(struct NaClVmmap   *self,
                         int                prot) {
   size_t      i;
   size_t      nvalid;
-  uintptr_t   page_num = PageDiv(self, untrusted_start_addr);
-  uintptr_t   npages = PageDiv(self, nbytes);
-  uintptr_t   new_region_end_page = page_num + npages;
+  uintptr_t   untrusted_end_addr = untrusted_start_addr + nbytes;
+
+  PageCheck(self, untrusted_start_addr);
+  PageCheck(self, nbytes);
 
   /*
    * NaClVmmapCheckExistingMapping should be always called before
@@ -481,14 +488,14 @@ int NaClVmmapChangeProt(struct NaClVmmap   *self,
    * as modifications cannot be rolled back.
    */
   NaClVmmapMakeSorted(self);
-  if (!NaClVmmapCheckExistingMapping(self, page_num, npages, prot)) {
+  if (!NaClVmmapCheckExistingMapping(self, untrusted_start_addr, nbytes, prot)) {
     return 0;
   }
 
   NaClLog(2,
           ("NaClVmmapChangeProt(0x%08"NACL_PRIxPTR", 0x%"NACL_PRIxPTR
            ", 0x%"NACL_PRIxS", 0x%x)\n"),
-          (uintptr_t) self, page_num, npages, prot);
+          (uintptr_t) self, untrusted_start_addr, nbytes, prot);
 
   /*
    * This loop & interval boundary tests closely follow those in
@@ -497,78 +504,77 @@ int NaClVmmapChangeProt(struct NaClVmmap   *self,
    * TODO(phosek): use better data structure which will support intervals
    */
 
-  for (i = 0, nvalid = self->nvalid; i < nvalid && npages > 0; i++) {
+  for (i = 0, nvalid = self->nvalid; i < nvalid && nbytes > 0; i++) {
     struct NaClVmmapEntry *ent = self->vmentry[i];
-    uintptr_t             ent_end_page = ent->page_num + ent->npages;
-    nacl_off64_t          additional_offset =
-        (new_region_end_page - ent->page_num) << self->page_shift;
+    uintptr_t             ent_end_addr = ent->base + ent->nbytes;
+    nacl_off64_t          additional_offset = untrusted_end_addr - ent->base;
 
-    if (ent->page_num < page_num && new_region_end_page < ent_end_page) {
+    if (ent->base < untrusted_start_addr && untrusted_end_addr < ent_end_addr) {
       /* Split existing mapping into two parts */
       NaClVmmapAdd(self,
-                   new_region_end_page << self->page_shift,
-                   (ent_end_page - new_region_end_page) << self->page_shift,
+                   untrusted_end_addr,
+                   ent_end_addr - untrusted_end_addr,
                    ent->prot,
                    ent->flags,
                    ent->desc,
                    ent->offset + additional_offset,
                    ent->file_size);
-      ent->npages = page_num - ent->page_num;
+      ent->nbytes = untrusted_start_addr - ent->base;
       /* Add the new mapping into the middle. */
       NaClVmmapAdd(self,
-                   page_num << self->page_shift,
-                   npages << self->page_shift,
+                   untrusted_start_addr,
+                   nbytes,
                    prot,
                    ent->flags,
                    ent->desc,
-                   ent->offset + (page_num - ent->page_num),
+                   ent->offset + (untrusted_start_addr - ent->base),
                    ent->file_size);
       return 1;
-    } else if (ent->page_num < page_num && page_num < ent_end_page) {
+    } else if (ent->base < untrusted_start_addr && untrusted_start_addr < ent_end_addr) {
       /* New mapping overlaps end of existing mapping. */
-      ent->npages = page_num - ent->page_num;
+      ent->nbytes = untrusted_start_addr - ent->base;
       /* Add the overlapping part of the mapping. */
       NaClVmmapAdd(self,
-                   page_num << self->page_shift,
-                   (ent_end_page - page_num) << self->page_shift,
+                   untrusted_start_addr,
+                   ent_end_addr - untrusted_start_addr,
                    prot,
                    ent->flags,
                    ent->desc,
-                   ent->offset + (page_num - ent->page_num),
+                   ent->offset + (untrusted_start_addr - ent->base),
                    ent->file_size);
       /* The remaining part (if any) will be added in other iteration. */
-      page_num = ent_end_page;
-      npages = new_region_end_page - ent_end_page;
-    } else if (ent->page_num < new_region_end_page &&
-               new_region_end_page < ent_end_page) {
+      untrusted_start_addr = ent_end_addr;
+      nbytes = untrusted_end_addr - ent_end_addr;
+    } else if (ent->base < untrusted_end_addr &&
+               untrusted_end_addr < ent_end_addr) {
       /* New mapping overlaps start of existing mapping, split it. */
-      DCHECK(page_num == ent->page_num);
+      DCHECK(untrusted_start_addr == ent->base);
       NaClVmmapAdd(self,
-                   page_num << self->page_shift,
-                   npages << self->page_shift,
+                   untrusted_start_addr,
+                   nbytes,
                    prot,
                    ent->flags,
                    ent->desc,
                    ent->offset,
                    ent->file_size);
-      ent->page_num = new_region_end_page;
-      ent->npages = ent_end_page - new_region_end_page;
+      ent->base = untrusted_end_addr;
+      ent->nbytes = ent_end_addr - untrusted_end_addr;
       ent->offset += additional_offset;
       return 1;
 
-    } else if (page_num <= ent->page_num &&
-               ent_end_page <= new_region_end_page) {
-      DCHECK(page_num == ent->page_num);
+    } else if (untrusted_start_addr <= ent->base &&
+               ent_end_addr <= untrusted_end_addr) {
+      DCHECK(untrusted_start_addr == ent->base);
       /* New mapping covers all of the existing mapping. */
-      page_num = ent_end_page;
-      npages = new_region_end_page - ent_end_page;
+      untrusted_start_addr = ent_end_addr;
+      nbytes = untrusted_end_addr - ent_end_addr;
       ent->prot = prot;
     } else {
       /* No overlap */
-      DCHECK(ent_end_page <= page_num);
+      DCHECK(ent_end_addr <= untrusted_start_addr);
     }
   }
-  DCHECK(npages == 0);
+  DCHECK(nbytes == 0);
   return 1;
 }
 
@@ -605,13 +611,8 @@ static int NaClVmmapContainCmpEntries(void const *vkey,
   struct NaClVmmapEntry const *const *ent =
       (struct NaClVmmapEntry const *const *) vent;
 
-  NaClLog(5, "key->page_num   = 0x%05"NACL_PRIxPTR"\n", (*key)->page_num);
-
-  NaClLog(5, "entry->page_num = 0x%05"NACL_PRIxPTR"\n", (*ent)->page_num);
-  NaClLog(5, "entry->npages   = 0x%"NACL_PRIxS"\n", (*ent)->npages);
-
-  if ((*key)->page_num < (*ent)->page_num) return -1;
-  if ((*key)->page_num < (*ent)->page_num + (*ent)->npages) return 0;
+  if ((*key)->base < (*ent)->base) return -1;
+  if ((*key)->base < (*ent)->base + (*ent)->nbytes) return 0;
   return 1;
 }
 
@@ -620,10 +621,10 @@ struct NaClVmmapEntry const *NaClVmmapFindPage(struct NaClVmmap *self,
   struct NaClVmmapEntry key;
   struct NaClVmmapEntry *kptr;
   struct NaClVmmapEntry *const *result_ptr;
-  uintptr_t pnum = PageDiv(self, untrusted_addr);
+  PageCheck(self, untrusted_addr);
 
   NaClVmmapMakeSorted(self);
-  key.page_num = pnum;
+  key.base = untrusted_addr;
   kptr = &key;
   result_ptr = ((struct NaClVmmapEntry *const *)
                 bsearch(&kptr,
@@ -641,10 +642,10 @@ struct NaClVmmapIter *NaClVmmapFindPageIter(struct NaClVmmap      *self,
   struct NaClVmmapEntry key;
   struct NaClVmmapEntry *kptr;
   struct NaClVmmapEntry **result_ptr;
-  uintptr_t pnum = PageDiv(self, untrusted_addr);
+  PageCheck(self, untrusted_addr);
 
   NaClVmmapMakeSorted(self);
-  key.page_num = pnum;
+  key.base = untrusted_addr;
   kptr = &key;
   result_ptr = ((struct NaClVmmapEntry **)
                 bsearch(&kptr,
@@ -708,6 +709,11 @@ void  NaClVmmapVisit(struct NaClVmmap *self,
   }
 }
 
+/* Does not check overflow */
+static size_t RoundUpToMapMultiple(size_t num_bytes) {
+  return (num_bytes + NACL_MAP_PAGESIZE - 1) & ~(NACL_MAP_PAGESIZE - 1);
+}
+
 /*
  * Linear search, from high addresses down.  For mmap, so the starting
  * address of the region found must be NACL_MAP_PAGESIZE aligned.
@@ -720,31 +726,28 @@ uintptr_t NaClVmmapFindMapSpace(struct NaClVmmap *self,
                                 size_t           num_bytes) {
   size_t                i;
   struct NaClVmmapEntry *vmep;
-  uintptr_t             end_page;
-  uintptr_t             start_page;
-  size_t num_pages = PageDiv(self, num_bytes); // FIXME just round directly to map size?
+  uintptr_t             end_addr;
+  uintptr_t             start_addr;
+
+  CHECK(num_bytes != 0 && num_bytes % NACL_MAP_PAGESIZE == 0);
 
   if (0 == self->nvalid)
     return 0;
   NaClVmmapMakeSorted(self);
-  num_pages = NaClRoundPageNumUpToMapMultiple(num_pages);
 
   for (i = self->nvalid; --i > 0; ) {
     vmep = self->vmentry[i-1];
-    end_page = vmep->page_num + vmep->npages;  /* end page from previous */
-    end_page = NaClRoundPageNumUpToMapMultiple(end_page);
+    end_addr = vmep->base + vmep->nbytes;  /* end address from previous */
+    end_addr = RoundUpToMapMultiple(end_addr);
 
-    start_page = self->vmentry[i]->page_num;  /* start page from current */
-    if (NACL_MAP_PAGESHIFT > self->page_shift) {
+    start_addr = self->vmentry[i]->base;  /* start address from current */
+    start_addr &= ~(NACL_MAP_PAGESHIFT - 1);
 
-      start_page = NaClTruncPageNumDownToMapMultiple(start_page);
-
-      if (start_page <= end_page) {
-        continue;
-      }
+    if (start_addr <= end_addr) {
+      continue;
     }
-    if (start_page - end_page >= num_pages) {
-      return (start_page - num_pages) << self->page_shift;
+    if (start_addr - end_addr >= num_bytes) {
+      return start_addr - num_bytes;
     }
   }
   return 0;
@@ -766,38 +769,35 @@ uintptr_t NaClVmmapFindMapSpaceAboveHint(struct NaClVmmap *self,
   size_t                nvalid;
   size_t                i;
   struct NaClVmmapEntry *vmep;
-  uintptr_t             usr_page;
-  uintptr_t             start_page;
-  uintptr_t             end_page;
-  size_t num_pages = PageDiv(self, num_bytes); // FIXME just round directly to map size?
+  uintptr_t             start_addr;
+  uintptr_t             end_addr;
+  uintptr_t             space_start;
 
   NaClVmmapMakeSorted(self);
 
-  usr_page = uaddr >> self->page_shift;
-  num_pages = NaClRoundPageNumUpToMapMultiple(num_pages);
+  CHECK(uaddr % NACL_MAP_PAGESIZE == 0);
+  CHECK(num_bytes != 0 && num_bytes % NACL_MAP_PAGESIZE == 0);
 
   nvalid = self->nvalid;
 
   for (i = 1; i < nvalid; ++i) {
     vmep = self->vmentry[i-1];
-    end_page = vmep->page_num + vmep->npages;
-    end_page = NaClRoundPageNumUpToMapMultiple(end_page);
+    end_addr = vmep->base + vmep->nbytes;
+    end_addr = RoundUpToMapMultiple(end_addr);
 
-    start_page = self->vmentry[i]->page_num;
-    if (NACL_MAP_PAGESHIFT > self->page_shift) {
+    start_addr = self->vmentry[i]->base;
+    start_addr &= ~(NACL_MAP_PAGESIZE - 1);
 
-      start_page = NaClTruncPageNumDownToMapMultiple(start_page);
-
-      if (start_page <= end_page) {
-        continue;
-      }
+    if (start_addr <= end_addr) {
+      continue;
     }
-    if (end_page <= usr_page && usr_page < start_page) {
-      end_page = usr_page;
+    if (start_addr <= uaddr) {
+      continue;
     }
-    if (usr_page <= end_page && (start_page - end_page) >= num_pages) {
+    space_start = uaddr > end_addr ? uaddr : end_addr;
+    if (start_addr - space_start >= num_bytes) {
       /* found a gap at or after uaddr that's big enough */
-      return end_page << self->page_shift;
+      return space_start;
     }
   }
   return 0;
