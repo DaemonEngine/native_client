@@ -185,14 +185,13 @@ TEST_F(SelMemTest, FindPageTest) {
 TEST_F(SelMemTest, FindSpaceTest) {
   struct NaClVmmap mem_map;
   uintptr_t ret_code;
-  int pagesize;
+  int pagesize = 65536 /*NACL_MAP_PAGESIZE*/;
 
   ret_code = NaClVmmapCtor(&mem_map);
   EXPECT_EQ(1U, ret_code);
-  pagesize = 1 << mem_map.page_shift;
 
   // no entry
-  ret_code = NaClVmmapFindSpace(&mem_map, 32 * pagesize);
+  ret_code = NaClVmmapFindMapSpace(&mem_map, 32 * pagesize);
   EXPECT_EQ(0U, ret_code);
 
   NaClVmmapAdd(&mem_map,
@@ -205,7 +204,7 @@ TEST_F(SelMemTest, FindSpaceTest) {
                0);
   EXPECT_EQ(1, static_cast<int>(mem_map.nvalid));
   // one entry only
-  ret_code = NaClVmmapFindSpace(&mem_map, 2 * pagesize);
+  ret_code = NaClVmmapFindMapSpace(&mem_map, 2 * pagesize);
   EXPECT_EQ(0U, ret_code);
 
   NaClVmmapAdd(&mem_map,
@@ -219,10 +218,10 @@ TEST_F(SelMemTest, FindSpaceTest) {
   EXPECT_EQ(2U, mem_map.nvalid);
 
   // the space is [32, 42], [64, 74]
-  ret_code = NaClVmmapFindSpace(&mem_map, 32 * pagesize);
+  ret_code = NaClVmmapFindMapSpace(&mem_map, 32 * pagesize);
   EXPECT_EQ(0U, ret_code);
 
-  ret_code = NaClVmmapFindSpace(&mem_map, 2 * pagesize);
+  ret_code = NaClVmmapFindMapSpace(&mem_map, 2 * pagesize);
   EXPECT_EQ(62U * pagesize, ret_code);
 
   NaClVmmapAdd(&mem_map,
@@ -237,7 +236,7 @@ TEST_F(SelMemTest, FindSpaceTest) {
 
   // vmmap is [32, 42], [64, 74], [96, 106]
   // the search is from high address down
-  ret_code = NaClVmmapFindSpace(&mem_map, 22 * pagesize);
+  ret_code = NaClVmmapFindMapSpace(&mem_map, 22 * pagesize);
   EXPECT_EQ(74U * pagesize, ret_code);
 
   NaClVmmapDtor(&mem_map);
