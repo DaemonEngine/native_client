@@ -24,9 +24,9 @@
 static uint16_t NaClAllocateSegmentForCodeRegion(struct NaClApp *nap) {
   uintptr_t code_start = nap->mem_start;
   size_t    code_bytes = nap->dynamic_text_end;
-  size_t    code_pages = code_bytes >> NACL_PAGESHIFT;
+  size_t    code_pages = code_bytes >> NACL_X86_PAGESHIFT;
 
-  VCHECK((code_bytes & ((1 << NACL_PAGESHIFT) - 1)) == 0,
+  VCHECK((code_bytes & ((1 << NACL_X86_PAGESHIFT) - 1)) == 0,
         ("code_bytes (0x%08"NACL_PRIxS") is not page aligned\n",
          code_bytes));
 
@@ -64,9 +64,9 @@ static uint16_t NaClAllocateSegmentForCodeRegion(struct NaClApp *nap) {
 static uint16_t NaClAllocateSegmentForDataRegion(struct NaClApp *nap) {
   uintptr_t           data_start = nap->mem_start;
   size_t              data_pages = ((size_t) 1U <<
-                                    (nap->addr_bits - NACL_PAGESHIFT));
+                                    (nap->addr_bits - NACL_X86_PAGESHIFT));
 
-  CHECK(nap->addr_bits > NACL_PAGESHIFT);
+  CHECK(nap->addr_bits > NACL_X86_PAGESHIFT);
 
   if (data_pages < 1) {
     NaClLog(LOG_FATAL,
