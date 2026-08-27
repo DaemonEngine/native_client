@@ -149,6 +149,9 @@
  */
 #if NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86
 
+# define NACL_X86_PAGESHIFT 12
+# define NACL_X86_PAGESIZE (1 << NACL_X86_PAGESHIFT)
+
 # define NACL_BLOCK_SHIFT         (5)
 
 # define NACL_NOOP_OPCODE    0x90

@@ -24,6 +24,10 @@
 #include "native_client/src/trusted/service_runtime/sel_memory.h"
 #include "native_client/src/trusted/service_runtime/sel_util.h"
 
+static INLINE int /* bool */ NaClIsPageMultiple(uintptr_t addr_or_size) {
+  return 0 == ((NACL_X86_PAGESIZE - 1) & addr_or_size);
+}
+
 /*
  * NaClPageFree: free pages allocated with NaClPageAlloc.
  * Must start at allocation granularity (NACL_MAP_PAGESIZE) and
@@ -81,10 +85,10 @@ int NaClPageAllocAtAddr(void **p, size_t num_bytes) {
 
   NaClLog(3, "NaClPageAlloc(*, 0x%"NACL_PRIxS")\n", num_bytes);
   GetSystemInfo(&sys_info);
-  if (NACL_PAGESIZE != sys_info.dwPageSize) {
+  if (NACL_X86_PAGESIZE != sys_info.dwPageSize) {
     NaClLog(2, "page size is 0x%x; expected 0x%x\n",
             sys_info.dwPageSize,
-            NACL_PAGESIZE);
+            NACL_X86_PAGESIZE);
   }
   if (NACL_MAP_PAGESIZE != sys_info.dwAllocationGranularity) {
     NaClLog(LOG_ERROR, "allocation granularity is 0x%x; expected 0x%x\n",

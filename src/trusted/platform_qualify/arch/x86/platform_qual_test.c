@@ -31,7 +31,7 @@
 void TestDEPCheckFailurePath(void) {
   /* DEP is not guaranteed to work on x86-32. */
 #if !(NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86 && NACL_BUILD_SUBARCH == 32)
-  size_t size = NACL_PAGESIZE;
+  size_t size = NACL_X86_PAGESIZE;
   void *page;
   CHECK(NaClPageAlloc(&page, size) == 0);
 
