@@ -117,13 +117,15 @@ int NaClAppWithEmptySyscallTableCtor(struct NaClApp *nap) {
   nap->initial_entry_pt = 0;
   nap->user_entry_pt = 0;
 
+  nap->page_size = NACL_PAGESIZE;
+
   if (!DynArrayCtor(&nap->threads, 2)) {
     goto cleanup_cpu_features;
   }
   if (!DynArrayCtor(&nap->desc_tbl, 2)) {
     goto cleanup_threads;
   }
-  if (!NaClVmmapCtor(&nap->mem_map)) {
+  if (!NaClVmmapCtor(&nap->mem_map, nap->page_size)) {
     goto cleanup_desc_tbl;
   }
 

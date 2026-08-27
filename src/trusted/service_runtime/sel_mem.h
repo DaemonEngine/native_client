@@ -72,7 +72,7 @@ struct NaClVmmapEntry *NaClVmmapIterStar(struct NaClVmmapIter *nvip);
 void                  NaClVmmapIterIncr(struct NaClVmmapIter *nvip);
 void                  NaClVmmapIterErase(struct NaClVmmapIter *nvip);
 
-int   NaClVmmapCtor(struct NaClVmmap  *self) NACL_WUR;
+int   NaClVmmapCtor(struct NaClVmmap  *self, size_t page_size) NACL_WUR;
 
 void  NaClVmmapDtor(struct NaClVmmap  *self);
 
