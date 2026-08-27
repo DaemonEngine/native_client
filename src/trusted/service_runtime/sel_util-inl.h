@@ -17,8 +17,8 @@
  * NaClRoundPage is a bit of a misnomer -- it always rounds up to a
  * page size, not the nearest.
  */
-static INLINE size_t  NaClRoundPage(size_t    nbytes) {
-  return (nbytes + NACL_PAGESIZE - 1) & ~((size_t) NACL_PAGESIZE - 1);
+static INLINE size_t  NaClRoundPage(size_t nbytes, size_t pagesize) {
+  return (nbytes + pagesize - 1) & ~(pagesize - 1);
 }
 
 static INLINE size_t  NaClRoundAllocPage(size_t    nbytes) {
@@ -31,17 +31,6 @@ static INLINE size_t NaClTruncAllocPage(size_t  nbytes) {
 
 static INLINE int /* bool */ NaClIsAllocPageMultiple(uintptr_t addr_or_size) {
   return 0 == ((NACL_MAP_PAGESIZE - 1) & addr_or_size);
-}
-
-/*
- * True host-OS allocation unit.
- */
-static INLINE size_t NaClRoundHostAllocPage(size_t  nbytes) {
-#if NACL_WINDOWS
-  return NaClRoundAllocPage(nbytes);
-#else   /* NACL_WINDOWS */
-  return NaClRoundPage(nbytes);
-#endif  /* !NACL_WINDOWS */
 }
 
 #endif  /* NATIVE_CLIENT_SRC_TRUSTED_SERVICE_RUNTIME_SEL_UTIL_INL_H_ */

@@ -102,7 +102,7 @@ const int kInstructionBundleSize = 16;
 static void AddBreakpoints(struct NaClApp *nap,
                            uintptr_t start, uintptr_t end) {
   size_t size = end - start;
-  size_t page_mask = NACL_PAGESIZE - 1;
+  size_t page_mask = nap->page_size - 1;
   uintptr_t page_addr = start & ~page_mask;
   uintptr_t mapping_size = ((end + page_mask) & ~page_mask) - page_addr;
   int rc;

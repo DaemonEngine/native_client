@@ -380,6 +380,8 @@ struct NaClApp {
    */
   int sc_nprocessors_onln;
 
+  size_t page_size;
+
   const struct NaClValidatorInterface *validator;
 
 #if !NACL_LINUX

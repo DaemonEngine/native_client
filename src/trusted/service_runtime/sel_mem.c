@@ -125,7 +125,7 @@ void NaClVmmapDebug(struct NaClVmmap *self,
 }
 
 
-int NaClVmmapCtor(struct NaClVmmap *self) {
+int NaClVmmapCtor(struct NaClVmmap *self, size_t page_size) {
   self->size = START_ENTRIES;
   if (SIZE_T_MAX / sizeof *self->vmentry < self->size) {
     return 0;
@@ -136,7 +136,7 @@ int NaClVmmapCtor(struct NaClVmmap *self) {
   }
   self->nvalid = 0;
   self->is_sorted = 1;
-  self->page_mask = NACL_PAGESIZE - 1;
+  self->page_mask = page_size - 1;
   return 1;
 }
 

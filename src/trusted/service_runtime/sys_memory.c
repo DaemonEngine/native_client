@@ -304,12 +304,17 @@ int32_t NaClSysMmapIntern(struct NaClApp        *nap,
     if ((nacl_off64_t) kMaxUsableFileSize < file_bytes) {
       host_rounded_file_bytes = kMaxUsableFileSize;
     } else {
-      host_rounded_file_bytes = NaClRoundHostAllocPage((size_t) file_bytes);
+      /* Round to the true host-OS allocation unit. */
+#if NACL_WINDOWS
+      host_rounded_file_bytes = NaClRoundAllocPage((size_t) file_bytes);
+#else
+      host_rounded_file_bytes = NaClRoundPage((size_t) file_bytes, nap->page_size);
+#endif
     }
 
     CHECK(host_rounded_file_bytes <= (nacl_off64_t) kMaxUsableFileSize);
     /*
-     * We need to deal with NaClRoundHostAllocPage rounding up to zero
+     * We need to deal with NaClRound(Alloc)Page rounding up to zero
      * from ~0u - n, where n < 4096 or 65536 (== 1 alloc page).
      *
      * Luckily, file_bytes is at most kMaxUsableFileSize which is
@@ -1053,7 +1058,7 @@ static int32_t MprotectInternal(struct NaClApp *nap,
 
       file_bytes = entry->file_size - offset;
       chunk_size = size_min((size_t) file_bytes, NACL_MAP_PAGESIZE);
-      rounded_chunk_size = NaClRoundPage(chunk_size);
+      rounded_chunk_size = NaClRoundPage(chunk_size, nap->page_size);
 
       NaClLog(4, "VirtualProtect(0x%08x, 0x%"NACL_PRIxS", %x)\n",
               addr, rounded_chunk_size, flProtect);
@@ -1120,7 +1125,7 @@ static int32_t MprotectInternal(struct NaClApp *nap,
       size_t            prot_len;
 
       file_bytes = entry->file_size - entry->offset;
-      rounded_file_bytes = NaClRoundPage((size_t) file_bytes);
+      rounded_file_bytes = NaClRoundPage((size_t) file_bytes, nap->page_size);
       prot_len = size_min(rounded_file_bytes, entry->nbytes);
 
       if (0 != mprotect((void *) addr, prot_len, host_prot)) {

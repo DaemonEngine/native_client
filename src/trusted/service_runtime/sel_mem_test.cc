@@ -29,11 +29,10 @@ TEST_F(SelMemTest, AddTest) {
   struct NaClVmmap mem_map;
   int start_page_num = 32;
   int ret_code;
-  int pagesize;
+  int pagesize = 4096;
 
-  ret_code = NaClVmmapCtor(&mem_map);
+  ret_code = NaClVmmapCtor(&mem_map, pagesize);
   EXPECT_EQ(1, ret_code);
-  pagesize = mem_map.page_mask + 1;
 
   for (int i = 1; i <= 5; ++i) {
     NaClVmmapAdd(&mem_map,
@@ -65,10 +64,9 @@ TEST_F(SelMemTest, AddTest) {
 
 TEST_F(SelMemTest, UpdateTest) {
   struct NaClVmmap mem_map;
-  int pagesize;
+  int pagesize = 16384;
 
-  EXPECT_EQ(1, NaClVmmapCtor(&mem_map));
-  pagesize = mem_map.page_mask + 1;
+  EXPECT_EQ(1, NaClVmmapCtor(&mem_map, pagesize));
 
   // 1st region
   NaClVmmapAddWithOverwrite(&mem_map,
@@ -142,11 +140,10 @@ TEST_F(SelMemTest, UpdateTest) {
 TEST_F(SelMemTest, FindPageTest) {
   struct NaClVmmap mem_map;
   int ret_code;
-  int pagesize;
+  int pagesize = 65536;
 
-  ret_code = NaClVmmapCtor(&mem_map);
+  ret_code = NaClVmmapCtor(&mem_map, pagesize);
   EXPECT_EQ(1, ret_code);
-  pagesize = mem_map.page_mask + 1;
 
   struct NaClVmmapEntry const *entry;
   entry = NaClVmmapFindPage(&mem_map, 32 * pagesize);
@@ -187,7 +184,7 @@ TEST_F(SelMemTest, FindSpaceTest) {
   uintptr_t ret_code;
   int pagesize = 65536 /*NACL_MAP_PAGESIZE*/;
 
-  ret_code = NaClVmmapCtor(&mem_map);
+  ret_code = NaClVmmapCtor(&mem_map, 4096);
   EXPECT_EQ(1U, ret_code);
 
   // no entry
