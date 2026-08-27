@@ -729,7 +729,7 @@ int32_t NaClSysMmapIntern(struct NaClApp        *nap,
    * with PROT_NONE pages.
    *
    * Windows forces us to expose a mixture of 64k and 4k pages, and we
-   * expose the same mappings on other platforms.  For example,
+   * expose the same mappings on other 4k page platforms.  For example,
    * suppose untrusted code requests to map 0x40000 bytes from a file
    * of extent 0x100.  We will create the following regions:
    *
@@ -745,6 +745,11 @@ int32_t NaClSysMmapIntern(struct NaClApp        *nap,
    * mapped as accessible.  This is unfortunate because it interferes
    * with how ELF dynamic linkers usually like to set up an ELF
    * object's BSS.
+   *
+   * On arm64 Linux hosts (running 32-bit ARM NaCl), 16k or 64k pages are also
+   * possible, and the system-specific difference will be visible: 16k
+   * granularity of inaccessible pages after the end of the file, or none at
+   * all in the case of 64k.
    */
   /* inaccessible: [length, alloc_rounded_length) */
   if (length < alloc_rounded_length) {

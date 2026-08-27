@@ -406,3 +406,7 @@ int NaClMadvise(void *start, size_t length, int advice) {
   NaClLog(5, "NaClMadvise: done\n");
   return 0;
 }
+
+size_t NaClGetPageSize(void) {
+  return NACL_X86_PAGESIZE;
+}

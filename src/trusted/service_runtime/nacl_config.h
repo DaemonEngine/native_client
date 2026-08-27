@@ -30,15 +30,8 @@
 #define NACL_INSTR_BLOCK_SIZE         (1 << NACL_INSTR_BLOCK_SHIFT)
 
 /* this must be a multiple of the system page size */
-#define NACL_PAGESHIFT                12
-#define NACL_PAGESIZE                 (1U << NACL_PAGESHIFT)
-
 #define NACL_MAP_PAGESHIFT            16
 #define NACL_MAP_PAGESIZE             (1U << NACL_MAP_PAGESHIFT)
-
-#if NACL_MAP_PAGESHIFT < NACL_PAGESHIFT
-# error "NACL_MAP_PAGESHIFT smaller than NACL_PAGESHIFT"
-#endif
 
 #define NACL_MEMORY_ALLOC_RETRY_MAX   256 /* see win/sel_memory.c */
 

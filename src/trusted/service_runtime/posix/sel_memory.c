@@ -22,6 +22,7 @@
 #include "native_client/src/include/build_config.h"
 #include "native_client/src/include/nacl_platform.h"
 #include "native_client/src/include/portability.h"
+#include "native_client/src/shared/platform/nacl_check.h"
 #include "native_client/src/shared/platform/nacl_exit.h"
 #include "native_client/src/shared/platform/nacl_global_secure_random.h"
 #include "native_client/src/shared/platform/nacl_log.h"
@@ -170,4 +171,10 @@ int NaClMadvise(void *start, size_t length, int advice) {
    * MADV_DONTNEED and MADV_NORMAL are needed
    */
   return ret == -1 ? -errno : ret;
+}
+
+size_t NaClGetPageSize(void) {
+  long size = sysconf(_SC_PAGESIZE);
+  CHECK(size > 0);
+  return (size_t) size;
 }
