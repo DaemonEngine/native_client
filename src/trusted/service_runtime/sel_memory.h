@@ -29,6 +29,9 @@ int NaClMprotect(void *addr, size_t len, int prot) NACL_WUR;
 
 int NaClMadvise(void *start, size_t length, int advice) NACL_WUR;
 
+/* Host system page size */
+size_t NaClGetPageSize(void) NACL_WUR;
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

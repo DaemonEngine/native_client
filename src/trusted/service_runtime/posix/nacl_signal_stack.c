@@ -15,6 +15,7 @@
 #include "native_client/src/trusted/service_runtime/nacl_config.h"
 #include "native_client/src/trusted/service_runtime/nacl_signal.h"
 
+#include "native_client/src/trusted/service_runtime/sel_memory.h"
 
 /*
  * NaCl uses POSIX signal handling on Linux, but not on Mac OS X.  We
@@ -32,7 +33,9 @@ static uint64_t g_signal_stack_size;
  */
 #define SIG_STACK_SIZE_DEFAULT (SIGSTKSZ + 4096ul)
 
-#define STACK_GUARD_SIZE NACL_PAGESIZE
+static size_t StackGuardSize(void) {
+  return NaClGetPageSize();
+}
 
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 
@@ -55,15 +58,16 @@ int NaClSignalStackAllocate(void **result) {
    */
   uint8_t *stack;
   size_t stack_size = MAX(g_signal_stack_size, SIG_STACK_SIZE_DEFAULT);
+  size_t guard_size = StackGuardSize();
 
-  stack = mmap(NULL, stack_size + STACK_GUARD_SIZE,
+  stack = mmap(NULL, stack_size + guard_size,
                PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON,
                -1, 0);
   if (stack == MAP_FAILED) {
     return 0;
   }
   /* We assume that the stack grows downwards. */
-  if (mprotect(stack, STACK_GUARD_SIZE, PROT_NONE) != 0) {
+  if (mprotect(stack, guard_size, PROT_NONE) != 0) {
     NaClLog(LOG_FATAL, "Failed to mprotect() the stack guard page:\n\t%s\n",
             strerror(errno));
   }
@@ -74,7 +78,7 @@ int NaClSignalStackAllocate(void **result) {
 void NaClSignalStackFree(void *stack) {
   size_t stack_size = MAX(g_signal_stack_size, SIG_STACK_SIZE_DEFAULT);
   CHECK(stack != NULL);
-  if (munmap(stack, stack_size + STACK_GUARD_SIZE) != 0) {
+  if (munmap(stack, stack_size + StackGuardSize()) != 0) {
     NaClLog(LOG_FATAL, "Failed to munmap() signal stack:\n\t%s\n",
             strerror(errno));
   }
@@ -90,7 +94,7 @@ void NaClSignalStackRegister(void *stack) {
    */
   stack_t st;
   st.ss_size = MAX(g_signal_stack_size, SIG_STACK_SIZE_DEFAULT);
-  st.ss_sp = ((uint8_t *) stack) + STACK_GUARD_SIZE;
+  st.ss_sp = ((uint8_t *) stack) + StackGuardSize();
   st.ss_flags = 0;
   if (sigaltstack(&st, NULL) != 0) {
     NaClLog(LOG_FATAL, "Failed to register signal stack:\n\t%s\n",
