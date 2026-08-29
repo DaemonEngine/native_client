@@ -43,6 +43,19 @@ static int NaClThreadCreate(struct NaClThread  *ntp,
   if (stack_size < PTHREAD_STACK_MIN) {
     stack_size = PTHREAD_STACK_MIN;
   }
+#if NACL_ARCH(NACL_BUILD_ARCH) == NACL_arm
+  /*
+   * Actual limit found when running under a 64K page size arm64 kernel.
+   * `getconf PTHREAD_STACK_MIN` is 131072 there, but
+   * sysconf(_SC_THREAD_STACK_MIN) wrongly returns 16384 inside the 32-bit
+   * process.
+   */
+  if (stack_size < 65536) {
+    stack_size = 65536;
+  }
+#endif
+
+
   if (0 != (code = pthread_attr_init(&attr))) {
     NaClLog(LOG_ERROR,
             "NaClThreadCtor: pthread_atr_init returned %d\n",
