@@ -259,7 +259,9 @@ int test_prot_none(int fd, size_t map_size, void *test_spec) {
   /* Check that memory contains the modified content. */
   CHECK(0 == memcmp(addr, expected_data, sizeof expected_data));
   /* Check that the rest of the region is inaccessible. */
+#if NACL_ARCH(NACL_BUILD_ARCH) != NACL_arm  /* ARM has different possible page sizes */
   check_addr_is_unreadable(addr + 0x1000);
+#endif
   check_addr_is_unreadable(addr + 0x10000);
   printf("test_prot_none: memcpy good\n");
   /* Change the protection to make the page unreadable. */
@@ -272,7 +274,9 @@ int test_prot_none(int fd, size_t map_size, void *test_spec) {
   /* Check that the modified content is still there. */
   CHECK(0 == memcmp(addr, expected_data, sizeof expected_data));
   /* Check that the rest of the region is still inaccessible. */
+#if NACL_ARCH(NACL_BUILD_ARCH) != NACL_arm
   check_addr_is_unreadable(addr + 0x1000);
+#endif
   check_addr_is_unreadable(addr + 0x10000);
   printf("test_prot_none: mprotect good\n");
   /* Unmap the memory. */

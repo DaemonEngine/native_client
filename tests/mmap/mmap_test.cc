@@ -25,6 +25,7 @@
 
 const char *example_file;
 const char *tmp_dir;
+unsigned long page_size;
 
 /*
  * function failed(testname, msg)
@@ -508,14 +509,22 @@ bool test_mmap_end_of_file() {
     }
   }
   /*
-   * Addresses beyond the first 4k should not be readable.  This is
-   * one case where we expose a 4k page size rather than a 64k page
+   * Addresses beyond the first page should not be readable.  This is
+   * one case where we expose system page size rather than a 64k page
    * size.  Windows forces us to expose a mixture of 4k and 64k page
    * sizes for end-of-file mappings.
    * See http://code.google.com/p/nativeclient/issues/detail?id=824
    */
-  assert_addr_is_unreadable(alloc + 0x1000);
-  assert_addr_is_unreadable(alloc + 0x2000);
+  if (page_size <= 0x1000) {
+    assert_addr_is_unreadable(alloc + 0x1000);
+  } else {
+    assert(alloc[0x1000] == '\0');
+  }
+  if (page_size <= 0x2000) {
+    assert_addr_is_unreadable(alloc + 0x1000);
+  } else {
+    assert(alloc[0x2000] == '\0');
+  }
   assert_addr_is_unreadable(alloc + 0x10000);
   assert_addr_is_unreadable(alloc + 0x11000);
   assert_page_is_allocated(alloc);
@@ -626,12 +635,13 @@ bool testSuite() {
 int main(const int argc, const char *argv[]) {
   bool passed;
 
-  if (argc != 3) {
-    printf("Error: Expected test file and temp dir args\n");
+  if (argc != 4) {
+    printf("Error: Expected test file, temp dir, and page size args\n");
     return 1;
   }
   example_file = argv[1];
   tmp_dir = argv[2];
+  page_size = strtoul(argv[3], NULL, 0);
 
   // run the full test suite
   passed = testSuite();
