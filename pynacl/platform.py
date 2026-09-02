@@ -200,7 +200,7 @@ def PlatformTripleSaigo(platform=None, machine=None):
 def KillSubprocessAndChildren(proc):
   """Kill a subprocess and all children.
 
-  While this is trivial on Posix platforms, on Windows this requires some
+  On Windows this requires some
   method for walking the process tree. Relying on this functionality in
   the taskkill.exe utility for now.
 
@@ -210,8 +210,10 @@ def KillSubprocessAndChildren(proc):
   if IsWindows():
     # Do subprocess call as the process may terminate before we manage
     # to invoke taskkill.
+    # TODO: use job object instead?
     subprocess.call(
         [os.path.join(os.environ['SYSTEMROOT'], 'System32', 'taskkill.exe'),
         '/F', '/T', '/PID', str(proc.pid)])
   else:
+    # TODO: implement for *nix. This kills only the one process
     proc.kill()

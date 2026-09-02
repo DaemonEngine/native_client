@@ -1,0 +1,128 @@
+trigger:
+  branches:
+    include:
+      - master
+
+pr:
+  branches:
+    include:
+      - '*'
+
+strategy:
+  matrix:
+    Linux amd64 GCC:
+      VM_IMAGE: 'ubuntu-22.04'
+      SDK_PLATFORM: linux-amd64
+      APT_PACKAGES: g++-10
+      SCONS_BUILD_ARGS: platform=x86-64 --mode=opt-host,nacl --no-clang werror=0
+      SCONS_TESTS: small_tests medium_tests large_tests
+      VPYTHON: pyenv/bin/python
+    Linux i686 GCC:
+      VM_IMAGE: 'ubuntu-22.04'
+      APT_ARCHITECTURE: i386
+      SDK_PLATFORM: linux-amd64
+      APT_PACKAGES: g++-i686-linux-gnu libc6:i386
+      SCONS_BUILD_ARGS: platform=x86-32 --mode=opt-host,nacl --no-clang werror=0
+      SCONS_TESTS: small_tests medium_tests large_tests
+      VPYTHON: pyenv/bin/python
+    Linux armhf GCC:
+      # There is an IO bug in qemu-arm from ubuntu-22.04.
+      VM_IMAGE: 'ubuntu-24.04'
+      SDK_PLATFORM: arm-xxx
+      APT_PACKAGES: g++-arm-linux-gnueabihf qemu-user
+      SCONS_BUILD_ARGS: platform=arm --mode=opt-host,nacl --no-clang werror=0
+      SCONS_TESTS: no_gdb_tests=1 small_tests medium_tests
+      VPYTHON: pyenv/bin/python
+    Linux amd64 Clang:
+      VM_IMAGE: 'ubuntu-22.04'
+      SDK_PLATFORM: linux-amd64
+      SCONS_BUILD_ARGS: platform=x86-64 --mode=opt-host,nacl --clang werror=1
+      SCONS_TESTS: small_tests medium_tests large_tests
+      VPYTHON: pyenv/bin/python
+    macOS amd64 AppleClang:
+      VM_IMAGE: 'macOS-15'
+      SDK_PLATFORM: macos-amd64
+      SCONS_BUILD_ARGS: platform=x86-64 --mode=opt-host,nacl --clang werror=1
+      SCONS_TESTS: all_tests
+      VPYTHON: pyenv/bin/python
+      NPROC_COMMAND: sysctl -n hw.logicalcpu
+    Windows amd64 MSVC:
+      VM_IMAGE: 'windows-2025'
+      SDK_PLATFORM: windows-amd64
+      SCONS_BUILD_ARGS: platform=x86-64 --mode=opt-host,nacl --no-clang werror=1 mingw_dir=mingw/mingw
+      SCONS_TESTS: small_tests medium_tests large_tests disable_tests=run_toolchain_python_tests
+      VPYTHON: pyenv/Scripts/python
+      PYTHON_PACKAGES: pywin32
+      MINGW_URL: https://github.com/niXman/mingw-builds-binaries/releases/download/16.1.0-rt_v14-rev1/x86_64-16.1.0-release-posix-seh-msvcrt-rt_v14-rev1.7z
+    Windows i686 MSVC:
+      VM_IMAGE: 'windows-2025'
+      SDK_PLATFORM: windows-amd64
+      SCONS_BUILD_ARGS: platform=x86-32 --mode=opt-host,nacl --no-clang werror=1 mingw_dir=mingw/mingw
+      VPYTHON: pyenv/Scripts/python
+      PYTHON_PACKAGES: pywin32
+      MINGW_URL: https://github.com/niXman/mingw-builds-binaries/releases/download/16.1.0-rt_v14-rev1/i686-16.1.0-release-posix-dwarf-msvcrt-rt_v14-rev1.7z
+    Windows amd64 MinGW:
+      VM_IMAGE: 'windows-2025'
+      SDK_PLATFORM: windows-amd64
+      SCONS_BUILD_ARGS: platform=x86-64 --mode=opt-host,nacl --no-clang mingw=1 werror=1 mingw_dir=mingw/mingw
+      SCONS_TESTS: small_tests medium_tests large_tests disable_tests=run_toolchain_python_tests
+      VPYTHON: pyenv/Scripts/python
+      PYTHON_PACKAGES: pywin32
+      MINGW_URL: https://github.com/niXman/mingw-builds-binaries/releases/download/16.1.0-rt_v14-rev1/x86_64-16.1.0-release-posix-seh-msvcrt-rt_v14-rev1.7z
+
+pool:
+  vmImage: $(VM_IMAGE)
+
+steps:
+- bash: |
+    set -xue
+    CURL() {
+        curl -fsSL --retry 8 "$@"
+    }
+    if [ -n "${APT_ARCHITECTURE:-}" ]; then
+      sudo dpkg --add-architecture "${APT_ARCHITECTURE}"
+    fi
+    if [ -n "${APT_PACKAGES:-}" ]; then
+      sudo apt-get update && sudo apt-get -y -q --no-install-recommends install ${APT_PACKAGES}
+    fi
+    python3 -m venv pyenv
+    # TODO pin scons to a specific version?
+    $(VPYTHON) -m pip install SCons ${PYTHON_PACKAGES:-}
+    mkdir sdk
+    (
+      cd sdk
+      if [ "$(SDK_PLATFORM)" = "arm-xxx" ]; then
+        sdk_url='https://dl.illwieckz.net/b/saigo/preview/saigo_newlib_20241119.txz'
+      else
+        sdk_url='https://github.com/DaemonEngine/saigo-nacl-sdk/releases/download/v20260805/saigosdk-$(SDK_PLATFORM)_21.0-20260805.tar.xz'
+      fi
+      CURL "$sdk_url" -o sdk.tar.xz
+      tar -xJf sdk.tar.xz
+      rm sdk.tar.xz
+      mv * sdk  # Rename the top-level dir to sdk
+    )
+    if [ -n "${MINGW_URL:-}" ]; then
+      mkdir mingw
+      (
+        cd mingw
+        CURL $(MINGW_URL) -o mingw.7z
+        7z x mingw.7z
+        rm mingw.7z
+        mv * mingw  # Rename the top-level dir to mingw
+      )
+    fi
+  displayName: 'Setup'
+
+- bash: |
+    set -xue
+    parallelism="$(${NPROC_COMMAND:-nproc})"
+    echo "Build parallelism: ${parallelism}"
+    $(VPYTHON) -m SCons saigo=1 saigo_newlib_dir=sdk/sdk ${SCONS_BUILD_ARGS} all_programs -j${parallelism} --verbose
+  displayName: 'Build'
+
+- bash: |
+    set -xue
+    parallelism="$(${NPROC_COMMAND:-nproc})"
+    $(VPYTHON) -m SCons saigo=1 saigo_newlib_dir=sdk/sdk ${SCONS_BUILD_ARGS} ${SCONS_TESTS} -j${parallelism} --verbose --keep-going disable_flaky_tests=1
+  condition: and(succeeded(), ne(variables['SCONS_TESTS'], ''))
+  displayName: 'Test'

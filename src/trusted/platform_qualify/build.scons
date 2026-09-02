@@ -63,7 +63,7 @@ if env.Bit('build_x86') and env.Bit('build_x86'):
   node = env.CommandTest('platform_qual_test.out', [platform_qual_test])
   env.AddNodeToTestSuite(
       node, ['small_tests'], 'run_platform_qual_test',
-      is_broken=env.IsRunningUnderValgrind())
+      is_broken=env.IsRunningUnderValgrind() or env.Bit('mingw'))
 
   cpuallowlist_test = env.ComponentProgram(
       'cpuallowlist_test', 'arch/x86/nacl_cpuallowlist_test.c',

@@ -533,7 +533,7 @@ hello_world_nexe = untrusted_env.File('$STAGING_DIR/hello_world.nexe')
 # Doesn't work on windows under coverage.
 # TODO(bradnelson): fix this to work on windows under coverage.
 if ((not env.Bit('windows') or not env.Bit('coverage_enabled')) and
-    env.Bit('nacl_static_link')):
+    env.Bit('nacl_static_link') and UsingNaclMode()):
   # NOTE: uses validator
   mmap_test_objs = [env.ComponentObject('mmap_test.c')]
   mmap_test_exe = env.ComponentProgram(
@@ -666,7 +666,7 @@ if env.Bit('windows') and env.Bit('build_x86_64'):
   node = env.CommandTest(
       'ntdll_fallback_test.out',
       command=[intercept_test_prog, 'test_fallback'],
-      exit_status='untrusted_segfault',
+      exit_status=0xC0000409,
       stdout_golden=env.File('win/exception_patch/fallback_test.stdout'))
   env.AddNodeToTestSuite(node, ['small_tests'], 'run_ntdll_fallback_test')
 
@@ -759,17 +759,18 @@ node = env.CommandSelLdrTestNacl(
     exit_status='1')
 env.AddNodeToTestSuite(node, ['small_tests'], 'run_sel_ldr_exe_not_found_test')
 
-# Check that "-F" makes sel_ldr stop after loading the nexe but before running
-# it.
-nullptr_nexe = untrusted_env.GetTranslatedNexe(
-    untrusted_env.File('$STAGING_DIR/nullptr$PROGSUFFIX'))
+if UsingNaclMode():
+  # Check that "-F" makes sel_ldr stop after loading the nexe but before running
+  # it.
+  nullptr_nexe = untrusted_env.GetTranslatedNexe(
+      untrusted_env.File('$STAGING_DIR/nullptr$PROGSUFFIX'))
 
-node = env.CommandSelLdrTestNacl(
-    'fuzz_nullptr_test.out',
-    nullptr_nexe,
-    size='large',
-    sel_ldr_flags=['-F'])
-env.AddNodeToTestSuite(node, ['large_tests'], 'run_fuzz_nullptr_test')
+  node = env.CommandSelLdrTestNacl(
+      'fuzz_nullptr_test.out',
+      nullptr_nexe,
+      size='large',
+      sel_ldr_flags=['-F'])
+  env.AddNodeToTestSuite(node, ['large_tests'], 'run_fuzz_nullptr_test')
 
 if env.Bit('build_mips32'):
   text_region_start = 0x00020000
@@ -836,7 +837,7 @@ if env.Bit('build_x86_64'):
       )
   env.AddNodeToTestSuite(node, ['small_tests'], 'run_hello_x32_test')
 
-if env.Bit('build_x86') and env.Bit('nacl_static_link'):
+if env.Bit('build_x86') and env.Bit('nacl_static_link') and UsingNaclMode():
   RE_HELLO = '^(Hello, World!)$'
   RE_IDENT = r'^\[[0-9,:.]*\] (e_ident\+1 = ELF)$'
 

@@ -115,29 +115,27 @@ def CommunicateWithTimeout(proc, input_data=None, timeout=None):
   if timeout == 0:
     timeout = None
 
-  result = []
-  def Target():
-    result.append(list(proc.communicate(input_data)))
-
-  thread = threading.Thread(target=Target)
-  thread.start()
-  thread.join(timeout)
-  if thread.is_alive():
+  try:
+    out, err = proc.communicate(input_data, timeout)
+  except subprocess.TimeoutExpired:
     sys.stderr.write('\nAttempting to kill test due to timeout!\n')
-    # This will kill the process which should force communicate to return with
-    # any partial output.
-    pynacl.platform.KillSubprocessAndChildren(proc)
-    # Thus result should ALWAYS contain something after this join.
-    thread.join()
+    try:
+      if pynacl.platform.IsWindows():
+        raise  # Skip to the kill all part
+      proc.send_signal(signal.SIGINT)
+      out, err = result = proc.communicate(timeout=3)
+    except subprocess.TimeoutExpired:
+      sys.stderr.write('\nForcibly killing test due to timeout!\n')
+      pynacl.platform.KillSubprocessAndChildren(proc)
+      out, err = proc.communicate()
     msg = '\n\nKilled test due to timeout!\n'
     sys.stderr.write(msg)
     # Also append to stderr.
-    result[0][1] += (msg.encode('ascii') if isinstance(result[0][1], bytes) else msg)
+    err += (msg.encode('ascii') if isinstance(err, bytes) else msg)
     returncode = -9
   else:
     returncode = proc.returncode
-  assert len(result) == 1
-  return tuple(result[0]) + (returncode,)
+  return out, err, returncode
 
 
 def RunTestWithInput(cmd, input_data, timeout=None):
