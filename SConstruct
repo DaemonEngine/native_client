@@ -637,7 +637,6 @@ nacl_glibc_skiplist = set([
     'run_abi_test',
     # Syscall wrappers not implemented yet.
     'run_sysbasic_test',
-    'run_sysbrk_test',
     # Fails because clock() is not hooked up.
     'run_timefuncs_test',
     # Needs further investigation.
@@ -3222,11 +3221,9 @@ irt_only_tests = [
     #### ALPHABETICALLY SORTED ####
     'tests/elf_loader/nacl.scons',
     'tests/irt/nacl.scons',
-    'tests/irt_compatibility/nacl.scons',
     'tests/irt_entry_alignment/nacl.scons',
     'tests/irt_ext/nacl.scons',
     'tests/irt_stack_alignment/nacl.scons',
-    'tests/sbrk/nacl.scons',
     'tests/translator_size_limits/nacl.scons',
     ]
 
