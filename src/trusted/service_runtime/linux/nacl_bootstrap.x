@@ -79,6 +79,11 @@ SECTIONS {
   .rodata : {
     *(.rodata*)
     *(.eh_frame*)
+    /*
+     * Pad to 64k to avoid unmapped holes when the page size is less than 64k.
+     * Unfortunately this takes up actual space in the file.
+     */
+    . = ALIGN(CONSTANT(MAXPAGESIZE));
   }
 
   etext = .;
@@ -96,6 +101,11 @@ SECTIONS {
   } :data
   .bss : {
     *(.bss*)
+    /*
+     * Padding for the data segment, as for the text segment in .rodata.
+     * This time it luckily doesn't use any disk space, being part of bss.
+     */
+    . = ALIGN(CONSTANT(MAXPAGESIZE));
   }
 
   /*
@@ -108,7 +118,7 @@ SECTIONS {
    * It just maps it from the file, i.e. way off the end of the file,
    * which is perfect for reserving the address space.
    */
-  . = ALIGN(CONSTANT(COMMONPAGESIZE));
+  . = ALIGN(CONSTANT(MAXPAGESIZE));
   RESERVE_START = .;
   .reserve : {
     . += (RESERVE_TOP > RESERVE_START) ? (RESERVE_TOP - RESERVE_START) : 0;
