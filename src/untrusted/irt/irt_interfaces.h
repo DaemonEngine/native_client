@@ -15,8 +15,6 @@ extern const struct nacl_irt_dev_fdio nacl_irt_dev_fdio;
 extern const struct nacl_irt_filename nacl_irt_filename;
 extern const struct nacl_irt_dev_filename_v0_2 nacl_irt_dev_filename_v0_2;
 extern const struct nacl_irt_dev_filename nacl_irt_dev_filename;
-extern const struct nacl_irt_memory_v0_1 nacl_irt_memory_v0_1;
-extern const struct nacl_irt_memory_v0_2 nacl_irt_memory_v0_2;
 extern const struct nacl_irt_memory nacl_irt_memory;
 extern const struct nacl_irt_dyncode nacl_irt_dyncode;
 extern const struct nacl_irt_thread nacl_irt_thread;

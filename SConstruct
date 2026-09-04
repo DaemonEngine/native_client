@@ -637,7 +637,6 @@ nacl_glibc_skiplist = set([
     'run_abi_test',
     # Syscall wrappers not implemented yet.
     'run_sysbasic_test',
-    'run_sysbrk_test',
     # Fails because clock() is not hooked up.
     'run_timefuncs_test',
     # Needs further investigation.
@@ -2738,6 +2737,8 @@ def MakeGenericLinuxEnv(platform=None):
       LINK = '$CXX',
   )
 
+  linux_env.SetDefault(MAX_PAGE_SIZE='0x1000')
+
   # Prepend so we can disable warnings via Append
   linux_env.Prepend(
       CPPDEFINES = [['_POSIX_C_SOURCE', '199506'],
@@ -2757,6 +2758,7 @@ def MakeGenericLinuxEnv(platform=None):
         LINKFLAGS = ['-m64'] + sysroot_flags,
         )
   elif linux_env.Bit('build_arm'):
+    linux_env.Replace(MAX_PAGE_SIZE='0x10000')
     SetUpLinuxEnvArm(linux_env)
   elif linux_env.Bit('build_mips32'):
     SetUpLinuxEnvMips(linux_env)
@@ -2782,7 +2784,8 @@ def MakeGenericLinuxEnv(platform=None):
   linux_env.Prepend(SHLINKFLAGS=['$COMMON_LINKFLAGS'])
   linux_env.Prepend(COMMON_LINKFLAGS=['-Wl,-z,relro',
                                       '-Wl,-z,now',
-                                      '-Wl,-z,noexecstack'])
+                                      '-Wl,-z,noexecstack',
+                                      '-Wl,-z,max-page-size=${MAX_PAGE_SIZE}'])
   linux_env.Prepend(LINKFLAGS=['-pie'])
   # The ARM toolchain has a linker that doesn't handle the code its
   # compiler generates under -fPIE.
@@ -3222,11 +3225,9 @@ irt_only_tests = [
     #### ALPHABETICALLY SORTED ####
     'tests/elf_loader/nacl.scons',
     'tests/irt/nacl.scons',
-    'tests/irt_compatibility/nacl.scons',
     'tests/irt_entry_alignment/nacl.scons',
     'tests/irt_ext/nacl.scons',
     'tests/irt_stack_alignment/nacl.scons',
-    'tests/sbrk/nacl.scons',
     'tests/translator_size_limits/nacl.scons',
     ]
 

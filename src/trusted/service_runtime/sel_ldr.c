@@ -68,6 +68,19 @@ static int ShouldEnableDynamicLoading(void) {
   return !IsEnvironmentVariableSet("NACL_DISABLE_DYNAMIC_LOADING");
 }
 
+/*
+ * System page size must not be larger than NACL_MAP_PAGESIZE. Also, we
+ * hard-code the size for x86 in some places. Note that Rosetta emulation does
+ * fully implement 4k granularity despite the system page size being 16k.
+ */
+static int CheckPageSize(size_t size) {
+#if NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86
+  return size == NACL_X86_PAGESIZE;
+#else
+  return size >= 4096 && NACL_MAP_PAGESIZE % size == 0;
+#endif
+}
+
 int NaClAppWithEmptySyscallTableCtor(struct NaClApp *nap) {
   struct NaClDescEffectorLdr  *effp;
   int i;
@@ -117,13 +130,20 @@ int NaClAppWithEmptySyscallTableCtor(struct NaClApp *nap) {
   nap->initial_entry_pt = 0;
   nap->user_entry_pt = 0;
 
+  nap->page_size = NaClGetPageSize();
+  if (!CheckPageSize(nap->page_size)) {
+    NaClLog(LOG_ERROR, "Unsupported system page size: %" NACL_PRIuS,
+                       nap->page_size);
+    goto cleanup_cpu_features;
+  }
+
   if (!DynArrayCtor(&nap->threads, 2)) {
     goto cleanup_cpu_features;
   }
   if (!DynArrayCtor(&nap->desc_tbl, 2)) {
     goto cleanup_threads;
   }
-  if (!NaClVmmapCtor(&nap->mem_map)) {
+  if (!NaClVmmapCtor(&nap->mem_map, nap->page_size)) {
     goto cleanup_desc_tbl;
   }
 

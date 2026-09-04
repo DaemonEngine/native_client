@@ -23,9 +23,9 @@ struct NaClDesc;
 #define NACL_MAP_COPY   0x100
 
 /*
- * Interface is based on setting properties and query properties by
- * page numbers (addr >> NACL_PAGESHIFT) and the number of pages
- * affected (for setting properties).
+ * Data structure for keeping track of the memory regions currently mapped in
+ * untrusted address space. None of the functions here actually maps memory or
+ * changes protection.
  *
  * Initially, the address space is empty, with all memory
  * inaccessible.  As the program is loaded, pages are marked
@@ -39,8 +39,8 @@ struct NaClDesc;
  */
 
 struct NaClVmmapEntry {
-  uintptr_t         page_num;   /* base virtual addr >> NACL_PAGESHIFT */
-  size_t            npages;     /* number of pages */
+  uintptr_t         base;       /* base virtual addr */
+  size_t            nbytes;     /* size */
   int               prot;       /* mprotect attribute */
   int               flags;      /* mapping flags */
   int               removed;    /* flag set in NaClVmmapUpdate */
@@ -53,6 +53,7 @@ struct NaClVmmap {
   struct NaClVmmapEntry **vmentry;       /* must not overlap */
   size_t                nvalid, size;
   int                   is_sorted;
+  uintptr_t             page_mask;
 };
 
 void NaClVmmapDebug(struct NaClVmmap  *self,
@@ -71,7 +72,7 @@ struct NaClVmmapEntry *NaClVmmapIterStar(struct NaClVmmapIter *nvip);
 void                  NaClVmmapIterIncr(struct NaClVmmapIter *nvip);
 void                  NaClVmmapIterErase(struct NaClVmmapIter *nvip);
 
-int   NaClVmmapCtor(struct NaClVmmap  *self) NACL_WUR;
+int   NaClVmmapCtor(struct NaClVmmap  *self, size_t page_size) NACL_WUR;
 
 void  NaClVmmapDtor(struct NaClVmmap  *self);
 
@@ -81,8 +82,8 @@ void  NaClVmmapDtor(struct NaClVmmap  *self);
  * only when non-overlapping mappings are being added.
  */
 void  NaClVmmapAdd(struct NaClVmmap   *self,
-                   uintptr_t          page_num,
-                   size_t             npages,
+                   uintptr_t          untrusted_start_addr,
+                   size_t             nbytes,
                    int                prot,
                    int                flags,
                    struct NaClDesc    *desc,
@@ -94,8 +95,8 @@ void  NaClVmmapAdd(struct NaClVmmap   *self,
  * them if necessary to fit in the newly mapped region.
  */
 void  NaClVmmapAddWithOverwrite(struct NaClVmmap  *self,
-                                uintptr_t         page_num,
-                                size_t            npages,
+                                uintptr_t         untrusted_start_addr,
+                                size_t            nbytes,
                                 int               prot,
                                 int               flags,
                                 struct NaClDesc   *desc,
@@ -107,26 +108,26 @@ void  NaClVmmapAddWithOverwrite(struct NaClVmmap  *self,
  * mappings if necessary.
  */
 void  NaClVmmapRemove(struct NaClVmmap  *self,
-                      uintptr_t         page_num,
-                      size_t            npages);
+                      uintptr_t         untrusted_start_addr,
+                      size_t            nbytes);
 
 /*
  * NaClVmmapChangeProt updates the protection bits for the specified region.
  */
 int NaClVmmapChangeProt(struct NaClVmmap  *self,
-                        uintptr_t         page_num,
-                        size_t            npages,
+                        uintptr_t         untrusted_start_addr,
+                        size_t            nbytes,
                         int               prot);
 
 /*
- * NaClVmmapFindPage and NaClVmmapFindPageIter only works if pnum is
+ * NaClVmmapFindPage and NaClVmmapFindPageIter only works if untrusted_addr is
  * in the NaClVmmap.  If not, NULL and an AtEnd iterator is returned.
  */
 struct NaClVmmapEntry const *NaClVmmapFindPage(struct NaClVmmap *self,
-                                               uintptr_t        pnum);
+                                               uintptr_t        untrusted_addr);
 
 struct NaClVmmapIter *NaClVmmapFindPageIter(struct NaClVmmap      *self,
-                                            uintptr_t             pnum,
+                                            uintptr_t             untrusted_addr,
                                             struct NaClVmmapIter  *space);
 
 /*
@@ -138,23 +139,18 @@ void  NaClVmmapVisit(struct NaClVmmap   *self,
                      void               *state);
 
 /*
- * Returns page number starting at which there is a hole of at least
- * num_pages in size.  Linear search from high addresses on down.
- */
-uintptr_t NaClVmmapFindSpace(struct NaClVmmap *self,
-                             size_t           num_pages);
-
-/*
- * Just lke NaClVmmapFindSpace, except usage is intended for
+ * Returns address starting at which there is a hole of at least
+ * num_bytes in size.  Linear search from high addresses on down.
+ * Usage is intended for
  * NaClHostDescMap, so the starting address of the region found must
  * be NACL_MAP_PAGESIZE aligned.
  */
 uintptr_t NaClVmmapFindMapSpace(struct NaClVmmap *self,
-                                size_t           num_pages);
+                                size_t           num_bytes);
 
 uintptr_t NaClVmmapFindMapSpaceAboveHint(struct NaClVmmap *self,
                                          uintptr_t        uaddr,
-                                         size_t           num_pages);
+                                         size_t           num_bytes);
 
 void NaClVmmapMakeSorted(struct NaClVmmap  *self);
 

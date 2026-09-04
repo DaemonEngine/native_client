@@ -65,7 +65,7 @@ bool IPlatform::GetMemory(uint64_t virt, uint32_t len, void *dst) {
 
 bool IPlatform::SetMemory(struct NaClApp *nap, uint64_t virt, uint32_t len,
                           void *src) {
-  uintptr_t page_mask = NACL_PAGESIZE - 1;
+  uintptr_t page_mask = nap->page_size - 1;
   uintptr_t page = virt & ~page_mask;
   uintptr_t mapping_size = ((virt + len + page_mask) & ~page_mask) - page;
   bool is_code = virt + len <= nap->mem_start + nap->dynamic_text_end;

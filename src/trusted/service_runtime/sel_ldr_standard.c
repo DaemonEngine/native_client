@@ -278,10 +278,7 @@ NaClErrorCode NaClAppLoadFileAslr(struct NaClDesc *ndp,
    * page boundary.
    *
    * Memory allocation will use NaClRoundPage(nap->break_addr), but
-   * the system notion of break is always an exact address.  Even
-   * though we must allocate and make accessible multiples of pages,
-   * the linux-style brk system call (which returns current break on
-   * failure) permits a non-aligned address as argument.
+   * the system notion of break is always an exact address.
    */
   nap->break_addr = max_vaddr;
   nap->data_end = max_vaddr;

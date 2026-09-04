@@ -30,18 +30,8 @@
 #define NACL_INSTR_BLOCK_SIZE         (1 << NACL_INSTR_BLOCK_SHIFT)
 
 /* this must be a multiple of the system page size */
-#define NACL_PAGESHIFT                12
-#define NACL_PAGESIZE                 (1U << NACL_PAGESHIFT)
-
 #define NACL_MAP_PAGESHIFT            16
 #define NACL_MAP_PAGESIZE             (1U << NACL_MAP_PAGESHIFT)
-
-#if NACL_MAP_PAGESHIFT < NACL_PAGESHIFT
-# error "NACL_MAP_PAGESHIFT smaller than NACL_PAGESHIFT"
-#endif
-
-/* NACL_MAP_PAGESIFT >= NACL_PAGESHIFT must hold */
-#define NACL_PAGES_PER_MAP            (1 << (NACL_MAP_PAGESHIFT-NACL_PAGESHIFT))
 
 #define NACL_MEMORY_ALLOC_RETRY_MAX   256 /* see win/sel_memory.c */
 
@@ -77,7 +67,7 @@
  * The first 64KB (16 pages) are inaccessible.  On x86, this is to prevent
  * addr16/data16 attacks.
  */
-#define NACL_SYSCALL_START_ADDR       (16 << NACL_PAGESHIFT)
+#define NACL_SYSCALL_START_ADDR       (1 << NACL_MAP_PAGESHIFT)
 /* Macro for the start address of a specific trampoline.  */
 #define NACL_SYSCALL_ADDR(syscall_number) \
     (NACL_SYSCALL_START_ADDR + (syscall_number << NACL_SYSCALL_BLOCK_SHIFT))
@@ -151,6 +141,9 @@
  * constants that simplify making the C code architecture independent.
  */
 #if NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86
+
+# define NACL_X86_PAGESHIFT 12
+# define NACL_X86_PAGESIZE (1 << NACL_X86_PAGESHIFT)
 
 # define NACL_BLOCK_SHIFT         (5)
 

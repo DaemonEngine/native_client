@@ -126,7 +126,7 @@ NaClErrorCode NaClMemoryProtection(struct NaClApp *nap) {
   /* Add the zero page to the mmap */
   NaClVmmapAdd(&nap->mem_map,
                0,
-               NACL_SYSCALL_START_ADDR >> NACL_PAGESHIFT,
+               NACL_SYSCALL_START_ADDR,
                PROT_NONE,
                NACL_ABI_MAP_PRIVATE,
                NULL,
@@ -139,7 +139,8 @@ NaClErrorCode NaClMemoryProtection(struct NaClApp *nap) {
    * Immediately following that is the loaded text section.
    * These are collectively marked as PROT_READ | PROT_EXEC.
    */
-  region_size = NaClRoundPage(nap->static_text_end - NACL_SYSCALL_START_ADDR);
+  region_size = NaClRoundPage(nap->static_text_end - NACL_SYSCALL_START_ADDR,
+                              nap->page_size);
   NaClLog(3,
           ("Trampoline/text region start 0x%08"NACL_PRIxPTR","
            " size 0x%08"NACL_PRIxS", end 0x%08"NACL_PRIxPTR"\n"),
@@ -158,8 +159,8 @@ NaClErrorCode NaClMemoryProtection(struct NaClApp *nap) {
     return LOAD_MPROTECT_FAIL;
   }
   NaClVmmapAdd(&nap->mem_map,
-               NaClSysToUser(nap, start_addr) >> NACL_PAGESHIFT,
-               region_size >> NACL_PAGESHIFT,
+               NaClSysToUser(nap, start_addr),
+               region_size,
                NACL_ABI_PROT_READ | NACL_ABI_PROT_EXEC,
                NACL_ABI_MAP_PRIVATE,
                NULL,
@@ -184,8 +185,8 @@ NaClErrorCode NaClMemoryProtection(struct NaClApp *nap) {
      * NaClSysCommonAddrRangeContainsExecutablePages_mu().
      */
     NaClVmmapAdd(&nap->mem_map,
-                 NaClSysToUser(nap, start_addr) >> NACL_PAGESHIFT,
-                 region_size >> NACL_PAGESHIFT,
+                 NaClSysToUser(nap, start_addr),
+                 region_size,
                  NACL_ABI_PROT_READ | NACL_ABI_PROT_EXEC,
                  NACL_ABI_MAP_PRIVATE,
                  nap->text_shm,
@@ -208,8 +209,9 @@ NaClErrorCode NaClMemoryProtection(struct NaClApp *nap) {
     }
 
     start_addr = NaClUserToSys(nap, nap->rodata_start);
-    region_size = NaClRoundPage(NaClRoundAllocPage(rodata_end)
-                                - NaClSysToUser(nap, start_addr));
+    region_size = NaClRoundPage(
+        NaClRoundAllocPage(rodata_end) - NaClSysToUser(nap, start_addr),
+        nap->page_size);
     NaClLog(3,
             ("RO data region start 0x%08"NACL_PRIxPTR", size 0x%08"NACL_PRIxS","
              " end 0x%08"NACL_PRIxPTR"\n"),
@@ -228,8 +230,8 @@ NaClErrorCode NaClMemoryProtection(struct NaClApp *nap) {
       return LOAD_MPROTECT_FAIL;
     }
     NaClVmmapAdd(&nap->mem_map,
-                 NaClSysToUser(nap, start_addr) >> NACL_PAGESHIFT,
-                 region_size >> NACL_PAGESHIFT,
+                 NaClSysToUser(nap, start_addr),
+                 region_size,
                  NACL_ABI_PROT_READ,
                  NACL_ABI_MAP_PRIVATE,
                  NULL,
@@ -244,8 +246,9 @@ NaClErrorCode NaClMemoryProtection(struct NaClApp *nap) {
 
   if (0 != nap->data_start) {
     start_addr = NaClUserToSys(nap, NaClTruncAllocPage(nap->data_start));
-    region_size = NaClRoundPage(NaClRoundAllocPage(nap->data_end)
-                                - NaClSysToUser(nap, start_addr));
+    region_size = NaClRoundPage(
+        NaClRoundAllocPage(nap->data_end) - NaClSysToUser(nap, start_addr),
+        nap->page_size);
     NaClLog(3,
             ("RW data region start 0x%08"NACL_PRIxPTR", size 0x%08"NACL_PRIxS","
              " end 0x%08"NACL_PRIxPTR"\n"),
@@ -264,8 +267,8 @@ NaClErrorCode NaClMemoryProtection(struct NaClApp *nap) {
       return LOAD_MPROTECT_FAIL;
     }
     NaClVmmapAdd(&nap->mem_map,
-                 NaClSysToUser(nap, start_addr) >> NACL_PAGESHIFT,
-                 region_size >> NACL_PAGESHIFT,
+                 NaClSysToUser(nap, start_addr),
+                 region_size,
                  NACL_ABI_PROT_READ | NACL_ABI_PROT_WRITE,
                  NACL_ABI_MAP_PRIVATE,
                  NULL,

@@ -12,7 +12,7 @@
 void __pthread_initialize(void);
 
 /*
- * Allocates (using sbrk) and initializes the combined area for the
+ * Allocates and initializes the combined area for the
  * main thread.  Always called, whether or not pthreads is in use.
  */
 void __pthread_initialize_minimal(size_t tdb_size);

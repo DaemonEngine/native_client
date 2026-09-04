@@ -25,6 +25,7 @@
 #include "native_client/src/trusted/service_runtime/nacl_signal.h"
 #include "native_client/src/trusted/service_runtime/nacl_syscall_register.h"
 #include "native_client/src/trusted/service_runtime/sel_ldr.h"
+#include "native_client/src/trusted/service_runtime/sel_memory.h"
 #include "native_client/src/trusted/service_runtime/sys_memory.h"
 #include "native_client/src/trusted/service_runtime/thread_suspension_unwind.h"
 #include "native_client/tests/common/register_set.h"
@@ -102,7 +103,7 @@ const int kInstructionBundleSize = 16;
 static void AddBreakpoints(struct NaClApp *nap,
                            uintptr_t start, uintptr_t end) {
   size_t size = end - start;
-  size_t page_mask = NACL_PAGESIZE - 1;
+  size_t page_mask = nap->page_size - 1;
   uintptr_t page_addr = start & ~page_mask;
   uintptr_t mapping_size = ((end + page_mask) & ~page_mask) - page_addr;
   int rc;
@@ -163,7 +164,8 @@ static uint32_t GetOverwrittenInstruction(uintptr_t addr) {
  * the address.
  */
 static void ResetPagePermissions(uintptr_t addr) {
-  int rc = mprotect((void *) (addr & ~(NACL_PAGESIZE - 1)), NACL_PAGESIZE,
+  size_t pagesize = NaClGetPageSize();
+  int rc = mprotect((void *) (addr & ~(pagesize - 1)), pagesize,
                     PROT_READ | PROT_WRITE | PROT_EXEC);
   CHECK(rc == 0);
 }
