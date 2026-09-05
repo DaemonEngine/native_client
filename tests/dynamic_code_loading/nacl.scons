@@ -5,11 +5,6 @@
 
 Import('env')
 
-# Saigo does not support these tests - intentionally unsafe asm code gets
-# autosandboxed and is safe again.
-if env.Bit('saigo'):
-  Return()
-
 # Do not run these tests with pexes, assuming they are portable.
 if env.Bit('bitcode') and env.Bit('pnacl_generate_pexe'):
   Return()
@@ -184,4 +179,4 @@ node = env.CommandSelLdrTestNacl('dynamic_modify_test.out',
 # shared memory segment.  It does not know to flush its code
 # translation cache.
 env.AddNodeToTestSuite(node, test_suites, 'run_dynamic_modify_test',
-                       is_broken=is_broken or env.IsRunningUnderValgrind())
+                       is_broken=is_broken or env.Bit('saigo') or env.IsRunningUnderValgrind())
