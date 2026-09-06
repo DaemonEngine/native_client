@@ -93,6 +93,10 @@
 
 #if defined(VREFIMPL)
 
+// FIXME: many non-saturating signed integer vector operations use the regular
+// arithmetic operations, which is undefined behavior for overflows. But for
+// the vector types, well-defined wrapping is expected (exercised in the tests).
+
 class _i8x16;
 class _u8x16;
 class _i16x8;

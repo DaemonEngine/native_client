@@ -31,7 +31,7 @@ native_env = env.Clone()
 if env.Bit('bitcode'):
   native_flags = []
 elif env.Bit('build_x86_32'):
-  native_flags = ['-msse2', '-msse3', '-msse4']
+  native_flags = ['-msse2', '-msse3', '-msse4', '-march=i686']
 elif env.Bit('build_x86_64'):
   native_flags = ['-msse2', '-msse3', '-msse4']
 elif env.Bit('build_arm'):
@@ -45,6 +45,8 @@ native_env.Append(CCFLAGS=native_flags)
 #   compound literals are a C99-specific feature
 # Remove pedantic to work around this issue.
 native_env.FilterOut(CCFLAGS=['-pedantic'])
+# Overflows in vector types are well-defined but still trigger warnings.
+native_env.Append(CXXFLAGS=['-Wno-integer-overflow'])
 
 ref_env = env.Clone()
 ref_flags = ['-DVREFIMPL']
@@ -52,21 +54,16 @@ ref_env.Append(CFLAGS=c_flags)
 ref_env.Append(CXXFLAGS=cxx_flags)
 ref_env.Append(CCFLAGS=ref_flags)
 
-# TODO(jfb): The native environment currently doesn't compile.
-if env.Bit('bitcode'):
-  AddTest(native_env, 'simd.cc', test_suffix='_native')
+AddTest(native_env, 'simd.cc', test_suffix='_native')
 AddTest(ref_env, 'simd.cc', test_suffix='_ref')
 
-# GCC 4.4 doesn't support all features of the vector extensions in C.
-# TODO(jfb) Re-enable testing when we migrate to a newer GCC.
-if env.Bit('bitcode'):
-  AddTest(native_env, 'vector_align.cc',
-          golden_file=native_env.File('vector_align.stdout'),
-          EXTRA_LIBS=['${PTHREAD_LIBS}'])
-  AddTest(native_env, 'vector_alloca.cc',
-          golden_file=native_env.File('vector_alloca.stdout'),
-          EXTRA_LIBS=['${PTHREAD_LIBS}'])
-  AddTest(native_env, 'vector_extension.c',
-          golden_file=native_env.File('vector_extension.stdout'))
-  AddTest(native_env, 'vector_shuffle.cc',
-          golden_file=native_env.File('vector_shuffle.stdout'))
+AddTest(native_env, 'vector_align.cc',
+        golden_file=native_env.File('vector_align.stdout'),
+        EXTRA_LIBS=['${PTHREAD_LIBS}'])
+AddTest(native_env, 'vector_alloca.cc',
+        golden_file=native_env.File('vector_alloca.stdout'),
+        EXTRA_LIBS=['${PTHREAD_LIBS}'])
+AddTest(native_env, 'vector_extension.c',
+        golden_file=native_env.File('vector_extension.stdout'))
+AddTest(native_env, 'vector_shuffle.cc',
+        golden_file=native_env.File('vector_shuffle.stdout'))
