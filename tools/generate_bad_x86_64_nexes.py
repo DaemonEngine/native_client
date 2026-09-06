@@ -39,6 +39,9 @@ import sys
 
 EHDR_SIZE=64
 PHDR_SIZE=56
+E_PHNUM_OFF=56
+P_FLAGS_OFF=4
+P_VADDR_OFF=16  # paddr is not used, only vaddr
 P_MEMSZ_OFF=40
 
 FILE_MODIFICATIONS=[
@@ -149,16 +152,15 @@ FILE_MODIFICATIONS=[
 ##   Type           Offset             VirtAddr           PhysAddr
 ##                  FileSiz            MemSiz              Flags  Align
 ##   PHDR           0x0000000000000000 0x0000000000000000 0x0000000000000000
-##                  0x0000000000000120 0x0000000000000120  R      8
+##                  0x0000000000000120 0x0000000000000120  R      0x8
 ##   LOAD           0x0000000000020000 0x0000000000020000 0x0000000000020000
-##                  0x00000000000277a0 0x00000000005e10a0  R E    200000
-##   LOAD           0x0000000000200000 0x0000000000200000 0x0000000000200000
-##                  0x0000000000206054 0x0000000000206054  R      200000
-##   LOAD           0x0000000000600000 0x0000000000600000 0x0000000000600000
-##                  0x0000000000000994 0x0000000000001c68  RW     200000
+##                  0x00000000000277a0 0x00000000000277a0  R E    0x200000
+##   LOAD           0x0000000000200000 0x0000000000030000 0x0000000000200000
+##                  0x0000000000206054 0x0000000000206054  RW     0x200000
     [ "fib_scalar_base.nexe", "text_overlaps_data.nexe",
-      [ ( EHDR_SIZE + PHDR_SIZE + P_MEMSZ_OFF + 2, 0x5e),
-        ( EHDR_SIZE + PHDR_SIZE + P_MEMSZ_OFF + 1, 0x10),
+      [ ( E_PHNUM_OFF, 0x03),
+        ( EHDR_SIZE + 2*PHDR_SIZE + P_FLAGS_OFF, 0x06),
+        ( EHDR_SIZE + 2*PHDR_SIZE + P_VADDR_OFF + 2, 0x03),
         ],
       ],
 ## $ readelf -l text_overlaps_rodata.nexe
@@ -166,15 +168,15 @@ FILE_MODIFICATIONS=[
 ##   Type           Offset             VirtAddr           PhysAddr
 ##                  FileSiz            MemSiz              Flags  Align
 ##   PHDR           0x0000000000000000 0x0000000000000000 0x0000000000000000
-##                  0x0000000000000120 0x0000000000000120  R      8
+##                  0x0000000000000120 0x0000000000000120  R      0x8
 ##   LOAD           0x0000000000020000 0x0000000000020000 0x0000000000020000
-##                  0x00000000000277a0 0x00000000002077a0  R E    200000
-##   LOAD           0x0000000000200000 0x0000000000200000 0x0000000000200000
-##                  0x0000000000206054 0x0000000000206054  R      200000
+##                  0x00000000000277a0 0x00000000000277a0  R E    0x200000
+##   LOAD           0x0000000000200000 0x0000000000030000 0x0000000000200000
+##                  0x0000000000206054 0x0000000000206054  R      0x200000
 ##   LOAD           0x0000000000600000 0x0000000000600000 0x0000000000600000
-##                  0x0000000000000994 0x0000000000001c68  RW     200000
+##                  0x0000000000000994 0x0000000000001c68  RW     0x200000
     [ "fib_scalar_base.nexe", "text_overlaps_rodata.nexe",
-      [ ( EHDR_SIZE + PHDR_SIZE + P_MEMSZ_OFF + 2, 0x20),
+      [ ( EHDR_SIZE + 2*PHDR_SIZE + P_VADDR_OFF + 2, 0x03),
         ],
       ],
     ]

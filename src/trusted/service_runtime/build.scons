@@ -866,17 +866,8 @@ DEATH_TESTS_X86 = [ 'old_abi',  # hello_world.nexe with an old ABI version
                     'text_overlaps_data',
                     'text_too_big' ]
 
-NOT_AVAIL_X86_32 = [ ]
-
-NOT_AVAIL_X86_64 = [ 'text_overlaps_rodata',
-                     'text_overlaps_data' ]
-
-def AddDeathTest(test, skip):
+def AddDeathTest(test):
   if not test:
-    return
-
-  if test in skip:
-    print('SKIPPING test ', test)
     return
 
   # Use an arch-specific golden file if there is one.
@@ -898,13 +889,8 @@ def AddDeathTest(test, skip):
 
 
 if env.Bit('build_x86'):
-  if env.Bit('build_x86_32'):
-    skip = NOT_AVAIL_X86_32
-  else:
-    skip = NOT_AVAIL_X86_64
-
   for death_test in DEATH_TESTS_X86:
-    AddDeathTest(death_test, skip)
+    AddDeathTest(death_test)
 
 # ----------------------------------------------------------
 # More Death Tests
