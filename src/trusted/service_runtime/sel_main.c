@@ -62,8 +62,8 @@ void NaClSetEnableOuterSandboxFunc(void (*func)(void)) {
 static void VmentryPrinter(void           *state,
                     struct NaClVmmapEntry *vmep) {
   NACL_UNUSED_PARAMETER(state);
-  printf("page num 0x%06x\n", (uint32_t)vmep->page_num);
-  printf("num pages %d\n", (uint32_t)vmep->npages);
+  printf("start addr 0x%08x\n", (uint32_t)vmep->base);
+  printf("size %d\n", (uint32_t)vmep->nbytes);
   printf("prot bits %x\n", vmep->prot);
   fflush(stdout);
 }

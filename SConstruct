@@ -2553,6 +2553,7 @@ def SetUpLinuxEnvX8664(env):
     )
 
 def SetUpLinuxEnvArm(env):
+  env.Replace(MAX_PAGE_SIZE='0x10000')
   if not platform.machine().startswith('a'):
     # Allow emulation on non-ARM hosts.
     env.Replace(EMULATOR='qemu-armhf -L /usr/arm-linux-gnueabihf/ -cpu cortex-a9')
@@ -2742,6 +2743,8 @@ def MakeGenericLinuxEnv(platform=None):
       LINK = '$CXX',
   )
 
+  linux_env.SetDefault(MAX_PAGE_SIZE='0x1000')
+
   # Prepend so we can disable warnings via Append
   linux_env.Prepend(
       CPPDEFINES = [['_POSIX_C_SOURCE', '199506'],
@@ -2783,7 +2786,8 @@ def MakeGenericLinuxEnv(platform=None):
   linux_env.Prepend(SHLINKFLAGS=['$COMMON_LINKFLAGS'])
   linux_env.Prepend(COMMON_LINKFLAGS=['-Wl,-z,relro',
                                       '-Wl,-z,now',
-                                      '-Wl,-z,noexecstack'])
+                                      '-Wl,-z,noexecstack',
+                                      '-Wl,-z,max-page-size=${MAX_PAGE_SIZE}'])
   linux_env.Prepend(LINKFLAGS=['-pie'])
   # The ARM toolchain has a linker that doesn't handle the code its
   # compiler generates under -fPIE.

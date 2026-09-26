@@ -22,6 +22,8 @@
  */
 #define TEXT_START 0x10000
 
+size_t g_pagesize;
+
 int ParseMapsLine(FILE *fp, uintptr_t *start, uintptr_t *end) {
   char buf[256];
 
@@ -59,20 +61,20 @@ void FindLowestMappedRange(uintptr_t *start, uintptr_t *end) {
 // See FIRST_USER_ADDRESS in kernel. It is supposed to impossible to reserve pages
 // lower than this (though sometimes you can due to bugs...) and causes EINVAL.
 #if NACL_ARCH(NACL_BUILD_ARCH) == NACL_arm
-const uintptr_t MIN_VALID_ADDRESS = 2 * NACL_PAGESIZE;
+const uintptr_t kMinValidPage = 2;
 #else
-const uintptr_t MIN_VALID_ADDRESS = 0;
+const uintptr_t kMinValidPage = 0;
 #endif
 
 int IsPageMappable(uintptr_t addr) {
-  void *retval = mmap((void *) addr, NACL_PAGESIZE, PROT_NONE,
+  void *retval = mmap((void *) addr, g_pagesize, PROT_NONE,
                       MAP_PRIVATE | MAP_FIXED |
                       MAP_ANONYMOUS | MAP_NORESERVE,
                       -1, 0);
   if (retval != (void *) addr)   {
     CHECK(MAP_FAILED == retval &&
           (EPERM == errno || EACCES == errno ||
-           (EINVAL == errno && addr < MIN_VALID_ADDRESS)));
+           (EINVAL == errno && addr < kMinValidPage * g_pagesize)));
     return 0;
   }
   return 1;
@@ -83,14 +85,14 @@ uintptr_t FindLowestMappableAddress(void) {
   uintptr_t low_addr;
 
   /* Find lowest mappable address */
-  for (mmap_addr = TEXT_START; mmap_addr > 0; mmap_addr -= NACL_PAGESIZE) {
-    if (!IsPageMappable(mmap_addr - NACL_PAGESIZE)) {
+  for (mmap_addr = TEXT_START; mmap_addr > 0; mmap_addr -= g_pagesize) {
+    if (!IsPageMappable(mmap_addr - g_pagesize)) {
       break;
     }
   }
   /* Check that all lower addresses are unmappable */
-  for (low_addr = mmap_addr; low_addr > 0; low_addr -= NACL_PAGESIZE) {
-    CHECK(!IsPageMappable(low_addr - NACL_PAGESIZE));
+  for (low_addr = mmap_addr; low_addr > 0; low_addr -= g_pagesize) {
+    CHECK(!IsPageMappable(low_addr - g_pagesize));
   }
   return mmap_addr;
 }
@@ -114,6 +116,10 @@ int main(int argc, char **argv) {
     ASSERT_EQ(g_prereserved_sandbox_size, 0);
     return 0;
   }
+
+  errno = 0;
+  g_pagesize = sysconf(_SC_PAGESIZE);
+  CHECK(errno == 0);
 
   /*
    * Check if g_prereserved_sandbox_size is less than or equal to the

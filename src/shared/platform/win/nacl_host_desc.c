@@ -862,7 +862,7 @@ uintptr_t NaClHostDescMap(struct NaClHostDesc *d,
       goto cleanup;
     }
     if (!VirtualProtect((void *) map_result,
-                        NaClRoundPage(chunk_size),
+                        NaClRoundPage(chunk_size, NACL_X86_PAGESIZE),
                         flProtect,
                         &flOldProtect)) {
         DWORD err = GetLastError();

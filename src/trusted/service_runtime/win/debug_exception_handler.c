@@ -72,10 +72,11 @@ static BOOL WriteProcessMemoryChecked(HANDLE process_handle, void *remote_addr,
    * mappings at the moment, so there should be no TOCTTOU race
    * condition with this check.
    */
-  uintptr_t page_start = NaClTruncPage((uintptr_t) remote_addr);
-  uintptr_t page_end = NaClRoundPage((uintptr_t) remote_addr + size);
+  uintptr_t page_start = (uintptr_t) remote_addr & ~(NACL_X86_PAGESIZE - 1);
+  uintptr_t page_end = NaClRoundPage((uintptr_t) remote_addr + size,
+                                     NACL_X86_PAGESIZE);
   uintptr_t addr;
-  for (addr = page_start; addr < page_end; addr += NACL_PAGESIZE) {
+  for (addr = page_start; addr < page_end; addr += NACL_X86_PAGESIZE) {
     int protect;
     if (!GetAddrProtection(process_handle, addr, &protect) ||
         protect != PAGE_READWRITE) {
