@@ -62,7 +62,7 @@ Windows i686: Builds, lightly tested
 ## Dependencies
 - SCons
 - [Saigo NaCl SDK](https://github.com/DaemonEngine/saigo-nacl-sdk)
-- For Linux: LLVM, if using `--clang` (default). Must be installed in `/usr/bin`.
+- For Linux: LLVM, if using `--clang` (default).
 - For Linux: GCC, if using `--no-clang`
 - For Linux: GNU Binutils
 - For Mac: Xcode Command Line Tools
