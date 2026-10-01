@@ -12,7 +12,7 @@ import sys
 import tarfile
 import unittest
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../..'))
 import pynacl.fake_downloader
 import pynacl.fake_storage
 import pynacl.file_tools
