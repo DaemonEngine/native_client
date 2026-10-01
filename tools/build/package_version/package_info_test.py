@@ -10,7 +10,7 @@ import os
 import unittest
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../..'))
 import pynacl.working_directory
 
 import archive_info
