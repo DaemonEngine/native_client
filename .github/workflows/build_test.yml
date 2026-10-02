@@ -1,0 +1,155 @@
+name: Build and test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.vm_image }}
+
+    strategy:
+      # Azure Pipelines matrix legs don't cancel each other on failure.
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux amd64 GCC
+            vm_image: ubuntu-22.04
+            sdk_platform: linux-amd64
+            apt_packages: g++-10
+            scons_build_args: platform=x86-64 --no-clang werror=0
+            scons_tests: small_tests medium_tests large_tests
+            vpython: pyenv/bin/python
+
+          - name: Linux i686 GCC
+            vm_image: ubuntu-22.04
+            apt_architecture: i386
+            sdk_platform: linux-amd64
+            apt_packages: g++-i686-linux-gnu libc6:i386
+            scons_build_args: platform=x86-32 --no-clang werror=0
+            scons_tests: small_tests medium_tests large_tests
+            vpython: pyenv/bin/python
+
+          - name: Linux armhf GCC
+            # There is an IO bug in qemu-arm from ubuntu-22.04.
+            vm_image: ubuntu-24.04
+            sdk_platform: linux-amd64
+            apt_packages: g++-arm-linux-gnueabihf qemu-user
+            scons_build_args: platform=arm --no-clang werror=0
+            scons_tests: no_gdb_tests=1 small_tests medium_tests
+            vpython: pyenv/bin/python
+
+          - name: Linux amd64 Clang
+            vm_image: ubuntu-22.04
+            sdk_platform: linux-amd64
+            scons_build_args: platform=x86-64 --clang werror=1
+            scons_tests: small_tests medium_tests large_tests
+            vpython: pyenv/bin/python
+
+          - name: macOS amd64 AppleClang
+            vm_image: macos-15
+            sdk_platform: macos-amd64
+            scons_build_args: platform=x86-64 --clang werror=1
+            scons_tests: all_tests
+            vpython: pyenv/bin/python
+            nproc_command: sysctl -n hw.logicalcpu
+
+          - name: Windows amd64 MSVC
+            vm_image: windows-2025
+            sdk_platform: windows-amd64
+            scons_build_args: platform=x86-64 --no-clang werror=1 mingw_dir=mingw/mingw
+            scons_tests: small_tests medium_tests large_tests disable_tests=run_toolchain_python_tests
+            vpython: pyenv/Scripts/python
+            python_packages: pywin32
+            mingw_url: https://github.com/niXman/mingw-builds-binaries/releases/download/16.1.0-rt_v14-rev1/x86_64-16.1.0-release-posix-seh-msvcrt-rt_v14-rev1.7z
+
+          - name: Windows i686 MSVC
+            vm_image: windows-2025
+            sdk_platform: windows-amd64
+            scons_build_args: platform=x86-32 --no-clang werror=1 mingw_dir=mingw/mingw
+            scons_tests: ''
+            vpython: pyenv/Scripts/python
+            python_packages: pywin32
+            mingw_url: https://github.com/niXman/mingw-builds-binaries/releases/download/16.1.0-rt_v14-rev1/i686-16.1.0-release-posix-dwarf-msvcrt-rt_v14-rev1.7z
+
+          - name: Windows amd64 MinGW
+            vm_image: windows-2025
+            sdk_platform: windows-amd64
+            scons_build_args: platform=x86-64 --no-clang mingw=1 werror=1 mingw_dir=mingw/mingw
+            scons_tests: small_tests medium_tests large_tests disable_tests=run_toolchain_python_tests
+            vpython: pyenv/Scripts/python
+            python_packages: pywin32
+            mingw_url: https://github.com/niXman/mingw-builds-binaries/releases/download/16.1.0-rt_v14-rev1/x86_64-16.1.0-release-posix-seh-msvcrt-rt_v14-rev1.7z
+
+    # Azure exposed matrix values as environment variables; do the same here
+    # so the scripts below can stay as plain shell.
+    env:
+      APT_ARCHITECTURE: ${{ matrix.apt_architecture }}
+      APT_PACKAGES: ${{ matrix.apt_packages }}
+      MINGW_URL: ${{ matrix.mingw_url }}
+      NPROC_COMMAND: ${{ matrix.nproc_command }}
+      PYTHON_PACKAGES: ${{ matrix.python_packages }}
+      SCONS_BUILD_ARGS: ${{ matrix.scons_build_args }}
+      SCONS_TESTS: ${{ matrix.scons_tests }}
+      SDK_PLATFORM: ${{ matrix.sdk_platform }}
+      VPYTHON: ${{ matrix.vpython }}
+
+    defaults:
+      run:
+        # Use bash everywhere (Git Bash on Windows), as the Azure config did.
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        run: |
+          set -xue
+          CURL() {
+              curl -fsSL --retry 8 "$@"
+          }
+          if [ -n "${APT_ARCHITECTURE:-}" ]; then
+            sudo dpkg --add-architecture "${APT_ARCHITECTURE}"
+          fi
+          if [ -n "${APT_PACKAGES:-}" ]; then
+            sudo apt-get update && sudo apt-get -y -q --no-install-recommends install ${APT_PACKAGES}
+          fi
+          python3 -m venv pyenv
+          # TODO pin scons to a specific version?
+          ${VPYTHON} -m pip install SCons ${PYTHON_PACKAGES:-}
+          mkdir sdk
+          (
+            cd sdk
+            sdk_url="https://github.com/DaemonEngine/saigo-nacl-sdk/releases/download/v20260925/saigosdk-${SDK_PLATFORM}_20260925.tar.xz"
+            CURL "$sdk_url" -o sdk.tar.xz
+            tar -xJf sdk.tar.xz
+            rm sdk.tar.xz
+            mv * sdk  # Rename the top-level dir to sdk
+          )
+          if [ -n "${MINGW_URL:-}" ]; then
+            mkdir mingw
+            (
+              cd mingw
+              CURL "${MINGW_URL}" -o mingw.7z
+              7z x mingw.7z
+              rm mingw.7z
+              mv * mingw  # Rename the top-level dir to mingw
+            )
+          fi
+
+      - name: Build
+        run: |
+          set -xue
+          parallelism="$(${NPROC_COMMAND:-nproc})"
+          echo "Build parallelism: ${parallelism}"
+          ${VPYTHON} -m SCons --mode=opt-host,nacl saigo=1 saigo_newlib_dir=sdk/sdk ${SCONS_BUILD_ARGS} all_programs -j${parallelism} --verbose
+
+      - name: Test
+        if: success() && matrix.scons_tests != ''
+        run: |
+          set -xue
+          parallelism="$(${NPROC_COMMAND:-nproc})"
+          ${VPYTHON} -m SCons --mode=opt-host,nacl saigo=1 saigo_newlib_dir=sdk/sdk ${SCONS_BUILD_ARGS} ${SCONS_TESTS} -j${parallelism} --verbose --keep-going disable_flaky_tests=1
