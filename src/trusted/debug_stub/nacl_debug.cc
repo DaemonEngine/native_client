@@ -28,10 +28,6 @@
 #include "native_client/src/trusted/service_runtime/sel_ldr.h"
 #include "native_client/src/trusted/service_runtime/thread_suspension.h"
 
-#if NACL_OSX
-# include <sys/sysctl.h>
-#endif
-
 using port::IPlatform;
 using port::Thread;
 using port::ITransport;
@@ -120,28 +116,13 @@ static const struct NaClDebugCallbacks debug_callbacks = {
   ProcessExitHook,
 };
 
-#if NACL_OSX
-// From https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment
-static int processIsTranslated() {
-  int ret = 0;
-  size_t size = sizeof(ret);
-  if (sysctlbyname("sysctl.proc_translated", &ret, &size, NULL, 0) == -1)
-  {
-    if (errno == ENOENT)
-      return 0;
-    return -1;
-  }
-  return ret;
-}
-#endif
-
 /*
  * This function is implemented for the service runtime.  The service runtime
  * declares the function so it does not need to be declared in our header.
  */
 int NaClDebugInit(struct NaClApp *nap) {
 #if NACL_OSX
-  if (processIsTranslated() != 0) {
+  if (nap->in_emulator) {
     // Thread suspension facilities don't work
     NaClLog(LOG_ERROR, "NaCl debugging not available under Rosetta translation\n");
     return 0;
