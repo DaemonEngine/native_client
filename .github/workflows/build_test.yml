@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - slipher/ci-convert
   pull_request:
 
 jobs:
