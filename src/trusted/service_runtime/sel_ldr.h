@@ -380,6 +380,10 @@ struct NaClApp {
    */
   int sc_nprocessors_onln;
 
+#if NACL_OSX
+  int in_emulator;
+#endif
+
   size_t page_size;
 
   const struct NaClValidatorInterface *validator;
