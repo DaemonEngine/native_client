@@ -58,25 +58,19 @@ static INLINE void NaClWriteMemoryBarrier(void) {
 static INLINE void NaClFlushCacheForDoublyMappedCode(uint8_t *writable_addr,
                                                      uint8_t *executable_addr,
                                                      size_t size) {
-#if NACL_ARCH(NACL_BUILD_ARCH) == NACL_x86
+#if NACL_WINDOWS
   /*
-   * Clearing the icache explicitly is not necessary on x86.  We could
-   * call gcc's __builtin___clear_cache() on x86, where it is a no-op,
-   * except that it is not available in Mac OS X's old version of gcc.
-   * We simply prevent the compiler from moving loads or stores around
+   * Clearing the icache explicitly is not necessary on x86.  The compiler
+   * only must be prevented from moving loads or stores around
    * this function.
    */
   NACL_UNUSED_PARAMETER(writable_addr);
   NACL_UNUSED_PARAMETER(executable_addr);
   NACL_UNUSED_PARAMETER(size);
-#if NACL_WINDOWS
   _ReadWriteBarrier();
-#else
-  __asm__ __volatile__("" : : : "memory");
-#endif
 #elif defined(__GNUC__)
   /*
-   * __clear_cache() does two things:
+   * For ARM __clear_cache() does two things:
    *
    *  1) It flushes the write buffer for the address range.
    *     We need to do this for writable_addr.
