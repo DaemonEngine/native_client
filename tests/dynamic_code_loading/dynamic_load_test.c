@@ -21,7 +21,7 @@
 
 #if defined(__x86_64__)
 /* On x86-64, template functions do not fit in 32-byte buffers */
-#define BUF_SIZE 128
+#define BUF_SIZE 64
 #elif defined(__i386__) || defined(__arm__)
 #define BUF_SIZE 32
 #else
