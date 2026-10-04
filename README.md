@@ -57,14 +57,15 @@ Many of the original project pages are no longer available. Some documentation a
 
 ## Status
 
-Linux amd64: Well-tested, everything works
-Linux i686: Builds
-Linux armhf: Well-tested, debugger support incomplete, platform qualification issues
-Linux arm64: Well-tested, can run armhf version well if CPU supports 32-bit programs
-MacOS amd64: All tests passed on a CI bot. Probably everything works fine. Debugger untested
-MacOS arm64: Well-tested, runs via Rosetta (so a couple obscure x86 features are not usable for client code), no debugger
-Windows amd64: Well-tested, everything works
-Windows i686: Builds, lightly tested
+- Linux amd64: Well-tested, everything works
+- Linux i686: Builds
+- Linux armhf: Well-tested, debugger support incomplete, platform qualification issues
+- Linux arm64: Well-tested, can run armhf version well if CPU supports 32-bit programs
+- MacOS amd64: All tests passed on a CI bot. Probably everything works fine. Debugger untested
+- MacOS arm64: Well-tested, runs via Rosetta (so a couple obscure x86 features are not usable for client code), no debugger
+- Windows amd64: Well-tested, everything works
+- Windows i686: Builds, lightly tested
+
 
 ## Dependencies
 - SCons
@@ -107,6 +108,7 @@ scons --mode=opt-host platform=x86-64 werror=0 sel_ldr
 ```
 
 On Linux, add `--no-clang` to use GCC instead of Clang.
+
 
 ### Build the IRT (C runtime 'dynamic library' used by NaCl code)
 
@@ -157,6 +159,7 @@ python -m SCons --mode=nacl,opt-windows --no-clang saigo=1 werror=0 mingw_dir=C:
 When using MinGW, you must pass `mingw=1` and `--no-clang`. You can locate the toolchain by either
 passing `mingw_dir=...` or putting it in the PATH. MinGW only works with `platform=x86_64`.
 
+
 ### ARM testing
 
 There are some special build system features that facilitate testing for the
@@ -176,6 +179,7 @@ scons --mode=opt-host,nacl saigo=1 platform=arm werror=0 --keep-going small_test
 This is useful but there are many tests that it cannot run, for example because they involve
 spawning multiple process. Also it is important to test on a full machine to exercise the
 arcane kernel interactions such as `longjmp`ing out of a signal handler.
+
 
 #### Running tests on a different machine than they were built
 To test on an emulated or slow ARM machine, you can build the binaries on another system first
