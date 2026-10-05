@@ -396,6 +396,7 @@ static int asm_HasCX8(void) {
 
 #if defined(NACL_WINDOWS_MSC_64) || defined(NACL_WINDOWS_MINGW)
 static int CheckCPUFeatureDetection(NaClCPUFeaturesX86 *cpuf) {
+  (void)cpuf;
   /* Unfortunately the asm_ tests will not work on 64-bit Windows */
   return 0;
 }
