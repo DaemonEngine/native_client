@@ -13,7 +13,7 @@
 const size_t kMinimumCachedCodeSize = 40000;
 
 /* Translate validation status to values wanted by sel_ldr. */
-static int NaClValidateStatus(NaClValidationStatus status) {
+int NaClValidateStatus(NaClValidationStatus status) {
   switch (status) {
     case NaClValidationSucceeded:
       return LOAD_OK;
@@ -96,27 +96,6 @@ int NaClValidateCodeReplacement(struct NaClApp *nap, uintptr_t guest_addr,
 
   return NaClValidateStatus(nap->validator->ValidateCodeReplacement(
       guest_addr, data_old, data_new, size, nap->cpu_features));
-}
-
-int NaClCopyCode(struct NaClApp *nap, uintptr_t guest_addr,
-                 uint8_t *data_old, uint8_t *data_new,
-                 size_t size) {
-  int status;
-  status = NaClValidateStatus(nap->validator->CopyCode(
-                              guest_addr, data_old, data_new, size,
-                              nap->cpu_features,
-                              NaClCopyInstruction));
-  /*
-   * Flush the processor's instruction cache.  This is not necessary
-   * for security, because any old cached instructions will just be
-   * safe halt instructions.  It is only necessary to ensure that
-   * untrusted code runs correctly when it tries to execute the
-   * dynamically-loaded code.
-   */
-  NaClFlushCacheForDoublyMappedCode(data_old,
-                                    (uint8_t *) guest_addr,
-                                    size);
-  return status;
 }
 
 NaClErrorCode NaClValidateImage(struct NaClApp  *nap) {

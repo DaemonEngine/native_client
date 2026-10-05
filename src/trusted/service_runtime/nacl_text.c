@@ -96,6 +96,27 @@ static struct NaClDesc *MakeImcShmDesc(uintptr_t size) {
   return &shm->base;
 }
 
+static int NaClCopyCode(struct NaClApp *nap, uintptr_t guest_addr,
+                        uint8_t *data_old, uint8_t *data_new,
+                        size_t size) {
+  int status;
+  status = NaClValidateStatus(nap->validator->CopyCode(
+                              guest_addr, data_old, data_new, size,
+                              nap->cpu_features,
+                              NaClCopyInstruction));
+  /*
+   * Flush the processor's instruction cache.  This is not necessary
+   * for security, because any old cached instructions will just be
+   * safe halt instructions.  It is only necessary to ensure that
+   * untrusted code runs correctly when it tries to execute the
+   * dynamically-loaded code.
+   */
+  NaClFlushCacheForDoublyMappedCode(data_old,
+                                    (uint8_t *) guest_addr,
+                                    size);
+  return status;
+}
+
 NaClErrorCode NaClMakeDynamicTextShared(struct NaClApp *nap) {
   uintptr_t                   dynamic_text_size;
   uintptr_t                   shm_vaddr_base;
