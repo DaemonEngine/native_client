@@ -136,6 +136,7 @@ NaClErrorCode NaClAllocateSpaceAslr(void **mem, size_t addrsp_size,
 
   CHECK(addrsp_size == FOURGIG);
 
+#if defined(NACL_X86_64_ZERO_BASED_SANDBOX)
   if (NACL_X86_64_ZERO_BASED_SANDBOX) {
     mem_sz = 11 * FOURGIG;
     if (getenv("NACL_ENABLE_INSECURE_ZERO_BASED_SANDBOX") != NULL) {
@@ -159,6 +160,7 @@ NaClErrorCode NaClAllocateSpaceAslr(void **mem, size_t addrsp_size,
        */
       mem_sz = FOURGIG;
     }
+#endif
 
     NaClAddrSpaceBeforeAlloc(mem_sz);
     if (NaClFindPrereservedSandboxMemory(mem, mem_sz)) {
