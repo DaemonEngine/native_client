@@ -300,17 +300,6 @@ if (YOKAI_TARGET_SYSTEM_ANDROID)
 	# Already done by the toolchain, same for crtend_so.o.
 endif()
 
-# From SetUpLinuxEnvMips() from (root)/SConstruct.
-if (YOKAI_TARGET_SYSTEM_LINUX_COMPATIBILITY AND YOKAI_TARGET_ARCH_MIPSEL)
-#TODO:	env.Append(LIBS=['rt', 'dl', 'pthread']
-	set_compiler_flag("-march=mips32r2")
-	# Because of:
-	# src/trusted/service_runtime/arch/mips/nacl_switch.S: Assembler messages:
-	# src/trusted/service_runtime/arch/mips/nacl_switch.S:38: Error: float register should be even, was 1
-	# src/trusted/service_runtime/arch/mips/nacl_switch.S:72: Error: float register should be even, was 1
-	set_compiler_flag("-mfp32")
-endif()
-
 # From MakeGenericLinuxEnv() from (root)/SConstruct.
 if (YOKAI_TARGET_SYSTEM_LINUX_COMPATIBILITY)
 	add_definitions(-D_POSIX_C_SOURCE=199506)
