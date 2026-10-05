@@ -43,8 +43,6 @@ elseif (YOKAI_TARGET_ARCH_ARMHF OR YOKAI_TARGET_ARCH_ARMEL)
 		# Compile ARM primitives for checking alignment features.
 		"arch/arm/nacl_qualify_unaligned.c"
 	)
-elseif (YOKAI_TARGET_ARCH_MIPSEL)
-	list(APPEND PQL_INPUTS "arch/mips/nacl_qualify_fpu.c")
 endif()
 
 add_library(platform_qual_lib STATIC ${PQL_INPUTS})
