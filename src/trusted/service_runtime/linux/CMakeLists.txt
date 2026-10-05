@@ -41,39 +41,7 @@ set(COMPILER_OVERRIDE "${CMAKE_CXX_COMPILER}")
 
 if (YOKAI_TARGET_ARCH_AMD64)
 	set(LD_EMUL "elf_x86_64")
-
-	if (USE_AMD64_ZERO_BASED_SANDBOX)
-		# For the zero-based 64-bit sandbox, we want to reserve 44GB of address
-		# space: 4GB for the program plus 40GB of guard pages. Due to a binutils
-		# bug (see http://sourceware.org/bugzilla/show_bug.cgi?id=13400), the
-		# amount of address space that the linker can pre-reserve is capped
-		# at 4GB. For proper reservation, GNU ld version 2.22 or higher
-		# needs to be used.
-		#
-		# Without the bug fix, trying to reserve 44GB will result in
-		# pre-reserving the entire capped space of 4GB. This tricks the run-time
-		# into thinking that we can mmap up to 44GB. This is unsafe as it can
-		# overwrite the run-time program itself and/or other programs. Because
-		# of this, we only reserve 4GB.
-		#
-		# TODO(arbenson): remove these comments and reserve 44GB once the
-		# necessary ld version becomes standard.
-		set(RESERVE_TOP "0x100000000")
-		# The reserve_top value gets interpreted as a pointer in
-		# linux/nacl_bootstrap.c. By default, mcmodel is set to small,
-		# which restricts code and data to the first 2GB.  With
-		# mcmodel set to small or medium, the reserve_top value is
-		# truncated, which produces an error. With mcmodel set to large,
-		# there is no restriction on the code and data, so we can
-		# safely set reserve_top to 0x100000000.
-		if (DAEMON_CXX_COMPILER_Clang_COMPATIBILITY)
-			list(APPEND BOOTSTRAP_FLAGS "-mcmodel=medium")
-		else()
-			list(APPEND BOOTSTRAP_FLAGS "-mcmodel=large")
-		endif()
-	else()
-		set(RESERVE_TOP "0x0")
-	endif()
+	set(RESERVE_TOP "0x0")
 elseif (YOKAI_TARGET_ARCH_I686)
 	set(LD_EMUL "elf_i386")
 	set(RESERVE_TOP "0x40000000")

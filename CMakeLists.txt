@@ -25,12 +25,6 @@ if (YOKAI_TARGET_SYSTEM_LINUX_COMPATIBILITY)
 	option(BUILD_NACL_HELPER_BOOTSTRAP "Build the nacl_helper_bootstrap program on platforms requiring it." ON)
 endif()
 
-# TODO(arbenson): remove this once binutils bug is fixed (see
-# src/trusted/service_runtime/arch/x86_64/sel_addrspace_posix_x86_64.c)
-if (BUILD_NACL_LOADER AND YOKAI_TARGET_ARCH_AMD64 AND NOT YOKAI_TARGET_SYSTEM_WINDOWS)
-	option(USE_AMD64_ZERO_BASED_SANDBOX "Allow the zero-based sandbox model to run insecurely." OFF)
-endif()
-
 if (BUILD_NACL_LOADER AND YOKAI_TARGET_SYSTEM_WINDOWS)
 	option(FORCE_NO_TRUSTED_BUILD "Prevent use of trusted toolchain." OFF)
 endif()
