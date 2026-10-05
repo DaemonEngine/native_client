@@ -20,7 +20,7 @@ if (YOKAI_TARGET_SYSTEM_WINDOWS)
 		"win/xlate_system_error.c"
 	)
 
-	if (YOKAI_CXX_COMPILER_MSVC)
+	if (YOKAI_TARGET_SYSTEM_WINDOWS)
 		list(APPEND PLATFORM_INPUTS "win/nacl_time.c")
 	else()
 		list(APPEND PLATFORM_INPUTS "posix/nacl_time.c")
@@ -92,3 +92,7 @@ list(APPEND PLATFORM_INPUTS
 add_library(platform STATIC ${PLATFORM_INPUTS})
 string(REPLACE ";" " " PLATFORM_FLAGS_STRING "${PLATFORM_FLAGS}")
 set_target_properties(platform PROPERTIES COMPILE_FLAGS "${PLATFORM_FLAGS_STRING}")
+
+if (YOKAI_TARGET_SYSTEM_WINDOWS)
+	target_link_libraries(platform PRIVATE winmm)
+endif()
