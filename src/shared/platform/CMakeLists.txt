@@ -43,10 +43,6 @@ elseif (YOKAI_TARGET_SYSTEM_LINUX_COMPATIBILITY)
 		"linux/nacl_host_dir.c"
 		"linux/nacl_semaphore.c"
 	)
-
-#TODO:	kernel_version = list(map(int, platform.release().split('.', 2)[:2]))
-#TODO:	if kernel_version < [3, 0]:
-#TODO:		cputime_test_enabled = False
 elseif (YOKAI_TARGET_SYSTEM_MACOS)
 	list(APPEND PLATFORM_INPUTS
 		"osx/nacl_clock.c"
