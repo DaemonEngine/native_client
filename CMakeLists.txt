@@ -35,7 +35,7 @@ if (BUILD_NACL_LOADER AND YOKAI_TARGET_SYSTEM_WINDOWS)
 	option(FORCE_NO_TRUSTED_BUILD "Prevent use of trusted toolchain." OFF)
 endif()
 
-if (BUILD_NACL_LOADER AND YOKAI_TARGET_SYSTEM_WINDOWS)
+if (BUILD_NACL_LOADER AND YOKAI_CXX_COMPILER_MSVC)
 	set(REQUIRE_MASM ON)
 endif()
 
@@ -54,23 +54,9 @@ if (REQUIRE_PYTHON)
 endif()
 
 if (REQUIRE_MASM)
-	if (YOKAI_CXX_COMPILER_MINGW)
-		if (NOT CMAKE_ASM_MASM_COMPILER)
-			find_program(PATH_JWASM NAMES "jwasm" DOC "Path to the JWasm executable." REQUIRED)
-
-			set(CMAKE_ASM_MASM_COMPILER "${PATH_JWASM}")
-		endif()
-
-		include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include-hax/fake_masm")
-
-		if (YOKAI_TARGET_ARCH_I686)
-			list(APPEND CMAKE_ASM_MASM_FLAGS "-coff")
-		elseif(YOKAI_TARGET_ARCH_AMD64)
-			list(APPEND CMAKE_ASM_MASM_FLAGS "-win64")
-		endif()
-	endif()
-
 	enable_language(ASM_MASM)
+	# TODO: win64_asm_env = env.Clone(ASCOM='ml64 $ASFLAGS /c /Fo$TARGET $SOURCES')
+	# TODO: ldr_inputs += [win64_asm_env.ComponentObject('arch/x86_64/nacl_switch_unwind_win.asm')]
 endif()
 
 include_directories("include-hax")

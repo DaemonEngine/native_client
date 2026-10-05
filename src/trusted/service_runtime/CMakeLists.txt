@@ -90,11 +90,14 @@ elseif (YOKAI_TARGET_ARCH_AMD64)
 			"arch/x86_64/fxsaverstor.S"
 		)
 
-		if (NOT FORCE_NO_TRUSTED_BUILD)
+		if (YOKAI_CXX_COMPILER_MSVC AND NOT FORCE_NO_TRUSTED_BUILD)
 			# This use of win64_asm_env causes an invocation of MSVC, even if sel_ldr
 			# would not otherwise be actually built. So don't include it if we aren't
 			# actually building sel_ldr
 			add_library(nacl_switch_unwind_win OBJECT "arch/x86_64/nacl_switch_unwind_win.asm")
+			list(APPEND LDR_LIBS nacl_switch_unwind_win)
+		else()
+			add_library(nacl_switch_unwind_win OBJECT "arch/x86_64/nacl_switch_unwind_win.S")
 			list(APPEND LDR_LIBS nacl_switch_unwind_win)
 		endif()
 	else()
