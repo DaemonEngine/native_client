@@ -115,18 +115,6 @@ elseif (YOKAI_TARGET_ARCH_ARMHF OR YOKAI_TARGET_ARCH_ARMEL)
 		"arch/arm/nacl_syscall.S"
 		"arch/arm/tramp_arm.S"
 	)
-elseif (YOKAI_TARGET_ARCH_MIPSEL)
-	list(APPEND LDR_INPUTS
-		"arch/mips/nacl_app.c"
-		"arch/mips/nacl_switch_to_app_mips.c"
-		"arch/mips/sel_rt.c"
-		"arch/mips/nacl_tls.c"
-		"arch/mips/sel_ldr_mips.c"
-		"arch/mips/sel_addrspace_mips.c"
-		"arch/mips/nacl_switch.S"
-		"arch/mips/nacl_syscall.S"
-		"arch/mips/tramp_mips.S"
-	)
 endif()
 
 if (YOKAI_TARGET_SYSTEM_WINDOWS)
@@ -196,8 +184,6 @@ elseif (YOKAI_TARGET_SYSTEM_LINUX_COMPATIBILITY)
 		)
 	elseif (YOKAI_TARGET_ARCH_ARMHF OR YOKAI_TARGET_ARCH_ARMEL)
 		list(APPEND LDR_INPUTS "linux/arm/sel_segments.c")
-	elseif (YOKAI_TARGET_ARCH_MIPSEL)
-		list(APPEND LDR_INPUTS "linux/mips/sel_segments.c")
 	endif()
 endif()
 
@@ -237,8 +223,6 @@ if (YOKAI_TARGET_SYSTEM_LINUX_COMPATIBILITY)
 
 	if (YOKAI_TARGET_ARCH_ARMHF OR YOKAI_TARGET_ARCH_ARMEL)
 		list(APPEND LDR_INPUTS "linux/nacl_signal_arm.c")
-	elseif (YOKAI_TARGET_ARCH_MIPSEL)
-		list(APPEND LDR_INPUTS "linux/nacl_signal_mips.c")
 	elseif (YOKAI_TARGET_ARCH_I686)
 		list(APPEND LDR_INPUTS "linux/nacl_signal_32.c")
 	elseif (YOKAI_TARGET_ARCH_AMD64)
@@ -315,8 +299,6 @@ if (YOKAI_TARGET_ARCH_I686 OR YOKAI_TARGET_ARCH_AMD64)
 elseif (YOKAI_TARGET_ARCH_ARMHF OR YOKAI_TARGET_ARCH_ARMEL)
 	list(APPEND LDR_LIBS ncvalidate_arm_v2)
 	list(APPEND LDR_LIBS arm_validator_reporters)
-elseif (YOKAI_TARGET_ARCH_MIPSEL)
-	list(APPEND LDR_LIBS ncvalidate_mips)
 endif()
 
 if (YOKAI_TARGET_ARCH_I686 OR YOKAI_TARGET_ARCH_AMD64)
