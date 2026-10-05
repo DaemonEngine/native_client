@@ -102,12 +102,6 @@ elseif (YOKAI_TARGET_ARCH_AMD64)
 		endif()
 	else()
 		list(APPEND LDR_INPUTS "arch/x86_64/sel_addrspace_posix_x86_64.c")
-
-		if (USE_AMD64_ZERO_BASED_SANDBOX)
-			add_definitions(-DNACL_X86_64_ZERO_BASED_SANDBOX=1)
-		else()
-			add_definitions(-DNACL_X86_64_ZERO_BASED_SANDBOX=0)
-		endif()
 	endif()
 elseif (YOKAI_TARGET_ARCH_ARMHF OR YOKAI_TARGET_ARCH_ARMEL)
 	list(APPEND LDR_INPUTS
