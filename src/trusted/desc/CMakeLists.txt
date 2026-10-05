@@ -1,7 +1,7 @@
 add_library(nrd OBJECT "nrd_xfer.c")
 list(APPEND NRD_XFER_LIBS nrd)
 
-if (NOT YOKAI_TARGET_SYSTEM_WINDOWS)
+if (NOT YOKAI_CXX_COMPILER_MSVC)
 	# Use those flags only with the nrd target.
 	list(APPEND NRD_FLAGS "-fno-strict-aliasing") # This was only a C flag in build.scons
 	list(APPEND NRD_FLAGS "-Wno-missing-field-initializers")
