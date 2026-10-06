@@ -59,7 +59,7 @@ def _CommonChecks(input_api, output_api):
   old_sys_path = list(sys.path)
   try:
     sys.path.append(os.path.join(NACL_TOP_DIR, 'tools'))
-    sys.path.append(os.path.join(NACL_TOP_DIR, 'build'))
+    sys.path.append(os.path.join(NACL_TOP_DIR, 'tools', 'build'))
     import code_hygiene
   finally:
     sys.path = old_sys_path

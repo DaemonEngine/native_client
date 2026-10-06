@@ -26,7 +26,7 @@ TOOLCHAIN_BUILD_OUT_DIR = os.path.join(TOOLCHAIN_BUILD_DIR, 'out')
 
 TEMP_PACKAGES_FILE = os.path.join(TOOLCHAIN_BUILD_OUT_DIR, 'packages.txt')
 
-BUILD_DIR = os.path.join(NACL_DIR, 'build')
+BUILD_DIR = os.path.join(NACL_DIR, 'tools', 'build')
 PACKAGE_VERSION_DIR = os.path.join(BUILD_DIR, 'package_version')
 PACKAGE_VERSION_SCRIPT = os.path.join(PACKAGE_VERSION_DIR, 'package_version.py')
 

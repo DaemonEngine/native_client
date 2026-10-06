@@ -22,7 +22,7 @@ from pynacl import file_tools, hashing_tools
 
 PYNACL_DIR = os.path.dirname(os.path.abspath(__file__))
 NACL_DIR = os.path.dirname(PYNACL_DIR)
-BUILD_DIR = os.path.join(NACL_DIR, 'build')
+BUILD_DIR = os.path.join(NACL_DIR, 'tools', 'build')
 CYGTAR_PATH = os.path.join(BUILD_DIR, 'cygtar.py')
 
 
