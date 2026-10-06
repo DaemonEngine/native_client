@@ -55,6 +55,10 @@ static INLINE void NaClWriteMemoryBarrier(void) {
 #endif
 
 
+/*
+ * If it needs to work on Rosetta, RosettaFlushInstructionCache is additionally
+ * needed.
+ */
 static INLINE void NaClFlushCacheForDoublyMappedCode(uint8_t *writable_addr,
                                                      uint8_t *executable_addr,
                                                      size_t size) {
