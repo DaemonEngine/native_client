@@ -49,7 +49,7 @@ COMMAND_CODE_FILES += [os.path.join(NACL_DIR, 'pynacl', f)
 # DEPS is not a command code file per se, but it describes the toolchains
 # and sysroots used to build all of the host binaries, which are not all
 # otherwise modeled.
-COMMAND_CODE_FILES += [os.path.join(NACL_DIR, 'DEPS')]
+# COMMAND_CODE_FILES += [os.path.join(NACL_DIR, 'DEPS')]
 
 
 def HashBuildSystemSources():

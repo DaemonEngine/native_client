@@ -23,7 +23,7 @@ import pynacl.local_storage_cache
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 NACL_DIR = os.path.dirname(SCRIPT_DIR)
 ROOT_DIR = os.path.dirname(NACL_DIR)
-BUILD_DIR = os.path.join(NACL_DIR, 'build')
+BUILD_DIR = os.path.join(NACL_DIR, 'tools', 'build')
 PKG_VER_DIR = os.path.join(BUILD_DIR, 'package_version')
 sys.path.append(PKG_VER_DIR)
 import archive_info
