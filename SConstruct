@@ -2314,6 +2314,9 @@ def MakeWindowsEnv(platform=None):
   if windows_env.Bit('mingw'):
     # Some C++-using binaries are linked with the C compiler
     windows_env.Append(LIBS = ['stdc++'])
+    if windows_env.Bit('build_x86_32'):
+      # Enable SSE2 for x86-32 MinGW builds so SSE intrinsics compile correctly.
+      windows_env.Append(CCFLAGS = ['-msse2'])
   else:
     # TODO(bsy) remove 4355 once cross-repo
     # NACL_ALLOW_THIS_IN_INITIALIZER_LIST changes go in.
