@@ -98,9 +98,17 @@ struct NaClGsSegment {
  */
 #if NACL_WINDOWS
 /* Align gs_segment for better performance on Intel Atom */
-__declspec(align(64))
+#if defined(_MSC_VER)
+#define NACL_THREAD_CONTEXT_ALIGN __declspec(align(64))
+#elif defined(__GNUC__)
+#define NACL_THREAD_CONTEXT_ALIGN __attribute__((aligned(64)))
+#else
+#define NACL_THREAD_CONTEXT_ALIGN
 #endif
-struct NaClThreadContext {
+#else
+#define NACL_THREAD_CONTEXT_ALIGN
+#endif
+struct NACL_THREAD_CONTEXT_ALIGN NaClThreadContext {
   /*
    * We align gs_segment to a multiple of 64 bytes because otherwise
    * memory accesses through the %gs segment are slow on Intel Atom
