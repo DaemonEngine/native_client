@@ -2328,7 +2328,8 @@ def MakeWindowsEnv(platform=None):
   # This linker option allows us to ensure our builds are compatible with
   # Chromium, which uses it.
   if windows_env.Bit('build_x86_32'):
-    windows_env.Append(LINKFLAGS = "/safeseh")
+    if not windows_env.Bit('mingw'):
+      windows_env.Append(LINKFLAGS = "/safeseh")
 
   mingw_dir = os.path.abspath(ARGUMENTS.get('mingw_dir', 'You.must.provide.the.mingw_dir.argument'))
   windows_env['MINGW_BIN'] = os.path.join(mingw_dir, 'bin')
