@@ -160,4 +160,4 @@ jobs:
         run: |
           set -xue
           parallelism="$(${NPROC_COMMAND:-nproc})"
-          ${VPYTHON} -m SCons --mode=opt-host,nacl saigo=1 saigo_newlib_dir=sdk/sdk ${SCONS_BUILD_ARGS} ${SCONS_TESTS} -j${parallelism} --verbose --keep-going disable_flaky_tests=1
+          ${VPYTHON} -m SCons -Q --mode=opt-host,nacl saigo=1 saigo_newlib_dir=sdk/sdk ${SCONS_BUILD_ARGS} ${SCONS_TESTS} -j${parallelism} --verbose --keep-going disable_flaky_tests=1
