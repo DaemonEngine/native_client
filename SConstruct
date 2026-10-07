@@ -277,6 +277,9 @@ def SetUpArgumentBits(env):
   BitFromArgument(env, 'mingw', default=False,
     desc='Use MinGW toolchain for trusted build')
 
+  BitFromArgument(env, 'tls_edit_i686', default=False,
+    desc='Build tls_edit as an i686 Windows host tool')
+
   BitFromArgument(env, 'pnacl_native_clang_driver', default=False,
     desc='Use the (experimental) native PNaCl Clang driver')
 
@@ -3721,6 +3724,14 @@ def LinkTrustedEnv(selected_envs):
 
 def MakeBuildEnv():
   build_platform = GetBuildPlatform()
+
+  if pre_base_env.Bit('tls_edit_i686'):
+    if not pre_base_env.Bit('mingw'):
+      raise UserError('tls_edit_i686 requires mingw=1')
+    if GetTargetPlatform() != 'x86-32':
+      raise UserError(
+          'tls_edit_i686 requires a 32-bit target (platform=x86-32)')
+    build_platform = 'x86-32'
 
   # Build Platform Base Function
   platform_func_map = {
