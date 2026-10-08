@@ -3753,6 +3753,12 @@ def MakeBuildEnv():
 
   build_env = make_env_func(build_platform)
   build_env['IS_BUILD_ENV'] = True
+  if tls_edit_i686:
+    build_env.Append(LINKFLAGS=[
+        '-static',
+        '-static-libgcc',
+        '-static-libstdc++',
+    ])
 
   # Building tls_edit depends on gio, platform, and validator_ragel.
   build_env['BUILD_SCONSCRIPTS'] = [
