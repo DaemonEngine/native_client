@@ -3725,7 +3725,8 @@ def LinkTrustedEnv(selected_envs):
 def MakeBuildEnv():
   build_platform = GetBuildPlatform()
 
-  if pre_base_env.Bit('tls_edit_i686'):
+  tls_edit_i686 = pre_base_env.Bit('tls_edit_i686')
+  if tls_edit_i686:
     if not pre_base_env.Bit('mingw'):
       raise UserError('tls_edit_i686 requires mingw=1')
     if GetTargetPlatform() != 'x86-32':
@@ -3743,7 +3744,12 @@ def MakeBuildEnv():
       }
   if sys.platform not in platform_func_map:
     raise UserError('Unrecognized host platform: %s', sys.platform)
-  make_env_func = platform_func_map[sys.platform]
+  # tls_edit_i686 builds a Windows host tool with the i686 MinGW
+  # toolchain, even when SCons itself is running on Linux.
+  if tls_edit_i686:
+    make_env_func = MakeWindowsEnv
+  else:
+    make_env_func = platform_func_map[sys.platform]
 
   build_env = make_env_func(build_platform)
   build_env['IS_BUILD_ENV'] = True
