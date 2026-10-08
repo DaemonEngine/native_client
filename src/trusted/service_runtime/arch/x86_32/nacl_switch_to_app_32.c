@@ -71,7 +71,7 @@ NORETURN void NaClStartThreadInApp(struct NaClAppThread *natp,
 
   NaClSwitch(context);
 
-#if NACL_WINDOWS && defined(__clang__)
+#if NACL_WINDOWS && (defined(__clang__) || defined(__GNUC__))
   /*
    * NaClSwitch is a function pointer in x86_32 and there's no way to mark
    * the function pointed to by a function pointer as noreturn in clang-cl mode.

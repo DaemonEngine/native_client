@@ -127,7 +127,7 @@ static void Backtrace(CONTEXT *initial_context) {
     }
     fprintf(stderr, "#%i: ip=%p stack=%llx frame=%llx ",
             frame_number,
-            (void *) frame.AddrPC.Offset,
+            (void *) (uintptr_t) frame.AddrPC.Offset,
             frame.AddrStack.Offset,
             frame.AddrFrame.Offset);
     PrintSymbolForAddress(frame.AddrPC.Offset);
