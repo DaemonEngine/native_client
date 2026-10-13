@@ -61,7 +61,7 @@ jobs:
             vm_image: windows-2022
             sdk_platform: windows-amd64
             scons_build_args: platform=x86-64 --no-clang werror=1 mingw_dir=mingw/mingw
-            scons_tests: small_tests medium_tests large_tests disable_tests=run_toolchain_python_tests
+            scons_tests: small_tests medium_tests large_tests
             vpython: pyenv/Scripts/python
             python_packages: pywin32
             mingw_url: https://github.com/niXman/mingw-builds-binaries/releases/download/16.1.0-rt_v14-rev1/x86_64-16.1.0-release-posix-seh-msvcrt-rt_v14-rev1.7z
@@ -79,7 +79,7 @@ jobs:
             vm_image: windows-2022
             sdk_platform: windows-amd64
             scons_build_args: platform=x86-64 --no-clang mingw=1 werror=1 mingw_dir=mingw/mingw
-            scons_tests: small_tests medium_tests large_tests disable_tests=run_toolchain_python_tests
+            scons_tests: small_tests medium_tests large_tests
             vpython: pyenv/Scripts/python
             python_packages: pywin32
             mingw_url: https://github.com/niXman/mingw-builds-binaries/releases/download/16.1.0-rt_v14-rev1/x86_64-16.1.0-release-posix-seh-msvcrt-rt_v14-rev1.7z
