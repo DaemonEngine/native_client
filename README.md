@@ -91,11 +91,12 @@ used command line arguments for our build:
   - `opt-host`: trusted code toolchain using optimization flags for the current OS
   - `dbg-host`: trusted code toolchain with debugging flags for th ecurrent OS
   - `nacl`: NaCl toolchain to build the sandboxed code
+  - `nacl_irt`, `nacl_irt_test`: NaCl toolchains with IRT enabled. (This is used in production.) Note that adding `nacl` automatically enables `nacl_irt`.
 - `saigo=1` to use the Saigo NaCl toolchain. This is the only NaCl toolchain we support so you must always add this when using the `nacl` mode.
 - `--platform=x86`, `--platform=x86-64`, or `--platform=arm`: choose target architecture.
 - `--verbose`: show compiler and test command lines and other stuff
 - `-j<N>` build parallelism
-- Target names, e.g. `sel_ldr` (NaCl loader), `irt_core`, `small_tests`, `medium_tests`, `all_programs`, `large_tests`, `huge_tests`, `run_<something>_test`
+- Target names, e.g. `sel_ldr` (NaCl loader), `irt_core`, `small_tests`, `small_tests_irt`, `medium_tests`, `all_programs`, `large_tests`, `huge_tests`, `run_<something>_test`
 
 There is also a toolchain for host-mode tools. Its configuration is based on the same arguments
 used for the trusted toolchain.
