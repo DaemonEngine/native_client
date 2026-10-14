@@ -89,9 +89,11 @@ if (env.Bit('tests_use_irt') and env.Bit('nacl_static_link') and
   datafile = asm_env.Command(
     'exec_data', objfile,
     '${OBJCOPY} -j .text -O binary ${SOURCES} ${TARGET}')
-  env.Alias('all_programs', datafile)
+  # FIXME: needs objdump
+  # env.Alias('all_programs', datafile)
   node = env.CommandSelLdrTestNacl('mmap_code_data_alloc_test.out',
                                    nexe, [datafile],
                                    sel_ldr_flags=['-a'])
   env.AddNodeToTestSuite(node, ['small_tests'],
-                         'run_mmap_code_data_alloc_test')
+                         'run_mmap_code_data_alloc_test',
+                         is_broken=True)

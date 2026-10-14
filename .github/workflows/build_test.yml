@@ -30,7 +30,7 @@ jobs:
             sdk_platform: linux-amd64
             apt_packages: g++-i686-linux-gnu libc6:i386
             scons_build_args: platform=x86-32 --no-clang werror=0
-            scons_tests: small_tests medium_tests large_tests
+            scons_tests: small_tests{,_irt} medium_tests{,_irt} large_tests{,_irt}
             vpython: pyenv/bin/python
 
           - name: Linux armhf GCC
@@ -39,14 +39,14 @@ jobs:
             sdk_platform: linux-amd64
             apt_packages: g++-arm-linux-gnueabihf qemu-user
             scons_build_args: platform=arm --no-clang werror=0
-            scons_tests: no_gdb_tests=1 small_tests medium_tests
+            scons_tests: no_gdb_tests=1 small_tests{,_irt} medium_tests{,_irt}
             vpython: pyenv/bin/python
 
           - name: Linux amd64 Clang
             vm_image: ubuntu-22.04
             sdk_platform: linux-amd64
             scons_build_args: platform=x86-64 --clang werror=1
-            scons_tests: small_tests medium_tests large_tests
+            scons_tests: small_tests{,_irt} medium_tests{,_irt} large_tests{,_irt}
             vpython: pyenv/bin/python
 
           - name: macOS amd64 AppleClang
@@ -61,7 +61,7 @@ jobs:
             vm_image: windows-2022
             sdk_platform: windows-amd64
             scons_build_args: platform=x86-64 --no-clang werror=1 mingw_dir=mingw/mingw
-            scons_tests: small_tests medium_tests large_tests disable_tests=run_toolchain_python_tests
+            scons_tests: small_tests{,_irt} medium_tests{,_irt} large_tests{,_irt} disable_tests=run_toolchain_python_tests
             vpython: pyenv/Scripts/python
             python_packages: pywin32
             mingw_url: https://github.com/niXman/mingw-builds-binaries/releases/download/16.1.0-rt_v14-rev1/x86_64-16.1.0-release-posix-seh-msvcrt-rt_v14-rev1.7z
@@ -79,7 +79,7 @@ jobs:
             vm_image: windows-2022
             sdk_platform: windows-amd64
             scons_build_args: platform=x86-64 --no-clang mingw=1 werror=1 mingw_dir=mingw/mingw
-            scons_tests: small_tests medium_tests large_tests disable_tests=run_toolchain_python_tests
+            scons_tests: small_tests{,_irt} medium_tests{,_irt} large_tests{,_irt} disable_tests=run_toolchain_python_tests
             vpython: pyenv/Scripts/python
             python_packages: pywin32
             mingw_url: https://github.com/niXman/mingw-builds-binaries/releases/download/16.1.0-rt_v14-rev1/x86_64-16.1.0-release-posix-seh-msvcrt-rt_v14-rev1.7z
@@ -93,7 +93,6 @@ jobs:
       NPROC_COMMAND: ${{ matrix.nproc_command }}
       PYTHON_PACKAGES: ${{ matrix.python_packages }}
       SCONS_BUILD_ARGS: ${{ matrix.scons_build_args }}
-      SCONS_TESTS: ${{ matrix.scons_tests }}
       SDK_PLATFORM: ${{ matrix.sdk_platform }}
       VPYTHON: ${{ matrix.vpython }}
 
@@ -144,11 +143,11 @@ jobs:
           set -xue
           parallelism="$(${NPROC_COMMAND:-nproc})"
           echo "Build parallelism: ${parallelism}"
-          ${VPYTHON} -m SCons --mode=opt-host,nacl saigo=1 saigo_newlib_dir=sdk/sdk ${SCONS_BUILD_ARGS} all_programs -j${parallelism} --verbose
+          ${VPYTHON} -m SCons --mode=opt-host,nacl,nacl_irt_test saigo=1 saigo_newlib_dir=sdk/sdk ${SCONS_BUILD_ARGS} all_programs -j${parallelism} --verbose
 
       - name: Test
         if: success() && matrix.scons_tests != ''
         run: |
           set -xue
           parallelism="$(${NPROC_COMMAND:-nproc})"
-          ${VPYTHON} -m SCons --mode=opt-host,nacl saigo=1 saigo_newlib_dir=sdk/sdk ${SCONS_BUILD_ARGS} ${SCONS_TESTS} -j${parallelism} --verbose --keep-going disable_flaky_tests=1
+          ${VPYTHON} -m SCons --mode=opt-host,nacl saigo=1 saigo_newlib_dir=sdk/sdk ${SCONS_BUILD_ARGS} ${{ matrix.scons_tests }} -j${parallelism} --verbose --keep-going disable_flaky_tests=1
