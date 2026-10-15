@@ -31,6 +31,7 @@
 #include "native_client/src/trusted/service_runtime/thread_suspension.h"
 
 #if NACL_OSX
+#include <errno.h>
 #include "native_client/src/trusted/desc/osx/nacl_desc_imc_shm_mach.h"
 #endif
 
@@ -94,6 +95,65 @@ static struct NaClDesc *MakeImcShmDesc(uintptr_t size) {
   }
 
   return &shm->base;
+}
+
+/*
+ * Toggling PROT_EXEC seems to be the only way to make Rosetta re-translate
+ * pages that have been executed previously. Officially recommended methods
+ * like sys_icache_invalidate don't help. Better hope no untrusted code
+ * is executing there...
+ * The memory range's protection is assumed to start as exec+read.
+ * nap->dynamic_load_mutex should be held.
+ */
+static void RosettaFlushInstructionCache(struct NaClApp *nap,
+                                         uintptr_t executable_addr,
+                                         size_t size) {
+#if NACL_OSX
+  char *start;
+  char *end;
+
+  if (!nap->in_emulator) {
+    return;
+  }
+
+  start = (char *) (executable_addr & ~(nap->page_size - 1));
+  end = (char *) NaClRoundPage(executable_addr + size, nap->page_size);
+
+  if (0 != mprotect(start, end - start, PROT_READ) ||
+      0 != mprotect(start, end - start, PROT_READ | PROT_EXEC)) {
+    NaClLog(LOG_FATAL, "Failed to toggle PROT_EXEC: errno %d\n", errno);
+  }
+#else
+  NACL_UNUSED_PARAMETER(nap);
+  NACL_UNUSED_PARAMETER(executable_addr);
+  NACL_UNUSED_PARAMETER(size);
+#endif
+}
+
+static int NaClCopyCode(struct NaClApp *nap, uintptr_t guest_addr,
+                        uint8_t *exec_addr,
+                        uint8_t *write_addr, uint8_t *replacement_addr,
+                        size_t size) {
+  int status;
+  status = NaClValidateStatus(nap->validator->CopyCode(
+                              guest_addr, write_addr, replacement_addr, size,
+                              nap->cpu_features,
+                              NaClCopyInstruction));
+  /*
+   * Flush the processor's instruction cache.  This is not necessary
+   * for security, because any old cached instructions will just be
+   * safe halt instructions.  It is only necessary to ensure that
+   * untrusted code runs correctly when it tries to execute the
+   * dynamically-loaded code.
+   *
+   * For Rosetta there's no thread syncing in this one so other threads
+   * executing code in the same page could crash upon toggling PROT_EXEC.
+   */
+  NaClFlushCacheForDoublyMappedCode(write_addr,
+                                    exec_addr,
+                                    size);
+  RosettaFlushInstructionCache(nap, (uintptr_t) exec_addr, size);
+  return status;
 }
 
 NaClErrorCode NaClMakeDynamicTextShared(struct NaClApp *nap) {
@@ -754,6 +814,7 @@ int32_t NaClTextDyncodeCreate(struct NaClApp *nap,
    * dynamically-loaded code.
    */
   NaClFlushCacheForDoublyMappedCode(mapped_addr, (uint8_t *) dest_addr, size);
+  RosettaFlushInstructionCache(nap, dest_addr, size);
 
   retval = 0;
 
@@ -921,7 +982,8 @@ int32_t NaClSysDyncodeModify(struct NaClAppThread *natp,
     goto cleanup_unlock;
   }
 
-  if (LOAD_OK != NaClCopyCode(nap, dest, mapped_addr, code_copy, size)) {
+  if (LOAD_OK != NaClCopyCode(nap, dest, (uint8_t *) dest_addr,
+                              mapped_addr, code_copy, size)) {
     NaClLog(1, "NaClSysDyncodeModify: Copying of replacement code failed\n");
     retval = -NACL_ABI_EINVAL;
     goto cleanup_unlock;
@@ -1020,6 +1082,7 @@ int32_t NaClSysDyncodeDelete(struct NaClAppThread *natp,
      * icache.
      */
     NaClFlushCacheForDoublyMappedCode(mapped_addr, (uint8_t *) dest_addr, size);
+    RosettaFlushInstructionCache(nap, dest_addr, size);
 
     NaClTextMapClearCacheIfNeeded(nap, dest, size);
 
