@@ -15,7 +15,7 @@ import pynacl.platform
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 NACL_DIR = os.path.dirname(SCRIPT_DIR)
-BUILD_DIR = os.path.join(NACL_DIR, 'build')
+BUILD_DIR = os.path.join(NACL_DIR, 'tools', 'build')
 
 PACKAGE_VERSION_DIR = os.path.join(BUILD_DIR, 'package_version')
 PACKAGE_VERSION_SCRIPT = os.path.join(PACKAGE_VERSION_DIR, 'package_version.py')

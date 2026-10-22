@@ -196,7 +196,7 @@ def MacSdkFlags():
     return []
   mac_sdk_sysroot, mac_sdk_version = subprocess.check_output([
       sys.executable,
-      os.path.join(os.path.dirname(NACL_DIR), 'build', 'mac', 'find_sdk.py'),
+      os.path.join(os.path.dirname(NACL_DIR), 'tools', 'build', 'mac', 'find_sdk.py'),
       '--print_sdk_path',
       MAC_SDK_MIN,
       ], encoding='utf-8').splitlines()

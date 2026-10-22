@@ -12,7 +12,7 @@ import os
 import posixpath
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../..'))
 import pynacl.file_tools
 import pynacl.gsd_storage
 

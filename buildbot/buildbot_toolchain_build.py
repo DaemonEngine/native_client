@@ -22,7 +22,7 @@ import packages
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 NACL_DIR = os.path.dirname(SCRIPT_DIR)
-BUILD_DIR = os.path.join(NACL_DIR, 'build')
+BUILD_DIR = os.path.join(NACL_DIR, 'tools', 'build')
 TOOLCHAIN_BUILD_DIR = os.path.join(NACL_DIR, 'toolchain_build')
 TOOLCHAIN_BUILD_OUT_DIR = os.path.join(TOOLCHAIN_BUILD_DIR, 'out')
 TOOLCHAIN_BUILD_PACKAGES = os.path.join(TOOLCHAIN_BUILD_OUT_DIR, 'packages')

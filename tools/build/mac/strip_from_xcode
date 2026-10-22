@@ -12,7 +12,7 @@
 #
 # An example "Strip If Needed" build phase placed after "Link Binary With
 # Libraries" would do:
-# exec "${XCODEPROJ_DEPTH}/build/mac/strip_from_xcode"
+# exec "${XCODEPROJ_DEPTH}/tools/build/mac/strip_from_xcode"
 
 if [ "${CONFIGURATION}" != "Release" ] ; then
   # Only strip in release mode.
