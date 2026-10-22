@@ -84,6 +84,15 @@ jobs:
             python_packages: pywin32
             mingw_url: https://github.com/niXman/mingw-builds-binaries/releases/download/16.1.0-rt_v14-rev1/x86_64-16.1.0-release-posix-seh-msvcrt-rt_v14-rev1.7z
 
+          - name: Windows i686 MinGW
+            vm_image: windows-2022
+            sdk_platform: windows-amd64
+            scons_build_args: platform=x86-32 --no-clang mingw=1 werror=1 mingw_dir=mingw/mingw tls_edit_i686=1
+            scons_tests: small_tests medium_tests large_tests disable_tests=run_toolchain_python_tests
+            vpython: pyenv/Scripts/python
+            python_packages: pywin32
+            mingw_url: https://github.com/niXman/mingw-builds-binaries/releases/download/16.1.0-rt_v14-rev1/i686-16.1.0-release-posix-dwarf-msvcrt-rt_v14-rev1.7z
+
     # Azure exposed matrix values as environment variables; do the same here
     # so the scripts below can stay as plain shell.
     env:
@@ -151,4 +160,4 @@ jobs:
         run: |
           set -xue
           parallelism="$(${NPROC_COMMAND:-nproc})"
-          ${VPYTHON} -m SCons --mode=opt-host,nacl saigo=1 saigo_newlib_dir=sdk/sdk ${SCONS_BUILD_ARGS} ${SCONS_TESTS} -j${parallelism} --verbose --keep-going disable_flaky_tests=1
+          ${VPYTHON} -m SCons -Q --mode=opt-host,nacl saigo=1 saigo_newlib_dir=sdk/sdk ${SCONS_BUILD_ARGS} ${SCONS_TESTS} -j${parallelism} --verbose --keep-going disable_flaky_tests=1
