@@ -175,8 +175,9 @@ if (YOKAI_TARGET_SYSTEM_WINDOWS)
 	# Windows /SAFESEH linking requires either an .sxdata section be
 	# present or that @feat.00 be defined as a local, absolute symbol
 	# with an odd value.
-#TODO:	ASCOM = ('$ASPPCOM /E /D__ASSEMBLER__ | '
-#TODO:		'$WINASM -defsym @feat.00=1 -o $TARGET'),
+#TODO:	ASCOM = '$ASPPCOM -D__ASSEMBLER__ -Wa,-defsym,@feat.00=1' if base_env.Bit('mingw')
+#TODO:	else '$ASPPCOM /E /D__ASSEMBLER__ | '
+#TODO:		'$WINASM -defsym @feat.00=1 -o $TARGET',
 	add_definitions("-D_WIN32_WINNT=0x0501")
 	add_definitions("-D__STDC_LIMIT_MACROS=1")
 	add_definitions("-DNOMINMAX=1")
