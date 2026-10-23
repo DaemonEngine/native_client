@@ -334,3 +334,7 @@ endif()
 if (YOKAI_TARGET_ARCH_I686)
 	set_compiler_flag("-msse2")
 endif()
+
+if (YOKAI_CXX_COMPILER_GCC_COMPATIBILITY AND NOT YOKAI_CXX_COMPILER_CLANG_COMPATIBILITY)
+	set_compiler_flag("-Wno-maybe-uninitialized")
+endif()
