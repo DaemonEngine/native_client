@@ -191,9 +191,12 @@ if (YOKAI_TARGET_SYSTEM_WINDOWS)
 		# TODO(bsy) remove 4355 once cross-repo
 		# NACL_ALLOW_THIS_IN_INITIALIZER_LIST changes go in.
 		set_compiler_flag("/EHsc")
-		set_compiler_flag("/Wx")
 		set_compiler_flag("/wd4355")
 		set_compiler_flag("/wd4800")
+
+		if (USE_WERROR)
+			set_compiler_flag("/Wx")
+		endif()
 
 		if (YOKAI_TARGET_ARCH_I686)
 			# This linker option allows us to ensure our builds are compatible with
