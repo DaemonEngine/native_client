@@ -218,7 +218,7 @@ if (YOKAI_TARGET_SYSTEM_MACOS)
 	# Don't override the macOS version when CMAKE_OSX_DEPLOYMENT_TARGET
 	# is set explicitely (environemnt, command line, toolchain…).
 	if (NOT DEFINED CMAKE_OSX_DEPLOYMENT_TARGET)
-		set(MAC_DEPLOYMENT_TARGET "10.6")
+		set(MAC_DEPLOYMENT_TARGET "10.12")
 		set(MAC_SDK_FLAG "-mmacosx-version-min=${MAC_DEPLOYMENT_TARGET}")
 
 		set_compiler_flag(${MAC_SDK_FLAG})
