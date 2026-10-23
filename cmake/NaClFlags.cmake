@@ -195,6 +195,10 @@ if (YOKAI_TARGET_SYSTEM_WINDOWS)
 		set_compiler_flag("/wd4355")
 		set_compiler_flag("/wd4800")
 
+		# Was initially only done on src/trusted/validator_ragel/
+		# It would be better if only done there.
+		set_compiler_flag("/wd5287")
+
 		if (USE_WERROR)
 			set_compiler_flag("/Wx")
 		endif()
