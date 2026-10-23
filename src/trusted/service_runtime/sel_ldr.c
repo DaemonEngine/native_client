@@ -15,6 +15,11 @@
 #include <intrin.h>
 #endif
 
+#if NACL_OSX
+#include <errno.h>
+#include <sys/sysctl.h>
+#endif
+
 #include "native_client/src/include/portability.h"
 #include "native_client/src/include/portability_io.h"
 #include "native_client/src/include/portability_string.h"
@@ -80,6 +85,21 @@ static int CheckPageSize(size_t size) {
   return size >= 4096 && NACL_MAP_PAGESIZE % size == 0;
 #endif
 }
+
+#if NACL_OSX
+// https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment
+static int ProcessIsTranslated(void) {
+  int ret = 0;
+  size_t size = sizeof(ret);
+  if (sysctlbyname("sysctl.proc_translated", &ret, &size, NULL, 0) == -1)
+  {
+    if (errno == ENOENT)
+      return 0;
+    NaClLog(LOG_FATAL, "Failed to retrieve sysctl.proc_translated\n");
+  }
+  return ret;
+}
+#endif
 
 int NaClAppWithEmptySyscallTableCtor(struct NaClApp *nap) {
   struct NaClDescEffectorLdr  *effp;
@@ -270,6 +290,9 @@ int NaClAppWithEmptySyscallTableCtor(struct NaClApp *nap) {
   nap->faulted_thread_fd_write = -1;
 #endif
 
+#if NACL_OSX
+  nap->in_emulator = ProcessIsTranslated();
+#endif
 
 #if NACL_LINUX || NACL_OSX
   /*

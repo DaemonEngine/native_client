@@ -2134,7 +2134,7 @@ def MakeBaseTrustedEnv(platform=None):
       'tests/unittests/trusted/bits/build.scons',
       'tests/unittests/trusted/platform_qualify/build.scons',
       'tests/unittests/trusted/service_runtime/build.scons',
-      'toolchain_build/build.scons',
+      # 'toolchain_build/build.scons',
   ])
 
   base_env.AddMethod(SDKInstallBin)

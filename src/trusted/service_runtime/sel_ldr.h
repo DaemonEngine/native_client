@@ -380,6 +380,10 @@ struct NaClApp {
    */
   int sc_nprocessors_onln;
 
+#if NACL_OSX
+  int in_emulator;
+#endif
+
   size_t page_size;
 
   const struct NaClValidatorInterface *validator;
@@ -457,6 +461,8 @@ NaClErrorCode NaClAppLoadFileDynamically(
     struct NaClDesc *ndp,
     struct NaClValidationMetadata *metadata) NACL_WUR;
 
+int NaClValidateStatus(NaClValidationStatus status);
+
 int NaClValidateCode(struct NaClApp *nap,
                      uintptr_t      guest_addr,
                      uint8_t        *data,
@@ -472,13 +478,6 @@ int NaClValidateCodeReplacement(struct    NaClApp *nap,
                                 uint8_t   *data_old,
                                 uint8_t   *data_new,
                                 size_t    size);
-
-/*
- * Copies code from data_new to data_old in a thread-safe way.
- */
-int NaClCopyCode(struct NaClApp *nap, uintptr_t guest_addr,
-                 uint8_t *data_old, uint8_t *data_new,
-                 size_t size);
 
 /*
  * Copies an instruction in a thread-safe way. Used by validators.
