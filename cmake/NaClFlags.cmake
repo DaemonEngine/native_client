@@ -249,6 +249,8 @@ if (YOKAI_TARGET_SYSTEM_LINUX_COMPATIBILITY AND YOKAI_TARGET_ARCH_ARMHF)
 	set_compiler_flag("-march=armv7-a")
 	set_compiler_flag("-mtune=generic-armv7-a")
 	set_compiler_flag("-mfpu=neon")
+	# Don't use Thumb mode.
+	set_compiler_flag("-marm")
 	# If ARCH is "armhf", then the float ABI is already set properly by the toolchain.
 	# set_compiler_flag("-mfloat-abi=hard")
 endif()
