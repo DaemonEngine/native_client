@@ -141,7 +141,7 @@ def _SetEnvForNativeSdk(env, sdk_path):
               RANLIB=FindRenamedTool('ranlib'),
               NM=FindRenamedTool('nm'),
               OBJDUMP=FindRenamedTool('objdump'),
-              OBJCOPY=os.path.join(bin_path, '%s-objcopy' % tool_prefix),
+              OBJCOPY=FindRenamedTool('objcopy'),
               STRIP=os.path.join(bin_path, '%s-strip' % tool_prefix),
               ADDR2LINE='false',
               BASE_LINKFLAGS=[cc_mode_flag],
