@@ -627,7 +627,7 @@ class NaClTempFileMunge(object):
     # user-friendly to not let obsession with architectural
     # purity get in the way of just being helpful, so we'll
     # reach into SCons.Action directly.
-    if SCons.Action.print_actions:
+    if SCons.Script.ARGUMENTS.get('verbose'):
       cmdstr = env.subst(self.cmdstr, SCons.Subst.SUBST_RAW, target,
                           source) if self.cmdstr is not None else ''
       # Print our message only if XXXCOMSTR returns an empty string
