@@ -402,7 +402,10 @@ def generate(env):
       ],
       # Omit the absolute pathname of the .pdb debugging info file
       # from the executable, and just use a relative pathname.
-      LINKFLAGS_OPTIMIZED=['/PDBALTPATH:%_PDB%'],
+      # SCons passes /DEBUG when PDB is set, which defaults to incremental
+      # linking without dead-code removal, so override that explicitly.
+      LINKFLAGS_OPTIMIZED=['/PDBALTPATH:%_PDB%', '/INCREMENTAL:NO', '/OPT:REF',
+                           '/OPT:ICF'],
 
       # Settings for component_builders
       COMPONENT_LIBRARY_LINK_SUFFIXES=['.lib'],
